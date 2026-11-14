@@ -97,6 +97,9 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | JS-037 | `ActiveQuery.js:870-881` | Object `setValues` and `hasValues` call `ActiveQuery.isNaO` as a static method, but the inspected class defines it only on instances. | Standard set/read calls throw TypeError before reaching their guards. | Test truthy and falsy key/value combinations. |
 | JS-038 | `ActiveQuery.js:320-323` | Array `i` calls `ActiveQuery.isNaN`, which is not defined in the inspected class/static API. | Normal index access throws TypeError. | Test valid numeric and invalid index arguments. |
 
+
+| JS-039 | `ActiveQuery.js:885-939` | Custom `String.prototype.trim` whitespace list includes U+200B ZERO WIDTH SPACE but omits U+FEFF ZERO WIDTH NO-BREAK SPACE/BOM, unlike native ECMAScript trim semantics. | Replacing native trim changes observable string behavior for Unicode whitespace and can break callers relying on native semantics. | Compare native captured method with AQJS trim for U+FEFF, U+200B and the full ECMAScript whitespace set. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
