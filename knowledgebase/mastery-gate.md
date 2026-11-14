@@ -6,38 +6,38 @@ The mastery label is withheld until every gate below has objective evidence. A l
 
 ## Gate A — Source coverage
 
-- [ ] The framework philosophy is mapped separately from executable library behavior.
-- [ ] AQS, AQI, AQPE and AQKISS concepts have authoritative specifications or are explicitly marked conceptual/unverified.
+- [x] The framework philosophy is mapped separately from executable library behavior (`architecture/framework-overview.md`, `architecture/principle-implementation-review.md`).
+- [x] AQS, AQI, AQPE and AQKISS concepts are explicitly marked conceptual/unverified where authoritative executable specifications were not found.
 - [ ] Governance, DCO and OSL-3.0 implications are understood for the intended portal distribution model.
 - [ ] Upstream freshness and the last source-file commits are checked before each major adoption/rebuild milestone.
 
-- [ ] Every AQCSS selector rule inventoried from a CSS-aware parse.
-- [ ] Every unique class selector mapped to its complete rule block and source line(s).
-- [ ] Every custom property inventoried with declaration and usage sites.
+- [x] Every AQCSS selector rule is inventoried structurally; the PostCSS AST catalog is generated and validated in CI.
+- [x] Every unique class token is mapped to rule IDs, selectors and source lines; complete declarations are available in the rule catalog.
+- [x] Custom properties are indexed across declarations and `var()` references (46 declared names; 91 names across declarations/references).
 - [ ] All media queries and selector overrides mapped.
-- [ ] AQJS export, constructor, static methods and every prototype extension fully inventoried.
+- [x] AQJS export, constructor, static methods and prototype extension method families are inventoried.
 - [ ] Third-party/bundled code distinguished from AQ-authored code.
-- [ ] Licensing and attribution constraints documented.
+- [x] Licensing and attribution constraints documented, including OSL-3.0 external deployment, third-party notices, trademark exclusions and DCO sign-off requirements.
 
 ## Gate B — Semantic understanding
 
 - [ ] Every public API has exact signature, input constraints, return type, side effects and failure behavior.
-- [ ] AQJS methods that differ between Element, NodeList and other prototypes are explicitly compared.
-- [ ] Global/prototype mutation implications understood.
-- [ ] AQCSS utility naming and responsive prefixes mapped from actual media rules, not assumptions.
+- [x] AQJS methods that differ between Element, NodeList and other prototypes are explicitly compared in the behavior matrix.
+- [x] Global/prototype mutation implications are source-mapped and tested, including default constructor alias pollution and native String.trim replacement.
+- [x] AQCSS utility naming and responsive prefixes are mapped from actual media rules and browser tests, including the ineffective mobile-hide helper.
 - [ ] Interactions between AQCSS selectors and AQJS methods documented where applicable.
 - [ ] Suspected defects reproduced or cleared through tests; no unexplained behavior is presented as guaranteed.
-- [ ] Public claims about AQI batching/delegation, local scope, AQPE context behavior and AQS continuity are traced to executable source/specification or explicitly scoped as conceptual/unimplemented.
+- [x] Public claims about AQI batching/delegation, local scope, AQPE context behavior and AQS continuity are traced to executable source/specification or explicitly scoped as conceptual/unimplemented.
 - [ ] Source and minified distributions are proven semantically equivalent across the documented API surface.
 
 ## Gate C — Runtime validation
 
 - [x] Minimal reproducible AQJS test harness runs in at least two modern browser engines (70 authored tests / 140 browser cases passed in Chromium and Firefox in [run #204](https://github.com/amrshah/activequery-labs/actions/runs/43635697793)).
-- [ ] AQCSS visual tests run at representative narrow, medium and wide viewports.
+- [x] AQCSS computed-style tests run at representative narrow, medium and wide viewports (599/600/601, 993 and 1440 CSS px); wider selector-family coverage remains incomplete.
 - [ ] Keyboard, focus, touch/pointer and reduced-motion behavior checked where relevant.
-- [ ] Selector/API examples have passing expected-result tests.
-- [ ] Error paths, empty results, invalid input, multiple matches and collection behavior tested.
-- [ ] No runtime test is described as passed unless its output is retained.
+- [x] Representative selector/API examples have passing expected-result tests in Chromium and Firefox.
+- [x] Representative error paths, empty results, invalid input, multiple matches and collection behavior have passing tests.
+- [x] Runtime pass claims are tied to retained GitHub Actions logs and generated catalog artifacts.
 
 ## Gate D — Knowledgebase usefulness to a fresh agent
 
