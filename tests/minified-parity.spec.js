@@ -278,7 +278,7 @@ test("AQJS source and minified builds preserve early lifecycle and initlog timin
       const result = frame.contentWindow.lifecycle;
       frame.remove();
       return result;
-    }, path);
+    }, modulePath);
   };
   const source = await collect("/vendor/ActiveQuery.js");
   const minified = await collect("/vendor/ActiveQuery.min.js");
