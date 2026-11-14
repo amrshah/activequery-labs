@@ -48,6 +48,10 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQJS API inventory](aqjs/api-inventory.md)
 - [AQJS prototype behavior matrix](aqjs/behavior-matrix.md)
 - [AQCSS selector families](aqcss/selector-families.md)
+- [AQCSS class token index](aqcss/class-token-index.json) — 1,813 unique class tokens with source line/selector references.
+- [AQCSS rule selector index](aqcss/rule-selector-index.json) — 1,417 rule selector entries.
+- [AQCSS custom property index](aqcss/custom-property-index.json) — declaration occurrences for 46 custom-property names.
+- [AQCSS tokens and responsive semantics](aqcss/tokens-and-responsive.md)
 - [Source findings and verification queue](testing/source-findings.md)
 - [Browser validation plan and coverage](testing/browser-test-plan.md)
 - [Integration guidance](integration/README.md)
