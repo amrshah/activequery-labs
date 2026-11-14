@@ -101,52 +101,37 @@ test("AQCSS row-gap xlarge unitless value is discarded by the browser", async ({
   expect(result).toBe("normal");
 });
 
-test("AQCSS tablet utility activates at 600px and mobile hide ends at 600px", async ({ page }) => {
-  await page.setViewportSize({ width: 599, height: 800 });
-  const at599 = await page.evaluate(() => {
-    const text = document.createElement("div");
-    text.className = "aq-t-text--large";
-    document.body.appendChild(text);
-    const hidden = document.createElement("div");
-    hidden.className = "aq-facet-hide-on-mobile";
-    document.body.appendChild(hidden);
-    return {
-      root: parseFloat(getComputedStyle(document.documentElement).fontSize),
-      text: parseFloat(getComputedStyle(text).fontSize),
-      hidden: getComputedStyle(hidden).display
-    };
-  });
+test("AQCSS tablet typography activates at 600px but mobile-hide media query is ignored", async ({ page }) => {
+  const sample = async width => {
+    await page.setViewportSize({ width, height: 800 });
+    return page.evaluate(() => {
+      const text = document.createElement("div");
+      text.className = "aq-t-text--large";
+      document.body.appendChild(text);
+      const hidden = document.createElement("div");
+      hidden.className = "aq-facet-hide-on-mobile";
+      document.body.appendChild(hidden);
+      return {
+        root: parseFloat(getComputedStyle(document.documentElement).fontSize),
+        text: parseFloat(getComputedStyle(text).fontSize),
+        hidden: getComputedStyle(hidden).display
+      };
+    });
+  };
 
-  await page.setViewportSize({ width: 600, height: 800 });
-  const at600 = await page.evaluate(() => {
-    const text = document.createElement("div");
-    text.className = "aq-t-text--large";
-    document.body.appendChild(text);
-    const hidden = document.createElement("div");
-    hidden.className = "aq-facet-hide-on-mobile";
-    document.body.appendChild(hidden);
-    return {
-      root: parseFloat(getComputedStyle(document.documentElement).fontSize),
-      text: parseFloat(getComputedStyle(text).fontSize),
-      hidden: getComputedStyle(hidden).display
-    };
-  });
+  const at599 = await sample(599);
+  const at600 = await sample(600);
+  const at601 = await sample(601);
 
   expect(at599.text).toBeCloseTo(at599.root, 1);
-  expect(at599.hidden).toBe("none");
   expect(at600.text).toBeGreaterThan(at600.root);
-  expect(at600.hidden).toBe("none");
-
-  await page.setViewportSize({ width: 601, height: 800 });
-  const at601 = await page.evaluate(() => {
-    const hidden = document.createElement("div");
-    hidden.className = "aq-facet-hide-on-mobile";
-    document.body.appendChild(hidden);
-    return getComputedStyle(hidden).display;
-  });
-  expect(at601).not.toBe("none");
+  expect(at601.text).toBeGreaterThan(at601.root);
+  // The pinned rule uses malformed media syntax: and(max-width:600px).
+  // Both engines ignore the condition, so this helper never hides.
+  expect(at599.hidden).not.toBe("none");
+  expect(at600.hidden).not.toBe("none");
+  expect(at601.hidden).not.toBe("none");
 });
-
 test("AQCSS base border token requires channel values rather than the default hex value", async ({ page }) => {
   const result = await page.evaluate(() => {
     const node = document.createElement("div");
