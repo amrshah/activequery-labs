@@ -1,7 +1,7 @@
 # AQCSS Cascade, Specificity and Responsive Rule Model
 
 Source: AQCSS v25.6.0, blob SHA `c03546ecd1a41d26cbbfa8f1e31d38731f77cf62`.
-Snapshot: 2026-11-14.
+Snapshot: 2026-11-15.
 
 ## Structural facts
 
@@ -70,6 +70,23 @@ The stylesheet contains repeated custom-property declarations and mixed value co
 - Several opacity variables use `inherit` as a fallback; verify the property context before relying on it.
 
 See `custom-property-index.json`, `theme-effects.md` and source findings CSS-019–CSS-023.
+
+## Theme, border and effect cascade cases
+
+The theme/effects reference now maps border, swatch, background-image and fleek declarations in detail. Important cross-family cascade rules:
+
+- Border and radius utilities are ordinary declarations, not important. The default `.aq-border` family consumes `rgb(var(--aq-swatch-secondary))`, while the effective root secondary token is the later hex value. This is a value-type incompatibility already tracked by CSS-001 and covered by existing base border-token browser tests.
+- `.aq-swatch-border--*` sets only `border-color`; it does not establish border style or width. Pair it with a border-producing rule.
+- Background swatches set `background` and often `color`; text swatches set `color`; border swatches set `border-color`. Their property scopes can be combined, but overlapping classes compete on the same property.
+- A swatch hover selector uses `:hover` and therefore has greater specificity than its single-class base selector. Multiple base swatch classes with equal specificity resolve by source order for overlapping properties.
+- Fleek filter utilities write the complete `filter` property. Multiple filter classes do not compose their function lists; the winning declaration replaces the other filter value. Opacity helpers similarly replace the whole `opacity` property.
+- `opacity:0` leaves layout space and does not itself disable interaction. It is not equivalent to `display:none`, `visibility:hidden` or native disabled state.
+- The screen-overlay helper is initially `display:none` with a high z-index, but CSS alone does not provide modal activation, focus management or scroll locking. Stacking contexts and top-layer elements still constrain z-index.
+- Dropdown and tooltip reveal paths are hover-only; no equivalent focus/click state is supplied by these rules.
+- Background-image helpers set attachment, sizing, position and repeat, but never supply an image URL.
+- No built-in `prefers-color-scheme` theme switch or reduced-motion override is present in the pinned stylesheet.
+
+See [the border, swatch and effects cascade map](theme-effects.md) and [visibility/interaction map](visibility-interaction-cascade-map.md). These are source-derived cascade rules; do not claim full accessibility or cross-browser theme validation.
 
 ## Specificity policy for Labs components
 
