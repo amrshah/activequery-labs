@@ -6,14 +6,15 @@
     "version": "25.6.0",
     "sha": "c03546ecd1a41d26cbbfa8f1e31d38731f77cf62"
   },
-  "method": "declaration and var() reference scan after comment removal",
+  "method": "Brace-aware declaration and var() reference scan, cross-checked against the PostCSS AST catalog",
   "limitations": [
     "Records declaration/reference occurrences, not final computed values.",
     "Cascade, selector scope, inheritance and browser support must be tested.",
     "Duplicate declarations are intentionally preserved.",
-    "Custom properties referenced only through CSS syntax other than var() may not be represented."
+    "Custom properties referenced only through CSS syntax other than var() may not be represented.",
+    "Corrected false positives from BEM selector modifier segments beginning with double hyphens; the previous lexical pass misclassified 20 selector suffixes as custom-property declarations."
   ],
-  "unique_custom_property_count": 91,
+  "unique_custom_property_count": 71,
   "properties": {
     "--aq-body-width": {
       "declarations": [
@@ -1363,265 +1364,6 @@
         }
       ]
     },
-    "--bold-hover": {
-      "declarations": [
-        {
-          "line": 328,
-          "value": "hover {font-weight: bold!important"
-        }
-      ],
-      "references": []
-    },
-    "--underline-hover": {
-      "declarations": [
-        {
-          "line": 329,
-          "value": "hover {text-decoration: underline!important"
-        }
-      ],
-      "references": []
-    },
-    "--canvas-hover": {
-      "declarations": [
-        {
-          "line": 354,
-          "value": "hover {background:rgb(from var(--aq-swatch-canvas,#ffffff ) r g b / var(--aq-swatch-canvas-opacity, 100%))"
-        },
-        {
-          "line": 366,
-          "value": "hover {color:rgb(from var(--aq-swatch-canvas,#ffffff ) r g b / var(--aq-swatch-text-opacity, 100%))"
-        },
-        {
-          "line": 378,
-          "value": "hover {border-color: rgb(from var(--aq-swatch-canvas,#ffffff ) r g b / var(--aq-swatch-border-opacity, 100%))"
-        }
-      ],
-      "references": []
-    },
-    "--primary-hover": {
-      "declarations": [
-        {
-          "line": 355,
-          "value": "hover {background:rgb(from var(--aq-swatch-primary,#113f67 ) r g b / var(--aq-swatch-canvas-opacity, 100%))"
-        },
-        {
-          "line": 367,
-          "value": "hover {color:rgb(from var(--aq-swatch-primary,#113f67 ) r g b / var(--aq-swatch-text-opacity, 100%))"
-        },
-        {
-          "line": 379,
-          "value": "hover {border-color: rgb(from var(--aq-swatch-primary,#113f67 ) r g b / var(--aq-swatch-border-opacity, 100%))"
-        }
-      ],
-      "references": []
-    },
-    "--secondary-hover": {
-      "declarations": [
-        {
-          "line": 356,
-          "value": "hover {background:rgb(from var(--aq-swatch-secondary, #e7eaf6) r g b / var(--aq-swatch-canvas-opacity, 100%))"
-        },
-        {
-          "line": 368,
-          "value": "hover {color:rgb(from var(--aq-swatch-secondary, #e7eaf6) r g b / var(--aq-swatch-text-opacity, 100%))"
-        },
-        {
-          "line": 380,
-          "value": "hover {border-color: rgb(from var(--aq-swatch-secondary, #e7eaf6) r g b / var(--aq-swatch-border-opacity, 100%))"
-        }
-      ],
-      "references": []
-    },
-    "--accent-hover": {
-      "declarations": [
-        {
-          "line": 357,
-          "value": "hover {background:rgb(from var(--aq-swatch-accent, #a2a8d3 ) r g b / var(--aq-swatch-canvas-opacity, 100%))"
-        },
-        {
-          "line": 369,
-          "value": "hover {color:rgb(from var(--aq-swatch-accent, #a2a8d3 ) r g b / var(--aq-swatch-text-opacity, 100%))"
-        },
-        {
-          "line": 381,
-          "value": "hover {border-color: rgb(from var(--aq-swatch-accent, #a2a8d3 ) r g b / var(--aq-swatch-border-opacity, 100%))"
-        }
-      ],
-      "references": []
-    },
-    "--info-hover": {
-      "declarations": [
-        {
-          "line": 358,
-          "value": "hover {background:rgb(from var(--aq-swatch-info, #2094f3) r g b / var(--aq-swatch-canvas-opacity, 100%))"
-        },
-        {
-          "line": 370,
-          "value": "hover {color:rgb(from var(--aq-swatch-info, #2094f3) r g b / var(--aq-swatch-text-opacity, 100%))"
-        },
-        {
-          "line": 382,
-          "value": "hover {border-color: rgb(from var(--aq-swatch-info, #2094f3) r g b / var(--aq-swatch-border-opacity, 100%))"
-        }
-      ],
-      "references": []
-    },
-    "--success-hover": {
-      "declarations": [
-        {
-          "line": 359,
-          "value": "hover {background:rgb(from var(--aq-swatch-success, #4caf50) r g b / var(--aq-swatch-canvas-opacity, 100%))"
-        },
-        {
-          "line": 371,
-          "value": "hover {color:rgb(from var(--aq-swatch-success, #4caf50) r g b / var(--aq-swatch-text-opacity, 100%))"
-        },
-        {
-          "line": 383,
-          "value": "hover {border-color: rgb(from var(--aq-swatch-success, #4caf50) r g b / var(--aq-swatch-border-opacity, 100%))"
-        }
-      ],
-      "references": []
-    },
-    "--warning-hover": {
-      "declarations": [
-        {
-          "line": 360,
-          "value": "hover {background:rgb(from var(--aq-swatch-warning, #ff5724) r g b / var(--aq-swatch-canvas-opacity, 100%))"
-        },
-        {
-          "line": 372,
-          "value": "hover {color:rgb(from var(--aq-swatch-warning, #ff5724) r g b / var(--aq-swatch-text-opacity, 100%))"
-        },
-        {
-          "line": 384,
-          "value": "hover {border-color: rgb(from var(--aq-swatch-warning, #ff5724) r g b / var(--aq-swatch-border-opacity, 100%))"
-        }
-      ],
-      "references": []
-    },
-    "--alert-hover": {
-      "declarations": [
-        {
-          "line": 361,
-          "value": "hover {background:rgb(from var(--aq-swatch-alert, #ff0000) r g b / var(--aq-swatch-canvas-opacity, 100%))"
-        },
-        {
-          "line": 373,
-          "value": "hover {color:rgb(from var(--aq-swatch-alert, #ff0000) r g b / var(--aq-swatch-text-opacity, 100%))"
-        },
-        {
-          "line": 385,
-          "value": "hover {border-color: rgb(from var(--aq-swatch-alert, #ff0000) r g b / var(--aq-swatch-border-opacity, 100%))"
-        }
-      ],
-      "references": []
-    },
-    "--mute-hover": {
-      "declarations": [
-        {
-          "line": 362,
-          "value": "hover {background:rgb(from var(--aq-swatch-mute, #808080 ) r g b / var(--aq-swatch-canvas-opacity, 100%))"
-        },
-        {
-          "line": 374,
-          "value": "hover {color:rgb(from var(--aq-swatch-mute, #808080 ) r g b / var(--aq-swatch-text-opacity, 100%))"
-        },
-        {
-          "line": 386,
-          "value": "hover {border-color: rgb(from var(--aq-swatch-mute, #808080 ) r g b / var(--aq-swatch-border-opacity, 100%))"
-        }
-      ],
-      "references": []
-    },
-    "--white-hover": {
-      "declarations": [
-        {
-          "line": 363,
-          "value": "hover {background:rgb(from var(--aq-swatch-white, #ffffff ) r g b / var(--aq-swatch-canvas-opacity, 100%))"
-        },
-        {
-          "line": 375,
-          "value": "hover {color:rgb(from var(--aq-swatch-white, #ffffff ) r g b / var(--aq-swatch-text-opacity, 100%))"
-        },
-        {
-          "line": 387,
-          "value": "hover {border-color: rgb(from var(--aq-swatch-white, #ffffff ) r g b / var(--aq-swatch-border-opacity, 100%))"
-        }
-      ],
-      "references": []
-    },
-    "--black-hover": {
-      "declarations": [
-        {
-          "line": 364,
-          "value": "hover {background:rgb(from var(--aq-swatch-black, #000000 ) r g b / var(--aq-swatch-canvas-opacity, 100%))"
-        },
-        {
-          "line": 376,
-          "value": "hover {color:rgb(from var(--aq-swatch-black, #000000 ) r g b / var(--aq-swatch-text-opacity, 100%))"
-        },
-        {
-          "line": 388,
-          "value": "hover {border-color: rgb(from var(--aq-swatch-black, #000000 ) r g b / var(--aq-swatch-border-opacity, 100%))"
-        }
-      ],
-      "references": []
-    },
-    "--grayscale-hover": {
-      "declarations": [
-        {
-          "line": 414,
-          "value": "hover {filter: grayscale(100%)"
-        }
-      ],
-      "references": []
-    },
-    "--invert-hover": {
-      "declarations": [
-        {
-          "line": 417,
-          "value": "hover {filter: invert(75%)"
-        }
-      ],
-      "references": []
-    },
-    "--invert-max-hover": {
-      "declarations": [
-        {
-          "line": 418,
-          "value": "hover {filter: invert(100%)"
-        }
-      ],
-      "references": []
-    },
-    "--sepia-hover": {
-      "declarations": [
-        {
-          "line": 420,
-          "value": "hover {filter: sepia(100%)"
-        }
-      ],
-      "references": []
-    },
-    "--opacity-hover": {
-      "declarations": [
-        {
-          "line": 422,
-          "value": "hover {opacity: 0.50"
-        }
-      ],
-      "references": []
-    },
-    "--opacity-off-hover": {
-      "declarations": [
-        {
-          "line": 423,
-          "value": "hover {opacity: 1"
-        }
-      ],
-      "references": []
-    },
     "--aq-swatch-screen-overlay": {
       "declarations": [],
       "references": [
@@ -1639,23 +1381,6 @@
           "snippet": "color:var(--aq-swatch-text-screen-overlay,#fff);"
         }
       ]
-    },
-    "--dropdown-hover": {
-      "declarations": [
-        {
-          "line": 440,
-          "value": "hover .aq-fleek--dropdown-content {display: block"
-        },
-        {
-          "line": 441,
-          "value": "first-child, .aq-fleek--dropdown-click:hover {background-color: rgb(from var(--aq-swatch-dropdown, #000 ) r g b / var(--aq-swatch-dropdown-opacity, 100%))"
-        },
-        {
-          "line": 442,
-          "value": "hover>.button:first-child, .aq-fleek--dropdown-click:hover>.button:first-child {background-color: var(--aq-swatch-dropdown,#ccc)"
-        }
-      ],
-      "references": []
     },
     "--aq-swatch-dropdown": {
       "declarations": [],
@@ -1773,5 +1498,12 @@
         }
       ]
     }
+  },
+  "summary": {
+    "unique_names": 71,
+    "declared_names": 26,
+    "reference_only_names": 45,
+    "declaration_occurrences": 37,
+    "var_reference_occurrences": 239
   }
 }
