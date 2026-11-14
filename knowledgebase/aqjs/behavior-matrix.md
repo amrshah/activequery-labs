@@ -56,7 +56,7 @@ Evidence: source-confirmed behavior; runtime status pending.
 
 ## String and Number extensions
 
-Both targets receive a method named `trim(charlist=null)` (Number lines 817–869; String implementation around 886–917). The implementation converts the receiver to a string and performs custom trimming against a whitespace list. The method name overlaps native `String.prototype.trim` and adds a custom Number prototype method. Its exact descriptor and behavior should be compared against native trim with a dedicated test suite before use.
+Both targets receive a method named `trim(charlist=null)` (Number lines 817–869; String implementation around 886–917). The implementation converts the receiver to a string and performs custom trimming against a whitespace list. The String extension replaces the native method body through `Object.defineProperties`; because the existing native property is configurable and writable, omitted descriptor flags retain their existing values (writable/configurable true, enumerable false). The replacement excludes U+FEFF and includes U+200B, differing from native ECMAScript trimming.
 
 ## Event registration surfaces
 
