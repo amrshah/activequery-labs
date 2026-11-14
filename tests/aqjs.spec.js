@@ -860,7 +860,7 @@ test("ActiveQuery.exit and Element chain helpers return their receiver", async (
 });
 
 
-test("Element setValue writes only truthy values on value-capable elements", async ({ page }) => {
+test("Element setValue clears falsy values and creates a value property on other elements", async ({ page }) => {
   const result = await page.evaluate(() => {
     const input = document.createElement("input");
     const div = document.createElement("div");
@@ -878,6 +878,7 @@ test("Element setValue writes only truthy values on value-capable elements", asy
       afterFalse,
       setReturnsReceiver: setReturn === input,
       divHasValueProperty: "value" in div,
+      divValue: div.value,
       divReturnSame: divReturn === div
     };
   });
@@ -887,6 +888,7 @@ test("Element setValue writes only truthy values on value-capable elements", asy
     afterFalse: "",
     setReturnsReceiver: true,
     divHasValueProperty: true,
+    divValue: "",
     divReturnSame: true
   });
 });
