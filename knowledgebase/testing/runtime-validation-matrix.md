@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-15.
-Run #171 completed with 106 passed and 16 failed. After correcting the tests and recording an additional AQCSS media-query defect, run #204 completed successfully: **140 passed, 0 failed, 0 skipped** across Chromium and Firefox. This validates the current 70-test authored suite only; broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run #171 completed with 106 passed and 16 failed. After correcting the tests and recording an additional AQCSS media-query defect, run #224 completed successfully: **146 passed, 0 failed, 0 skipped** across Chromium and Firefox. This validates the current 73-test authored suite only; broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -13,7 +13,7 @@ Legend:
 
 | API / behavior | Source review | Test coverage | Current status |
 |---|---|---|---|
-| Constructor default argument | Inspected: null triggers alias and Object/Element/NodeList prototype writes | Default and empty-string constructor tests | Passed in run #204 |
+| Constructor default argument | Inspected: null triggers alias and Object/Element/NodeList prototype writes | Default and empty-string constructor tests | Passed in run #224 |
 | Import-time prototype extensions | Inspected: native prototypes augmented; String.trim replaced; native writable/configurable descriptor flags are retained | Native trim identity/descriptor test | Passed in run #204 |
 | `DOM(selector)` | Inspected: null / Element / NodeList polymorphic result | Zero, one, many matches | Passed in run #204 |
 | `nestedDOM(selector)` Element | Inspected | Single descendant and no-match context | Passed in run #204 |
@@ -34,11 +34,11 @@ Legend:
 
 | Method(s) | Source review | Test coverage | Current status |
 |---|---|---|---|
-| `isArray`, `isNaA`, `isArraySet`, `isNaAS`, `isObjectMap`, `isNaOM` | Inspected | Representative positive/negative checks | Partial; passed in run #204; truth table not exhaustive |
+| `isArray`, `isNaA`, `isArraySet`, `isNaAS`, `isObjectMap`, `isNaOM` | Inspected | Representative positive/negative checks | Partial; passed in run #224; truth table not exhaustive |
 | `isArrayLike`, `isNaAL` | Inspected: unqualified helper references | Explicit ReferenceError tests | Passed in run #204 |
 | `isString`, `isNaS` | Inspected: `isNaS` appears broken | Primitive/boxed string test | Passed in run #204 |
-| `isObject`, `isNaO`, `isObjectLiteral` | Inspected; null throws before guard | Plain-object checks and null error test | Partial; passed in run #204; cross-realm and other edge cases remain |
-| `isNaM`, `isSet`, `isNaOL`, `isObjectLike` | Inspected; naming/undefined helper issues | Map, array and objectLike checks | Partial; selected cases passed in run #204; `isNaOL` and full input matrix remain |
+| `isObject`, `isNaO`, `isObjectLiteral` | Inspected; null throws before guard | Plain-object checks and null error test | Partial; passed in run #224; cross-realm and other edge cases remain |
+| `isNaM`, `isSet`, `isNaOL`, `isObjectLike` | Inspected; naming/undefined helper issues | Map, array and objectLike checks | Partial; selected cases passed in run #224; `isNaOL` and full input matrix remain |
 | `isFunction`, `isNaF`, `isClass`, `isNaC` | Inspected heuristic string checks | Named function and class checks | Partial; selected cases passed in run #204; negative predicates remain |
 | `isNodeList`, `isNaNL` | Inspected: references undefined `x` | Both positive and negative methods tested for ReferenceError | Passed in run #204 |
 | `isArgument`, `isJSON` | Inspected: type/regex behavior, not JSON parsing | Empty/null argument and arbitrary string JSON tests | Passed in run #204 |
@@ -47,7 +47,7 @@ Legend:
 
 | Target | Methods | Source review | Test coverage | Current status |
 |---|---|---|---|---|
-| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified | i, getIndex, getCount, setSort, both setItem branches, has, getIndexs, then | Partial; selected contracts passed in run #204; default getCount branch and remaining edge cases pending |
+| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified | i, getIndex, getCount, setSort, both setItem branches, has, getIndexs, then | Partial; selected contracts passed in run #224; default getCount branch and remaining edge cases pending |
 | Object | `setValues`, `hasValues` | Missing static predicate call | Both error cases | Passed in run #204 |
 | Number | `trim` | Inspected | Primitive trim test | Passed in run #204 |
 | String | `trim` | Native override and Unicode mismatch identified | Descriptor and U+FEFF/U+200B comparisons | Passed in run #204 |
@@ -96,14 +96,14 @@ Legend:
 
 | Field | Verified value |
 |---|---|
-| Workflow | [ActiveQuery knowledgebase browser tests #204](https://github.com/amrshah/activequery-labs/actions/runs/43635697793) |
-| Commit | `433baee9d8a0815581fcee5a03dead55a898c125` |
+| Workflow | [ActiveQuery knowledgebase browser tests #224](https://github.com/amrshah/activequery-labs/actions/runs/43636585558) |
+| Commit | `adea4f278ac26adf0700a502804eeb697252bb8a` |
 | Runner | Ubuntu 24.04.5 LTS (`ubuntu-24.04`) |
 | Node / npm | Node 22.23.4 / npm 10.9.9 |
 | Playwright | `@playwright/test` 1.56.1 |
 | Browser binaries | Chromium 141.0.7390.37 (Playwright build v1194); Firefox 142.0.1 (build v1495) |
-| Execution | 140 passed, 0 failed, 0 skipped; 26.5 seconds; 2 workers |
+| Execution | 146 passed, 0 failed, 0 skipped; 26.4 seconds; 2 workers |
 | Source integrity | Pinned AQJS/AQCSS source and minified assets fetched and hash-verified before catalog generation and tests |
 | Artifact | Generated AQCSS/AQJS AST catalogs uploaded successfully by the workflow |
 
-The run validates the 70 authored tests in two browser projects. It does not prove complete framework mastery, exhaustive API coverage, accessibility, touch behavior, WebKit compatibility or the clean-room portal rebuild.
+The run validates the 73 authored tests in two browser projects. It does not prove complete framework mastery, exhaustive API coverage, accessibility, touch behavior, WebKit compatibility or the clean-room portal rebuild.
