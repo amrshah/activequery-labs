@@ -337,3 +337,25 @@ test("Object setValues and hasValues call a missing static predicate", async ({ 
   });
   expect(result).toEqual({ value: { existing: 1 }, setError: "TypeError", getError: "TypeError" });
 });
+
+test("nestedDOM handles arrays of Elements and preserves polymorphic returns", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const two = [document.querySelector("#scope-a"), document.querySelector("#scope-b")];
+    const many = window.AQ.nestedDOM.call(two, ".target");
+    const one = window.AQ.nestedDOM.call([document.querySelector("#scope-b")], "#target-c");
+    const noneInput = [document.createElement("div")];
+    const none = window.AQ.nestedDOM.call(noneInput, ".target");
+    return {
+      manyIsArray: Array.isArray(many),
+      manyIds: many.map(node => node.id),
+      oneId: one?.id,
+      noneIsOriginal: none === noneInput
+    };
+  });
+  expect(result).toEqual({
+    manyIsArray: true,
+    manyIds: ["target-a", "target-b", "target-c"],
+    oneId: "target-c",
+    noneIsOriginal: true
+  });
+});
