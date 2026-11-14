@@ -128,4 +128,13 @@ test("AQCSS tablet utility activates at 600px while mobile hide still includes 6
   expect(at599.hidden).toBe("none");
   expect(at600.text).toBeGreaterThan(at600.root);
   expect(at600.hidden).toBe("none");
+
+  await page.setViewportSize({ width: 601, height: 800 });
+  const at601 = await page.evaluate(() => {
+    const hidden = document.createElement("div");
+    hidden.className = "aq-facet-hide-on-mobile";
+    document.body.appendChild(hidden);
+    return getComputedStyle(hidden).display;
+  });
+  expect(at601).not.toBe("none");
 });
