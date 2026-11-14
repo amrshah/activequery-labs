@@ -19,7 +19,11 @@ The Ethical Source Policy describes seven principles: benefit the commons, open 
 
 The Code of Conduct defines expected respectful participation, unacceptable conduct, scope and enforcement.
 
-The DCO adapts Developer Certificate of Origin 1.1. It requires contributors to certify that they authored the contribution or have the rights to submit it under the indicated license. The policy says ActiveQuery repositories use a DCO process through a contribution policy; inspect each target repository's actual contribution instructions before submitting changes.
+The DCO adapts Developer Certificate of Origin 1.1. The Contribution Policy requires a `Signed-off-by` statement in each commit message; it says the compliance team reviews each contribution and may reject commits without it. This is relevant when contributing upstream; the community Labs repository's own contribution process should be kept distinct. The policy also states ActiveQuery uses CalVer `YY.MINOR.MICRO`, so v25.6.0 denotes the 2025 release-year series.
+
+The Ethical Source Policy lists seven principles: benefit the commons, open development, welcoming/fair governance, accessibility, safety, privacy and support for maintainers/community. It says commercial users are expected to contribute back and support the community in tangible ways; treat this as a stated ethical/community expectation, distinct from the legal license grant.
+
+OSL-3.0 section 4 also expressly excludes a license to the Licensor's names and trademarks, and restricts using those names or contributor names to endorse or promote derivative products without prior permission. Software code licensing and brand/trademark permission are separate.
 
 ## OSL-3.0 implications
 
