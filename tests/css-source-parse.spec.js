@@ -54,14 +54,25 @@ test("custom property index excludes BEM selector modifiers misread as variables
 
 
 test("committed AQCSS navigation indexes match the pinned PostCSS catalog", async () => {
+  const astCatalog = JSON.parse(fs.readFileSync("./knowledgebase/aqcss/generated-ast-catalog.json", "utf8"));
   const classIndex = JSON.parse(fs.readFileSync("./knowledgebase/aqcss/class-token-index.json", "utf8"));
   const ruleCatalog = JSON.parse(fs.readFileSync("./knowledgebase/aqcss/rule-catalog.json", "utf8"));
+  const customIndex = JSON.parse(fs.readFileSync("./knowledgebase/aqcss/custom-property-index.json", "utf8"));
+
   expect(classIndex.source.sha).toBe("c03546ecd1a41d26cbbfa8f1e31d38731f77cf62");
   expect(classIndex.rule_count).toBe(1417);
   expect(classIndex.unique_class_token_count).toBe(1813);
   expect(classIndex.classes).toHaveLength(1813);
+  expect(classIndex.classes.map(item => item.name).sort()).toEqual(astCatalog.classes.map(item => item.name).sort());
+
   expect(ruleCatalog.source.sha).toBe("c03546ecd1a41d26cbbfa8f1e31d38731f77cf62");
   expect(ruleCatalog.rule_count).toBe(1417);
   expect(ruleCatalog.unique_selector_text_count).toBe(1409);
   expect(ruleCatalog.rules).toHaveLength(1417);
+
+  expect(Object.keys(customIndex.properties).sort()).toEqual(Object.keys(astCatalog.custom_properties).sort());
+  for (const name of Object.keys(customIndex.properties)) {
+    expect(customIndex.properties[name].declarations).toHaveLength(astCatalog.custom_properties[name].declarations.length);
+    expect(customIndex.properties[name].references).toHaveLength(astCatalog.custom_properties[name].references.length);
+  }
 });
