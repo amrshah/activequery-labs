@@ -54,6 +54,10 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS third-party provenance](architecture/third-party-provenance.md)
 - [AQJS runtime model](architecture/aqjs-runtime-model.md)
 - [AQJS API inventory](aqjs/api-inventory.md)
+- [AQJS API signature and return contract reference](aqjs/api-signature-reference.md) — exact receiver, signatures/defaults, polymorphic return shapes, mutations and caveats across class and prototype APIs.
+- [AQJS Element/NodeList edge-case audit](aqjs/nodelist-edge-case-audit.md) — explicit collection-vs-element behavior, no-op stubs, broken sibling paths and safer alternatives.
+- [AQJS predicate truth and failure-path audit](aqjs/predicate-truth-table.md) — predicate truth expressions, identifier hazards, empty-value semantics and validation requirements.
+- [AQJS source/minified parity audit](aqjs/source-minified-parity-audit.md) — focused method-level comparison, artifact hashes and remaining semantic parity proof.
 - [AQJS API contract closure matrix](aqjs/api-contract-closure-matrix.md) — remaining method contracts, edge-case truth tables, unsafe API classifications and method-level source/minified parity plan.
 - [AQJS prototype behavior matrix](aqjs/behavior-matrix.md)
 - [AQJS type predicates and guards](aqjs/type-predicates-and-guards.md)
