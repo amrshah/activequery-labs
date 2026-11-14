@@ -567,13 +567,13 @@ test("AQX-008 fixed positioning remains fixed when combined with the top helper"
   expect(result).toEqual({ position: "fixed", top: "0px" });
 });
 
-test("AQX-009 sticky positioning remains pinned to a real scroll container", async ({ page }) => {
+test("AQX-009 sticky positioning works in a nested scrollport after accounting for the global body overflow", async ({ page }) => {
   const result = await page.evaluate(async () => {
     const frame = document.createElement("iframe");
     frame.style.cssText = "width:400px;height:300px;border:0";
     const loaded = new Promise(resolve => frame.addEventListener("load", resolve, { once: true }));
-    frame.srcdoc = `<!doctype html><html><head><link rel="stylesheet" href="/vendor/ActiveQuery.css"></head><body style="margin:0">
-      <div id="scroller" style="height:100px;width:250px;overflow-y:scroll;border:1px solid">
+    frame.srcdoc = `<!doctype html><html><head><link rel="stylesheet" href="/vendor/ActiveQuery.css"></head><body>
+      <div id="scroller" style="height:100px;width:250px;overflow-y:auto;border:1px solid">
         <div id="sticky" class="aq-affix--sticky aq-affix--top" style="height:20px"></div>
         <div style="height:300px"></div>
       </div>
@@ -581,29 +581,41 @@ test("AQX-009 sticky positioning remains pinned to a real scroll container", asy
     document.body.appendChild(frame);
     await loaded;
     const win = frame.contentWindow;
-    const scroller = win.document.querySelector("#scroller");
-    const sticky = win.document.querySelector("#sticky");
-    const style = win.getComputedStyle(sticky);
+    const doc = win.document;
+    const body = doc.body;
+    const scroller = doc.querySelector("#scroller");
+    const sticky = doc.querySelector("#sticky");
+    const bodyStyle = win.getComputedStyle(body);
+    const defaultOverflow = { x: bodyStyle.overflowX, y: bodyStyle.overflowY };
     const scrollerTop = scroller.getBoundingClientRect().top;
     scroller.scrollTop = 80;
     await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
-    const state = {
-      position: style.position,
-      top: style.top,
+    const defaultBodyStickyDelta = sticky.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
+    body.style.setProperty("overflow-x", "visible", "important");
+    body.style.setProperty("overflow-y", "visible", "important");
+    scroller.scrollTop = 0;
+    await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
+    scroller.scrollTop = 80;
+    await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
+    const result = {
+      position: win.getComputedStyle(sticky).position,
+      top: win.getComputedStyle(sticky).top,
+      defaultOverflow,
+      bodyOverflowAfterOverride: { x: win.getComputedStyle(body).overflowX, y: win.getComputedStyle(body).overflowY },
       scrollTop: scroller.scrollTop,
-      scrollHeight: scroller.scrollHeight,
-      clientHeight: scroller.clientHeight,
-      scrollerTop,
-      stickyTopAfterScroll: sticky.getBoundingClientRect().top
+      defaultBodyStickyDelta,
+      stickyDeltaAfterOverride: sticky.getBoundingClientRect().top - scroller.getBoundingClientRect().top
     };
     frame.remove();
-    return state;
+    return result;
   });
   expect(result.position).toBe("sticky");
   expect(result.top).toBe("0px");
+  expect(result.defaultOverflow).toEqual({ x: "hidden", y: "auto" });
+  expect(result.bodyOverflowAfterOverride).toEqual({ x: "visible", y: "visible" });
   expect(result.scrollTop).toBe(80);
-  expect(result.scrollHeight).toBeGreaterThan(result.clientHeight);
-  expect(Math.abs(result.stickyTopAfterScroll - result.scrollerTop)).toBeLessThan(1, JSON.stringify(result));
+  expect(Math.abs(result.defaultBodyStickyDelta)).toBeGreaterThan(1);
+  expect(Math.abs(result.stickyDeltaAfterOverride)).toBeLessThan(1, JSON.stringify(result));
 });
 
 test("AQX-010 flex column and center-top compose into the expected alignment", async ({ page }) => {
