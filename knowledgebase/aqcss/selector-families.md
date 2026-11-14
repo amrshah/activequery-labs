@@ -25,6 +25,10 @@ AQCSS contains legacy/base selectors, AQ-prefixed utility families, and responsi
 | Background images | `.aq-swatch-bg-img--*` | Background image sizing, positioning and repeat helpers |
 | Touch/device visibility | `.aq-facet-hide-on-touch`, `.aq-facet-hide-on-mobile`, `.aq-facet-hide-on-tablet`, `.aq-facet-hide-on-desktop`, `.aq-facet-hide-on-screen` | Device/input-context visibility; test exact conditions |
 
+## Responsive prefix interpretation
+
+The source places `aq-t-` rules inside the min-width 600px media block, `aq-d-` inside min-width 993px, and `aq-s-` inside min-width 1440px. `aq-m-` rules are commonly paired with base `aq-` selectors outside these media blocks; it is therefore the baseline/mobile companion family, not a medium breakpoint. These are viewport rules, not device detection.
+
 ## Responsive media rules observed
 
 The stylesheet contains these media query expressions:
