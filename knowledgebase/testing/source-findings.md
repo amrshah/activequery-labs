@@ -110,6 +110,9 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | JS-042 | `ActiveQuery.js:720-814` | Several NodeList methods are explicit no-op stubs, including `getStyles`, `setChild`, `setAdjacent`, `setHtml`, `getHtml`, `setContent`, `setText`, `getText` and `getValue`. | Calling the method may silently return the collection or undefined without performing the corresponding Element operation. | Assert each stub's return and lack of mutation; never assume Element/NodeList parity. |
 | JS-043 | `ActiveQuery.js:619-622` | Element `setText(a)` writes only when `a` is truthy. | Passing an empty string cannot clear existing text content. | Test empty string, zero, false and ordinary strings. |
 
+
+| JS-044 | `ActiveQuery.js:1126-1143` | MutationObserver callback iterates mutations with an unbound `forEach(function(mutation){...})` and writes `this.watched` in strict module code. | The inner callback's `this` is undefined, causing TypeError before `args.then()`; the method also returns `observer.observe()` (undefined) rather than the observer. | Browser-test mutation, callback invocation, returned value and disconnect/lifecycle behavior. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
