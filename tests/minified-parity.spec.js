@@ -253,3 +253,35 @@ test("AQJS source and minified builds preserve Array then and Document/Window ev
     invalidWindowReturnsReceiver: true
   });
 });
+
+
+test("AQJS source and minified builds preserve early lifecycle and initlog timing", async ({ page }) => {
+  const collect = async modulePath => {
+    await page.goto("/");
+    return page.evaluate(async path => {
+      const frame = document.createElement("iframe");
+      const loaded = new Promise(resolve => frame.addEventListener("load", resolve, { once: true }));
+      frame.srcdoc = `<!doctype html><html><head></head><body>
+        <script type="module">
+          import { ActiveQuery } from "${path}";
+          const instance = new ActiveQuery("");
+          window.lifecycle = { ready: 0, init: 0, run: 0, complete: 0 };
+          instance.on("ready", () => window.lifecycle.ready++);
+          instance.on("init", () => window.lifecycle.init++);
+          instance.on("run", () => window.lifecycle.run++);
+          instance.initlog.push(() => window.lifecycle.complete++);
+        <\/script>
+      </body></html>`;
+      document.body.appendChild(frame);
+      await loaded;
+      await new Promise(resolve => setTimeout(resolve, 30));
+      const result = frame.contentWindow.lifecycle;
+      frame.remove();
+      return result;
+    }, path);
+  };
+  const source = await collect("/vendor/ActiveQuery.js");
+  const minified = await collect("/vendor/ActiveQuery.min.js");
+  expect(minified).toEqual(source);
+  expect(source).toEqual({ ready: 1, init: 1, run: 1, complete: 1 });
+});
