@@ -1,7 +1,11 @@
 # AQJS API Inventory — Source Examination
 
 Source: [ActiveQuery.js](https://github.com/ActiveQuery/JS/blob/main/ActiveQuery.js), SHA `b8ec9e5be8668d048eea3385cd9012dfddb69cf0`, 1,152 lines.
-Status: initial method inventory. Not a completed behavioral API reference.
+Status: structural method inventory completed and AST-count validated; behavioral contracts and edge-case coverage remain partial.
+
+## AST inventory baseline
+
+The pinned AQJS source is parsed with Acorn in CI. The generated AST catalog records **35 class methods**, **76 prototype-extension methods across 9 targets**, **11 event-listener call sites**, **1 dynamic import**, and **4 global/prototype write sites**. The minified build matches the source on export names, class method names/kinds/static flags, extension targets and extension method names/descriptor kinds. These are structural parity checks, not proof that every method body is semantically identical; selected behavior is additionally compared in Playwright.
 
 ## Named export and class methods
 
