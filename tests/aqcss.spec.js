@@ -179,3 +179,38 @@ test("AQCSS hover color alpha fallback is invalid until explicit percentages are
   expect(plainAfter).toBe(result.plainBefore);
   expect(configuredAfter).not.toBe(result.configuredBefore);
 });
+
+test("baseline mobile margin/padding left aliases are missing and right aliases affect both sides", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const marginLeft = document.createElement("div");
+    marginLeft.className = "aq-m--margin-left";
+    const marginRight = document.createElement("div");
+    marginRight.className = "aq-m--margin-right";
+    const paddingLeft = document.createElement("div");
+    paddingLeft.className = "aq-m--padding-left";
+    const paddingRight = document.createElement("div");
+    paddingRight.className = "aq-m--padding-right";
+    document.body.append(marginLeft, marginRight, paddingLeft, paddingRight);
+    const style = node => {
+      const value = getComputedStyle(node);
+      return {
+        marginLeft: parseFloat(value.marginLeft),
+        marginRight: parseFloat(value.marginRight),
+        paddingLeft: parseFloat(value.paddingLeft),
+        paddingRight: parseFloat(value.paddingRight)
+      };
+    };
+    return {
+      marginLeft: style(marginLeft),
+      marginRight: style(marginRight),
+      paddingLeft: style(paddingLeft),
+      paddingRight: style(paddingRight)
+    };
+  });
+  expect(result.marginLeft.marginLeft).toBe(0);
+  expect(result.marginRight.marginLeft).toBeGreaterThan(0);
+  expect(result.marginRight.marginRight).toBeGreaterThan(0);
+  expect(result.paddingLeft.paddingLeft).toBe(0);
+  expect(result.paddingRight.paddingLeft).toBeGreaterThan(0);
+  expect(result.paddingRight.paddingRight).toBeGreaterThan(0);
+});
