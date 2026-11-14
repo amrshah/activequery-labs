@@ -86,7 +86,7 @@ The default branch accepts a constructor/function and descriptor object, then de
 - `online` → `online`
 - `close` → `beforeunload`
 
-Unrecognized names are ignored; the method returns the instance. This method is distinct from the prototype-added `on(eventName, callback)` methods for Element, Document, Window and NodeList.
+Unrecognized names are ignored; the method returns the instance. The helper only registers native listeners; it does not check whether DOMContentLoaded or load has already fired, so late registration does not replay `ready` or `init`. This method is distinct from the prototype-added `on(eventName, callback)` methods for Element, Document, Window and NodeList.
 
 ## Architecture cautions
 
