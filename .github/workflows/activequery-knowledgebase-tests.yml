@@ -38,12 +38,18 @@ jobs:
         shell: bash
         run: |
           git clone https://github.com/ActiveQuery/CSS.git /tmp/aqcss
-          git -C /tmp/aqcss checkout c03546ecd1a41d26cbbfa8f1e31d38731f77cf62
+          git -C /tmp/aqcss checkout 6f479f6a3f315d2623af79dd49c84cb379b52473
           git clone https://github.com/ActiveQuery/JS.git /tmp/aqjs
-          git -C /tmp/aqjs checkout b8ec9e5be8668d048eea3385cd9012dfddb69cf0
+          git -C /tmp/aqjs checkout adb1b19770ca68840dc2f9e62de556a324bee2fa
           mkdir -p vendor
           cp /tmp/aqcss/ActiveQuery.css vendor/ActiveQuery.css
+          cp /tmp/aqcss/ActiveQuery.min.css vendor/ActiveQuery.min.css
           cp /tmp/aqjs/ActiveQuery.js vendor/ActiveQuery.js
+          cp /tmp/aqjs/ActiveQuery.min.js vendor/ActiveQuery.min.js
+          test "$(git -C /tmp/aqcss show HEAD:ActiveQuery.css | git hash-object --stdin)" = "c03546ecd1a41d26cbbfa8f1e31d38731f77cf62"
+          test "$(git -C /tmp/aqcss show HEAD:ActiveQuery.min.css | git hash-object --stdin)" = "bdda032d530661c32d9a9351a4ae95219347f081"
+          test "$(git -C /tmp/aqjs show HEAD:ActiveQuery.js | git hash-object --stdin)" = "b8ec9e5be8668d048eea3385cd9012dfddb69cf0"
+          test "$(git -C /tmp/aqjs show HEAD:ActiveQuery.min.js | git hash-object --stdin)" = "594d778cd5fefe2caa039a7904343e385b77a50c"
       - name: Generate AQCSS AST catalog
         run: npm run catalog:aqcss -- vendor/ActiveQuery.css knowledgebase/aqcss/generated-ast-catalog.json
       - name: Install Playwright browsers
