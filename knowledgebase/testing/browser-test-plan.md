@@ -42,6 +42,7 @@ Status: first full browser execution completed with failures; assertion correcti
 | Text alignment utility | Computed text alignment is center | `tests/aqcss.spec.js` |
 | Circle border utility | Computed radius is non-zero | `tests/aqcss.spec.js` |
 | Tablet-prefixed typography | `aq-t-` rule activates at 600px | `tests/aqcss.spec.js` |
+| Mobile hide helper | Pinned media query is malformed and ignored; helper remains visible at 599/600/601px in Chromium/Firefox | `tests/aqcss.spec.js` |
 | Third-width anomaly | Computed width remains a small fraction, capturing source value without normalizing | `tests/aqcss.spec.js` |
 | Xlarge row-gap anomaly | Invalid `2` unitless declaration does not compute as 2px | `tests/aqcss.spec.js` |
 
