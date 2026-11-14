@@ -30,7 +30,7 @@ Evidence: source-confirmed behavior; selected contracts are browser-tested in Ch
 | `getText` | Returns textContent or substring boolean | No-op | Collection stub |
 | `setValue` | Sets truthy value; clears on falsy input | Sets/clears value across controls | Similar but falsy values collapse to empty |
 | `getValue` | Returns substring boolean for truthy needle; returns element when omitted | Returns collection itself | Not a conventional getter |
-| `then` | Calls callback with Element | Calls callback with NodeList | Callback helper |
+| `then` | Calls callback with Element | Calls callback with NodeList | Callback helper; Array also receives a `then` method, making Arrays thenables and creating Promise-assimilation hazards |
 | `fax` | Incomplete form-specific behavior | No-op | Do not rely on it |
 | `on` | Adds listener to Element | Loops and adds listener to each node | Similar intent |
 
@@ -39,7 +39,7 @@ Evidence: source-confirmed behavior; selected contracts are browser-tested in Ch
 | Method | Source lines | Contract and cautions |
 |---|---:|---|
 | `i(a='')` | 320–323 | Intended index helper; references `ActiveQuery.isNaN`, which was not found as a static member. |
-| `then(callback)` | 324–325 | Invokes callback with array if callable. |
+| `then(callback)` | 324–325 | Invokes callback with array if callable. This makes Arrays thenables; wrap/copy them before returning across Promise-based boundaries to avoid resolver assimilation. |
 | `getIndex(key,op,value)` | 326–337 | `==` searches by loose equality; `=` branch assigns value inside predicate instead of comparing. |
 | `getCount(key,op,value)` | 338–372 | Counts by loose equality, strict equality, substring operator `*`, or a default branch whose semantics need validation. |
 | `setSort(...args)` | 373–407 | In-place sort by nested key paths; comparator assigns undeclared `aVal` and `bVal`. |
