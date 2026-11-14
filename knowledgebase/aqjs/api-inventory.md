@@ -25,7 +25,7 @@ The pinned AQJS source is parsed with Acorn in CI. The generated AST catalog rec
 | Method | Source-observed role | Notes requiring care |
 |---|---|---|
 | `constructor(a=null)` | Initializes helper references, event listener and optional alias | See runtime model; global/prototype mutations |
-| `defer(a)` | Copies iterable, pops last value, multiplies by 1000, passes remaining array to `setTimeout` | `setTimeout` expects a callback function or string; the array argument is invalid/suspicious. See JS-016 |
+| `defer(a)` | Copies iterable, pops last value, multiplies by 1000, passes remaining array to `setTimeout` | In Chromium/Firefox the array is coerced to a string and no synchronous error is thrown; whether the timer executes useful callback logic remains unresolved. See JS-016 |
 | `getPlugin(name)` | Dynamically imports the string module specifier with `import(name)` | Do not pass untrusted user-controlled module specifiers; restrict allowed modules at the application boundary |
 | `isArray(a)` / `isNaA(a)` | Positive/negative array checks | `isNaA` is negation |
 | `isArraySet(a)` / `isNaAS(a)` | Set checks | Negative counterpart |
@@ -63,7 +63,7 @@ The source invokes `ActiveQuery.extend` for these targets:
 ### Array methods
 
 - `i(a='')`: returns `this[a]` unless its guard returns the array itself.
-- `then(callback)`: invokes callback with the array when callback is a function.
+- `then(callback)`: invokes callback with the array when callback is a function. This makes Arrays thenable to Promise-resolution machinery; returning an Array from an async boundary can trigger assimilation and hang if the resolver receives the same Array. Wrap or copy Arrays before returning them across promise-based boundaries.
 - `getIndex(key, operator, value)`: supports `==` and `=`; the latter assigns in the predicate rather than compares. This is a source-observed behavior and should be treated as a likely bug, not silently rewritten in documentation.
 - `getCount(key, op, val)`: supports `==`, `===`, `*`, and a default branch. The default branch splits `val` using `op[1]`; semantics are unclear and need tests.
 - `setSort(...args)`: parses path strings/arrays and sorts the array in place using a comparator. Comparator references `aVal` and `bVal` without declarations, creating potential global leakage in non-strict execution or a ReferenceError in strict/module contexts.
