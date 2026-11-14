@@ -17,7 +17,7 @@ Purpose: prove that an AI agent can implement and reason about ActiveQuery using
 ### AQCSS
 
 1. **What are the AQCSS responsive prefixes and activation widths?**
-   - Expected: base/mobile companion `aq-`/`aq-m-`; `aq-t-` at min-width 600px; `aq-d-` at 993px; `aq-s-` at 1440px. Explain cumulative min-width behavior. Do not claim the mobile-hide helper works: its media query is malformed and Chromium/Firefox leave it visible at 599, 600 and 601px.
+   - Expected: base/mobile companion `aq-`/`aq-m-`; `aq-t-` at min-width 600px; `aq-d-` at 993px; `aq-s-` at 1440px. Explain cumulative min-width behavior. Do not claim the mobile, tablet or desktop hide helpers work: all three range media queries are malformed and Chromium/Firefox leave them visible at 599/600/601, 601/992 and 993/1439px. The simple screen-hide query works at 1440px.
    - Reference: `aqcss/tokens-and-responsive.md`, `aqcss/selector-families.md`.
 
 2. **What is wrong with `.aq-facet--third`?**
