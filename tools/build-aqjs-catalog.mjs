@@ -130,8 +130,18 @@ const sourceCatalog = analyze(sourceText, "source");
 const minCatalog = analyze(minText, "minified");
 
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+const summary = {
+  class_method_count: sourceCatalog.class_methods.length,
+  extension_target_count: sourceCatalog.extension_targets.length,
+  extension_method_count: sourceCatalog.extension_methods.length,
+  event_listener_call_count: sourceCatalog.event_listener_calls.length,
+  dynamic_import_count: sourceCatalog.dynamic_imports.length,
+  global_prototype_write_count: sourceCatalog.global_prototype_writes.length
+};
+
 const catalog = {
   schema_version: 1,
+  summary,
   generated_by: "tools/build-aqjs-catalog.mjs",
   parser: "Acorn AST",
   source: {
