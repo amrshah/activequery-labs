@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-15.
-Run #171 completed with 106 passed and 16 failed. After correcting the tests and recording additional AQCSS media-query defects, run #313 completed successfully: **158 passed, 0 failed, 0 skipped** across Chromium and Firefox. The 79 authored tests are now runtime-verified in both configured browser projects. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run #171 completed with 106 passed and 16 failed. After run #313, additional test coverage was added. The latest completed browser run #324 passed: **174 passed, 0 failed, 0 skipped** across Chromium and Firefox (87 authored tests in two browser projects). Run #313 remains the historical 79-test baseline. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -9,9 +9,9 @@ Legend:
 - **Pending run** — test has not been observed passing in a real browser.
 - **Pending authoring** — additional test coverage is still required.
 
-## Latest authored tests — pending execution
+## Latest AQJS contract coverage — verified in run #324
 
-The six additional AQJS tests were authored in commit `96cbe9e54b9ade9826a00e43187b4323b0d6e7cd`. Their first run #321 exposed three incorrect test expectations, not framework regressions: `isNaF` matches arrow-function source and strings containing `function`; `Element.setValue` creates/clears a `value` property even on a generic Element; and `NodeList.on` returns the same empty collection when arguments are valid. These expectations were corrected in commits `1fe3bdbf28e7f8c56e2dcce52d8df1adbfffcbc2`, `22d6e5b125720fb4e15c489e28840733d3f7becd` and `c5f52071c476289a18f675e678fd0a6eaea9cc39`. Workflow [#324](https://github.com/amrshah/activequery-labs/actions/runs/43644712359) is the current validation target. Do not count the new coverage as passed until that run succeeds. The previous established passing baseline remains run #313 (79 tests / 158 browser cases).
+Six additional tests were added for Element `setValue`, `setChild`, `then`/`fax`; NodeList no-op stubs and `on`; and Array `getCount` default-operator edge cases. The first execution exposed incorrect expectations in the tests, not framework regressions. Source review and subsequent passing browser assertions established: `isNaF` matches arrow-function source and strings containing `function`; `Element.setValue` writes an empty `value` property even on a generic Element when the supplied value is falsy or the Element lacks a native value property; and `NodeList.on` returns the same empty collection when called with valid arguments. Workflow [#324](https://github.com/amrshah/activequery-labs/actions/runs/43644712359) passed all 174 browser cases. A further source/minified fixture is authored in commit `5769645f9aa327c627ce58f8dda9a5b40934b8db` and awaits workflow #325.
 
 ## AQJS core and lifecycle
 
@@ -40,10 +40,10 @@ The six additional AQJS tests were authored in commit `96cbe9e54b9ade9826a00e431
 |---|---|---|---|
 | `isArray`, `isNaA`, `isArraySet`, `isNaAS`, `isObjectMap`, `isNaOM` | Inspected | Representative positive/negative checks | Partial; passed in run #313; truth table not exhaustive |
 | `isArrayLike`, `isNaAL` | Inspected: unqualified helper references | Explicit ReferenceError tests | Passed in run #313 |
-| `isString`, `isNaS` | Inspected: `isNaS` expression is always true for primitive strings, boxed strings and non-strings | Primitive/boxed string test | Passed in run #313; exhaustive truth table remains pending |
+| `isString`, `isNaS` | Inspected: `isNaS` expression is always true for primitive strings, boxed strings and non-strings | Primitive/boxed string test | Passed in run #324; exhaustive truth table remains pending |
 | `isObject`, `isNaO`, `isObjectLiteral` | Inspected; null throws before guard | Plain-object checks and null error test | Partial; passed in run #313; cross-realm and other edge cases remain |
 | `isNaM`, `isSet`, `isNaOL`, `isObjectLike` | Inspected; naming/undefined helper issues | Map, array and objectLike checks | Partial; selected cases passed in run #313; `isNaOL` and full input matrix remain |
-| `isFunction`, `isNaF`, `isClass`, `isNaC` | Inspected heuristic string checks | Named function and class checks | Partial; selected cases passed in run #313; negative predicates remain |
+| `isFunction`, `isNaF`, `isClass`, `isNaC` | Inspected heuristic string checks; `isNaF` false-positive for strings containing `function` and arrow functions | Named function, class, arrow and string cases | Selected cases passed in run #324; exhaustive input matrix remains pending |
 | `isNodeList`, `isNaNL` | Inspected: references undefined `x` | Both positive and negative methods tested for ReferenceError | Passed in run #313 |
 | `isArgument`, `isJSON` | Inspected: type/regex behavior, not JSON parsing | Empty/null argument and arbitrary string JSON tests | Passed in run #313 |
 
@@ -51,7 +51,7 @@ The six additional AQJS tests were authored in commit `96cbe9e54b9ade9826a00e431
 
 | Target | Methods | Source review | Test coverage | Current status |
 |---|---|---|---|---|
-| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified; `then` makes Arrays thenable and can interfere with Promise-based consumers | i, getIndex, getCount, setSort, both setItem branches, has, getIndexs, then | Partial; selected contracts passed in run #313; default getCount branch, thenable interoperability and remaining edge cases pending |
+| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified; `then` makes Arrays thenable and can interfere with Promise-based consumers | i, getIndex, getCount default/operator branches, setSort, both setItem branches, has, getIndexs, then | Partial; delimiter, no-delimiter and missing-property default `getCount` cases passed in run #324; thenable interoperability and broader edge cases pending |
 | Object | `setValues`, `hasValues` | Missing static predicate call | Both error cases | Passed in run #313 |
 | Number | `trim` | Inspected | Primitive trim test | Passed in run #313 |
 | String | `trim` | Native override and Unicode mismatch identified | Descriptor and U+FEFF/U+200B comparisons | Passed in run #313 |
@@ -64,15 +64,15 @@ The six additional AQJS tests were authored in commit `96cbe9e54b9ade9826a00e431
 | Element | `parent`, `name` | Inspected | Parent relationship and nodeName | Passed in run #313 |
 | Element | Attributes/styles | Inspected; falsy-value and simple parser limits | Pair early-stop, attribute names/removal, inline style parsing/readback | Partial; selected contracts passed in run #313 |
 | Element | Classes | Inspected | Basic set/get/remove plus NodeList bulk class mutators | Partial; selected contracts passed in run #313 |
-| Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default tests | Partial; sibling paths passed in run #313; `i` and `setChild` remain untested |
+| Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default and setChild single/array/empty cases | Partial; setChild cases passed in run #324; `i` remains untested |
 | Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | Guarded setAdjacent/setHtml, getHtml modes, array setContent | Partial; selected contracts passed in run #313 |
-| Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior | setText, getText and getValue modes | Partial; selected contracts passed in run #313; Element setValue remains untested |
-| Element | `then`, `fax`, `on` | Inspected | on tested; then/fax pending | Partial; `on` passed in run #313; then/fax remain untested |
+| Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior; setValue assigns empty string on falsy input and on generic Elements | setText, getText, getValue modes, setValue truthy/falsy/generic Element | Selected contracts passed in run #324; broader control-type matrix remains pending |
+| Element | `then`, `fax`, `on` | Inspected | callback result, absent callback, FORM/non-FORM fax, event listener | Selected contracts passed in run #324; form semantics remain unsupported/incomplete |
 | Element | `sancha` | Inspected; HTML injection and undeclared identifiers | Static success and data-mode ReferenceError | Passed in run #313 |
 | Element | `sift` | Inspected: truthy selector early return | Explicit no-handler test | Passed in run #313 |
 | Element | `watch` | Inspected; callback `this` failure and missing observer return | Mutation test captures TypeError and missing user callback | Passed in run #313 |
-| NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | Bulk attributes/styles/classes, setValue, getStyles/getClasses and content no-op cases | Partial; selected contracts passed in run #313 |
-| NodeList | no-op stubs | Inspected: getStyles/getClasses/getHtml/setText/etc. | Representative stubs and content no-op behavior | Partial; selected stubs passed in run #313; not exhaustive |
+| NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | Bulk attributes/styles/classes, setValue, stubs and valid/invalid/empty-list `on` | Selected contracts passed in run #324; broader collection edge cases remain pending |
+| NodeList | no-op stubs | Inspected: getStyles/getClasses/getHtml/setText/etc. | All identified no-op stubs invoked with representative arguments; no mutation and return shape asserted | Identified stub set passed in run #324; broader argument combinations remain pending |
 | Document/Window | `on` | Inspected | Native custom event listeners | Passed in run #313 |
 
 ## AQCSS validation
@@ -100,7 +100,15 @@ The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specif
 4. Keep the mastery gate open until coverage and independent-agent evaluation are complete.
 
 
-## Confirmed execution record
+## Latest confirmed execution record — run #324
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #324](https://github.com/amrshah/activequery-labs/actions/runs/43644712359) |
+| Commit | `c5f52071c476289a18f675e678fd0a6eaea9cc39` |
+| Execution | 174 passed, 0 failed, 0 skipped; 87 authored tests across Chromium and Firefox |
+
+## Historical execution record — run #313
 
 | Field | Verified value |
 |---|---|
@@ -114,4 +122,4 @@ The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specif
 | Source integrity | Pinned AQJS/AQCSS source and minified assets fetched and hash-verified before catalog generation and tests |
 | Artifact | Generated AQCSS/AQJS AST catalogs uploaded successfully by the workflow |
 
-The run validates the 79 authored tests in two browser projects. It does not prove complete framework mastery, exhaustive API coverage, accessibility, touch behavior, WebKit compatibility or the clean-room portal rebuild.
+The run validates the 87 authored tests in two browser projects. It does not prove complete framework mastery, exhaustive API coverage, accessibility, touch behavior, WebKit compatibility or the clean-room portal rebuild.
