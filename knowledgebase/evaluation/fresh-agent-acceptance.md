@@ -1,6 +1,6 @@
 # Fresh-Agent Knowledgebase Acceptance Evaluation
 
-Status: evaluation suite drafted and updated to current browser evidence; not yet executed by an independent/fresh agent. The browser suite currently validates 73 authored tests in Chromium and Firefox, but that does not substitute for this independent knowledgebase-only evaluation.
+Status: evaluation suite drafted and updated to current browser evidence; not yet executed by an independent/fresh agent. The browser suite currently validates 74 authored tests in Chromium and Firefox, but that does not substitute for this independent knowledgebase-only evaluation.
 
 Purpose: prove that an AI agent can implement and reason about ActiveQuery using the knowledgebase without repeatedly reopening upstream source.
 
