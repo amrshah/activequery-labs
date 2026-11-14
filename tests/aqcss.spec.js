@@ -401,3 +401,23 @@ test("AQCSS short-landscape overlay activates at 550px height and clears above t
   expect(at550.overflow).toBe("hidden");
   expect(at551).toBe("none");
 });
+
+
+test("AQCSS input animation retains its transition under prefers-reduced-motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const result = await page.evaluate(() => {
+    const input = document.createElement("input");
+    input.className = "input-animate";
+    input.style.width = "120px";
+    document.body.appendChild(input);
+    input.focus();
+    return {
+      reducedMotionMatches: matchMedia("(prefers-reduced-motion: reduce)").matches,
+      transitionDuration: getComputedStyle(input).transitionDuration,
+      transitionTiming: getComputedStyle(input).transitionTimingFunction
+    };
+  });
+  expect(result.reducedMotionMatches).toBe(true);
+  expect(result.transitionDuration).toBe("0.4s");
+  expect(result.transitionTiming).toBe("ease-in-out");
+});
