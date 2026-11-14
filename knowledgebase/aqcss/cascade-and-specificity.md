@@ -88,6 +88,12 @@ The theme/effects reference now maps border, swatch, background-image and fleek 
 
 See [the border, swatch and effects cascade map](theme-effects.md) and [visibility/interaction map](visibility-interaction-cascade-map.md). These are source-derived cascade rules; do not claim full accessibility or cross-browser theme validation.
 
+## Cross-family conflict audit
+
+The family-level maps are now connected in [the AQCSS cross-family cascade and selector-conflict audit](cross-family-cascade-audit.md). It records concrete interactions across border/no-border, swatch borders, facet dimensions and min/max constraints, spacing shorthand/longhand pairs, affix modes and offsets, flex direction/alignment, responsive utility overlap, global element rules, visibility and fleek effects.
+
+Use the audit when composing multiple AQ classes on one element. It distinguishes actual cascade conflicts from selector/media-query match failures and CSS used-size constraints. Its conflict-test matrix is proposed coverage, not a claim that all combinations have been runtime-tested.
+
 ## Specificity policy for Labs components
 
 1. Use AQCSS classes only where their complete rule and media context are understood.
