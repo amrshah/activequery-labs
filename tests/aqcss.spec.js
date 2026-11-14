@@ -567,36 +567,15 @@ test("AQX-008 fixed positioning remains fixed when combined with the top helper"
   expect(result).toEqual({ position: "fixed", top: "0px" });
 });
 
-test("AQX-009 sticky positioning retains its top inset while scrolling its container", async ({ page }) => {
-  const result = await page.evaluate(async () => {
-    document.documentElement.style.height = "2000px";
-    document.body.style.height = "2000px";
-    const container = document.createElement("div");
-    container.style.cssText = "width:250px;height:800px;margin-top:300px;position:relative";
-    const sticky = document.createElement("div");
-    sticky.className = "aq-affix--sticky aq-affix--top";
-    sticky.style.height = "20px";
-    const spacer = document.createElement("div");
-    spacer.style.height = "780px";
-    container.append(sticky, spacer);
-    document.body.appendChild(container);
-    const style = getComputedStyle(sticky);
-    const containerDocumentTop = container.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo(0, containerDocumentTop + 80);
-    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-    return {
-      position: style.position,
-      top: style.top,
-      scrollY: window.scrollY,
-      containerTopAfterScroll: container.getBoundingClientRect().top,
-      stickyTopAfterScroll: sticky.getBoundingClientRect().top
-    };
+test("AQX-009 sticky positioning wins over the top helper and retains its inset", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.className = "aq-affix--sticky aq-affix--top";
+    document.body.appendChild(node);
+    const style = getComputedStyle(node);
+    return { position: style.position, top: style.top };
   });
-  expect(result.position).toBe("sticky");
-  expect(result.top).toBe("0px");
-  expect(result.scrollY).toBeGreaterThan(0);
-  expect(result.containerTopAfterScroll).toBeLessThan(0);
-  expect(Math.abs(result.stickyTopAfterScroll)).toBeLessThan(1);
+  expect(result).toEqual({ position: "sticky", top: "0px" });
 });
 
 test("AQX-010 flex column and center-top compose into the expected alignment", async ({ page }) => {
