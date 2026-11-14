@@ -153,3 +153,62 @@ test("AQJS source and minified builds match selected edge-case contracts", async
     arrayLikeError: "ReferenceError"
   });
 });
+
+
+test("AQJS source and minified builds preserve Element value/child and NodeList event contracts", async ({ page }) => {
+  const collect = async path => {
+    await page.goto(path);
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const input = document.createElement("input");
+      input.setValue("ready");
+      const afterTruthy = input.value;
+      input.setValue(0);
+      const afterFalsy = input.value;
+
+      const generic = document.createElement("div");
+      generic.setValue("ignored");
+      const child = document.createElement("em");
+      const childRoot = document.createElement("div");
+      const childReturn = childRoot.setChild([child]);
+
+      const callbackValue = childRoot.then(node => node.children[0].tagName);
+      const nodes = document.querySelectorAll(".target");
+      let eventCalls = 0;
+      nodes.on("aq-parity-event", () => eventCalls++);
+      nodes.forEach(node => node.dispatchEvent(new Event("aq-parity-event")));
+      const empty = document.querySelectorAll(".no-such-target");
+      const emptyOnSame = empty.on("aq-parity-event", () => {}) === empty;
+
+      const values = [{ key: "beta:more" }, { key: "beta" }, { key: "alpha" }];
+      return {
+        afterTruthy,
+        afterFalsy,
+        genericHasValue: "value" in generic,
+        genericValue: generic.value,
+        childTag: childRoot.firstElementChild?.tagName,
+        childReturnSame: childReturn === childRoot,
+        callbackValue,
+        eventCalls,
+        emptyOnSame,
+        defaultCount: values.getCount("key", "x:", "beta:more")
+      };
+    });
+  };
+
+  const sourceResult = await collect("/");
+  const minifiedResult = await collect("/tests/fixture-min.html");
+  expect(minifiedResult).toEqual(sourceResult);
+  expect(sourceResult).toEqual({
+    afterTruthy: "ready",
+    afterFalsy: "",
+    genericHasValue: true,
+    genericValue: "",
+    childTag: "EM",
+    childReturnSame: true,
+    callbackValue: "EM",
+    eventCalls: 3,
+    emptyOnSame: true,
+    defaultCount: 2
+  });
+});
