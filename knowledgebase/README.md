@@ -1,0 +1,65 @@
+# ActiveQuery AI Knowledgebase
+
+This directory is the canonical, agent-oriented technical reference for ActiveQuery CSS (AQCSS) and ActiveQuery JS (AQJS).
+
+Its purpose is to let a new AI agent answer implementation questions by consulting this knowledgebase rather than repeatedly rereading the upstream source files. It must be sufficiently precise, navigable, source-traceable, and validated to function as a durable engineering reference.
+
+## Core operating rule
+
+**Lookup the knowledgebase first.** Read the smallest relevant reference page and follow its source anchors when necessary. Do not reread entire upstream files for routine tasks.
+
+Reopen upstream source only when:
+- the recorded source version or SHA differs from the version being used;
+- the knowledgebase marks the requested behavior as unresolved or unverified;
+- a specific discrepancy is found;
+- a new upstream release may have changed the relevant behavior.
+
+When source reinspection is necessary, update the knowledgebase so future agents benefit from the finding.
+
+## Evidence levels
+
+Every meaningful technical claim must be labelled as one of:
+
+- **Source-confirmed** — directly traced to the upstream implementation, with a file and line/range or symbol anchor.
+- **Runtime-verified** — reproduced in a browser or supported runtime, with test conditions and expected/actual result.
+- **Derived** — a reasoned conclusion from source-confirmed facts; explain the reasoning.
+- **Unverified** — documentation or inference not yet validated. Do not use as an implementation guarantee.
+
+Do not conflate upstream framework capabilities with browser-native APIs, third-party bundled code, or ActiveQuery Labs additions.
+
+## Knowledgebase map
+
+- `source-baseline.md` — pinned source identity, versions, hashes, licenses and research status.
+- `architecture/` — framework philosophy, architecture, initialization and execution model.
+- `aqcss/` — complete selector catalogue, tokens, layout, typography, responsive rules, states and interaction behavior.
+- `aqjs/` — exports, constructor, static and instance APIs, prototype extensions, lifecycle, DOM operations, templating, observation and edge cases.
+- `integration/` — AQCSS/AQJS interaction, browser-native integration and usage patterns.
+- `cookbook/` — tested recipes and implementation patterns.
+- `testing/` — reproducible test cases, compatibility, edge cases and known limitations.
+- `agent-reference/` — fast capability index, task-to-reference routing and concise agent instructions.
+- `source-traceability/` — symbol/selector-to-source map and verification records.
+
+## Authoring requirements
+
+1. Preserve exact selector/API spelling and case.
+2. Record complete signatures, accepted inputs, return values, side effects, prerequisites and failure behavior.
+3. Document single-element and collection behavior separately where they differ.
+4. Capture CSS cascade, specificity, media-query overrides and interaction states, not merely selector names.
+5. Include minimal runnable examples and counterexamples.
+6. Link every claim to the exact upstream file and line range or uniquely named implementation block.
+7. Record test setup, browser/version, viewport, steps and observed result for runtime claims.
+8. Record known bugs and surprising behavior honestly; do not silently "correct" upstream behavior in the documentation.
+9. Keep the reference versioned. A release update triggers a targeted diff and revalidation process.
+10. Never claim mastery or completeness while material APIs, selectors, execution paths or tests remain unexamined.
+
+## Research sequence
+
+1. Pin and inspect upstream sources, license files, governance and third-party notices.
+2. Map the full AQCSS stylesheet and AQJS implementation.
+3. Trace every public selector family and API to its implementation.
+4. Test important behavior and edge cases in a real browser.
+5. Write the detailed reference pages and machine-readable indexes.
+6. Validate the knowledgebase against practical implementation tasks performed without reopening source.
+7. Only after that gate passes, declare source-level mastery and begin rebuilding the Labs portal from a clean purpose-driven design.
+
+This knowledgebase is intended to reduce repeated source reading, not to hide uncertainty. Where it does not yet contain a reliable answer, it must say so explicitly.
