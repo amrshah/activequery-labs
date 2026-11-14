@@ -9,7 +9,7 @@ Every public method should have its exact receiver and signature/defaults, accep
 
 ## Newly authored coverage (passed in run #324)
 
-Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passed in run [#324](https://github.com/amrshah/activequery-labs/actions/runs/43644712359): Element `setValue`, `setChild`, `then` and `fax`; NodeList no-op stubs and `on` validation; and Array `getCount` default-operator delimiter/missing-property behavior. The initial test assumptions were corrected after source review; no upstream code was changed. A further source/minified behavior fixture was added in commit `5769645f9aa327c627ce58f8dda9a5b40934b8db` and is pending run #325.
+Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passed in run [#324](https://github.com/amrshah/activequery-labs/actions/runs/43644712359): Element `setValue`, `setChild`, `then` and `fax`; NodeList no-op stubs and `on` validation; and Array `getCount` default-operator delimiter/missing-property behavior. The initial test assumptions were corrected after source review; no upstream code was changed. A further source/minified behavior fixture was added in commit `5769645f9aa327c627ce58f8dda9a5b40934b8db` and passed in [run #325](https://github.com/amrshah/activequery-labs/actions/runs/43644825180). It compares Element value/child/then behavior, NodeList event behavior and the Array `getCount` default branch across source and minified builds. This remains selected-method parity, not full semantic proof.
 
 ## Priority 0 — unresolved API contracts
 
@@ -96,7 +96,7 @@ The current source-review pass adds four focused references:
 - [Predicate truth and failure-path audit](predicate-truth-table.md) — source expressions and ambient-global hazards.
 - [Source/minified parity audit](source-minified-parity-audit.md) — inspected high-risk methods and the limits of current parity evidence.
 
-These are source-review improvements. The six new contract tests passed in run #324, but they do not close the remaining runtime or semantic-parity criteria.
+These are source-review improvements. The six new contract tests passed in run #324 and the selected source/minified fixture passed in run #325. They do not close the remaining runtime or full semantic-parity criteria.
 
 ## References
 
