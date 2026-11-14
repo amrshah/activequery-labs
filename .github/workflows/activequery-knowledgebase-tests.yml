@@ -17,6 +17,7 @@ on:
     paths:
       - "knowledgebase/**"
       - "tests/**"
+      - "tools/**"
       - "vendor/**"
       - "package.json"
       - "playwright.config.js"
