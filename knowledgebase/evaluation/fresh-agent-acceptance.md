@@ -21,7 +21,7 @@ Purpose: prove that an AI agent can implement and reason about ActiveQuery using
    - Reference: `aqcss/tokens-and-responsive.md`, `aqcss/selector-families.md`.
 
 2. **What is wrong with `.aq-facet--third`?**
-   - Expected: source declaration is 3.33333% width; do not silently reinterpret as 33.33333%; runtime confirmation remains pending.
+   - Expected: base, tablet, desktop and large-screen third-width classes all use 3.33333%; do not silently reinterpret as 33.33333%; runtime confirmation remains pending.
    - Reference: `testing/source-findings.md`, `aqcss/layout-utilities.md`.
 
 3. **Can `.aq-flexon--row-gap-xlarge` be relied on?**
