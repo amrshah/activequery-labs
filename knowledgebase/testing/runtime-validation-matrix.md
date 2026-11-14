@@ -77,10 +77,10 @@ Legend:
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Test authored; pending run |
 | Source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Test authored; pending run |
-| Breakpoints and responsive variants | Inspected | 599/600/601 and 992/993/1440 boundary tests not yet implemented | Pending authoring |
+| Breakpoints and responsive variants | Inspected | 599/600/601 tablet/mobile overlap test | Partial; 992/993/1440 tests pending |
 | Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Test authored; pending run |
 | Layout/flex/spacing | Multiple source defects documented | Facet and row-gap tests pending | Pending authoring |
-| Swatches and color functions | Token duplication and invalid rgb() usage documented | Computed color tests pending | Pending authoring |
+| Swatches and color functions | Token duplication and invalid rgb() usage documented | Base border token and hover alpha tests | Partial; pending run and more color coverage |
 | Controls/focus/tooltip/dropdown | Source inspected | Keyboard/touch/hover tests pending | Pending authoring |
 | Reduced motion/dark mode | No built-in support found in pinned stylesheet | Absence/source assertions; app-level implementation deferred | Pending authoring |
 
