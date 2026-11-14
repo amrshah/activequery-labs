@@ -10,7 +10,7 @@ Status: initial method inventory. Not a completed behavioral API reference.
 | Method | Source-observed role | Return/side-effect notes |
 |---|---|---|
 | `DOM(x)` | Document-wide selector helper | `null`, Element or NodeList based on match count |
-| `nestedDOM(a)` | Context-aware descendant selector helper | Returns original context, Element, NodeList or plain array depending on context and matches |
+| `nestedDOM(a)` | Context-aware descendant selector helper | Element/Document return original context, Element or NodeList by match count; NodeList returns original collection, Element or plain Array; Array and HTMLCollection contexts are returned unchanged |
 | `extend(...a)` | Defines custom elements or adds property descriptors to prototypes | Can mutate global/native prototypes |
 | `isEmpty(a,b=[])` | Checks values/arrays against configurable empty-value set | Returns boolean in ordinary valid-array path; invalid second arg returns undefined |
 | `exit()` | Returns `this` | No other effect in body |
