@@ -47,7 +47,7 @@ Legend:
 
 | Target | Methods | Source review | Test coverage | Current status |
 |---|---|---|---|---|
-| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified | i, getIndex, getCount, setSort, both setItem branches, has, getIndexs, then | Partial; selected contracts passed in run #292; default getCount branch and remaining edge cases pending |
+| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified; `then` makes Arrays thenable and can interfere with Promise-based consumers | i, getIndex, getCount, setSort, both setItem branches, has, getIndexs, then | Partial; selected contracts passed in run #292; default getCount branch, thenable interoperability and remaining edge cases pending |
 | Object | `setValues`, `hasValues` | Missing static predicate call | Both error cases | Passed in run #292 |
 | Number | `trim` | Inspected | Primitive trim test | Passed in run #292 |
 | String | `trim` | Native override and Unicode mismatch identified | Descriptor and U+FEFF/U+200B comparisons | Passed in run #292 |
