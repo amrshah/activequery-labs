@@ -9,16 +9,24 @@
       "readme_version_claim": "25.6.0",
       "source_file": "ActiveQuery.css",
       "license": "OSL-3.0",
-      "third_party_notices": ["W3CSS 4.10 (MIT)", "Normalize.css 8.0.1 (MIT)"]
+      "third_party_notices": [
+        "W3CSS 4.10 (MIT)",
+        "Normalize.css 8.0.1 (MIT)"
+      ]
     },
     "aqjs": {
       "repository": "https://github.com/ActiveQuery/JS",
       "default_branch": "main",
       "readme_version_claim": "25.6.0",
       "source_file": "ActiveQuery.js",
-      "named_exports_verified": ["ActiveQuery"],
+      "named_exports_verified": [
+        "ActiveQuery"
+      ],
       "license": "OSL-3.0",
-      "third_party_notices": ["Array.sortBy 1.2.2 (MIT)", "is-json 2.0.1 (ISC)"]
+      "third_party_notices": [
+        "Array.sortBy 1.2.2 (MIT)",
+        "is-json 2.0.1 (ISC)"
+      ]
     },
     "governance": "https://github.com/ActiveQuery/Governance"
   },
@@ -39,5 +47,17 @@
     "../skills/activequery-documentation/SKILL.md",
     "../skills/activequery-integration/SKILL.md"
   ],
-  "verification_policy": "Source-first. Treat names, signatures, behavior, compatibility and licensing as unverified until checked against the current upstream source and a reproducible test."
+  "verification_policy": "Source-first. Treat names, signatures, behavior, compatibility and licensing as unverified until checked against the current upstream source and a reproducible test.",
+  "knowledgebase": {
+    "root": "../knowledgebase/README.md",
+    "baseline": "../knowledgebase/source-baseline.md",
+    "aqjs_runtime": "../knowledgebase/architecture/aqjs-runtime-model.md",
+    "aqjs_api": "../knowledgebase/aqjs/api-inventory.md",
+    "aqcss_families": "../knowledgebase/aqcss/selector-families.md",
+    "source_findings": "../knowledgebase/testing/source-findings.md",
+    "integration": "../knowledgebase/integration/README.md",
+    "traceability": "../knowledgebase/source-traceability/index.md",
+    "mastery_gate": "../knowledgebase/mastery-gate.md",
+    "status": "in_progress_not_mastered"
+  }
 }
