@@ -65,6 +65,10 @@
     "aqcss_custom_properties": "../knowledgebase/aqcss/custom-property-index.json",
     "aqcss_tokens": "../knowledgebase/aqcss/tokens-and-responsive.md",
     "framework_overview": "../knowledgebase/architecture/framework-overview.md",
-    "governance": "../knowledgebase/architecture/governance-and-licensing.md"
+    "governance": "../knowledgebase/architecture/governance-and-licensing.md",
+    "aqcss_base_controls": "../knowledgebase/aqcss/base-controls.md",
+    "aqcss_layout": "../knowledgebase/aqcss/layout-utilities.md",
+    "aqcss_theme_effects": "../knowledgebase/aqcss/theme-effects.md",
+    "tea_istm": "../knowledgebase/architecture/tea-istm-concepts.md"
   }
 }
