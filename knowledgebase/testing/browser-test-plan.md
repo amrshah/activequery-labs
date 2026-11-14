@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run #281 passed all 156 browser cases (78 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: run #292 passed all 156 browser cases (78 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -60,25 +60,25 @@ Status: run #281 passed all 156 browser cases (78 authored tests × Chromium/Fir
 
 - Constructor alias/prototype mutation is covered for default null and explicit empty-string construction, but not all arbitrary aliases.
 - No tests yet for every AQJS method or collection-specific stub.
-- `sancha`, `sift` and `watch` now have authored targeted tests; they remain unexecuted and require review after the first browser run.
-- Lifecycle late-registration and callback timing tests have been authored; they remain unexecuted.
+- `sancha`, `sift` and `watch` have authored targeted tests and passed in run #292; broader behavioral branches remain untested.
+- Lifecycle late-registration and callback timing tests have been authored and passed in run #292; early registration and timing edge cases remain to be expanded.
 - No exhaustive CSS selector catalogue coverage.
 - Base border-token and hover alpha computed-style tests have been authored; exhaustive swatch/theme coverage remains outstanding.
-- Basic focus-outline, disabled-descendant and hover-only tooltip tests have been authored; touch/hybrid device, reduced-motion, short-landscape, zoom and comprehensive accessibility audits remain outstanding.
+- Basic focus-outline, disabled-descendant and hover-only tooltip tests passed in run #292; touch/hybrid device, zoom and comprehensive accessibility audits remain outstanding. Reduced-motion and short-landscape tests also passed, including a documented browser-specific CSSOM difference.
 - No WebKit project yet.
 
 ## Current authored test inventory
 
 - `tests/aqjs.spec.js`: 46 targeted browser tests.
 - `tests/aqcss.spec.js`: 21 targeted computed-style/browser tests.
-- Additional source-structure and minified-parity specs are present and should be counted/reviewed as part of the first CI execution.
-- The workflow is configured for both `push` and `pull_request` to `main`. Run #281 proves the current 78-test suite passed in both configured browser projects; future changes must continue to pass the workflow.
+- Additional source-structure and minified-parity specs bring the total to 78 authored tests.
+- The workflow is configured for both `push` and `pull_request` to `main`. Run #292 proves the current 78-test suite passed in both configured browser projects; future changes must continue to pass the workflow.
 
 ## Execution record
 
 | Date | Commit / run | Result |
 |---|---|---|
 | 2026-11-14 | Run #171, commit `77a78e44235dbbca6b07320074f4149d6131dd55` | Failed: 106 passed, 16 failed across 122 Chromium/Firefox cases. Failures traced to incorrect expectations/fixture issues in `defer`, native trim descriptor flags, `Array.setItem` thenable result serialization, Array `nestedDOM` support, mobile hide breakpoint, hover alpha support assertion, and zero-size tooltip fixture. No upstream source changes. |
-| 2026-11-15 | Run #281, commit `84a1381a7ac761ca7a8e9aa5a949c393555dcecc` | **Success:** 156 passed, 0 failed, 0 skipped across Chromium 141.0.7390.37 and Firefox 142.0.1 on Ubuntu 24.04.5 / Node 22.23.4. [Workflow evidence](https://github.com/amrshah/activequery-labs/actions/runs/43638192585). |
+| 2026-11-15 | Run #292, commit `d2d6067aae76f29eb3fbbf4864c77d8bc8df3cd5` | **Success:** 156 passed, 0 failed, 0 skipped across Chromium 141.0.7390.37 and Firefox 142.0.1 on Ubuntu 24.04.5 / Node 22.23.4. [Workflow evidence](https://github.com/amrshah/activequery-labs/actions/runs/43638562334). |
 
 Update this table only after retrieving the actual workflow run, job logs and test summary. A successful workflow file commit is not a successful test run.
