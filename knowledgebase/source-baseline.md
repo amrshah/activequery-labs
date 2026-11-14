@@ -70,7 +70,7 @@ Completed:
 Outstanding:
 - Finish the AQCSS cascade/override map and exhaustive selector-family semantic review; structural selector/rule/token/property indexes now exist.
 - Finish AQJS per-method contracts and edge-case coverage; the public/prototype method inventory exists, but some signatures/branches remain untested.
-- Expand browser coverage beyond the current 70 authored tests / 140 passing Chromium+Firefox cases, especially touch/hybrid, reduced motion, broader viewport matrices and remaining APIs.
+- Expand browser coverage beyond the current 73 authored tests / 146 passing Chromium+Firefox cases, especially touch/hybrid, reduced motion, broader viewport matrices and remaining APIs.
 - Complete AQCSS third-party provenance attribution beyond first-pass exact matches.
 - Reconcile and expand existing agent skills/indexes to point to the verified knowledgebase.
 - Run retrieval-based acceptance tests with an independent fresh-agent workflow; not yet executed.
