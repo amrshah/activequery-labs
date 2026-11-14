@@ -75,7 +75,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS positioning / affix cascade map](aqcss/positioning-cascade-map.md) — position modes, edge/corner/center helpers, important-vs-normal mode precedence, sticky inset requirements and responsive combinations.
 - [AQCSS typography cascade map](aqcss/typography-cascade-map.md) — root typography tokens, heading and paragraph defaults, size/weight scales, text styling, responsive overrides and known selector/value defects.
 - [AQCSS visibility, display and interaction-state cascade map](aqcss/visibility-interaction-cascade-map.md) — display/visibility helpers, malformed responsive hide ranges, pointer capability rules, hover/focus/disabled states, cascade conflicts and accessibility limitations.
-- [AQCSS base styles and controls](aqcss/base-controls.md)
+- [AQCSS base styles, form controls and element utilities](aqcss/base-controls.md) — document/control resets, input/select/fieldset/button behavior, focus and disabled limitations, tooltips, image/SVG/list helpers and clearfix boundaries.
 - [AQCSS layout utilities](aqcss/layout-utilities.md)
 - [AQCSS borders, swatches, background images and fleek effects](aqcss/theme-effects.md) — border/radius helpers, palette tokens and opacity, hover swatches, background-image presentation, filter/opacity effects, overlay/dropdown/blockquote behavior and cascade hazards.
 - [Source findings and verification queue](testing/source-findings.md)
