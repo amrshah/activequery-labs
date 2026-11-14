@@ -1,19 +1,22 @@
 ---
 name: activequery-foundation
-description: Use when researching, documenting, integrating or building with the ActiveQuery ecosystem. Enforces source-first verification, upstream attribution, licensing care and separation between upstream capabilities and community additions.
+description: Use when researching, documenting, integrating or building with the ActiveQuery ecosystem. Enforces knowledgebase-first retrieval, source traceability, upstream attribution and separation between upstream capabilities and community additions.
 ---
 
 # ActiveQuery Foundation Skill
 
 ## Required workflow
 
-1. Identify the exact upstream repository and branch/version before implementation.
-2. Read the upstream README, full source file(s), license and third-party notices. Do not rely on summaries or memory.
-3. Record verified facts with source path, version/commit and confidence.
-4. Distinguish upstream functionality, browser-native functionality and custom ActiveQuery Labs code.
-5. Never invent selectors, APIs, signatures, options or behavior.
-6. Build the smallest reproducible example and test it in a browser.
-7. Document known limitations and unverified behavior explicitly.
+1. Read `knowledgebase/README.md` and the relevant reference page before searching source.
+2. Check `knowledgebase/source-baseline.md` to confirm that the reference matches the version in use.
+3. Treat the knowledgebase as the primary engineering reference. Do not reread entire upstream source files for routine questions already answered there.
+4. Reopen upstream source only for documented gaps, version drift, discrepancies or new research.
+5. When new source facts are discovered, add them to the knowledgebase with exact source anchors and evidence status.
+6. Distinguish source-confirmed facts, runtime-verified behavior, derived conclusions and unverified assumptions.
+7. Never invent selectors, APIs, signatures, options or behavior.
+8. Build the smallest reproducible example and test it in a browser when behavior matters.
+9. Document known limitations and unverified behavior explicitly.
+10. Do not declare mastery until every item in `knowledgebase/mastery-gate.md` is evidenced.
 
 ## Source repositories
 
