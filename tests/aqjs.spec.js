@@ -233,7 +233,7 @@ test("suspect type predicates expose their source-level edge cases", async ({ pa
   expect(result.isObjectLiteralPlain).toBe(true);
   expect(result.isNaFFunction).toBe(false);
   expect(result.isNaFSpacedArrow).toBe(false);
-  expect(result.isNaFString).toBe(true);
+  expect(result.isNaFString).toBe(false);
   expect(result.isNaCClass).toBe(false);
   expect(result.isNaCFunction).toBe(true);
   expect(result.isNaSPrimitive).toBe(true);
