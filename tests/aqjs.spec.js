@@ -214,7 +214,8 @@ test("suspect type predicates expose their source-level edge cases", async ({ pa
     return {
       isStringBoxed: instance.isString(new String("value")),
       isObjectLiteralPlain: instance.isObjectLiteral({ value: 1 }),
-      isNaFFunction: instance.isNaF(() => true),
+      isNaFFunction: instance.isNaF(function named() {}),
+      isNaFSpacedArrow: instance.isNaF(() => true),
       isNaFString: instance.isNaF("not a function"),
       isNaCClass: instance.isNaC(class Example {}),
       isNaCFunction: instance.isNaC(function named() {}),
@@ -231,6 +232,7 @@ test("suspect type predicates expose their source-level edge cases", async ({ pa
   expect(result.isStringBoxed).toBe(true);
   expect(result.isObjectLiteralPlain).toBe(true);
   expect(result.isNaFFunction).toBe(false);
+  expect(result.isNaFSpacedArrow).toBe(true);
   expect(result.isNaFString).toBe(true);
   expect(result.isNaCClass).toBe(false);
   expect(result.isNaCFunction).toBe(true);
