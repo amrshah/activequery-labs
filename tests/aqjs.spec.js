@@ -81,11 +81,15 @@ test("default constructor triggers alias/prototype mutation through null coercio
         elementZero: Object.prototype.hasOwnProperty.call(Element.prototype, "0"),
         nodeListZero: Object.prototype.hasOwnProperty.call(NodeList.prototype, "0")
       },
+      objectZeroEnumerable: Object.prototype.propertyIsEnumerable("0"),
+      inheritedKeys: (() => { const value = { own: true }; const keys = []; for (const key in value) keys.push(key); return keys; })(),
       aliasType: typeof window.null
     };
   });
   expect(result.before).toEqual({ windowNull: false, objectZero: false, elementZero: false, nodeListZero: false });
   expect(result.after).toEqual({ windowNull: true, objectZero: true, elementZero: true, nodeListZero: true });
+  expect(result.objectZeroEnumerable).toBe(true);
+  expect(result.inheritedKeys).toContain("0");
   expect(result.aliasType).toBe("function");
 });
 
