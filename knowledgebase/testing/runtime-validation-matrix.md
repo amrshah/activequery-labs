@@ -90,7 +90,7 @@ Six additional tests were added for Element `setValue`, `setChild`, `then`/`fax`
 
 ## Proposed AQCSS composition coverage
 
-The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specifies additional cross-family and responsive tests. These are pending authoring and must not be counted as runtime coverage until implemented and run. Existing run #313 remains the current passing baseline.
+The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specifies additional cross-family and responsive tests. These are pending authoring and must not be counted as runtime coverage until implemented and run. Run #324 is the latest passing baseline; run #313 remains the earlier AQCSS coverage baseline.
 
 ## Execution and acceptance
 
@@ -122,4 +122,4 @@ The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specif
 | Source integrity | Pinned AQJS/AQCSS source and minified assets fetched and hash-verified before catalog generation and tests |
 | Artifact | Generated AQCSS/AQJS AST catalogs uploaded successfully by the workflow |
 
-The run validates the 87 authored tests in two browser projects. It does not prove complete framework mastery, exhaustive API coverage, accessibility, touch behavior, WebKit compatibility or the clean-room portal rebuild.
+The historical run validates the 79 authored tests in two browser projects. It does not prove complete framework mastery, exhaustive API coverage, accessibility, touch behavior, WebKit compatibility or the clean-room portal rebuild.
