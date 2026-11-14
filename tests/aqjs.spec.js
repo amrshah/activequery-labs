@@ -560,10 +560,11 @@ test("nestedDOM supports Document contexts with polymorphic descendant results",
 test("Array query helpers implement loose, strict, substring and first-index contracts", async ({ page }) => {
   const result = await page.evaluate(() => {
     const values = [{ key: 1 }, { key: "1" }, { key: "abc" }, { key: "abcd" }];
+    const strings = [{ key: "abc" }, { key: "abcd" }];
     return {
       looseCount: values.getCount("key", "==", 1),
       strictCount: values.getCount("key", "===", 1),
-      substringCount: values.getCount("key", "*", "bc"),
+      substringCount: strings.getCount("key", "*", "bc"),
       hasExact: values.has("key", "abc"),
       foundIndex: values.getIndexs("key", "abcd"),
       missingIndex: values.getIndexs("key", "missing"),
