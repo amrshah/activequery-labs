@@ -69,6 +69,9 @@
     "aqcss_base_controls": "../knowledgebase/aqcss/base-controls.md",
     "aqcss_layout": "../knowledgebase/aqcss/layout-utilities.md",
     "aqcss_theme_effects": "../knowledgebase/aqcss/theme-effects.md",
-    "tea_istm": "../knowledgebase/architecture/tea-istm-concepts.md"
+    "tea_istm": "../knowledgebase/architecture/tea-istm-concepts.md",
+    "source_freshness": "../knowledgebase/source-freshness.md",
+    "aqjs_type_predicates": "../knowledgebase/aqjs/type-predicates-and-guards.md",
+    "aqjs_templating": "../knowledgebase/aqjs/templating-and-observation.md"
   }
 }
