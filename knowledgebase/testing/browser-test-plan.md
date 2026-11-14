@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run #340 passed all 186 browser cases (93 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: run #348 passed all 194 browser cases (97 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -16,7 +16,7 @@ Status: run #340 passed all 186 browser cases (93 authored tests × Chromium/Fir
 ### Source/minified parity
 
 - PostCSS AST comparison checks all AQCSS source and minified rules, selectors, media context and declarations after syntax-preserving whitespace normalization.
-- Browser tests compare core AQJS selector/Element behavior and selected edge contracts across source and minified module builds, including Element `setValue`, `setChild`, `then`, NodeList event registration/empty-collection return, Array `getCount` default-operator behavior, Array `then`, Document/Window event helpers, early lifecycle hooks and constructor `initlog` timing (runs #325, #327 and #340).
+- Browser tests compare core AQJS selector/Element behavior and selected edge contracts across source and minified module builds, including Element `setValue`, `setChild`, `then`, NodeList event registration/empty-collection return, Array `getCount` default-operator behavior, Array `then`, Document/Window event helpers, early lifecycle hooks and constructor `initlog` timing, Array query helper parity, and Element/NodeList bulk mutation parity (runs #325, #327, #340 and #348).
 - CI verifies exact Git blob SHAs for both source and minified files before testing.
 
 ### AQJS
@@ -41,6 +41,8 @@ Status: run #340 passed all 186 browser cases (93 authored tests × Chromium/Fir
 | getPlugin rejection | Rejected dynamic import propagates TypeError; non-string fallback returns instance | `tests/aqjs.spec.js` |
 | Document/Window on guards | Invalid event/callback arguments return the original receiver | `tests/aqjs.spec.js` |
 | Early lifecycle and initlog | `ready`, `init`, `run` and constructor `readystatechange=complete` callback fire once when registered before lifecycle completion | `tests/aqjs.spec.js` |
+| Remaining lifecycle event names | `offline`, `online`, `close` map to native events; unknown names are ignored; method returns instance | `tests/aqjs.spec.js` |
+| NodeList index edges | Numeric-string index, out-of-range undefined and empty-list receiver return | `tests/aqjs.spec.js` |
 
 ### AQCSS
 
@@ -68,7 +70,7 @@ The source-grounded but not-yet-implemented cross-family cases are listed in [AQ
 - Constructor alias/prototype mutation is covered for default null and explicit empty-string construction, but not all arbitrary aliases.
 - No tests yet for every AQJS method or every collection-specific edge case; the identified NodeList no-op stubs now have representative invocation/no-mutation assertions.
 - `sancha`, `sift` and `watch` have authored targeted tests and remain passing through run #327; broader behavioral branches remain untested.
-- Lifecycle late registration and early `ready`/`init`/`run` plus constructor `initlog` completion timing have authored coverage and pass through run #340; offline/online/close event hooks, repeated construction, and unusual lifecycle timing remain to be expanded.
+- Lifecycle late registration, early `ready`/`init`/`run`, constructor `initlog` completion, and `offline`/`online`/`close` mappings have authored coverage and pass through run #347; repeated construction and unusual lifecycle timing remain to be expanded.
 - No exhaustive CSS selector catalogue coverage.
 - Base border-token and hover alpha computed-style tests have been authored; exhaustive swatch/theme coverage remains outstanding.
 - Basic focus-outline, disabled-descendant and hover-only tooltip tests remain passing through run #327; touch/hybrid device, zoom and comprehensive accessibility audits remain outstanding. Reduced-motion and short-landscape tests also passed, including a documented browser-specific CSSOM difference.
@@ -76,11 +78,11 @@ The source-grounded but not-yet-implemented cross-family cases are listed in [AQ
 
 ## Current authored test inventory
 
-- `tests/aqjs.spec.js`: 58 targeted browser tests.
+- `tests/aqjs.spec.js`: 60 targeted browser tests.
 - `tests/aqcss.spec.js`: 21 targeted computed-style/browser tests.
-- `tests/minified-parity.spec.js`: 8 source/minified parity tests.
+- `tests/minified-parity.spec.js`: 10 source/minified parity tests.
 - `tests/css-source-parse.spec.js`: 4 source/catalog tests; `tests/js-source-parse.spec.js`: 1 API inventory test; `tests/knowledgebase-integrity.spec.js`: 1 link-integrity test.
-- Total: 93 authored tests. The workflow is configured for both `push` and `pull_request` to `main`. Run #327 proves all 91 authored tests passed in both configured browser projects; future changes must continue to pass the workflow.
+- Total: 97 authored tests. The workflow is configured for both `push` and `pull_request` to `main`. Run #327 proves all 91 authored tests passed in both configured browser projects; future changes must continue to pass the workflow.
 
 ## Execution record
 
