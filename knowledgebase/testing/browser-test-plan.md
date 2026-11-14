@@ -56,6 +56,10 @@ Status: run #313 passed all 158 browser cases (79 authored tests × Chromium/Fir
 | Third-width anomaly | Computed width remains a small fraction, capturing source value without normalizing | `tests/aqcss.spec.js` |
 | Xlarge row-gap anomaly | Invalid `2` unitless declaration does not compute as 2px | `tests/aqcss.spec.js` |
 
+## Next targeted AQCSS composition coverage
+
+The source-grounded but not-yet-implemented cross-family cases are listed in [AQCSS Focused Composition Test Plan](aqcss-composition-test-plan.md). They are proposals, not existing tests or passing evidence. Add them as a deliberate focused test batch rather than rerunning the full suite for documentation-only work.
+
 ## Known gaps in automated coverage
 
 - Constructor alias/prototype mutation is covered for default null and explicit empty-string construction, but not all arbitrary aliases.
