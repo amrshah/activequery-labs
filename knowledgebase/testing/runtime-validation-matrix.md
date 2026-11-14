@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-15.
-Run #171 completed with 106 passed and 16 failed. After correcting the tests and recording additional AQCSS media-query defects, run #313 completed successfully: **158 passed, 0 failed, 0 skipped** across Chromium and Firefox. The 79 authored tests are now runtime-verified in both configured browser projects. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.** **Gate C is partially satisfied, not passed in full.**
+Run #171 completed with 106 passed and 16 failed. After correcting the tests and recording additional AQCSS media-query defects, run #313 completed successfully: **158 passed, 0 failed, 0 skipped** across Chromium and Firefox. The 79 authored tests are now runtime-verified in both configured browser projects. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -14,75 +14,75 @@ Legend:
 | API / behavior | Source review | Test coverage | Current status |
 |---|---|---|---|
 | Constructor default argument | Inspected: null triggers alias and Object/Element/NodeList prototype writes | Default and empty-string constructor tests | Passed in run #313 |
-| Import-time prototype extensions | Inspected: native prototypes augmented; String.trim replaced; native writable/configurable descriptor flags are retained | Native trim identity/descriptor test | Passed in run #292 |
-| `DOM(selector)` | Inspected: null / Element / NodeList polymorphic result | Zero, one, many matches | Passed in run #292 |
-| `nestedDOM(selector)` Element | Inspected | Single descendant and no-match context | Passed in run #292 |
-| `nestedDOM(selector)` NodeList | Inspected | Flattened descendants | Passed in run #292 |
-| `nestedDOM(selector)` Array | Inspected: Array fails accepted-type guard and is returned unchanged | Explicit unchanged-array test | Passed in run #292 |
-| `nestedDOM(selector)` Document | Inspected | Zero/one/many and no-match context test | Passed in run #292 |
-| `nestedDOM(selector)` HTMLCollection | Inspected: returns unchanged | Explicit unchanged-result test | Passed in run #292 |
-| `extend(...args)` | Inspected; argument validation and custom-element branches mapped | Valid autonomous element and invalid no-hyphen name tests | Passed in run #292 |
-| `isEmpty` | Inspected: zero/false/null/empty string and recursive array semantics | Representative cases | Passed in run #292 |
-| `exit` | Inspected as no-op returning this | Static and instance receiver identity | Passed in run #292 |
-| `keepOn` | Inspected: returns input only for empty length and non-debug | Empty/non-empty/debug cases | Passed in run #292 |
-| `defer` | Inspected: spreads input, pops delay, passes remaining array to setTimeout; array is string-coerced by browser timer API and callback is not invoked | Non-throwing timer-handle and callback non-execution tests | First test passed in run #292; callback non-execution test awaits CI |
+| Import-time prototype extensions | Inspected: native prototypes augmented; String.trim replaced; native writable/configurable descriptor flags are retained | Native trim identity/descriptor test | Passed in run #313 |
+| `DOM(selector)` | Inspected: null / Element / NodeList polymorphic result | Zero, one, many matches | Passed in run #313 |
+| `nestedDOM(selector)` Element | Inspected | Single descendant and no-match context | Passed in run #313 |
+| `nestedDOM(selector)` NodeList | Inspected | Flattened descendants | Passed in run #313 |
+| `nestedDOM(selector)` Array | Inspected: Array fails accepted-type guard and is returned unchanged | Explicit unchanged-array test | Passed in run #313 |
+| `nestedDOM(selector)` Document | Inspected | Zero/one/many and no-match context test | Passed in run #313 |
+| `nestedDOM(selector)` HTMLCollection | Inspected: returns unchanged | Explicit unchanged-result test | Passed in run #313 |
+| `extend(...args)` | Inspected; argument validation and custom-element branches mapped | Valid autonomous element and invalid no-hyphen name tests | Passed in run #313 |
+| `isEmpty` | Inspected: zero/false/null/empty string and recursive array semantics | Representative cases | Passed in run #313 |
+| `exit` | Inspected as no-op returning this | Static and instance receiver identity | Passed in run #313 |
+| `keepOn` | Inspected: returns input only for empty length and non-debug | Empty/non-empty/debug cases | Passed in run #313 |
+| `defer` | Inspected: spreads input, pops delay, passes remaining array to setTimeout; array is string-coerced by browser timer API and callback is not invoked | Non-throwing timer-handle and callback non-execution tests | Both timer-handle and callback non-execution tests passed in run #313 |
 | `getPlugin` | Inspected: dynamic import by string | No allowlist/security test | Pending authoring |
-| Lifecycle `on` | Inspected: fixed event names, no late replay | Late ready/init test | Passed in run #292 |
-| Constructor `initlog` | Inspected: no readyState check | Late callback test | Passed in run #292 |
+| Lifecycle `on` | Inspected: fixed event names, no late replay | Late ready/init test | Passed in run #313 |
+| Constructor `initlog` | Inspected: no readyState check | Late callback test | Passed in run #313 |
 
 ## AQJS type predicates
 
 | Method(s) | Source review | Test coverage | Current status |
 |---|---|---|---|
-| `isArray`, `isNaA`, `isArraySet`, `isNaAS`, `isObjectMap`, `isNaOM` | Inspected | Representative positive/negative checks | Partial; passed in run #292; truth table not exhaustive |
-| `isArrayLike`, `isNaAL` | Inspected: unqualified helper references | Explicit ReferenceError tests | Passed in run #292 |
-| `isString`, `isNaS` | Inspected: `isNaS` appears broken | Primitive/boxed string test | Passed in run #292 |
-| `isObject`, `isNaO`, `isObjectLiteral` | Inspected; null throws before guard | Plain-object checks and null error test | Partial; passed in run #292; cross-realm and other edge cases remain |
-| `isNaM`, `isSet`, `isNaOL`, `isObjectLike` | Inspected; naming/undefined helper issues | Map, array and objectLike checks | Partial; selected cases passed in run #292; `isNaOL` and full input matrix remain |
-| `isFunction`, `isNaF`, `isClass`, `isNaC` | Inspected heuristic string checks | Named function and class checks | Partial; selected cases passed in run #292; negative predicates remain |
-| `isNodeList`, `isNaNL` | Inspected: references undefined `x` | Both positive and negative methods tested for ReferenceError | Passed in run #292 |
-| `isArgument`, `isJSON` | Inspected: type/regex behavior, not JSON parsing | Empty/null argument and arbitrary string JSON tests | Passed in run #292 |
+| `isArray`, `isNaA`, `isArraySet`, `isNaAS`, `isObjectMap`, `isNaOM` | Inspected | Representative positive/negative checks | Partial; passed in run #313; truth table not exhaustive |
+| `isArrayLike`, `isNaAL` | Inspected: unqualified helper references | Explicit ReferenceError tests | Passed in run #313 |
+| `isString`, `isNaS` | Inspected: `isNaS` appears broken | Primitive/boxed string test | Passed in run #313 |
+| `isObject`, `isNaO`, `isObjectLiteral` | Inspected; null throws before guard | Plain-object checks and null error test | Partial; passed in run #313; cross-realm and other edge cases remain |
+| `isNaM`, `isSet`, `isNaOL`, `isObjectLike` | Inspected; naming/undefined helper issues | Map, array and objectLike checks | Partial; selected cases passed in run #313; `isNaOL` and full input matrix remain |
+| `isFunction`, `isNaF`, `isClass`, `isNaC` | Inspected heuristic string checks | Named function and class checks | Partial; selected cases passed in run #313; negative predicates remain |
+| `isNodeList`, `isNaNL` | Inspected: references undefined `x` | Both positive and negative methods tested for ReferenceError | Passed in run #313 |
+| `isArgument`, `isJSON` | Inspected: type/regex behavior, not JSON parsing | Empty/null argument and arbitrary string JSON tests | Passed in run #313 |
 
 ## AQJS Array/Object/primitive extensions
 
 | Target | Methods | Source review | Test coverage | Current status |
 |---|---|---|---|---|
-| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified; `then` makes Arrays thenable and can interfere with Promise-based consumers | i, getIndex, getCount, setSort, both setItem branches, has, getIndexs, then | Partial; selected contracts passed in run #292; default getCount branch, thenable interoperability and remaining edge cases pending |
-| Object | `setValues`, `hasValues` | Missing static predicate call | Both error cases | Passed in run #292 |
-| Number | `trim` | Inspected | Primitive trim test | Passed in run #292 |
-| String | `trim` | Native override and Unicode mismatch identified | Descriptor and U+FEFF/U+200B comparisons | Passed in run #292 |
-| Function | `then` | Inspected | Callback test | Passed in run #292 |
+| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified; `then` makes Arrays thenable and can interfere with Promise-based consumers | i, getIndex, getCount, setSort, both setItem branches, has, getIndexs, then | Partial; selected contracts passed in run #313; default getCount branch, thenable interoperability and remaining edge cases pending |
+| Object | `setValues`, `hasValues` | Missing static predicate call | Both error cases | Passed in run #313 |
+| Number | `trim` | Inspected | Primitive trim test | Passed in run #313 |
+| String | `trim` | Native override and Unicode mismatch identified | Descriptor and U+FEFF/U+200B comparisons | Passed in run #313 |
+| Function | `then` | Inspected | Callback test | Passed in run #313 |
 
 ## AQJS Element/NodeList/Document/Window
 
 | Target | Methods / behavior | Source review | Test coverage | Current status |
 |---|---|---|---|---|
-| Element | `parent`, `name` | Inspected | Parent relationship and nodeName | Passed in run #292 |
-| Element | Attributes/styles | Inspected; falsy-value and simple parser limits | Pair early-stop, attribute names/removal, inline style parsing/readback | Partial; selected contracts passed in run #292 |
-| Element | Classes | Inspected | Basic set/get/remove plus NodeList bulk class mutators | Partial; selected contracts passed in run #292 |
-| Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default tests | Partial; sibling paths passed in run #292; `i` and `setChild` remain untested |
-| Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | Guarded setAdjacent/setHtml, getHtml modes, array setContent | Partial; selected contracts passed in run #292 |
-| Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior | setText, getText and getValue modes | Partial; selected contracts passed in run #292; Element setValue remains untested |
-| Element | `then`, `fax`, `on` | Inspected | on tested; then/fax pending | Partial; `on` passed in run #292; then/fax remain untested |
-| Element | `sancha` | Inspected; HTML injection and undeclared identifiers | Static success and data-mode ReferenceError | Passed in run #292 |
-| Element | `sift` | Inspected: truthy selector early return | Explicit no-handler test | Passed in run #292 |
-| Element | `watch` | Inspected; callback `this` failure and missing observer return | Mutation test captures TypeError and missing user callback | Passed in run #292 |
-| NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | Bulk attributes/styles/classes, setValue, getStyles/getClasses and content no-op cases | Partial; selected contracts passed in run #292 |
-| NodeList | no-op stubs | Inspected: getStyles/getClasses/getHtml/setText/etc. | Representative stubs and content no-op behavior | Partial; selected stubs passed in run #292; not exhaustive |
-| Document/Window | `on` | Inspected | Native custom event listeners | Passed in run #292 |
+| Element | `parent`, `name` | Inspected | Parent relationship and nodeName | Passed in run #313 |
+| Element | Attributes/styles | Inspected; falsy-value and simple parser limits | Pair early-stop, attribute names/removal, inline style parsing/readback | Partial; selected contracts passed in run #313 |
+| Element | Classes | Inspected | Basic set/get/remove plus NodeList bulk class mutators | Partial; selected contracts passed in run #313 |
+| Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default tests | Partial; sibling paths passed in run #313; `i` and `setChild` remain untested |
+| Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | Guarded setAdjacent/setHtml, getHtml modes, array setContent | Partial; selected contracts passed in run #313 |
+| Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior | setText, getText and getValue modes | Partial; selected contracts passed in run #313; Element setValue remains untested |
+| Element | `then`, `fax`, `on` | Inspected | on tested; then/fax pending | Partial; `on` passed in run #313; then/fax remain untested |
+| Element | `sancha` | Inspected; HTML injection and undeclared identifiers | Static success and data-mode ReferenceError | Passed in run #313 |
+| Element | `sift` | Inspected: truthy selector early return | Explicit no-handler test | Passed in run #313 |
+| Element | `watch` | Inspected; callback `this` failure and missing observer return | Mutation test captures TypeError and missing user callback | Passed in run #313 |
+| NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | Bulk attributes/styles/classes, setValue, getStyles/getClasses and content no-op cases | Partial; selected contracts passed in run #313 |
+| NodeList | no-op stubs | Inspected: getStyles/getClasses/getHtml/setText/etc. | Representative stubs and content no-op behavior | Partial; selected stubs passed in run #313; not exhaustive |
+| Document/Window | `on` | Inspected | Native custom event listeners | Passed in run #313 |
 
 ## AQCSS validation
 
 | Area | Source review | Test coverage | Current status |
 |---|---|---|---|
-| Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #292 |
-| Source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #292 |
-| Breakpoints and responsive variants | Inspected: mobile/tablet/desktop hide range queries are malformed and ignored by Chromium/Firefox; tablet/desktop/large typography prefixes activate at their min-width thresholds | 599/600/601, 601/992, 993/1439 and 1440 computed-style tests | All tested breakpoint and hide-helper behavior passed in run #292; short-landscape and touch/hybrid behavior remain untested |
-| Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Passed in run #292 |
-| Layout/flex/spacing | Multiple source defects documented | Facet, row-gap, flex base, spacing aliases and responsive alignment tests | Passed in run #292 |
-| Swatches and color functions | Token duplication and invalid rgb() usage documented | Base border token and hover alpha tests | Partial; selected cases passed in run #292; more theme/swatch coverage remains |
-| Controls/focus/tooltip/dropdown | Source inspected | Focus outline, hover-only tooltip, hover/focus/click dropdown tests | Partial; keyboard/pointer tests passed in run #292; touch behavior remains untested |
-| Reduced motion/dark mode | No built-in reduced-motion override or dark-mode query found in pinned stylesheet | Reduced-motion emulation test; dark-mode source absence review | Reduced-motion gap passed in run #292; dark mode remains an application-level feature |
+| Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
+| Source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |
+| Breakpoints and responsive variants | Inspected: mobile/tablet/desktop hide range queries are malformed and ignored by Chromium/Firefox; tablet/desktop/large typography prefixes activate at their min-width thresholds | 599/600/601, 601/992, 993/1439 and 1440 computed-style tests | All tested breakpoint and hide-helper behavior passed in run #313; short-landscape and touch/hybrid behavior remain untested |
+| Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Passed in run #313 |
+| Layout/flex/spacing | Multiple source defects documented | Facet, row-gap, flex base, spacing aliases and responsive alignment tests | Passed in run #313 |
+| Swatches and color functions | Token duplication and invalid rgb() usage documented | Base border token and hover alpha tests | Partial; selected cases passed in run #313; more theme/swatch coverage remains |
+| Controls/focus/tooltip/dropdown | Source inspected | Focus outline, hover-only tooltip, hover/focus/click dropdown tests | Partial; keyboard/pointer tests passed in run #313; touch behavior remains untested |
+| Reduced motion/dark mode | No built-in reduced-motion override or dark-mode query found in pinned stylesheet | Reduced-motion emulation test; dark-mode source absence review | Reduced-motion gap passed in run #313; dark mode remains an application-level feature |
 
 ## Execution and acceptance
 

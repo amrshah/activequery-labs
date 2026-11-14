@@ -60,11 +60,11 @@ Status: run #313 passed all 158 browser cases (79 authored tests × Chromium/Fir
 
 - Constructor alias/prototype mutation is covered for default null and explicit empty-string construction, but not all arbitrary aliases.
 - No tests yet for every AQJS method or collection-specific stub.
-- `sancha`, `sift` and `watch` have authored targeted tests and passed in run #292; broader behavioral branches remain untested.
-- Lifecycle late-registration and callback timing tests have been authored and passed in run #292; early registration and timing edge cases remain to be expanded.
+- `sancha`, `sift` and `watch` have authored targeted tests and passed in run #313; broader behavioral branches remain untested.
+- Lifecycle late-registration and callback timing tests have been authored and passed in run #313; early registration and timing edge cases remain to be expanded.
 - No exhaustive CSS selector catalogue coverage.
 - Base border-token and hover alpha computed-style tests have been authored; exhaustive swatch/theme coverage remains outstanding.
-- Basic focus-outline, disabled-descendant and hover-only tooltip tests passed in run #292; touch/hybrid device, zoom and comprehensive accessibility audits remain outstanding. Reduced-motion and short-landscape tests also passed, including a documented browser-specific CSSOM difference.
+- Basic focus-outline, disabled-descendant and hover-only tooltip tests passed in run #313; touch/hybrid device, zoom and comprehensive accessibility audits remain outstanding. Reduced-motion and short-landscape tests also passed, including a documented browser-specific CSSOM difference.
 - No WebKit project yet.
 
 ## Current authored test inventory
