@@ -94,7 +94,7 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | JS-034 | `ActiveQuery.js:373-407` | `setSort` comparator assigns `aVal` and `bVal` without declarations. Since AQJS is an ES module, strict mode applies. | Sorting invokes the comparator and throws ReferenceError rather than sorting. | Browser-test in Chromium/Firefox and compare with the upstream Array.sortBy adaptation. |
 | JS-035 | `ActiveQuery.js:326-337` | `getIndex(key,"=",value)` uses assignment in the `findIndex` predicate instead of comparison. | It mutates the first matching candidate and returns based on the assigned value's truthiness. | Test truthy and falsy assignment values and verify array mutation. |
 | JS-036 | `ActiveQuery.js:409-413` | `setItem(index,value)` returns early if either argument is truthy. | Normal insertions with a valid index/value are skipped. | Test normal truthy inputs and edge falsy inputs. |
-| JS-037 | `ActiveQuery.js:870-881` | Object `setValues` and `hasValues` return early for normal truthy key/value arguments. | Standard set/read calls are bypassed. | Test truthy and falsy key/value combinations. |
+| JS-037 | `ActiveQuery.js:870-881` | Object `setValues` and `hasValues` call `ActiveQuery.isNaO` as a static method, but the inspected class defines it only on instances. | Standard set/read calls throw TypeError before reaching their guards. | Test truthy and falsy key/value combinations. |
 | JS-038 | `ActiveQuery.js:320-323` | Array `i` calls `ActiveQuery.isNaN`, which is not defined in the inspected class/static API. | Normal index access throws TypeError. | Test valid numeric and invalid index arguments. |
 
 ## Corrective policy
