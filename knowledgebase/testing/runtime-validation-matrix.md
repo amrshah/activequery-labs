@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
-Status snapshot: 2026-11-14.
-Important: test cases are authored and committed, but no GitHub Actions run/status has been retrieved. **No runtime test in this matrix is marked passed.**
+Status snapshot: 2026-11-15.
+Run #171 completed with 106 passed and 16 failed (122 Chromium/Firefox cases). Failures exposed incorrect test assumptions and a Playwright thenable-serialization trap; corrections are committed and rerun is pending. **Runtime validation is not passed.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -14,18 +14,18 @@ Legend:
 | API / behavior | Source review | Test coverage | Current status |
 |---|---|---|---|
 | Constructor default argument | Inspected: null triggers alias and Object/Element/NodeList prototype writes | Default and empty-string constructor tests | Test authored; pending run |
-| Import-time prototype extensions | Inspected: native prototypes augmented; String.trim replaced | Native trim identity/descriptor test | Test authored; pending run |
+| Import-time prototype extensions | Inspected: native prototypes augmented; String.trim replaced; native writable/configurable descriptor flags are retained | Native trim identity/descriptor test | Corrected assertion; rerun pending |
 | `DOM(selector)` | Inspected: null / Element / NodeList polymorphic result | Zero, one, many matches | Test authored; pending run |
 | `nestedDOM(selector)` Element | Inspected | Single descendant and no-match context | Test authored; pending run |
 | `nestedDOM(selector)` NodeList | Inspected | Flattened descendants | Test authored; pending run |
-| `nestedDOM(selector)` Array | Inspected | Zero/one/many polymorphic returns | Test authored; pending run |
+| `nestedDOM(selector)` Array | Inspected: Array fails accepted-type guard and is returned unchanged | Explicit unchanged-array test | Corrected test; rerun pending |
 | `nestedDOM(selector)` Document | Inspected | Not yet isolated | Pending authoring |
 | `nestedDOM(selector)` HTMLCollection | Inspected: returns unchanged | Explicit unchanged-result test | Test authored; pending run |
 | `extend(...args)` | Inspected; argument validation and custom-element branches mapped | Valid autonomous element and invalid no-hyphen name tests | Test authored; pending run |
 | `isEmpty` | Inspected: zero/false/null/empty string and recursive array semantics | Representative cases | Test authored; pending run |
 | `exit` | Inspected as no-op returning this | No test | Pending authoring |
 | `keepOn` | Inspected: returns input only for empty length and non-debug | Empty/non-empty/debug cases | Test authored; pending run |
-| `defer` | Inspected: passes array to setTimeout | TypeError test | Test authored; pending run |
+| `defer` | Inspected: spreads input, pops delay, passes remaining array to setTimeout; array is string-coerced by browser timer API | Non-throwing timer-handle test | Corrected test; rerun pending |
 | `getPlugin` | Inspected: dynamic import by string | No allowlist/security test | Pending authoring |
 | Lifecycle `on` | Inspected: fixed event names, no late replay | Late ready/init test | Test authored; pending run |
 | Constructor `initlog` | Inspected: no readyState check | Late callback test | Test authored; pending run |
@@ -86,8 +86,8 @@ Legend:
 
 ## Execution and acceptance
 
-1. Run the committed Playwright suite in Chromium and Firefox.
-2. Inspect and fix test harness failures without modifying upstream source.
+1. Re-run the corrected Playwright suite in Chromium and Firefox.
+2. Inspect any remaining failures without modifying upstream source or weakening source-grounded assertions.
 3. Add the remaining API and CSS tests above.
 4. Retain test logs, browser versions and generated AST catalog artifacts.
 5. Only then update this matrix with observed pass/fail results.
