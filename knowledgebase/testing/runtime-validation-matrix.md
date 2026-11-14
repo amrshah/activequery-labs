@@ -21,7 +21,7 @@ Legend:
 | `nestedDOM(selector)` Array | Inspected | Zero/one/many polymorphic returns | Test authored; pending run |
 | `nestedDOM(selector)` Document | Inspected | Not yet isolated | Pending authoring |
 | `nestedDOM(selector)` HTMLCollection | Inspected: returns unchanged | Explicit unchanged-result test | Test authored; pending run |
-| `extend(...args)` | Inspected; argument validation and custom-element branches mapped | No dedicated browser tests yet | Pending authoring |
+| `extend(...args)` | Inspected; argument validation and custom-element branches mapped | Valid autonomous element and invalid no-hyphen name tests | Test authored; pending run |
 | `isEmpty` | Inspected: zero/false/null/empty string and recursive array semantics | Representative cases | Test authored; pending run |
 | `exit` | Inspected as no-op returning this | No test | Pending authoring |
 | `keepOn` | Inspected: returns input only for empty length and non-debug | Empty/non-empty/debug cases | Test authored; pending run |
