@@ -21,7 +21,8 @@ Status: initial method inventory. Not a completed behavioral API reference.
 | Method | Source-observed role | Notes requiring care |
 |---|---|---|
 | `constructor(a=null)` | Initializes helper references, event listener and optional alias | See runtime model; global/prototype mutations |
-| `defer(a)` | Copies iterable, pops last value, multiplies by 1000, passes remaining callbacks to `setTimeout` | Actual callback shape is suspicious; verify intended use and runtime behavior |
+| `defer(a)` | Copies iterable, pops last value, multiplies by 1000, passes remaining array to `setTimeout` | `setTimeout` expects a callback function or string; the array argument is invalid/suspicious. See JS-016 |
+| `getPlugin(name)` | Dynamically imports the string module specifier with `import(name)` | Do not pass untrusted user-controlled module specifiers; restrict allowed modules at the application boundary |
 | `isArray(a)` / `isNaA(a)` | Positive/negative array checks | `isNaA` is negation |
 | `isArraySet(a)` / `isNaAS(a)` | Set checks | Negative counterpart |
 | `isObjectMap(a)` / `isNaOM(a)` | Map checks | Naming is unconventional |
@@ -85,14 +86,14 @@ The source invokes `ActiveQuery.extend` for these targets:
 | `i` | no meaningful argument | Returns element itself |
 | `setChild` | `(elementOrArray)` | Appends one or multiple nodes |
 | `siblings` | `(direction)` | `next`, `prev`, or all siblings; default branch references `target` not locally declared |
-| `setAdjacent` | `(position,element)` | Maps aliases to insertAdjacentElement positions |
-| `setHtml` | `(html,outer=false)` | Sets innerHTML or outerHTML; guard rejects falsy HTML |
+| `setAdjacent` | `(position,element)` | Maps aliases to insertAdjacentElement positions, but the guard returns early when either normal argument is truthy; ordinary calls are skipped |
+| `setHtml` | `(html,outer=false)` | Intended to set innerHTML or outerHTML, but the guard returns early when HTML is truthy; normal non-empty HTML writes are skipped |
 | `getHtml` | `(needle,outer=false)` | Returns markup or substring-presence boolean |
 | `setContent` | `(elementOrArray)` | Clears innerHTML then appends nodes |
 | `setText` | `(text)` | Sets textContent only when argument truthy |
 | `getText` | `(needle)` | Returns textContent or substring-presence boolean |
 | `setValue` | `(value)` | Sets value when supported and truthy; otherwise clears value |
-| `getValue` | `(needle,mode=false)` | Guarded substring checks; fallback/return behavior needs careful tests |
+| `getValue` | `(needle,mode=false)` | With a truthy needle and mode false, returns whether the value contains it; with mode true, returns `Boolean(indexOf(needle))` (false at index 0, true when absent); with no truthy needle, returns the Element itself |
 | `then` | `(callback)` | Calls callback with element |
 | `fax` | no parameters | Returns element when it is not a FORM; form behavior is incomplete in inspected body |
 | `on` | `(event,callback)` | Adds event listener when types are valid |
