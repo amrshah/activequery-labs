@@ -156,10 +156,12 @@ test("AQCSS base border token requires channel values rather than the default he
 test("AQCSS hover color alpha fallback is invalid until explicit percentages are supplied", async ({ page }) => {
   const result = await page.evaluate(() => {
     const plain = document.createElement("button");
+    plain.id = "plain-hover";
     plain.className = "button";
     plain.textContent = "Plain";
     document.body.appendChild(plain);
     const configured = document.createElement("button");
+    configured.id = "configured-hover";
     configured.className = "button";
     configured.textContent = "Configured";
     configured.style.setProperty("--aq-swatch-hover-text-opacity", "100%");
@@ -170,10 +172,10 @@ test("AQCSS hover color alpha fallback is invalid until explicit percentages are
       configuredBefore: getComputedStyle(configured).backgroundColor
     };
   });
-  await page.locator("button").first().hover();
-  const plainAfter = await page.locator("button").first().evaluate(node => getComputedStyle(node).backgroundColor);
-  await page.locator("button").nth(1).hover();
-  const configuredAfter = await page.locator("button").nth(1).evaluate(node => getComputedStyle(node).backgroundColor);
+  await page.locator("#plain-hover").hover();
+  const plainAfter = await page.locator("#plain-hover").evaluate(node => getComputedStyle(node).backgroundColor);
+  await page.locator("#configured-hover").hover();
+  const configuredAfter = await page.locator("#configured-hover").evaluate(node => getComputedStyle(node).backgroundColor);
   expect(plainAfter).toBe(result.plainBefore);
   expect(configuredAfter).not.toBe(result.configuredBefore);
 });
