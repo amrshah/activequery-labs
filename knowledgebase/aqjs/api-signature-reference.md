@@ -16,7 +16,7 @@ This reference records source-observed signatures and return shapes. It is not a
 | Static `exit` | `exit()` | Returns its receiver (`this`) | No other body effect. |
 | Static `keepOn` | `keepOn(a)` | Returns `a` only if `a.length == 0` and `window.debug` is falsy; otherwise undefined | Guard helper; assumes a readable `length`. |
 | Instance `defer` | `defer(a)` | Native timer handle | Copies iterable, pops last member as seconds, multiplies by 1000, passes remaining Array as `setTimeout` callback argument. Browser coercion does not turn its members into an invoked callback. |
-| Instance `getPlugin` | `async getPlugin(n)` | Imported module namespace for string input; otherwise returns instance | Uses dynamic `import(n)`; rejection propagates. Do not accept untrusted module specifiers. |
+| Instance `getPlugin` | `async getPlugin(n)` | Promise resolving to imported module namespace for string input; otherwise resolves to instance | Uses dynamic `import(n)`; import rejection propagates. Do not accept untrusted module specifiers. |
 | Instance predicates | `isX(a)` / `isNaX(a)` | Mostly Boolean, but several throw or are semantically misleading | Exact predicate list and failure conditions are in type-predicates-and-guards.md. |
 | Instance lifecycle `on` | `on(a = null, b = null)` | Always returns AQ instance | Registers only six fixed names; unknown names are ignored; no listener-removal API is returned. |
 
@@ -89,8 +89,8 @@ All methods are installed through `ActiveQuery.extend('array', ...)`.
 |---|---|---|
 | Document / Window `on` | `on(a, b)` | Always returns receiver; registers only for string event and function callback. |
 | Function `then` | `then(a)` | Calls callback with function receiver and returns callback result; otherwise undefined. |
-| Object `setValues` | `setValues(a, b, c = false)` | Guard commonly returns receiver for truthy key/value; calls missing static `ActiveQuery.isNaO` in valid path; unsafe. |
-| Object `hasValues` | `hasValues(a)` | Guard commonly returns receiver for truthy key; valid path calls missing static `ActiveQuery.isNaO`; unsafe. |
+| Object `setValues` | `setValues(a, b, c = false)` | Calls missing static `ActiveQuery.isNaO` before evaluating key/value guards; currently throws TypeError on invocation. Unsafe. |
+| Object `hasValues` | `hasValues(a)` | Calls missing static `ActiveQuery.isNaO` before evaluating key guard; currently throws TypeError on invocation. Unsafe. |
 | String / Number `trim` | `trim(charlist = null)` | Returns custom-trimmed string for matching primitive receiver; custom whitespace includes U+200B and excludes U+FEFF. String.prototype.trim is replaced. |
 
 ## Usage rule
