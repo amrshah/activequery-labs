@@ -9,7 +9,9 @@ Read `knowledgebase/README.md` first. Then use this routing table to load only t
 | Understand responsive behavior | `aqcss/tokens-and-responsive.md` | `aqcss/layout-utilities.md`, `testing/source-findings.md` |
 | Change colors or implement themes | `aqcss/tokens-and-responsive.md` | `aqcss/theme-effects.md`, custom-property index; remember dark mode is not established upstream |
 | Use AQJS selectors | `architecture/aqjs-runtime-model.md` | `aqjs/api-inventory.md`, browser tests |
-| Use Element/NodeList helpers | `aqjs/behavior-matrix.md` | `aqjs/api-inventory.md`, `aqjs/api-contract-closure-matrix.md`, `testing/source-findings.md` |
+| Use Element/NodeList helpers | `aqjs/api-signature-reference.md` | `aqjs/nodelist-edge-case-audit.md`, `aqjs/behavior-matrix.md`, `aqjs/api-contract-closure-matrix.md` |
+| Check AQJS predicate behavior | `aqjs/predicate-truth-table.md` | `aqjs/type-predicates-and-guards.md`, `testing/runtime-validation-matrix.md` |
+| Compare AQJS source and minified builds | `aqjs/source-minified-parity-audit.md` | `testing/minified-parity.md`, `aqjs/api-contract-closure-matrix.md` |
 | Use type checks / validation | `aqjs/type-predicates-and-guards.md` | `aqjs/api-inventory.md`, browser tests |
 | Use templating/filtering/observation | `aqjs/templating-and-observation.md` | `testing/source-findings.md`; prefer native APIs when AQJS behavior is suspect |
 | Extend prototypes or register custom elements | `aqjs/extend-and-custom-elements.md` | `architecture/aqjs-runtime-model.md`, governance notes |
