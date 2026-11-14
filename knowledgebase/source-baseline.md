@@ -40,7 +40,7 @@ The public ActiveQuery framework overview describes a philosophy plus independen
 
 - Main stylesheet: 1,808 lines, approximately 118 KB.
 - It contains broad base/framework selectors as well as the `aq-` namespace.
-- A brace-aware lexical rule-prelude scan found 1,417 selector rule blocks and 1,813 unique class tokens, plus 46 unique declared custom-property names (91 unique names appear when declarations and var() references are combined). These are navigation indexes, not semantic CSS parsing: inspect full rules, media context, cascade and computed browser behavior.
+- A brace-aware lexical rule-prelude scan found 1,417 selector rule blocks and 1,813 unique class tokens, plus 46 unique declared custom-property names (91 unique names appear when declarations and var() references are combined). The lexical indexes are supplemented by a PostCSS AST catalog generated and checked in CI. The rule catalog preserves complete declaration blocks, media context and source lines; the class-token index maps 1,813 tokens to rule IDs/lines/selectors; the custom-property index records 46 declared names and 91 names across declarations/references. Cascade and computed behavior still require browser-specific interpretation.
 - Source includes multiple media-query regions. A complete breakpoint and cascade map remains pending.
 - The CSS must be studied as a whole: variables, base resets, inherited W3CSS-derived behavior, AQ-specific utilities, responsive overrides, pseudo-classes and attribute selectors all matter.
 
@@ -61,17 +61,18 @@ The public ActiveQuery framework overview describes a philosophy plus independen
 
 Completed:
 - Confirmed access to the upstream AQCSS, AQJS and Labs repositories.
-- Retrieved the exact main stylesheet and JavaScript source.
-- Recorded source blob SHAs, source sizes, versions and license files.
-- Began line-by-line AQJS examination and structural inventory.
-- Read the existing Labs research baseline, agent instructions and machine-readable index.
+- Retrieved and pinned exact source/minified assets, blob SHAs, source sizes, versions and license files.
+- Built the 1,417-rule AQCSS selector/declaration catalog, 1,813-token class index and custom-property declaration/reference index; generated PostCSS AST catalogs in CI.
+- Inventoried the AQJS named export, constructor, static/instance methods and prototype extension targets.
+- Added 70 authored Playwright tests; run #204 passed 140 Chromium/Firefox browser cases.
+- Documented 73 source findings, traceability anchors, governance/license context and third-party provenance findings.
 
 Outstanding:
-- Complete AQCSS selector/rule/cascade catalogue.
-- Complete AQJS public and prototype API catalogue.
-- Trace implementation details and edge cases.
-- Build reproducible browser tests and validate behavior.
-- Reconcile and expand existing agent skills/indexes to point to the completed knowledgebase.
-- Run retrieval-based acceptance tests with a fresh-agent workflow.
+- Finish the AQCSS cascade/override map and exhaustive selector-family semantic review; structural selector/rule/token/property indexes now exist.
+- Finish AQJS per-method contracts and edge-case coverage; the public/prototype method inventory exists, but some signatures/branches remain untested.
+- Expand browser coverage beyond the current 70 authored tests / 140 passing Chromium+Firefox cases, especially touch/hybrid, reduced motion, broader viewport matrices and remaining APIs.
+- Complete AQCSS third-party provenance attribution beyond first-pass exact matches.
+- Reconcile and expand existing agent skills/indexes to point to the verified knowledgebase.
+- Run retrieval-based acceptance tests with an independent fresh-agent workflow; not yet executed.
 
 Do not use this file alone as an API reference.
