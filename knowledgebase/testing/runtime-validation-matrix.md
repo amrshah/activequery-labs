@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-15.
-Run #171 completed with 106 passed and 16 failed. After run #313, additional test coverage was added. The latest completed browser run #327 passed: **182 passed, 0 failed, 0 skipped** across Chromium and Firefox (91 authored tests in two browser projects). Run #325 remains the previous 88-test baseline; run #313 remains the historical 79-test baseline. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run #171 completed with 106 passed and 16 failed. After run #313, additional test coverage was added. The latest completed browser run #340 passed: **186 passed, 0 failed, 0 skipped** across Chromium and Firefox (93 authored tests in two browser projects). Run #327 remains the previous 91-test baseline; run #313 remains the historical 79-test baseline. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -9,9 +9,11 @@ Legend:
 - **Pending run** — test has not been observed passing in a real browser.
 - **Pending authoring** — additional test coverage is still required.
 
-## Latest AQJS contract coverage — verified in run #324
+## Latest AQJS contract coverage — verified through run #340
 
 Six additional tests were added for Element `setValue`, `setChild`, `then`/`fax`; NodeList no-op stubs and `on`; and Array `getCount` default-operator edge cases. The first execution exposed incorrect expectations in the tests, not framework regressions. Source review and subsequent passing browser assertions established: `isNaF` matches arrow-function source and strings containing `function`; `Element.setValue` writes an empty `value` property even on a generic Element when the supplied value is falsy or the Element lacks a native value property; and `NodeList.on` returns the same empty collection when called with valid arguments. Workflow [#325](https://github.com/amrshah/activequery-labs/actions/runs/43644825180) passed all 174 browser cases. A further source/minified fixture is authored in commit `5769645f9aa327c627ce58f8dda9a5b40934b8db` and awaits workflow #325.
+
+Run #340 adds isolated early-registration evidence: `ready` (DOMContentLoaded), `init` (load), and `run` (pageshow) each fired once; the constructor's `readystatechange=complete` handler invoked the queued `initlog` callback once. The same timing fixture passed against source and minified builds. Run #339's parity fixture initially failed from a test-harness variable-name typo (`path` versus `modulePath`); the harness was corrected and run #340 passed. This was not an upstream behavior failure.
 
 ## AQJS core and lifecycle
 
@@ -80,7 +82,7 @@ Six additional tests were added for Element `setValue`, `setChild`, `then`/`fax`
 | Area | Source review | Test coverage | Current status |
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
-| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, selected edge cases, Element value/child/then, NodeList events, Array `getCount` default branch, Array `then`, and Document/Window events | Selected fixtures passed in runs #325 and #327; complete method-level semantic parity remains pending |
+| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, selected edge cases, Element value/child/then, NodeList events, Array `getCount` default branch, Array `then`, Document/Window events, early lifecycle and constructor `initlog` | Selected fixtures passed in runs #325, #327 and #340; complete method-level semantic parity remains pending |
 | Breakpoints and responsive variants | Inspected: mobile/tablet/desktop hide range queries are malformed and ignored by Chromium/Firefox; tablet/desktop/large typography prefixes activate at their min-width thresholds | 599/600/601, 601/992, 993/1439 and 1440 computed-style tests | All tested breakpoint and hide-helper behavior passed in run #313; short-landscape and touch/hybrid behavior remain untested |
 | Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Passed in run #313 |
 | Layout/flex/spacing | Multiple source defects documented | Facet, row-gap, flex base, spacing aliases and responsive alignment tests | Passed in run #313 |
@@ -100,7 +102,15 @@ The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specif
 4. Keep the mastery gate open until coverage and independent-agent evaluation are complete.
 
 
-## Latest confirmed execution record — run #327
+## Latest confirmed execution record — run #340
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #340](https://github.com/amrshah/activequery-labs/actions/runs/43645942215) |
+| Commit | `790b5b9563f288a592a49298b41f2af8f25975d4` |
+| Execution | 186 passed, 0 failed, 0 skipped; 93 authored tests across Chromium and Firefox |
+
+## Previous execution record — run #327
 
 | Field | Verified value |
 |---|---|
