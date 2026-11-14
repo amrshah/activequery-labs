@@ -51,6 +51,10 @@ These are research leads, not confirmed AQI implementation facts. The AQJS sourc
 
 The public framework overview describes the framework and associated systems/names as proprietary intellectual property, while the AQCSS/AQJS source repositories separately publish their software under OSL-3.0. Treat software copyright licensing, trademark/name rights and conceptual framework IP as distinct questions. Do not infer that an open-source software license grants rights to use the author's marks or to present an independent portal as official. Obtain legal review for any commercial redistribution or branding decisions.
 
+## Principle/implementation tensions
+
+The inspected AQJS source currently shows a tension with the public AQI claims around local-scope discipline, global-scope minimization, DOM batching and event delegation. See `principle-implementation-review.md` for the exact source evidence and unresolved questions. This is a blocking research item, not a conclusion that the entire framework is invalid.
+
 ## Research plan for the wider framework
 
 1. Obtain authoritative technical specifications or repositories for AQI, AQS, AQPE and AQKISS.
