@@ -212,3 +212,44 @@ test("AQJS source and minified builds preserve Element value/child and NodeList 
     defaultCount: 2
   });
 });
+
+
+test("AQJS source and minified builds preserve Array then and Document/Window event contracts", async ({ page }) => {
+  const collect = async path => {
+    await page.goto(path);
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const values = [1, 2, 3];
+      const callbackResult = values.then(list => list.length + 10);
+      const missingCallback = values.then() === undefined;
+      const invalidCallback = values.then("not-a-callback") === undefined;
+      let documentCalls = 0;
+      let windowCalls = 0;
+      document.on("aq-parity-document", () => documentCalls++);
+      window.on("aq-parity-window", () => windowCalls++);
+      document.dispatchEvent(new Event("aq-parity-document"));
+      window.dispatchEvent(new Event("aq-parity-window"));
+      return {
+        callbackResult,
+        missingCallback,
+        invalidCallback,
+        documentCalls,
+        windowCalls,
+        invalidDocumentReturnsReceiver: document.on("", () => {}) === document,
+        invalidWindowReturnsReceiver: window.on("aq-invalid", null) === window
+      };
+    });
+  };
+  const sourceResult = await collect("/");
+  const minifiedResult = await collect("/tests/fixture-min.html");
+  expect(minifiedResult).toEqual(sourceResult);
+  expect(sourceResult).toEqual({
+    callbackResult: 13,
+    missingCallback: true,
+    invalidCallback: true,
+    documentCalls: 1,
+    windowCalls: 1,
+    invalidDocumentReturnsReceiver: true,
+    invalidWindowReturnsReceiver: true
+  });
+});
