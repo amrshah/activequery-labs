@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A source-grounded ActiveQuery field guide with an isolated, editable live playground.">
+  <meta name="theme-color" content="#101b2c">
+  <title>ActiveQuery Labs — Field Guide & Playground</title>
+  <link rel="stylesheet" href="./assets/portal.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="ActiveQuery Labs home">
+        <span class="brand-mark" aria-hidden="true">AQ</span>
+        <span class="brand-name">ActiveQuery <small>Labs</small></span>
+      </a>
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <a href="#approach">Approach</a>
+        <a href="#playground">Playground</a>
+        <a href="#reference">Knowledgebase</a>
+        <a href="#licensing">Licensing</a>
+      </nav>
+      <a class="header-cta" href="#playground">Try the lab <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> Source-grounded framework lab</p>
+          <h1>Understand the rules.<br><span>Build with evidence.</span></h1>
+          <p class="hero-lede">A practical field guide to ActiveQuery CSS and JavaScript, backed by pinned source references, browser-tested behavior and an agent-oriented knowledgebase.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#playground">Open live playground <span aria-hidden="true">→</span></a>
+            <a class="button button-quiet" href="#reference">Explore the knowledgebase</a>
+          </div>
+          <div class="hero-proof" aria-label="Project principles">
+            <span><i></i> Pinned upstream sources</span>
+            <span><i></i> Chromium + Firefox tests</span>
+            <span><i></i> Known defects documented</span>
+          </div>
+        </div>
+        <aside class="hero-console" aria-label="Knowledgebase status">
+          <div class="console-top"><span class="console-lights"><i></i><i></i><i></i></span><span>aq-labs / validation</span><span class="console-live">LIVE DATA</span></div>
+          <div class="console-body">
+            <p class="console-comment">// Evidence before assumptions</p>
+            <p><span class="console-key">AQCSS</span> <span class="console-value">selector + cascade maps</span></p>
+            <p><span class="console-key">AQJS</span> <span class="console-value">API + failure contracts</span></p>
+            <p><span class="console-key">TESTS</span> <span class="console-value">Chromium / Firefox</span></p>
+            <div class="console-divider"></div>
+            <div class="console-stat-row"><span>Current browser baseline</span><strong>232 / 232</strong></div>
+            <div class="console-bar"><span></span></div>
+            <p class="console-foot">Latest verified run: #365 · 116 authored tests</p>
+          </div>
+          <div class="console-bottom"><span>MASTERY GATE</span><strong>IN PROGRESS</strong></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="principles-section" id="approach">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-kicker">How this lab works</p>
+          <h2>Not another class-name cheat sheet.</h2>
+          <p>Every useful claim has a source trail. Every important limitation is called out instead of hidden behind a polished example.</p>
+        </div>
+        <div class="principle-grid">
+          <article class="principle-card">
+            <span class="principle-number">01</span>
+            <h3>Source first</h3>
+            <p>Selector maps, API signatures and provenance notes are tied to exact upstream revisions.</p>
+            <a href="https://github.com/amrshah/activequery-labs/tree/main/knowledgebase">Browse the knowledgebase <span aria-hidden="true">↗</span></a>
+          </article>
+          <article class="principle-card">
+            <span class="principle-number">02</span>
+            <h3>Behavior verified</h3>
+            <p>Computed styles, DOM contracts and known failure paths are exercised in two browser engines.</p>
+            <a href="https://github.com/amrshah/activequery-labs/actions">Inspect CI evidence <span aria-hidden="true">↗</span></a>
+          </article>
+          <article class="principle-card">
+            <span class="principle-number">03</span>
+            <h3>Agent ready</h3>
+            <p>Structured references help future agents retrieve facts without repeatedly reopening upstream source.</p>
+            <a href="https://github.com/amrshah/activequery-labs/tree/main/skills">Explore agent skills <span aria-hidden="true">↗</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="playground-section" id="playground">
+      <div class="container">
+        <div class="section-heading playground-heading">
+          <p class="section-kicker">Interactive lab</p>
+          <h2>Change the code. See the result.</h2>
+          <p>Edit the example's HTML, CSS or JavaScript. The preview updates in a separate sandboxed frame; your code does not execute in this page.</p>
+        </div>
+        <div class="playground-layout">
+          <section class="editor-panel" aria-labelledby="editor-title">
+            <div class="panel-heading">
+              <div><p class="panel-overline">SOURCE EDITOR</p><h3 id="editor-title">Example component</h3></div>
+              <button class="text-button" id="reset-example" type="button">Reset example</button>
+            </div>
+            <div class="editor-tabs" role="tablist" aria-label="Example source type">
+              <button type="button" role="tab" id="tab-html" aria-selected="true" aria-controls="source-editor" data-editor-tab="html">HTML</button>
+              <button type="button" role="tab" id="tab-css" aria-selected="false" aria-controls="source-editor" data-editor-tab="css">CSS</button>
+              <button type="button" role="tab" id="tab-js" aria-selected="false" aria-controls="source-editor" data-editor-tab="js">JavaScript</button>
+            </div>
+            <label class="editor-label" id="editor-label" for="source-editor">HTML source</label>
+            <textarea id="source-editor" class="source-editor" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Editable example source"></textarea>
+            <div class="editor-footer">
+              <span id="editor-status" aria-live="polite">HTML editor selected</span>
+              <button class="button button-run" id="run-preview" type="button">Run preview <span aria-hidden="true">▶</span></button>
+            </div>
+            <p class="editor-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> to run · Changes also preview automatically</p>
+          </section>
+
+          <section class="preview-panel" aria-labelledby="preview-title">
+            <div class="panel-heading preview-heading">
+              <div><p class="panel-overline">LIVE OUTPUT</p><h3 id="preview-title">Isolated preview</h3></div>
+              <span class="sandbox-badge"><i></i> Sandboxed</span>
+            </div>
+            <iframe id="live-preview" title="Isolated preview of the editable ActiveQuery example" sandbox="allow-scripts"></iframe>
+            <div class="preview-footer">
+              <span id="preview-status" role="status" aria-live="polite">Preparing pinned framework assets…</span>
+              <span class="preview-version">AQCSS + AQJS</span>
+            </div>
+          </section>
+        </div>
+        <div class="playground-footnote">
+          <span class="footnote-icon" aria-hidden="true">ⓘ</span>
+          <p>The preview frame intentionally omits <code>allow-same-origin</code>, forms, popups and top-navigation permissions. Do not paste secrets or run code you do not trust.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="reference-section" id="reference">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-kicker">Reference library</p>
+          <h2>Go deeper than the demo.</h2>
+          <p>The playground is a learning surface, not the specification. Use the source-grounded maps for exact contracts and known limitations.</p>
+        </div>
+        <div class="reference-grid">
+          <a class="reference-card" href="https://github.com/amrshah/activequery-labs/blob/main/knowledgebase/aqcss/flex-cascade-map.md">
+            <span class="reference-tag">AQCSS</span><h3>Flex & layout cascade</h3><p>Display triggers, alignment aliases, responsive variants and known selector defects.</p><span class="reference-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="reference-card" href="https://github.com/amrshah/activequery-labs/blob/main/knowledgebase/aqcss/spacing-cascade-map.md">
+            <span class="reference-tag">AQCSS</span><h3>Spacing contracts</h3><p>Scale values, shorthand/longhand precedence and responsive directional defects.</p><span class="reference-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="reference-card" href="https://github.com/amrshah/activequery-labs/blob/main/knowledgebase/aqjs/api-contract-closure-matrix.md">
+            <span class="reference-tag">AQJS</span><h3>API closure matrix</h3><p>Signatures, receiver behavior, edge cases and unresolved runtime coverage.</p><span class="reference-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="reference-card" href="https://github.com/amrshah/activequery-labs/blob/main/knowledgebase/testing/runtime-validation-matrix.md">
+            <span class="reference-tag">TESTING</span><h3>Runtime validation</h3><p>Browser evidence, source/minified parity and the limits of current test coverage.</p><span class="reference-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="notice-section" id="licensing">
+      <div class="container notice-card">
+        <div><p class="section-kicker">Independent project</p><h2>Clear provenance. No false affiliation.</h2></div>
+        <p>ActiveQuery Labs is an independent community project, not the official ActiveQuery website. Upstream CSS and JavaScript remain governed by their own licenses. This clean-room rebuild is a validation branch; public deployment is held pending the documented OSL-3.0 distribution review.</p>
+        <div class="notice-links">
+          <a href="https://github.com/ActiveQuery/CSS">Upstream CSS ↗</a>
+          <a href="https://github.com/ActiveQuery/JS">Upstream JS ↗</a>
+          <a href="https://github.com/ActiveQuery/Governance">Governance ↗</a>
+          <a href="https://github.com/amrshah/activequery-labs/blob/main/LICENSE-NOTICE.md">License notice ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="brand footer-brand" href="#top"><span class="brand-mark" aria-hidden="true">AQ</span><span class="brand-name">ActiveQuery <small>Labs</small></span></a>
+      <p>Source-grounded learning for real-world implementation.</p>
+      <a href="https://github.com/amrshah/activequery-labs">View repository ↗</a>
+    </div>
+  </footer>
+
+  <script type="module" src="./assets/portal.js"></script>
+</body>
+</html>
