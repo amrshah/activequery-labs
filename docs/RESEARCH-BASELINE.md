@@ -37,7 +37,7 @@ The constructor sets instance references to static helpers including `DOM`, `nes
 
 The source defines a static `DOM(selector)` helper that returns null for no matches, a single element for one match, or a NodeList for multiple matches. `nestedDOM(selector)` supports Element, Document, NodeList and HTMLCollection contexts.
 
-The source also contains instance type predicates including `isArray`, `isArraySet`, `isObjectMap`, `isArrayLike`, `isString`, `isObject`, `isObjectLiteral`, `isFunction`, `isClass`, `isNodeList`, `isSet`, `isArgument`, `isJSON`, and `isEmpty`. These names are inventory only; signatures and edge cases require further method-by-method inspection and tests.
+The instance method <code>on(name, callback)</code> recognizes <code>ready</code>, <code>init</code>, <code>run</code>, <code>offline</code>, <code>online</code> and <code>close</code>, wiring them respectively to DOMContentLoaded, load, pageshow, offline, online and beforeunload. It requires a string name and function callback and returns the instance.\n\nThe source also contains instance type predicates including `isArray`, `isArraySet`, `isObjectMap`, `isArrayLike`, `isString`, `isObject`, `isObjectLiteral`, `isFunction`, `isClass`, `isNodeList`, `isSet`, `isArgument`, `isJSON`, and `isEmpty`. These names are inventory only; signatures and edge cases require further method-by-method inspection and tests.
 
 ## Governance
 
