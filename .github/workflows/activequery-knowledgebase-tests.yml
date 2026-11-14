@@ -23,6 +23,7 @@ on:
       - "package.json"
       - "playwright.config.js"
       - "server.mjs"
+      - "rebuild/**"
       - ".github/workflows/activequery-knowledgebase-tests.yml"
 
 jobs:
