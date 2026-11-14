@@ -9,6 +9,10 @@ Legend:
 - **Pending run** — test has not been observed passing in a real browser.
 - **Pending authoring** — additional test coverage is still required.
 
+## Latest authored tests — pending execution
+
+Commit `96cbe9e54b9ade9826a00e43187b4323b0d6e7cd` adds six AQJS tests covering Element `setValue`, `setChild`, `then`/`fax`; NodeList no-op stubs and `on` argument/empty-list behavior; and Array `getCount` default-operator edge cases. Workflow [#321](https://github.com/amrshah/activequery-labs/actions/runs/43644461343) is the validation target. Until it completes, the established passing baseline remains run #313 (79 tests / 158 browser cases).
+
 ## AQJS core and lifecycle
 
 | API / behavior | Source review | Test coverage | Current status |
