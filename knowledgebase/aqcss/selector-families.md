@@ -57,7 +57,7 @@ This confirms a token layer exists; it does **not** prove a built-in dark-mode i
 
 ## Machine-readable navigation indexes
 
-The knowledgebase now includes a brace-aware lexical scan of 1,417 rule selector blocks and 1,813 unique class tokens. Use `class-token-index.json` to locate a class and `rule-selector-index.json` to inspect selector groups/line references. The custom property declaration index records 46 unique names and every detected declaration occurrence. These are navigation aids, not a substitute for cascade analysis, complete declarations or browser verification.
+The knowledgebase now includes a brace-aware lexical scan of 1,417 rule selector blocks and 1,813 unique class tokens. Use `class-token-index.json` to locate a class and `rule-selector-index.json` to inspect selector groups/line references. The custom property index records 46 declared names, 91 names across declarations/references, 81 declaration occurrences and 239 var() references. These are navigation aids, not a substitute for cascade analysis, complete declarations or browser verification.
 
 ## Catalogue completion requirements
 
