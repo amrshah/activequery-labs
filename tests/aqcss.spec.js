@@ -383,3 +383,21 @@ test("AQCSS desktop and large-screen prefixes activate while range-hide helpers 
   expect(large1439.hidden).not.toBe("none");
   expect(large1440.hidden).toBe("none");
 });
+
+
+test("AQCSS short-landscape overlay activates at 550px height and clears above threshold", async ({ page }) => {
+  await page.setViewportSize({ width: 800, height: 550 });
+  const at550 = await page.evaluate(() => ({
+    content: getComputedStyle(document.body, "::after").content,
+    display: getComputedStyle(document.body, "::after").display,
+    overflow: getComputedStyle(document.body).overflow
+  }));
+
+  await page.setViewportSize({ width: 800, height: 551 });
+  const at551 = await page.evaluate(() => getComputedStyle(document.body, "::after").content);
+
+  expect(at550.content).toContain("Turn Holding Position");
+  expect(at550.display).toBe("flex");
+  expect(at550.overflow).toBe("hidden");
+  expect(at551).toBe("none");
+});
