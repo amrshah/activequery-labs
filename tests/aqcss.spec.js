@@ -64,3 +64,68 @@ test("large-screen fs-2 and fs-3 lowercase classes miss uppercase selectors", as
   expect(result[4]).toBeGreaterThan(result[2]);
   expect(result[5]).toBeGreaterThan(result[2]);
 });
+
+test("AQCSS facet third width is 3.33333 percent rather than one third", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const container = document.createElement("div");
+    container.style.width = "300px";
+    const child = document.createElement("div");
+    child.className = "aq-facet--third";
+    container.appendChild(child);
+    document.body.appendChild(container);
+    return {
+      width: parseFloat(getComputedStyle(child).width),
+      containerWidth: parseFloat(getComputedStyle(container).width)
+    };
+  });
+  expect(result.width).toBeCloseTo(result.containerWidth / 30, 1);
+  expect(result.width).toBeLessThan(result.containerWidth / 10);
+});
+
+test("AQCSS row-gap xlarge unitless value is discarded by the browser", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.className = "aq-flexon aq-flexon--row-gap-xlarge";
+    document.body.appendChild(node);
+    return getComputedStyle(node).rowGap;
+  });
+  expect(result).not.toBe("2px");
+  expect(result).toBe("normal");
+});
+
+test("AQCSS tablet utility activates at 600px while mobile hide still includes 600px", async ({ page }) => {
+  await page.setViewportSize({ width: 599, height: 800 });
+  const at599 = await page.evaluate(() => {
+    const text = document.createElement("div");
+    text.className = "aq-t-text--large";
+    document.body.appendChild(text);
+    const hidden = document.createElement("div");
+    hidden.className = "aq-facet-hide-on-mobile";
+    document.body.appendChild(hidden);
+    return {
+      root: parseFloat(getComputedStyle(document.documentElement).fontSize),
+      text: parseFloat(getComputedStyle(text).fontSize),
+      hidden: getComputedStyle(hidden).display
+    };
+  });
+
+  await page.setViewportSize({ width: 600, height: 800 });
+  const at600 = await page.evaluate(() => {
+    const text = document.createElement("div");
+    text.className = "aq-t-text--large";
+    document.body.appendChild(text);
+    const hidden = document.createElement("div");
+    hidden.className = "aq-facet-hide-on-mobile";
+    document.body.appendChild(hidden);
+    return {
+      root: parseFloat(getComputedStyle(document.documentElement).fontSize),
+      text: parseFloat(getComputedStyle(text).fontSize),
+      hidden: getComputedStyle(hidden).display
+    };
+  });
+
+  expect(at599.text).toBeCloseTo(at599.root, 1);
+  expect(at599.hidden).not.toBe("none");
+  expect(at600.text).toBeGreaterThan(at600.root);
+  expect(at600.hidden).toBe("none");
+});
