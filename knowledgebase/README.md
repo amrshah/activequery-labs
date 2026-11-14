@@ -63,6 +63,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS theme and effects](aqcss/theme-effects.md)
 - [Source findings and verification queue](testing/source-findings.md)
 - [Browser validation plan and coverage](testing/browser-test-plan.md)
+- [Source/minified distribution parity](testing/minified-parity.md)
 - [Integration guidance](integration/README.md)
 - [Source traceability index](source-traceability/index.md)
 - [Mastery gate](mastery-gate.md)
