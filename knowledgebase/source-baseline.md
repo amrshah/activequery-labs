@@ -8,6 +8,8 @@ This file pins the exact upstream source revisions used for the current systemat
 |---|---|---|---|---|---|---:|
 | AQCSS | https://github.com/ActiveQuery/CSS | main | ActiveQuery.css | 25.6.0 | `c03546ecd1a41d26cbbfa8f1e31d38731f77cf62` | 118,361 chars |
 | AQJS | https://github.com/ActiveQuery/JS | main | ActiveQuery.js | 25.6.0 | `b8ec9e5be8668d048eea3385cd9012dfddb69cf0` | 44,399 chars |
+| AQCSS minified | https://github.com/ActiveQuery/CSS | main | ActiveQuery.min.css | 25.6.0 | `bdda032d530661c32d9a9351a4ae95219347f081` | 108,833 chars |
+| AQJS minified | https://github.com/ActiveQuery/JS | main | ActiveQuery.min.js | 25.6.0 | `594d778cd5fefe2caa039a7904343e385b77a50c` | 23,373 chars |
 | AQCSS license | https://github.com/ActiveQuery/CSS | main | LICENSE.txt | 25.6.0 | `95913ab0528af615935ad360fe4ab42feb09ed3d` | 12,960 chars |
 | AQJS license | https://github.com/ActiveQuery/JS | main | LICENSE.txt | 25.6.0 | `28eb6b57f17f9af993123b943fa6eae63be43ac2` | 13,841 chars |
 
