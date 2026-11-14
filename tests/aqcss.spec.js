@@ -217,3 +217,40 @@ test("1rem margin/padding left aliases are missing at all responsive prefixes", 
     expect(result.paddingRightRight).toBeGreaterThan(0);
   }
 });
+
+test("AQCSS flex modifiers need the base flexon class to establish display flex", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const modifierOnly = document.createElement("div");
+    modifierOnly.className = "aq-flexon--column";
+    const baseAndModifier = document.createElement("div");
+    baseAndModifier.className = "aq-flexon aq-flexon--column";
+    document.body.append(modifierOnly, baseAndModifier);
+    return {
+      modifierOnlyDisplay: getComputedStyle(modifierOnly).display,
+      baseDisplay: getComputedStyle(baseAndModifier).display,
+      baseDirection: getComputedStyle(baseAndModifier).flexDirection
+    };
+  });
+  expect(result.modifierOnlyDisplay).not.toBe("flex");
+  expect(result.baseDisplay).toBe("flex");
+  expect(result.baseDirection).toBe("column");
+});
+
+test("AQCSS mobile middle alignment alias requires a second class", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const middle = document.createElement("div");
+    middle.className = "aq-flexon aq-m-flexon--middle";
+    const center = document.createElement("div");
+    center.className = "aq-flexon aq-m-flexon--center";
+    document.body.append(middle, center);
+    const style = node => {
+      const value = getComputedStyle(node);
+      return { alignItems: value.alignItems, justifyContent: value.justifyContent };
+    };
+    return { middle: style(middle), center: style(center) };
+  });
+  expect(result.middle.alignItems).not.toBe("center");
+  expect(result.middle.justifyContent).not.toBe("center");
+  expect(result.center.alignItems).toBe("center");
+  expect(result.center.justifyContent).toBe("center");
+});
