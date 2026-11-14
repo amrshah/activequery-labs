@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-15.
-Run #171 completed with 106 passed and 16 failed (122 Chromium/Firefox cases). Failures exposed incorrect test assumptions and a Playwright thenable-serialization trap; corrections are committed and rerun is pending. **Runtime validation is not passed.**
+Run #171 completed with 106 passed and 16 failed. After correcting the tests and recording an additional AQCSS media-query defect, run #181 completed successfully: **122 passed, 0 failed, 0 skipped** across Chromium and Firefox. This validates the current authored suite only; broader viewport/API/accessibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -91,3 +91,20 @@ Legend:
 3. Add the remaining API and CSS tests above.
 4. Retain test logs, browser versions and generated AST catalog artifacts.
 5. Only then update this matrix with observed pass/fail results.
+
+
+## Confirmed execution record
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #181](https://github.com/amrshah/activequery-labs/actions/runs/43634873143) |
+| Commit | `7bab25998e5fc80b17135249827d2f7adf2f3299` |
+| Runner | Ubuntu 24.04.5 LTS (`ubuntu-24.04`) |
+| Node / npm | Node 22.23.4 / npm 10.9.9 |
+| Playwright | `@playwright/test` 1.56.1 |
+| Browser binaries | Chromium 141.0.7390.37 (Playwright build v1194); Firefox 142.0.1 (build v1495) |
+| Execution | 122 passed, 0 failed, 0 skipped; 23.6 seconds; 2 workers |
+| Source integrity | Pinned AQJS/AQCSS source and minified assets fetched and hash-verified before catalog generation and tests |
+| Artifact | Generated AQCSS/AQJS AST catalogs uploaded successfully by the workflow |
+
+The run validates the 61 authored tests in two browser projects. It does not prove complete framework mastery, exhaustive API coverage, accessibility, touch behavior, WebKit compatibility or the clean-room portal rebuild.
