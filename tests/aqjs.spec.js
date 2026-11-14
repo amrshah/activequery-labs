@@ -535,3 +535,135 @@ test("extend dom accepts a name without a hyphen then browser registration rejec
   });
   expect(result).toEqual({ threw: true, error: "SyntaxError", registered: false });
 });
+
+
+test("nestedDOM supports Document contexts with polymorphic descendant results", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const many = window.AQ.nestedDOM.call(document, ".target");
+    const one = window.AQ.nestedDOM.call(document, "#target-c");
+    const none = window.AQ.nestedDOM.call(document, ".missing");
+    return {
+      manyIsNodeList: many instanceof NodeList,
+      manyLength: many.length,
+      oneId: one.id,
+      noneIsDocument: none === document
+    };
+  });
+  expect(result).toEqual({
+    manyIsNodeList: true,
+    manyLength: 3,
+    oneId: "target-c",
+    noneIsDocument: true
+  });
+});
+
+test("Array query helpers implement loose, strict, substring and first-index contracts", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const values = [{ key: 1 }, { key: "1" }, { key: "abc" }, { key: "abcd" }];
+    return {
+      looseCount: values.getCount("key", "==", 1),
+      strictCount: values.getCount("key", "===", 1),
+      substringCount: values.getCount("key", "*", "bc"),
+      hasExact: values.has("key", "abc"),
+      foundIndex: values.getIndexs("key", "abcd"),
+      missingIndex: values.getIndexs("key", "missing"),
+      thenValue: values.then(list => list.length)
+    };
+  });
+  expect(result).toEqual({
+    looseCount: 2,
+    strictCount: 1,
+    substringCount: 2,
+    hasExact: true,
+    foundIndex: 3,
+    missingIndex: false,
+    thenValue: 4
+  });
+});
+
+test("Element attributes and inline styles expose early-stop and parsing behavior", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.setAttributes(["data-first", "one", "data-stop", "", "data-after", "three"]);
+    node.setAttributeName(["hidden", "inert"]);
+    node.removeAttributes(["inert"]);
+    node.setStyles(["color: red", "marginTop: 2px"]);
+    return {
+      first: node.getAttribute("data-first"),
+      stopped: node.hasAttribute("data-stop"),
+      after: node.hasAttribute("data-after"),
+      hidden: node.hasAttribute("hidden"),
+      inert: node.hasAttribute("inert"),
+      inlineStyles: node.getStyles(["color", "marginTop", true])
+    };
+  });
+  expect(result).toEqual({
+    first: "one",
+    stopped: false,
+    after: false,
+    hidden: true,
+    inert: false,
+    inlineStyles: ["red", "2px"]
+  });
+});
+
+test("Element content helpers distinguish HTML, text and substring modes", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.innerHTML = "<b>Hello</b>";
+    const before = {
+      html: node.getHtml(),
+      htmlContains: node.getHtml("Hello"),
+      text: node.getText(),
+      textContains: node.getText("ell"),
+      missingText: node.getText("missing")
+    };
+    const child = document.createElement("i");
+    child.textContent = "replacement";
+    node.setContent([child]);
+    const after = node.innerHTML;
+    return { before, after };
+  });
+  expect(result).toEqual({
+    before: {
+      html: "<b>Hello</b>",
+      htmlContains: true,
+      text: "Hello",
+      textContains: true,
+      missingText: false
+    },
+    after: "<i>replacement</i>"
+  });
+});
+
+test("NodeList bulk attribute, style and class mutators apply to each member", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const nodes = document.querySelectorAll(".target");
+    nodes.setAttributes(["data-batch", "yes"]);
+    nodes.setStyles(["color: blue"]);
+    nodes.setClasses(["batched"]);
+    return {
+      attributes: [...nodes].map(node => node.getAttribute("data-batch")),
+      colors: [...nodes].map(node => node.style.color),
+      classes: [...nodes].map(node => node.classList.contains("batched"))
+    };
+  });
+  expect(result).toEqual({
+    attributes: ["yes", "yes", "yes"],
+    colors: ["blue", "blue", "blue"],
+    classes: [true, true, true]
+  });
+});
+
+test("Element parent and name getters return DOM relationships", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.querySelector("#single");
+    const rootChild = document.documentElement;
+    return {
+      parentId: node.parent.id,
+      name: node.name,
+      htmlParentIsSelf: rootChild.parent === rootChild
+    };
+  });
+  expect(result).toEqual({ parentId: "fixture", name: "DIV", htmlParentIsSelf: true });
+});
