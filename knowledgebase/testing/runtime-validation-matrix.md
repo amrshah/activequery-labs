@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-15.
-Run #171 completed with 106 passed and 16 failed. After correcting the tests and recording additional AQCSS media-query defects, run #292 completed successfully: **156 passed, 0 failed, 0 skipped** across Chromium and Firefox. Run #281 was an earlier successful execution of the same 78-test suite; #292 is the latest verified run. This validates the current 78-test authored suite only; broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run #171 completed with 106 passed and 16 failed. After correcting the tests and recording additional AQCSS media-query defects, run #292 completed successfully: **156 passed, 0 failed, 0 skipped** across Chromium and Firefox. Run #281 was an earlier successful execution of the same 78-test suite; #292 is the latest verified run. Run #292 validates the then-current 78-test suite. A 79th test now covers whether `defer` actually invokes its callback and awaits CI; broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -25,7 +25,7 @@ Legend:
 | `isEmpty` | Inspected: zero/false/null/empty string and recursive array semantics | Representative cases | Passed in run #292 |
 | `exit` | Inspected as no-op returning this | Static and instance receiver identity | Passed in run #292 |
 | `keepOn` | Inspected: returns input only for empty length and non-debug | Empty/non-empty/debug cases | Passed in run #292 |
-| `defer` | Inspected: spreads input, pops delay, passes remaining array to setTimeout; array is string-coerced by browser timer API | Non-throwing timer-handle test | Passed in run #292 |
+| `defer` | Inspected: spreads input, pops delay, passes remaining array to setTimeout; array is string-coerced by browser timer API and callback is not invoked | Non-throwing timer-handle and callback non-execution tests | First test passed in run #292; callback non-execution test awaits CI |
 | `getPlugin` | Inspected: dynamic import by string | No allowlist/security test | Pending authoring |
 | Lifecycle `on` | Inspected: fixed event names, no late replay | Late ready/init test | Passed in run #292 |
 | Constructor `initlog` | Inspected: no readyState check | Late callback test | Passed in run #292 |
