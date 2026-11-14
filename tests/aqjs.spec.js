@@ -173,6 +173,17 @@ test("defer passes the remaining callback array to setTimeout without a synchron
   expect(result).toEqual({ threw: false, timerType: "number" });
 });
 
+test("defer stringifies callback arrays instead of invoking the callback", async ({ page }) => {
+  await page.evaluate(() => {
+    window.deferCalls = 0;
+    const instance = new window.AQ("");
+    instance.defer([() => window.deferCalls++, 0.01]);
+  });
+  await page.waitForTimeout(60);
+  const calls = await page.evaluate(() => window.deferCalls);
+  expect(calls).toBe(0);
+});
+
 test("suspect type predicates expose their source-level edge cases", async ({ page }) => {
   const result = await page.evaluate(() => {
     const instance = new window.AQ("");
