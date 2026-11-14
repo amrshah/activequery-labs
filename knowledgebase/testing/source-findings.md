@@ -100,6 +100,10 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 
 | JS-039 | `ActiveQuery.js:885-939` | Custom `String.prototype.trim` whitespace list includes U+200B ZERO WIDTH SPACE but omits U+FEFF ZERO WIDTH NO-BREAK SPACE/BOM, unlike native ECMAScript trim semantics. | Replacing native trim changes observable string behavior for Unicode whitespace and can break callers relying on native semantics. | Compare native captured method with AQJS trim for U+FEFF, U+200B and the full ECMAScript whitespace set. |
 
+
+| CSS-024 | `ActiveQuery.css:338-346,40-80` | Base border utilities call `rgb(var(--aq-swatch-secondary))`, but the winning root value for `--aq-swatch-secondary` is a hex color after duplicate declarations. | `rgb(#e7eaf6)` is invalid, so the base AQ border declarations are discarded unless the token is overridden with channel values. | Browser-test default token and explicit channel-list override. |
+| CSS-025 | `ActiveQuery.css:239-240` | Hover/focus color functions use `var(--aq-swatch-hover-text-opacity, inherit)` and `var(--aq-swatch-hover-button-opacity, inherit)` as alpha values. `inherit` is not a valid numeric/percentage alpha. | Default hover/focus color declarations may be discarded unless applications define valid opacity tokens. | Test hover with default variables and with explicit 100% alpha tokens. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
