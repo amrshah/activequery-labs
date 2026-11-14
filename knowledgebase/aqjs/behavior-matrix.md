@@ -56,7 +56,7 @@ Evidence: source-confirmed behavior; runtime status pending.
 
 ## String and Number extensions
 
-Both targets receive a method named `trim(charlist=null)` (Number lines 838–870; Object extension region follows; String implementation later around 883–917). The implementation converts the receiver to a string and performs custom trimming against a whitespace list. The method name overlaps native `String.prototype.trim` and adds a custom Number prototype method. Its exact descriptor and behavior should be compared against native trim with a dedicated test suite before use.
+Both targets receive a method named `trim(charlist=null)` (Number lines 817–869; String implementation around 886–917). The implementation converts the receiver to a string and performs custom trimming against a whitespace list. The method name overlaps native `String.prototype.trim` and adds a custom Number prototype method. Its exact descriptor and behavior should be compared against native trim with a dedicated test suite before use.
 
 ## Event registration surfaces
 
