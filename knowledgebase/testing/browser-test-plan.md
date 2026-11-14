@@ -35,6 +35,7 @@ Status: test harness committed; execution result has not yet been confirmed from
 ### AQCSS
 
 - PostCSS structural parse of the pinned source verifies that the stylesheet parses and that expected media queries, custom properties and representative selectors are present (`tests/css-source-parse.spec.js`).
+- Acorn AST inventory of AQJS source/minified artifacts verifies exported names, class methods, prototype extension targets and method names (`tests/js-source-parse.spec.js`).
 
 | Test | Expected contract | Coverage file |
 |---|---|---|
