@@ -858,3 +858,161 @@ test("ActiveQuery.exit and Element chain helpers return their receiver", async (
     thenValue: 2
   });
 });
+
+
+test("Element setValue writes only truthy values on value-capable elements", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const input = document.createElement("input");
+    const div = document.createElement("div");
+    input.value = "initial";
+    const setReturn = input.setValue("changed");
+    const afterTruthy = input.value;
+    input.setValue(0);
+    const afterZero = input.value;
+    input.setValue(false);
+    const afterFalse = input.value;
+    const divReturn = div.setValue("not-a-value-control");
+    return {
+      afterTruthy,
+      afterZero,
+      afterFalse,
+      setReturnsReceiver: setReturn === input,
+      divHasValueProperty: "value" in div,
+      divReturnSame: divReturn === div
+    };
+  });
+  expect(result).toEqual({
+    afterTruthy: "changed",
+    afterZero: "",
+    afterFalse: "",
+    setReturnsReceiver: true,
+    divHasValueProperty: false,
+    divReturnSame: true
+  });
+});
+
+test("Element setChild appends one node or each array member and returns its receiver", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const root = document.createElement("div");
+    const first = document.createElement("i");
+    const second = document.createElement("b");
+    const singleReturn = root.setChild(first);
+    const arrayReturn = root.setChild([second]);
+    const emptyReturn = root.setChild([]);
+    return {
+      tags: [...root.children].map(node => node.tagName),
+      singleReturnSame: singleReturn === root,
+      arrayReturnSame: arrayReturn === root,
+      emptyReturnSame: emptyReturn === root
+    };
+  });
+  expect(result).toEqual({
+    tags: ["I", "B"],
+    singleReturnSame: true,
+    arrayReturnSame: true,
+    emptyReturnSame: true
+  });
+});
+
+test("Element then returns callback result and fax leaves FORM unsupported", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const element = document.createElement("div");
+    const form = document.createElement("form");
+    const sentinel = { completed: true };
+    return {
+      callbackResultSame: element.then(node => node === element ? sentinel : null) === sentinel,
+      missingCallback: element.then() === undefined,
+      nonFunctionCallback: element.then("callback") === undefined,
+      nonFormFaxSame: element.fax() === element,
+      formFaxUndefined: form.fax() === undefined
+    };
+  });
+  expect(result).toEqual({
+    callbackResultSame: true,
+    missingCallback: true,
+    nonFunctionCallback: true,
+    nonFormFaxSame: true,
+    formFaxUndefined: true
+  });
+});
+
+test("NodeList no-op stubs preserve members and perform no DOM mutation", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const root = document.createElement("div");
+    root.innerHTML = "<span>one</span><span>two</span>";
+    const list = root.querySelectorAll("span");
+    const before = [...list].map(node => node.outerHTML);
+    const child = document.createElement("i");
+    const calls = [
+      list.setChild(child),
+      list.setAdjacent("after", child),
+      list.setHtml("<b>replace</b>"),
+      list.getHtml("one"),
+      list.setContent(child),
+      list.setText("replace"),
+      list.getText("one"),
+      list.getValue("one"),
+      list.fax()
+    ];
+    return {
+      allReturnSame: calls.every(value => value === list),
+      childNotInserted: !root.contains(child),
+      unchanged: [...list].map(node => node.outerHTML),
+      before
+    };
+  });
+  expect(result.allReturnSame).toBe(true);
+  expect(result.childNotInserted).toBe(true);
+  expect(result.unchanged).toEqual(result.before);
+});
+
+test("NodeList on validates arguments and returns the collection only for a valid listener", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const root = document.createElement("div");
+    root.innerHTML = "<button></button><button></button>";
+    const list = root.querySelectorAll("button");
+    const empty = root.querySelectorAll(".missing");
+    let calls = 0;
+    const invalidEvent = list.on("", () => calls++);
+    const invalidCallback = list.on("click", null);
+    const valid = list.on("click", () => calls++);
+    list.forEach(button => button.dispatchEvent(new Event("click")));
+    const emptyResult = empty.on("click", () => calls++);
+    return {
+      invalidEventUndefined: invalidEvent === undefined,
+      invalidCallbackUndefined: invalidCallback === undefined,
+      validReturnsList: valid === list,
+      emptyReturnsUndefined: emptyResult === undefined,
+      calls
+    };
+  });
+  expect(result).toEqual({
+    invalidEventUndefined: true,
+    invalidCallbackUndefined: true,
+    validReturnsList: true,
+    emptyReturnsUndefined: true,
+    calls: 2
+  });
+});
+
+test("Array getCount default operator exposes split and missing-property failure behavior", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const values = [{ key: "beta:more" }, { key: "beta" }, { key: "alpha" }];
+    let missingPropertyError = null;
+    try {
+      [{ other: "value" }].getCount("key", "x:", "not-present");
+    } catch (error) {
+      missingPropertyError = error.name;
+    }
+    return {
+      delimiterCount: values.getCount("key", "x:", "beta:more"),
+      noDelimiterCount: values.getCount("key", "contains", "beta"),
+      missingPropertyError
+    };
+  });
+  expect(result).toEqual({
+    delimiterCount: 2,
+    noDelimiterCount: 2,
+    missingPropertyError: "TypeError"
+  });
+});
