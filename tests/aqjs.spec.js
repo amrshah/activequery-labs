@@ -667,3 +667,65 @@ test("Element parent and name getters return DOM relationships", async ({ page }
   });
   expect(result).toEqual({ parentId: "fixture", parentIsNativeParent: true, name: "DIV" });
 });
+
+
+test("Array.setItem inserts only when both arguments are falsy", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const values = [1, 2];
+    const returned = values.setItem(0, 0);
+    return { values: [...values], returnedSame: returned === values };
+  });
+  expect(result).toEqual({ values: [0, 1, 2], returnedSame: true });
+});
+
+test("type predicate families expose positive, negative and broken array-like checks", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const instance = new window.AQ("");
+    let arrayLikeError = null;
+    let negativeArrayLikeError = null;
+    let negativeNodeListError = null;
+    try { instance.isArrayLike([1]); } catch (error) { arrayLikeError = error.name; }
+    try { instance.isNaAL([1]); } catch (error) { negativeArrayLikeError = error.name; }
+    try { instance.isNaNL(document.querySelectorAll(".target")); } catch (error) { negativeNodeListError = error.name; }
+    return {
+      isArray: instance.isArray([1]),
+      isNaA: instance.isNaA([1]),
+      isArraySet: instance.isArraySet(new Set([1])),
+      isNaAS: instance.isNaAS(new Set([1])),
+      isObjectMap: instance.isObjectMap(new Map()),
+      isNaOM: instance.isNaOM(new Map()),
+      isString: instance.isString("value"),
+      isObject: instance.isObject({ value: 1 }),
+      isNaO: instance.isNaO({ value: 1 }),
+      isNaM: instance.isNaM(new Map()),
+      isFunction: instance.isFunction(() => true),
+      isClass: instance.isClass(class Example {}),
+      isArgumentEmpty: instance.isArgument(""),
+      isArgumentNull: instance.isArgument(null),
+      isJSONArbitraryText: instance.isJSON("not valid JSON"),
+      arrayLikeError,
+      negativeArrayLikeError,
+      negativeNodeListError
+    };
+  });
+  expect(result).toEqual({
+    isArray: true,
+    isNaA: false,
+    isArraySet: true,
+    isNaAS: false,
+    isObjectMap: true,
+    isNaOM: false,
+    isString: true,
+    isObject: true,
+    isNaO: false,
+    isNaM: false,
+    isFunction: true,
+    isClass: true,
+    isArgumentEmpty: false,
+    isArgumentNull: true,
+    isJSONArbitraryText: true,
+    arrayLikeError: "ReferenceError",
+    negativeArrayLikeError: "ReferenceError",
+    negativeNodeListError: "ReferenceError"
+  });
+});
