@@ -125,7 +125,7 @@ test("AQCSS tablet utility activates at 600px while mobile hide still includes 6
   });
 
   expect(at599.text).toBeCloseTo(at599.root, 1);
-  expect(at599.hidden).not.toBe("none");
+  expect(at599.hidden).toBe("none");
   expect(at600.text).toBeGreaterThan(at600.root);
   expect(at600.hidden).toBe("none");
 });
