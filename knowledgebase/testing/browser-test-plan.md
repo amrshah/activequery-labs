@@ -32,7 +32,7 @@ Status: run #292 passed all 156 browser cases (78 authored tests × Chromium/Fir
 | Element class mutation/query | Adds, checks and removes classes | `tests/aqjs.spec.js` |
 | Element event helper | Native event listener invoked | `tests/aqjs.spec.js` |
 | Document nestedDOM | Zero/one/many descendant results and no-match context | `tests/aqjs.spec.js` |
-| Array helpers | `getCount`, `has`, `getIndexs`, `then`, and both `setItem` branches | `tests/aqjs.spec.js` |
+| Array helpers | `getCount`, `has`, `getIndexs`, `then`, and both `setItem` branches; test results are wrapped because AQJS makes Arrays thenable | `tests/aqjs.spec.js` |
 | Element attributes/styles | Pair early-stop, attribute-name/remove helpers and inline style reads | `tests/aqjs.spec.js` |
 | Element content | HTML/text retrieval and substring modes; node-array `setContent` | `tests/aqjs.spec.js` |
 | NodeList bulk mutators | Attributes, inline styles and classes applied across collection | `tests/aqjs.spec.js` |
