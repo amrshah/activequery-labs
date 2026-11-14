@@ -94,7 +94,7 @@ const catalog = {
   source: {
     repository: "https://github.com/ActiveQuery/CSS",
     file: sourcePath,
-    version: css.match(/ActiveQuery CSS v([^\\s]+)/)?.[1] || null,
+    version: css.match(/ActiveQuery CSS v([^\s]+)/)?.[1] || null,
     git_blob_sha: gitBlobSha
   },
   parser: "PostCSS AST",
