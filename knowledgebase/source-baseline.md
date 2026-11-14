@@ -1,6 +1,6 @@
 # Upstream Source Baseline
 
-Snapshot date: 2026-11-14
+Snapshot date: 2026-11-15
 
 This file pins the exact upstream source revisions used for the current systematic examination. Hashes are Git blob SHAs returned by GitHub for the fetched files. A later source change invalidates claims only where the changed code is relevant; agents must compare hashes before relying on this baseline.
 
