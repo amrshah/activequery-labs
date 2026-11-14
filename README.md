@@ -23,6 +23,12 @@ The goal is to make ActiveQuery easier to explore through practical, source-led 
 
 ## AI agent resources
 
+- [ActiveQuery AI Knowledgebase](knowledgebase/README.md) — canonical framework, AQCSS and AQJS reference, source traceability, known findings and mastery criteria.
+- [Mastery gate](knowledgebase/mastery-gate.md) — current status is **NOT PASSED**; the reference and browser validation work are in progress.
+- [Browser test plan](knowledgebase/testing/browser-test-plan.md) — pinned-source Playwright coverage; results must be confirmed from CI before being called passed.
+
+## AI agent resources
+
 - [Skills index](skills/README.md)
 - [Agent instructions](agent-reference/AGENTS.md)
 - [Machine-readable framework index](agent-reference/activequery-index.json)
