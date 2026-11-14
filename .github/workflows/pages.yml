@@ -50,6 +50,7 @@ jobs:
           echo "Validated ${#required[@]} required files."
           node --check playground/playground.js
           node --check components/components.js
+          node --check tools/aq-inspect.mjs
           echo "JavaScript syntax checks passed."
       - name: Setup Pages
         uses: actions/configure-pages@v5
