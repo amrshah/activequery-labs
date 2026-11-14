@@ -20,7 +20,7 @@ Status: source-derived truth/failure analysis. Runtime coverage is partial; do n
 | `isObjectLiteral(a)` | Reads `Object.getOwnPropertyNames(a)` before checking truthiness/type | Null/undefined throw before its later guard; not a robust plain-object test. |
 | `isNaM(a)` | Negation of `!!a && a instanceof Map` | Overlaps `isNaOM`; true for falsy and non-Map values. |
 | `isFunction(a)` | Truthy and `/function|()=>/.test(a.toString())` | String heuristic; the empty capture group in `()` means the `=>` alternative matches arrow-function source even when whitespace precedes the arrow. Callable values can still fail and non-callable custom stringifiers can pass. |
-| `isNaF(a)` | Negates the same truthy regex expression | Returns false for ordinary arrow functions and functions whose source contains `function`; true for other values that do not match. It is not a reliable negative callable predicate. |
+| `isNaF(a)` | Negates the same truthy regex expression | Returns false for arrow functions and any value whose `toString()` contains `function` (including the ordinary string `not a function`); true for non-matching values. It is not a reliable negative callable predicate. |
 | `isClass(a)` | Truthy and string contains `class` | String heuristic, not reliable class reflection. |
 | `isNaC(a)` | Negates same class-string check | Inherits heuristic limits. |
 | `isSet(a)` | Negates Array/falsy-string pattern checks | Despite name, checks an Array's string representation; not `instanceof Set`. |
