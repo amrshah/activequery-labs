@@ -27,7 +27,7 @@
   <script type="module">
     import { ActiveQuery } from "/vendor/ActiveQuery.js";
     window.AQ = ActiveQuery;
-    window.aq = new ActiveQuery();
+    // Avoid default constructor aliasing during the general fixture; test it in isolation.
     window.fixtureReady = true;
   </script>
 </body>
