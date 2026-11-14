@@ -117,6 +117,9 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | JS-045 | `ActiveQuery.js:119-124` | `extend("dom")` name regex permits names such as `foo` that do not contain the hyphen required by the browser custom-element specification. | AQJS passes the name check, then `customElements.define` throws SyntaxError. | Test valid hyphenated names and invalid names that pass AQ's regex. |
 | JS-046 | `ActiveQuery.js:119` | The same regex excludes digits, although digits are permitted in custom-element names after the first character. | Valid names containing digits may be rejected before browser registration. | Test spec-valid names containing digits and compare against AQ's regex. |
 
+
+| CSS-026 | `ActiveQuery.css:521-522,548-549` | Baseline `aq-m--margin-left` and `aq-m--padding-left` aliases are missing; the left-side declarations mistakenly use `aq-m--margin-right` and `aq-m--padding-right`, which are also used by right-side declarations. | The mobile/right class applies both left and right spacing, while the mobile/left class has no default-size rule. | Test baseline aliases and inspect other responsive scales separately. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
