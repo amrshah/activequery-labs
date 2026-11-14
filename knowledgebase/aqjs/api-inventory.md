@@ -100,7 +100,7 @@ The source invokes `ActiveQuery.extend` for these targets:
 
 ### NodeList methods and deliberate stubs
 
-The NodeList extension includes implementations for attributes, styles, classes, `i`, `siblings`, `setValue`, `on`, and `then`. Its `siblings` implementation is not a reliable equivalent of the Element version. The String extension also replaces the native `String.prototype.trim` with a non-writable/non-configurable implementation; see JS-033. Several methods are stubs that return `this` or undefined, including `getStyles`, `getClasses`, `setChild`, `setAdjacent`, `setHtml`, `getHtml`, `setContent`, `setText`, `getText`, `getValue`, and `fax`.
+The NodeList extension includes implementations for attributes, styles, classes, `i`, `siblings`, `setValue`, `on`, and `then`. Its `siblings` implementation is not a reliable equivalent of the Element version. The String extension replaces the native `String.prototype.trim` implementation while retaining the existing native descriptor flags (writable/configurable true, enumerable false); its whitespace semantics differ from native trim. Several methods are stubs that return `this` or undefined, including `getStyles`, `getClasses`, `setChild`, `setAdjacent`, `setHtml`, `getHtml`, `setContent`, `setText`, `getText`, `getValue`, and `fax`.
 
 Do not assume API parity between Element and NodeList.
 
