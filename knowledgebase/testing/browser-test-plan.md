@@ -13,6 +13,12 @@ Status: test harness committed; execution result has not yet been confirmed from
 
 ## Current automated coverage
 
+### Source/minified parity
+
+- PostCSS AST comparison checks all AQCSS source and minified rules, selectors, media context and declarations after syntax-preserving whitespace normalization.
+- Browser test compares core AQJS selector and Element helper behavior between source and minified module builds.
+- CI verifies exact Git blob SHAs for both source and minified files before testing.
+
 ### AQJS
 
 | Test | Expected contract | Coverage file |
@@ -40,7 +46,7 @@ Status: test harness committed; execution result has not yet been confirmed from
 
 ## Known gaps in automated coverage
 
-- No tests yet for constructor alias/prototype mutation.
+- Constructor alias/prototype mutation is covered for default null and explicit empty-string construction, but not all arbitrary aliases.
 - No tests yet for every AQJS method or collection-specific stub.
 - No tests yet for `sancha`, `sift` and `watch`.
 - No test yet for lifecycle event timing.
