@@ -77,7 +77,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS visibility, display and interaction-state cascade map](aqcss/visibility-interaction-cascade-map.md) — display/visibility helpers, malformed responsive hide ranges, pointer capability rules, hover/focus/disabled states, cascade conflicts and accessibility limitations.
 - [AQCSS base styles and controls](aqcss/base-controls.md)
 - [AQCSS layout utilities](aqcss/layout-utilities.md)
-- [AQCSS theme and effects](aqcss/theme-effects.md)
+- [AQCSS borders, swatches, background images and fleek effects](aqcss/theme-effects.md) — border/radius helpers, palette tokens and opacity, hover swatches, background-image presentation, filter/opacity effects, overlay/dropdown/blockquote behavior and cascade hazards.
 - [Source findings and verification queue](testing/source-findings.md)
 - [Browser validation plan and coverage](testing/browser-test-plan.md)
 - [Runtime validation matrix](testing/runtime-validation-matrix.md) — source coverage, authored tests, verified browser runs and remaining gaps.
