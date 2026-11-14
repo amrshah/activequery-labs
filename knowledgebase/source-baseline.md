@@ -25,6 +25,13 @@ The Governance repository identifies the Compliance Framework v21.1 and provides
 
 The public ActiveQuery framework overview describes a philosophy plus independent libraries and names AQS, AQI, AQPE, AQKISS, AQDB, AQPHP, AQPY and AQML. The inspected public repositories in this research provide concrete AQCSS and AQJS implementations; other named layers remain conceptual/unverified until their authoritative specifications and code are located. See `architecture/framework-overview.md`.
 
+## Last source-file commits observed
+
+- AQCSS `ActiveQuery.css`: commit `b1120e47027ceba6e6c8b8bf7796af4f6f002f1d`, 2025-06-28.
+- AQJS `ActiveQuery.js`: commit `5dd9145d6f36ad7e3966b6f55ecd6fcbe15003c7`, 2025-07-05.
+- Latest repository commits observed: AQCSS `6f479f6a3f315d2623af79dd49c84cb379b52473` (2025-07-05), AQJS `adb1b19770ca68840dc2f9e62de556a324bee2fa` (2025-07-05), Governance `ab369232ac801cfbf769d9838c07d4ea8846dfd5` (2025-06-28).
+- The published sources appear unchanged since mid-2025 in the commit history examined. See `source-freshness.md`.
+
 ## First-pass structural observations
 
 ### AQCSS
