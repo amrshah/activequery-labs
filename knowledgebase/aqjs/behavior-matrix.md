@@ -1,7 +1,7 @@
 # AQJS Prototype Behavior Matrix
 
 Source revision: `ActiveQuery.js` SHA `b8ec9e5be8668d048eea3385cd9012dfddb69cf0`.
-Evidence: source-confirmed behavior; runtime status pending.
+Evidence: source-confirmed behavior; selected contracts are browser-tested in Chromium and Firefox, with broader API coverage still pending.
 
 ## Element vs NodeList API parity
 
@@ -16,7 +16,7 @@ Evidence: source-confirmed behavior; runtime status pending.
 | `getStyles` | Returns array of truthy inline/computed values | Returns undefined | Collection stub |
 | `removeStyles` | Removes named inline properties | Removes from every node | Similar intent |
 | `setClasses` | Adds names | Adds names to each node | Similar intent |
-| `getClasses` | Returns class list or all-present boolean | Returns undefined | Collection stub |
+| `getClasses` | Returns class list or all-present boolean | Returns collection itself | Collection stub |
 | `removeClasses` | Removes trimmed names | Removes names from each node | Similar intent |
 | `toggleClasses` | Toggles one class | Toggles one class on every node | Similar intent |
 | `i` | Returns self | Returns indexed member if guard passes | Not equivalent |
@@ -29,7 +29,7 @@ Evidence: source-confirmed behavior; runtime status pending.
 | `setText` | Sets textContent only for truthy input | No-op | Collection stub |
 | `getText` | Returns textContent or substring boolean | No-op | Collection stub |
 | `setValue` | Sets truthy value; clears on falsy input | Sets/clears value across controls | Similar but falsy values collapse to empty |
-| `getValue` | Returns substring boolean for truthy needle; returns element when omitted | Returns undefined | Not a conventional getter |
+| `getValue` | Returns substring boolean for truthy needle; returns element when omitted | Returns collection itself | Not a conventional getter |
 | `then` | Calls callback with Element | Calls callback with NodeList | Callback helper |
 | `fax` | Incomplete form-specific behavior | No-op | Do not rely on it |
 | `on` | Adds listener to Element | Loops and adds listener to each node | Similar intent |
