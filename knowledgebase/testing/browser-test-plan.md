@@ -49,7 +49,7 @@ Status: run #266 passed all 152 browser cases (76 authored tests × Chromium/Fir
 | Text alignment utility | Computed text alignment is center | `tests/aqcss.spec.js` |
 | Circle border utility | Computed radius is non-zero | `tests/aqcss.spec.js` |
 | Tablet-prefixed typography | `aq-t-` rule activates at 600px | `tests/aqcss.spec.js` |
-| Mobile hide helper | Pinned media query is malformed and ignored; helper remains visible at 599/600/601px in Chromium/Firefox | `tests/aqcss.spec.js` |
+| Mobile/tablet/desktop hide helpers | All three range media queries are malformed and ignored; helpers remain visible at 599/600/601, 601/992 and 993/1439px. The simple screen-hide query works at 1440px | `tests/aqcss.spec.js` |
 | Dropdown interaction | Hover variant opens on pointer hover but not keyboard focus; click variant has no click-to-open behavior | `tests/aqcss.spec.js` |
 | Third-width anomaly | Computed width remains a small fraction, capturing source value without normalizing | `tests/aqcss.spec.js` |
 | Xlarge row-gap anomaly | Invalid `2` unitless declaration does not compute as 2px | `tests/aqcss.spec.js` |
