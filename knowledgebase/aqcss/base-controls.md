@@ -1,7 +1,7 @@
 # AQCSS Base Styles, Controls and Utility Elements
 
 Source: `ActiveQuery.css` SHA `c03546ecd1a41d26cbbfa8f1e31d38731f77cf62`.
-Evidence: source-confirmed declarations; selected focus, disabled-state, tooltip and dropdown behavior has been browser-tested in Chromium/Firefox; touch and full accessibility coverage remains open.
+Evidence: source-confirmed declarations; focus, disabled-state, tooltip, dropdown and reduced-motion behavior has been browser-tested in Chromium/Firefox; touch and full accessibility coverage remains open.
 
 ## Document and element baseline
 
@@ -72,7 +72,7 @@ A production component must explicitly provide:
 
 | Selector | Source behavior |
 |---|---|
-| `.input-animate` | Width transition; focus sets width to 100% |
+| `.input-animate` | Width transition of 0.4s ease-in-out; focus sets width to 100%; transition remains active under `prefers-reduced-motion: reduce` in Chromium/Firefox |
 | `.tooltip .text` | Hides text child by default |
 | `.tooltip:hover .text` | Displays text child on hover; keyboard focus alone does not reveal it in browser tests |
 | `.code` | Adds top/bottom margin |
