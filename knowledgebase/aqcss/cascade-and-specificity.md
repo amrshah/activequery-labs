@@ -65,4 +65,4 @@ See `custom-property-index.json`, `theme-effects.md` and source findings CSS-019
 
 Verified in Chromium and Firefox by the current Playwright suite: 599/600/601, 601/992, 993/1439 and 1440 breakpoint behavior; invalid range hide helpers; valid screen-hide helper; responsive prefixes; invalid row-gap; facet width; base border token; relative-color alpha support; flex/spacing aliases; focus outline; disabled descendants; tooltip and dropdown interaction; plus source/minified AST parity.
 
-Still pending: 992/993 and 1439/1440 boundary coverage for additional selector families, touch/hybrid pointer behavior, short-landscape overlay behavior, broad color-token coverage across themes, and wider browser compatibility beyond Chromium/Firefox.
+Still pending: 992/993 and 1439/1440 boundary coverage for additional selector families, touch/hybrid pointer behavior, broad color-token coverage across themes, and wider browser compatibility beyond Chromium/Firefox. The short-landscape overlay is now tested: Firefox renders it at 800x550, while Chromium drops the `body::after` rule after the stray semicolon; neither renders it at 800x551.
