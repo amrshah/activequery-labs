@@ -1018,3 +1018,41 @@ test("Array getCount default operator exposes split and missing-property failure
     missingPropertyError: "TypeError"
   });
 });
+
+
+test("getPlugin propagates dynamic-import rejection and keeps non-string fallback", async ({ page }) => {
+  const result = await page.evaluate(async () => {
+    const instance = new window.AQ("");
+    let rejection = null;
+    try {
+      await instance.getPlugin("/tests/does-not-exist-plugin.js?aqjs-contract=1");
+    } catch (error) {
+      rejection = error.name;
+    }
+    return {
+      rejected: rejection !== null,
+      errorName: rejection,
+      fallbackSame: await instance.getPlugin(null) === instance
+    };
+  });
+  expect(result).toEqual({
+    rejected: true,
+    errorName: "TypeError",
+    fallbackSame: true
+  });
+});
+
+test("Document and Window on return their receiver for invalid arguments", async ({ page }) => {
+  const result = await page.evaluate(() => ({
+    documentInvalidEventSame: document.on("", () => {}) === document,
+    documentInvalidCallbackSame: document.on("aq-invalid", null) === document,
+    windowInvalidEventSame: window.on("", () => {}) === window,
+    windowInvalidCallbackSame: window.on("aq-invalid", null) === window
+  }));
+  expect(result).toEqual({
+    documentInvalidEventSame: true,
+    documentInvalidCallbackSame: true,
+    windowInvalidEventSame: true,
+    windowInvalidCallbackSame: true
+  });
+});
