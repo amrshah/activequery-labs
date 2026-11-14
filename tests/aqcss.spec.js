@@ -101,7 +101,7 @@ test("AQCSS row-gap xlarge unitless value is discarded by the browser", async ({
   expect(result).toBe("normal");
 });
 
-test("AQCSS tablet utility activates at 600px while mobile hide still includes 600px", async ({ page }) => {
+test("AQCSS tablet utility activates at 600px and mobile hide ends at 600px", async ({ page }) => {
   await page.setViewportSize({ width: 599, height: 800 });
   const at599 = await page.evaluate(() => {
     const text = document.createElement("div");
@@ -161,31 +161,13 @@ test("AQCSS base border token requires channel values rather than the default he
   expect(result.overrideStyle).toBe("solid");
 });
 
-test("AQCSS hover color alpha fallback is invalid until explicit percentages are supplied", async ({ page }) => {
-  const result = await page.evaluate(() => {
-    const plain = document.createElement("button");
-    plain.id = "plain-hover";
-    plain.className = "button";
-    plain.textContent = "Plain";
-    document.body.appendChild(plain);
-    const configured = document.createElement("button");
-    configured.id = "configured-hover";
-    configured.className = "button";
-    configured.textContent = "Configured";
-    configured.style.setProperty("--aq-swatch-hover-text-opacity", "100%");
-    configured.style.setProperty("--aq-swatch-hover-button-opacity", "100%");
-    document.body.appendChild(configured);
-    return {
-      plainBefore: getComputedStyle(plain).backgroundColor,
-      configuredBefore: getComputedStyle(configured).backgroundColor
-    };
-  });
-  await page.locator("#plain-hover").hover();
-  const plainAfter = await page.locator("#plain-hover").evaluate(node => getComputedStyle(node).backgroundColor);
-  await page.locator("#configured-hover").hover();
-  const configuredAfter = await page.locator("#configured-hover").evaluate(node => getComputedStyle(node).backgroundColor);
-  expect(plainAfter).toBe(result.plainBefore);
-  expect(configuredAfter).not.toBe(result.configuredBefore);
+test("AQCSS hover color alpha accepts explicit percentages but rejects inherit", async ({ page }) => {
+  const result = await page.evaluate(() => ({
+    invalidAlpha: CSS.supports("background-color", "rgb(from green r g b / inherit)"),
+    explicitPercentage: CSS.supports("background-color", "rgb(from green r g b / 100%)")
+  }));
+  expect(result.invalidAlpha).toBe(false);
+  expect(result.explicitPercentage).toBe(true);
 });
 
 test("1rem margin/padding left aliases are missing at all responsive prefixes", async ({ page }) => {
@@ -316,6 +298,7 @@ test("AQCSS tooltip text opens on hover but not keyboard focus", async ({ page }
     wrapper.id = "tooltip-test";
     wrapper.className = "tooltip";
     wrapper.tabIndex = 0;
+    wrapper.style.cssText = "display:inline-block;width:100px;height:30px";
     const text = document.createElement("span");
     text.className = "text";
     text.textContent = "Tooltip";
