@@ -32,6 +32,10 @@ The public framework page explicitly says the philosophy can be adopted without 
 - A feature claim such as event batching, local scope or real-time adaptation must be traced to source and tests before it is described as implemented.
 - AQCSS and AQJS are independently usable libraries; do not assume they require the full ecosystem.
 
+## TEA and ISTM relationship
+
+The author-published TEA framework defines Transaction → Event → Agent as a conceptual model, including a two-agent transaction rule, transaction-triggered events and state changes for both participants. It also describes TEA/ATE/EAT as system/process/outcome lenses and recurring TEA chains. The ActiveQuery overview says AQI mirrors TEA logic. These are conceptual descriptions, not evidence of an executable AQI/AQS protocol. See `tea-istm-concepts.md`.
+
 ## AQI claims requiring technical substantiation
 
 The public page describes AQI as a behavioural layer and references:
@@ -42,6 +46,10 @@ The public page describes AQI as a behavioural layer and references:
 - environment-aligned integration.
 
 These are research leads, not confirmed AQI implementation facts. The AQJS source contains event registration and DOM mutation observation, but that alone does not establish the full AQI model or TEA semantics.
+
+## Intellectual property distinction
+
+The public framework overview describes the framework and associated systems/names as proprietary intellectual property, while the AQCSS/AQJS source repositories separately publish their software under OSL-3.0. Treat software copyright licensing, trademark/name rights and conceptual framework IP as distinct questions. Do not infer that an open-source software license grants rights to use the author's marks or to present an independent portal as official. Obtain legal review for any commercial redistribution or branding decisions.
 
 ## Research plan for the wider framework
 
