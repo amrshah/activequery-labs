@@ -57,7 +57,8 @@ The blockquote effect targets a `blockquote` element combined with `.aq-fleek--b
 ## Source map
 
 - Root theme variables: lines 40–80.
-- Typography and border utilities: lines 288–352.
-- Swatch background/text/border rules: lines 353–388.
-- Background image helpers: lines 389–411.
-- Fleek filters, overlay, dropdown and blockquote: lines 412–450.
+- Typography utilities: lines 280–337 and 471–503.
+- Border utilities: lines 338–352.
+- Swatch background/text/border rules: lines 354–388.
+- Background image helpers: lines 391–411.
+- Fleek filters, overlay, dropdown and blockquote: lines 414–470.
