@@ -63,3 +63,41 @@ test("Element event helper registers a native event listener", async ({ page }) 
   });
   expect(result).toBe(1);
 });
+
+test("default constructor triggers alias/prototype mutation through null coercion", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const before = {
+      windowNull: Object.prototype.hasOwnProperty.call(window, "null"),
+      objectZero: Object.prototype.hasOwnProperty.call(Object.prototype, "0"),
+      elementZero: Object.prototype.hasOwnProperty.call(Element.prototype, "0"),
+      nodeListZero: Object.prototype.hasOwnProperty.call(NodeList.prototype, "0")
+    };
+    new window.AQ();
+    return {
+      before,
+      after: {
+        windowNull: Object.prototype.hasOwnProperty.call(window, "null"),
+        objectZero: Object.prototype.hasOwnProperty.call(Object.prototype, "0"),
+        elementZero: Object.prototype.hasOwnProperty.call(Element.prototype, "0"),
+        nodeListZero: Object.prototype.hasOwnProperty.call(NodeList.prototype, "0")
+      },
+      aliasType: typeof window.null
+    };
+  });
+  expect(result.before).toEqual({ windowNull: false, objectZero: false, elementZero: false, nodeListZero: false });
+  expect(result.after).toEqual({ windowNull: true, objectZero: true, elementZero: true, nodeListZero: true });
+  expect(result.aliasType).toBe("function");
+});
+
+test("explicit empty-string constructor avoids the default alias side effect", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    new window.AQ("");
+    return {
+      windowNull: Object.prototype.hasOwnProperty.call(window, "null"),
+      objectZero: Object.prototype.hasOwnProperty.call(Object.prototype, "0"),
+      elementZero: Object.prototype.hasOwnProperty.call(Element.prototype, "0"),
+      nodeListZero: Object.prototype.hasOwnProperty.call(NodeList.prototype, "0")
+    };
+  });
+  expect(result).toEqual({ windowNull: false, objectZero: false, elementZero: false, nodeListZero: false });
+});
