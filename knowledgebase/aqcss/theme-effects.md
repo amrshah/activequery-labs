@@ -1,7 +1,7 @@
 # AQCSS Theme Swatches, Backgrounds and Effects
 
 Source: `ActiveQuery.css` SHA `c03546ecd1a41d26cbbfa8f1e31d38731f77cf62`.
-Evidence: selector declarations are source-confirmed; computed colors and cross-browser rendering remain pending.
+Evidence: selector declarations are source-confirmed; base border-token and relative-color alpha cases are runtime-tested in Chromium/Firefox; comprehensive swatch/theme and cross-browser rendering remains pending.
 
 ## Swatch families
 
