@@ -66,23 +66,21 @@ This mapping is source placement, not a claim about physical device categories. 
 
 The `aq-facet` family provides full-size, viewport-size, auto, fraction and 12-column sizing rules. For example, `aq-facet--w-1` through `aq-facet--w-12` correspond to approximately 1/12 through 12/12 width. Similar families exist for min/max width and height.
 
-Source inspection found that the class `.aq-facet--third` declares `width: 3.33333%` rather than the expected one-third value. Do not use it as a one-third width primitive until browser behavior and intended semantics are confirmed.
+Source inspection and Chromium/Firefox computed-style tests confirm `.aq-facet--third` and its responsive variants declare/use `width: 3.33333%` rather than one-third. Do not use it as a one-third width primitive.
 
 ## Flex utilities
 
 The `aq-flexon` family sets flex display and provides flow direction, wrapping, alignment, stretch/shrink, distribution and gap utilities. Responsive copies exist under `aq-t-flexon`, `aq-d-flexon` and `aq-s-flexon`.
 
-The `*-flexon--row-gap-xlarge` rules use `row-gap: 2!important` without a unit. This is invalid as a CSS length and should be treated as a source anomaly until tested. The `*-flexon--gap-xlarge` and column-gap variants have separate declarations; do not assume the three utilities are aliases.
+The `*-flexon--row-gap-xlarge` rules use `row-gap: 2!important` without a unit. Chromium/Firefox discard the invalid length; computed `row-gap` is `normal`. The `*-flexon--gap-xlarge` and column-gap variants have separate declarations; do not assume the three utilities are aliases.
 
 ## Input modality and viewport behavior
 
 At the end of the stylesheet:
 - `(pointer: coarse) and (hover: none)` hides touch-specific content;
-- a malformed width 1–600px media prelude attempts to hide mobile-specific content but is ignored by Chromium/Firefox;
-- width 601–992px hides tablet-specific content;
+- malformed width 1–600px, 601–992px and 993–1439px range media preludes attempt to hide mobile-, tablet- and desktop-specific content, but all three are ignored by Chromium/Firefox;
 - fine pointer plus hover hides no-touch-specific content;
-- width 993–1439px hides desktop-specific content;
-- width 1440px and above hides screen-specific content;
+- width 1440px and above hides screen-specific content through a valid simple min-width query;
 - max-height 550px in landscape applies a full-screen orientation overlay and hides body overflow.
 
 These are independent CSS conditions. Hybrid devices and desktop windows with low height need explicit testing.
