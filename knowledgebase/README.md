@@ -46,6 +46,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [Framework conceptual architecture map](architecture/framework-overview.md)
 - [TEA and ISTM conceptual notes](architecture/tea-istm-concepts.md)
 - [Governance and licensing notes](architecture/governance-and-licensing.md)
+- [Naming, versioning and repository conventions](architecture/conventions.md)
 - [AQJS runtime model](architecture/aqjs-runtime-model.md)
 - [AQJS API inventory](aqjs/api-inventory.md)
 - [AQJS prototype behavior matrix](aqjs/behavior-matrix.md)
