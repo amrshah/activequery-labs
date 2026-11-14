@@ -44,6 +44,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 
 ## Current high-value references
 
+- [Upstream freshness report](source-freshness.md)
 - [Framework conceptual architecture map](architecture/framework-overview.md)
 - [Principle vs implementation review](architecture/principle-implementation-review.md)
 - [TEA and ISTM conceptual notes](architecture/tea-istm-concepts.md)
@@ -55,10 +56,12 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQJS type predicates and guards](aqjs/type-predicates-and-guards.md)
 - [AQJS templating and observation](aqjs/templating-and-observation.md)
 - [AQJS extension and custom elements](aqjs/extend-and-custom-elements.md)
-- [AQJS AST inventory](aqjs/generated-ast-catalog.json) — generated in CI from the pinned source/minified artifacts.
+- [AQJS AST catalog generator](../tools/build-aqjs-catalog.mjs) — emits source/minified API inventories in CI.
+- [AQCSS AST catalog generator](../tools/build-aqcss-catalog.mjs) — emits rule, class and custom-property inventories in CI.
 - [AQCSS selector families](aqcss/selector-families.md)
 - [AQCSS class token index](aqcss/class-token-index.json) — 1,813 unique class tokens with source line/selector references.
-- [AQCSS rule selector index](aqcss/rule-selector-index.json) — 1,417 rule selector entries.
+- [AQCSS rule selector index](aqcss/rule-selector-index.json) — compact selector and source-line index.
+- [AQCSS full rule catalog](aqcss/rule-catalog.json) — 1,417 raw selector/declaration blocks with media context.
 - [AQCSS custom property index](aqcss/custom-property-index.json) — declaration occurrences for 46 declared custom-property names and 91 names across declarations/references.
 - [AQCSS tokens and responsive semantics](aqcss/tokens-and-responsive.md)
 - [AQCSS base styles and controls](aqcss/base-controls.md)
