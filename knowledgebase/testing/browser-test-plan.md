@@ -28,6 +28,8 @@ Status: test harness committed; execution result has not yet been confirmed from
 
 ### AQCSS
 
+- PostCSS structural parse of the pinned source verifies that the stylesheet parses and that expected media queries, custom properties and representative selectors are present (`tests/css-source-parse.spec.js`).
+
 | Test | Expected contract | Coverage file |
 |---|---|---|
 | Text alignment utility | Computed text alignment is center | `tests/aqcss.spec.js` |
