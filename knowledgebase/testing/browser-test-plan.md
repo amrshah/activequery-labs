@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run #365 passed all 232 browser cases (116 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: run #369 passed all 240 browser cases (120 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -71,6 +71,7 @@ The source-grounded but not-yet-implemented cross-family cases are listed in [AQ
 - No tests yet for every AQJS method or every collection-specific edge case; the identified NodeList no-op stubs now have representative invocation/no-mutation assertions.
 - `sancha`, `sift` and `watch` have authored targeted tests and remain passing through run #327; broader behavioral branches remain untested.
 - Lifecycle late registration, early `ready`/`init`/`run`, constructor `initlog` completion, and `offline`/`online`/`close` mappings have authored coverage and pass through run #347; repeated construction and unusual lifecycle timing remain to be expanded.
+- The clean-room portal is validated in CI but is not publicly deployed; the Pages workflow is intentionally unchanged pending the OSL-3.0 distribution review.
 - AQCSS cross-family composition coverage now includes 18 fully asserted AQX cases (001–008 and 010–019). AQX-009 verifies sticky/top computed cascade only; real sticky scroll behavior remains unverified.
 - No exhaustive CSS selector catalogue coverage.
 - Base border-token and hover alpha computed-style tests have been authored; exhaustive swatch/theme coverage remains outstanding.
@@ -81,9 +82,10 @@ The source-grounded but not-yet-implemented cross-family cases are listed in [AQ
 
 - `tests/aqjs.spec.js`: 60 targeted browser tests.
 - `tests/aqcss.spec.js`: 40 targeted computed-style/browser tests.
+- `tests/rebuild-portal.spec.js`: 4 clean-room portal tests (render, sandbox/live edit, AQJS event bridge, narrow layout).
 - `tests/minified-parity.spec.js`: 10 source/minified parity tests.
 - `tests/css-source-parse.spec.js`: 4 source/catalog tests; `tests/js-source-parse.spec.js`: 1 API inventory test; `tests/knowledgebase-integrity.spec.js`: 1 link-integrity test.
-- Total: 116 authored tests. The workflow is configured for both `push` and `pull_request` to `main`. Run #365 proves all 116 authored tests passed in both configured browser projects; future changes must continue to pass the workflow.
+- Total: 120 authored tests. The workflow is configured for both `push` and `pull_request` to `main`. Run #369 proves all 120 authored tests passed in both configured browser projects; future changes must continue to pass the workflow.
 
 ## Execution record
 

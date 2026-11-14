@@ -36,7 +36,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - `aqjs/` — exports, constructor, static and instance APIs, prototype extensions, lifecycle, DOM operations, templating, observation and edge cases.
 - `integration/` — AQCSS/AQJS interaction, browser-native integration and usage patterns.
 - `cookbook/` — tested recipes and implementation patterns.
-- `testing/` — reproducible test cases, compatibility, edge cases and known limitations; all 116 authored browser tests currently pass in Chromium and Firefox (232 browser cases in [run #365](https://github.com/amrshah/activequery-labs/actions/runs/43647892108)); run #313 remains the historical 79-test baseline.
+- `testing/` — reproducible test cases, compatibility, edge cases and known limitations; all 120 authored browser tests currently pass in Chromium and Firefox (240 browser cases in [run #369](https://github.com/amrshah/activequery-labs/actions/runs/43649159878)); run #313 remains the historical 79-test baseline.
 - `agent-reference/` — fast capability index, task-to-reference routing and concise agent instructions.
 - [Task routing guide](agent-reference/task-routing.md) — selects the smallest relevant reference for each agent task.
 - `source-traceability/` — symbol/selector-to-source map and verification records.
@@ -89,6 +89,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS focused composition test plan](testing/aqcss-composition-test-plan.md) — proposed cross-family and responsive computed-style tests, separated from existing run evidence.
 - [Browser validation plan and coverage](testing/browser-test-plan.md)
 - [Fresh-agent evaluation prompts](testing/fresh-agent-evaluation-prompts.md) and [answer key / scoring rubric](testing/fresh-agent-evaluation-answer-key.md) — 24-question retrieval benchmark; prepared but not yet administered.
+- [Clean-room portal rebuild](../rebuild/README.md) — separate, CI-validated implementation branch; public deployment pending license review.
 - [Runtime validation matrix](testing/runtime-validation-matrix.md) — source coverage, authored tests, verified browser runs and remaining gaps.
 - [Source/minified distribution parity](testing/minified-parity.md)
 - [Integration guidance](integration/README.md)

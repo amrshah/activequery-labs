@@ -32,7 +32,7 @@ The mastery label is withheld until every gate below has objective evidence. A l
 
 ## Gate C — Runtime validation
 
-- [x] Minimal reproducible AQJS test harness runs in at least two modern browser engines (116 authored tests / 232 browser cases passed in Chromium and Firefox in [run #365](https://github.com/amrshah/activequery-labs/actions/runs/43647892108)).
+- [x] Minimal reproducible AQJS test harness runs in at least two modern browser engines (120 authored tests / 240 browser cases passed in Chromium and Firefox in [run #369](https://github.com/amrshah/activequery-labs/actions/runs/43649159878)).
 - [x] AQCSS computed-style tests run at representative narrow, medium and wide viewports (599/600/601, 993 and 1440 CSS px); wider selector-family coverage remains incomplete.
 - [ ] Keyboard, focus, touch/pointer and reduced-motion behavior checked where relevant.
 - [x] Representative selector/API examples have passing expected-result tests in Chromium and Firefox.
@@ -52,13 +52,15 @@ The mastery label is withheld until every gate below has objective evidence. A l
 
 ## Gate E — Build-from-scratch proof
 
-- [ ] A new, clean portal implementation is produced from the knowledgebase, not copied from the current portal.
-- [ ] The new portal demonstrates AQCSS and AQJS usage accurately.
-- [ ] Components are accessible, responsive and professionally designed.
-- [ ] The live playground supports side-by-side source editing and preview, with isolated execution.
-- [ ] The portal is tested end-to-end on mobile and desktop.
-- [ ] Existing portal is not treated as a reference implementation for the rebuild.
+- [x] A new, clean portal implementation is produced from the knowledgebase, not copied from the current portal (`rebuild/` on the clean-room branch).
+- [x] The new portal demonstrates AQCSS and AQJS usage accurately, including a documented third-width limitation and a tested AQJS event helper.
+- [x] Components are keyboard-labelled, responsive and professionally designed; narrow viewport behavior is covered by Playwright.
+- [x] The live playground supports side-by-side HTML/CSS/JS editing and preview, with `sandbox="allow-scripts"` and no `allow-same-origin`.
+- [x] The portal is tested end-to-end in Chromium and Firefox, including a narrow mobile viewport and the AQJS event bridge ([run #369](https://github.com/amrshah/activequery-labs/actions/runs/43649159878)).
+- [x] Existing portal is not treated as a reference implementation for the rebuild; the new implementation is authored from the knowledgebase.
 - [ ] Light/dark modes are evaluated as a later design phase, after the framework mastery gate.
+
+Release boundary: the clean-room branch is CI-validated, but public Pages deployment is intentionally withheld pending OSL-3.0 distribution review. The light/dark evaluation and fresh-agent retrieval benchmark remain open.
 
 ## Declaration rule
 

@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-15.
-Run #171 completed with 106 passed and 16 failed. After run #313, additional test coverage was added. The latest completed browser run #365 passed: **232 passed, 0 failed, 0 skipped** across Chromium and Firefox (116 authored tests in two browser projects). Run #348 remains the previous 97-test baseline; run #313 remains the historical 79-test baseline. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run #171 completed with 106 passed and 16 failed. After run #313, additional test coverage was added. The latest completed browser run #369 passed: **240 passed, 0 failed, 0 skipped** across Chromium and Firefox (120 authored tests in two browser projects). Run #365 remains the previous 116-test baseline; run #313 remains the historical 79-test baseline. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -84,6 +84,7 @@ Run #340 adds isolated early-registration evidence: `ready` (DOMContentLoaded), 
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
 | AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, selected edge cases, Element value/child/then, NodeList events, Array `getCount` default branch, Array `then`, Document/Window events, early lifecycle and constructor `initlog`, Array query helpers, and Element/NodeList bulk mutations | Selected fixtures passed in runs #325, #327, #340 and #348; complete method-level semantic parity remains pending |
 | Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed, but real scroll-container behavior remains unverified | 18 full cases passed; sticky scroll behavior remains an explicit gap |
+| Clean-room portal | Responsive field guide, editable HTML/CSS/JS, isolated preview, AQJS event helper and narrow viewport layout | Four Playwright tests passed in run #369; preview sandbox allows scripts only and omits same-origin access | Passed in CI; public deployment withheld pending OSL-3.0 review |
 | Breakpoints and responsive variants | Inspected: mobile/tablet/desktop hide range queries are malformed and ignored by Chromium/Firefox; tablet/desktop/large typography prefixes activate at their min-width thresholds | 599/600/601, 601/992, 993/1439 and 1440 computed-style tests | All tested breakpoint and hide-helper behavior passed in run #313; short-landscape and touch/hybrid behavior remain untested |
 | Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Passed in run #313 |
 | Layout/flex/spacing | Multiple source defects documented | Facet, row-gap, flex base, spacing aliases and responsive alignment tests | Passed in run #313 |
@@ -103,7 +104,15 @@ The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specif
 4. Keep the mastery gate open until coverage and independent-agent evaluation are complete.
 
 
-## Latest confirmed execution record — run #365
+## Latest confirmed execution record — run #369
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #369](https://github.com/amrshah/activequery-labs/actions/runs/43649159878) |
+| Commit | `2139a2dd8a45103506e1bb5deb4f494bd6c32574` |
+| Execution | 240 passed, 0 failed, 0 skipped; 120 authored tests across Chromium and Firefox |
+
+## Previous execution record — run #365
 
 | Field | Verified value |
 |---|---|
