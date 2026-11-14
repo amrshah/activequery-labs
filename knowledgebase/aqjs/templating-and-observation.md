@@ -22,7 +22,7 @@ The method reads a template, finds placeholder-like expressions, iterates `args.
 ### Risks and caveats
 
 - Uses `insertAdjacentHTML` and `innerHTML`, so untrusted data can become an XSS vector unless correctly escaped.
-- References undeclared `variables`, `ii` and `i` in parts of the implementation.
+- References undeclared `variables`, `ii` and `i` in parts of the implementation. Since the library is an ES module, assigning to undeclared `ii`/`i` throws ReferenceError in data mode before rendering. Static mode returns before this loop and can work.
 - The placeholder parsing and replacement regular expressions have narrower syntax than a full template engine.
 - `args.then` is called without checking it is a function in the shown path.
 - The no-data path inserts the literal text "No Data found".
