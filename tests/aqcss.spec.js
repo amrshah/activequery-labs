@@ -570,7 +570,7 @@ test("AQX-008 fixed positioning remains fixed when combined with the top helper"
 test("AQX-009 sticky positioning works in a nested scrollport after accounting for the global body overflow", async ({ page }) => {
   const result = await page.evaluate(async () => {
     const frame = document.createElement("iframe");
-    frame.style.cssText = "width:400px;height:300px;border:0";
+    frame.style.cssText = "width:400px;height:600px;border:0";
     const loaded = new Promise(resolve => frame.addEventListener("load", resolve, { once: true }));
     frame.srcdoc = `<!doctype html><html><head><link rel="stylesheet" href="/vendor/ActiveQuery.css"></head><body>
       <div id="scroller" style="height:100px;width:250px;overflow-y:auto;border:1px solid">
