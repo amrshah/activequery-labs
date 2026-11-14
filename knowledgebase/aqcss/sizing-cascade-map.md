@@ -103,7 +103,7 @@ The same family ordering applies to the corresponding responsive copies. Width, 
 
 ## Source consistency and anomalies
 
-After normalizing the responsive prefixes, the 134 facet rule declarations in each context have the same structure and values, apart from inconsequential whitespace differences. The `--third` width defect is repeated consistently in all four contexts rather than being a one-breakpoint anomaly.
+After normalizing the responsive prefixes, the 134 facet rule declarations in each context have the same structure and values, apart from formatting-only differences (spacing and omitted final semicolons in some rules). The `--third` width defect is repeated consistently in all four contexts rather than being a one-breakpoint anomaly.
 
 Two pairs of names set the same property/value in each family:
 - `--wide-auto` and `--w-auto` both set `width:auto!important`.
@@ -124,6 +124,6 @@ These are duplicate spellings in the stylesheet, not separate sizing behaviors. 
 ## Validation status and remaining work
 
 - The selector counts, declarations, source locations, `!important` distribution and repeated `--third` value are source-confirmed against the pinned stylesheet.
-- The combination outcomes are derived from selector specificity, importance, source order and standard CSS sizing constraints. They have not yet been added as dedicated computed-style assertions in the Labs browser suite.
-- No runtime claim is made here about every class combination or viewport. Targeted computed-style tests should cover the `--third` defect, `--full` versus important sizing, same-property responsive overrides, and simultaneous width/height constraints before treating this map as runtime-verified.
+- The combination outcomes are derived from selector specificity, importance, source order and standard CSS sizing constraints. The existing layout overview records targeted facet-sizing browser tests, but the specific `--third` defect and the combination outcomes in this map are not evidenced as dedicated passing assertions; the `CSS-002` verification item remains open.
+- No runtime claim is made here about every class combination or viewport. Targeted computed-style tests should cover the `--third` defect, `--full` versus important sizing, same-property responsive overrides, and simultaneous width/height constraints before treating this map as fully runtime-verified.
 - This document maps facet sizing only. The broader Gate A criterion remains open: flex, positioning, typography, visibility, theme/global rules, selector overlaps and pseudo-class interactions still require declaration-level treatment.
