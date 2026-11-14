@@ -65,7 +65,7 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | JS-026 | `ActiveQuery.js:145-180` | Prototype extension branches call `Object.defineProperties` using descriptor objects without consistently validating shape or existing property descriptors. | Existing non-configurable properties or malformed descriptors can throw; new properties default to non-enumerable/non-writable/non-configurable. | Test collisions, descriptor flags, repeated extension calls and browser-native properties. |
 
 
-| JS-027 | `ActiveQuery.js:69-110` | `nestedDOM` explicitly accepts HTMLCollection in its initial type gate, but its query branch only handles contexts with `querySelectorAll` and its collection branch only handles NodeList or Array. | HTMLCollection context returns unchanged without querying descendants, contrary to the broad validation/comment. | Test HTMLCollection context and compare with NodeList and Array contexts. |
+| JS-027 | `ActiveQuery.js:69-110` | `nestedDOM` initial type gate accepts Element, Document, NodeList and HTMLCollection, but rejects Array before the later collection branch that contains an Array check. | Array and HTMLCollection contexts are returned unchanged; the Array-processing branch is unreachable for ordinary Arrays. | Test both unchanged-context cases and compare with Element/Document/NodeList behavior. |
 | JS-028 | `ActiveQuery.js:38-55` | Constructor registers a `readystatechange` listener but does not check whether `document.readyState` is already `complete`. | An instance created after the complete event may never execute callbacks pushed into `initlog`. | Create instance after load, push callback and verify whether it executes; also test early construction. |
 
 
