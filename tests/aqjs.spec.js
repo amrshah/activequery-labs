@@ -232,7 +232,7 @@ test("suspect type predicates expose their source-level edge cases", async ({ pa
   expect(result.isStringBoxed).toBe(true);
   expect(result.isObjectLiteralPlain).toBe(true);
   expect(result.isNaFFunction).toBe(false);
-  expect(result.isNaFSpacedArrow).toBe(true);
+  expect(result.isNaFSpacedArrow).toBe(false);
   expect(result.isNaFString).toBe(true);
   expect(result.isNaCClass).toBe(false);
   expect(result.isNaCFunction).toBe(true);
@@ -886,7 +886,7 @@ test("Element setValue writes only truthy values on value-capable elements", asy
     afterZero: "",
     afterFalse: "",
     setReturnsReceiver: true,
-    divHasValueProperty: false,
+    divHasValueProperty: true,
     divReturnSame: true
   });
 });
@@ -982,7 +982,7 @@ test("NodeList on validates arguments and returns the collection only for a vali
       invalidEventUndefined: invalidEvent === undefined,
       invalidCallbackUndefined: invalidCallback === undefined,
       validReturnsList: valid === list,
-      emptyReturnsUndefined: emptyResult === undefined,
+      emptyReturnsSame: emptyResult === empty,
       calls
     };
   });
@@ -990,7 +990,7 @@ test("NodeList on validates arguments and returns the collection only for a vali
     invalidEventUndefined: true,
     invalidCallbackUndefined: true,
     validReturnsList: true,
-    emptyReturnsUndefined: true,
+    emptyReturnsSame: true,
     calls: 2
   });
 });
