@@ -68,6 +68,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS custom property index](aqcss/custom-property-index.json) — declaration/reference index for 26 declared custom-property names and 71 names across declarations/references.
 - [AQCSS tokens and responsive semantics](aqcss/tokens-and-responsive.md)
 - [AQCSS cascade and specificity](aqcss/cascade-and-specificity.md)
+- [AQCSS cross-family cascade and selector-conflict audit](aqcss/cross-family-cascade-audit.md) — concrete interactions between utility families, important declarations, shorthand/longhand rules, responsive overlap, global selectors and a focused conflict-test matrix.
 - [AQCSS media-query and responsive selector map](aqcss/media-query-and-selector-map.md) — exact media-query inventory, responsive token correspondence, duplicated selectors and verified runtime caveats.
 - [AQCSS spacing utility cascade map](aqcss/spacing-cascade-map.md) — margin/padding declarations, responsive cascade order, shorthand/longhand outcomes and the 1rem left/right selector defect.
 - [AQCSS facet sizing cascade map](aqcss/sizing-cascade-map.md) — width/height fractions, min/max constraints, viewport units, responsive precedence and the repeated `--third` width defect.
