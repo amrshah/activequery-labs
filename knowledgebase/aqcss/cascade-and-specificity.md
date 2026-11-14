@@ -20,8 +20,8 @@ Snapshot: 2026-11-14.
 | `min-width: 993px` | Desktop-prefixed utility family begins |
 | `min-width: 1440px` | Large-screen utility family begins |
 | Source text `@media (min-width:1px)and(max-width:600px)`, `@media(min-width:601px)and(max-width:992px)`, `@media(min-width:993px)and(max-width:1439px)` | Intended mobile/tablet/desktop hide ranges, but all three malformed conditions are ignored by Chromium and Firefox |
-| `min-width: 601px and max-width: 992px` | Tablet-specific range |
-| `min-width: 993px and max-width: 1439px` | Desktop-specific range |
+| Intended `min-width: 601px and max-width: 992px` tablet-hide range | The authored prelude is actually `@media(min-width:601px)and(max-width:992px)` and is malformed/ignored in Chromium and Firefox |
+| Intended `min-width: 993px and max-width: 1439px` desktop-hide range | The authored prelude is actually `@media(min-width:993px)and(max-width:1439px)` and is malformed/ignored in Chromium and Firefox |
 | `max-height: 550px and orientation: landscape` | Short-landscape overlay behavior |
 | `pointer: coarse and hover: none` | Touch/coarse-pointer context |
 | `pointer: fine and hover: hover` | Fine-pointer/hover context |
