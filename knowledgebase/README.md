@@ -70,6 +70,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS cascade and specificity](aqcss/cascade-and-specificity.md)
 - [AQCSS media-query and responsive selector map](aqcss/media-query-and-selector-map.md) — exact media-query inventory, responsive token correspondence, duplicated selectors and verified runtime caveats.
 - [AQCSS spacing utility cascade map](aqcss/spacing-cascade-map.md) — margin/padding declarations, responsive cascade order, shorthand/longhand outcomes and the 1rem left/right selector defect.
+- [AQCSS facet sizing cascade map](aqcss/sizing-cascade-map.md) — width/height fractions, min/max constraints, viewport units, responsive precedence and the repeated `--third` width defect.
 - [AQCSS base styles and controls](aqcss/base-controls.md)
 - [AQCSS layout utilities](aqcss/layout-utilities.md)
 - [AQCSS theme and effects](aqcss/theme-effects.md)
