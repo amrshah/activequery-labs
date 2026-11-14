@@ -1,0 +1,40 @@
+{
+  "name": "ActiveQuery",
+  "portal": "https://amrshah.github.io/activequery-labs/",
+  "independent_community_project": true,
+  "upstream": {
+    "aqcss": {
+      "repository": "https://github.com/ActiveQuery/CSS",
+      "default_branch": "main",
+      "readme_version_claim": "25.6.0",
+      "source_file": "ActiveQuery.css",
+      "license": "OSL-3.0",
+      "third_party_notices": ["W3CSS 4.10 (MIT)", "Normalize.css 8.0.1 (MIT)"]
+    },
+    "aqjs": {
+      "repository": "https://github.com/ActiveQuery/JS",
+      "default_branch": "main",
+      "readme_version_claim": "25.6.0",
+      "source_file": "ActiveQuery.js",
+      "named_exports_verified": ["ActiveQuery"],
+      "license": "OSL-3.0",
+      "third_party_notices": ["Array.sortBy 1.2.2 (MIT)", "is-json 2.0.1 (ISC)"]
+    },
+    "governance": "https://github.com/ActiveQuery/Governance"
+  },
+  "documentation": {
+    "research_baseline": "../docs/RESEARCH-BASELINE.md",
+    "aqcss": "../docs/aqcss/",
+    "aqjs": "../docs/aqjs/",
+    "components": "../components/",
+    "playground": "../playground/",
+    "examples": "../examples/"
+  },
+  "skills": [
+    "../skills/activequery-foundation/SKILL.md",
+    "../skills/aqcss-engineering/SKILL.md",
+    "../skills/aqjs-engineering/SKILL.md",
+    "../skills/activequery-component-engineering/SKILL.md"
+  ],
+  "verification_policy": "Source-first. Treat names, signatures, behavior, compatibility and licensing as unverified until checked against the current upstream source and a reproducible test."
+}
