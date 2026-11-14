@@ -1,6 +1,6 @@
 # Fresh-Agent Knowledgebase Acceptance Evaluation
 
-Status: evaluation suite drafted; not yet executed by an independent/fresh agent.
+Status: evaluation suite drafted and updated to current browser evidence; not yet executed by an independent/fresh agent. The browser suite currently validates 69 authored tests in Chromium and Firefox, but that does not substitute for this independent knowledgebase-only evaluation.
 
 Purpose: prove that an AI agent can implement and reason about ActiveQuery using the knowledgebase without repeatedly reopening upstream source.
 
@@ -17,15 +17,15 @@ Purpose: prove that an AI agent can implement and reason about ActiveQuery using
 ### AQCSS
 
 1. **What are the AQCSS responsive prefixes and activation widths?**
-   - Expected: base/mobile companion `aq-`/`aq-m-`; `aq-t-` at min-width 600px; `aq-d-` at 993px; `aq-s-` at 1440px. Explain cumulative min-width behavior and 600px overlap with mobile-hide helper.
+   - Expected: base/mobile companion `aq-`/`aq-m-`; `aq-t-` at min-width 600px; `aq-d-` at 993px; `aq-s-` at 1440px. Explain cumulative min-width behavior. Do not claim the mobile-hide helper works: its media query is malformed and Chromium/Firefox leave it visible at 599, 600 and 601px.
    - Reference: `aqcss/tokens-and-responsive.md`, `aqcss/selector-families.md`.
 
 2. **What is wrong with `.aq-facet--third`?**
-   - Expected: base, tablet, desktop and large-screen third-width classes all use 3.33333%; do not silently reinterpret as 33.33333%; runtime confirmation remains pending.
+   - Expected: base, tablet, desktop and large-screen third-width classes all use 3.33333%; do not silently reinterpret as 33.33333%. Computed width is browser-verified in Chromium and Firefox.
    - Reference: `testing/source-findings.md`, `aqcss/layout-utilities.md`.
 
 3. **Can `.aq-flexon--row-gap-xlarge` be relied on?**
-   - Expected: source uses unitless `row-gap:2`; invalid CSS length; browser verification pending. Also mention base selector list missing commas and responsive spelling mismatches.
+   - Expected: source uses unitless `row-gap:2`; browser computed style resolves to `normal`, not `2px`. Also mention base selector list missing commas and responsive spelling mismatches.
    - Reference: `testing/source-findings.md`, `aqcss/layout-utilities.md`.
 
 4. **Does AQCSS provide a built-in dark-mode toggle?**
@@ -33,7 +33,7 @@ Purpose: prove that an AI agent can implement and reason about ActiveQuery using
    - Reference: `aqcss/tokens-and-responsive.md`, `aqcss/theme-effects.md`.
 
 5. **What accessibility risks must be addressed when using AQCSS controls?**
-   - Expected: global outline resets, hover-only tooltip/dropdown, disabled descendant selectors, contrast testing and keyboard/touch alternatives.
+   - Expected: global outline resets, hover-only tooltip/dropdown, disabled descendant selectors that style children rather than the disabled control itself, contrast testing and keyboard/touch alternatives. The mobile-hide helper is also ineffective in tested engines.
    - Reference: `aqcss/base-controls.md`, `testing/source-findings.md`.
 
 ### AQJS
@@ -51,7 +51,7 @@ Purpose: prove that an AI agent can implement and reason about ActiveQuery using
    - Reference: `aqjs/behavior-matrix.md`.
 
 9. **Is `sift(selector)` a working filter helper?**
-   - Expected: source guard returns early for truthy selectors, so normal valid selector path does not install handler; treat as suspect/broken pending runtime tests.
+   - Expected: source guard returns early for truthy selectors, so normal valid selector path does not install handler; this behavior is confirmed by Chromium/Firefox tests. Treat as broken for the normal selector use case.
    - Reference: `aqjs/templating-and-observation.md`, `testing/source-findings.md`.
 
 10. **Does the inspected AQJS source prove AQI event batching and delegated events?**
