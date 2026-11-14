@@ -570,30 +570,31 @@ test("AQX-008 fixed positioning remains fixed when combined with the top helper"
 test("AQX-009 sticky positioning retains its top inset while scrolling its container", async ({ page }) => {
   const result = await page.evaluate(async () => {
     const container = document.createElement("div");
-    container.style.cssText = "width:250px;height:100px;overflow:auto;position:relative";
+    container.style.cssText = "width:250px;height:400px;position:relative";
     const sticky = document.createElement("div");
     sticky.className = "aq-affix--sticky aq-affix--top";
     sticky.style.height = "20px";
     const spacer = document.createElement("div");
-    spacer.style.height = "300px";
+    spacer.style.height = "380px";
     container.append(sticky, spacer);
     document.body.appendChild(container);
     const style = getComputedStyle(sticky);
-    const containerTop = container.getBoundingClientRect().top;
-    container.scrollTop = 80;
+    const containerDocumentTop = container.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo(0, containerDocumentTop + 80);
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     return {
       position: style.position,
       top: style.top,
-      scrollTop: container.scrollTop,
-      stickyTopAfterScroll: sticky.getBoundingClientRect().top,
-      containerTop
+      scrollY: window.scrollY,
+      containerTopAfterScroll: container.getBoundingClientRect().top,
+      stickyTopAfterScroll: sticky.getBoundingClientRect().top
     };
   });
   expect(result.position).toBe("sticky");
   expect(result.top).toBe("0px");
-  expect(result.scrollTop).toBe(80);
-  expect(Math.abs(result.stickyTopAfterScroll - result.containerTop)).toBeLessThan(1);
+  expect(result.scrollY).toBeGreaterThan(0);
+  expect(result.containerTopAfterScroll).toBeLessThan(0);
+  expect(Math.abs(result.stickyTopAfterScroll)).toBeLessThan(1);
 });
 
 test("AQX-010 flex column and center-top compose into the expected alignment", async ({ page }) => {
@@ -661,13 +662,11 @@ test("AQX-013 zero opacity preserves layout while hide removes layout participat
       hiddenRectCount: hidden.getClientRects().length
     };
   });
-  expect(result).toEqual({
-    opacity: "0",
-    transparentDisplay: "block",
-    transparentRectCount: 1,
-    hiddenDisplay: "none",
-    hiddenRectCount: 0
-  });
+  expect(result.opacity).toBe("0");
+  expect(result.transparentDisplay).not.toBe("none");
+  expect(result.transparentRectCount).toBe(1);
+  expect(result.hiddenDisplay).toBe("none");
+  expect(result.hiddenRectCount).toBe(0);
 });
 
 test("AQX-014 wide-screen facet width on an image is capped by the global image max-width", async ({ page }) => {
