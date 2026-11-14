@@ -43,6 +43,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 ## Current high-value references
 
 - [Framework conceptual architecture map](architecture/framework-overview.md)
+- [TEA and ISTM conceptual notes](architecture/tea-istm-concepts.md)
 - [Governance and licensing notes](architecture/governance-and-licensing.md)
 - [AQJS runtime model](architecture/aqjs-runtime-model.md)
 - [AQJS API inventory](aqjs/api-inventory.md)
