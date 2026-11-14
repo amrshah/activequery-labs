@@ -1,0 +1,58 @@
+# AQJS Source and Minified Semantic Parity Audit
+
+Source artifact: `ActiveQuery.js`, blob SHA `b8ec9e5be8668d048eea3385cd9012dfddb69cf0`, 44,399 bytes.
+Minified artifact: `ActiveQuery.min.js`, blob SHA `594d778cd5fefe2caa039a7904343e385b77a50c`, 23,373 bytes.
+Both artifacts are from the ActiveQuery/JS repository's current main content at inspection time and match the pinned blob identifiers already recorded by this knowledgebase.
+
+## What is established
+
+The existing CI AST catalog validates structural parity for exported names, class method names/kinds/static flags, extension targets and extension method names/descriptor kinds. Existing Playwright coverage compares selected behaviors in Chromium and Firefox.
+
+A direct source/minified inspection of the high-risk methods below found the same material control flow and observable hazards in both artifacts:
+
+| Method / family | Source observation | Minified observation | Current conclusion |
+|---|---|---|---|
+| Array `i` | Calls `ActiveQuery.isNaN` before indexing | Same reference and guard | Hazard preserved; no mismatch seen. |
+| Array `getIndex` | `=` branch assigns in predicate | Same assignment expression | Defect preserved; no mismatch seen. |
+| Array `getCount` | Same operator branches and default split | Same branches and split | No mismatch seen; default branch still needs runtime cases. |
+| Array `setSort` | Assigns undeclared `aVal`, `bVal` | Same undeclared assignments | Hazard preserved; strict-mode test pending. |
+| Array `setItem` | Truthy either argument returns early; only both falsy reach splice | Equivalent conditional expression | No mismatch seen. |
+| Element `siblings` | Default references `target` | Same identifier | Hazard preserved. |
+| Element `setAdjacent` | Truthy args return early | Same guard | No mismatch seen. |
+| Element `setHtml` | Truthy HTML returns early | Equivalent conditional expression | No mismatch seen. |
+| Element `getValue` | Boolean substring modes, including inverted index behavior when mode true | Equivalent nested conditional | No mismatch seen. |
+| NodeList `siblings` | Double-indexes first Element | Same double indexing | Hazard preserved. |
+| NodeList stubs | Empty bodies or return-this bodies | Same empty/return-this bodies | No mismatch seen for inspected stub set. |
+| Object `setValues` / `hasValues` | Guard and missing static `ActiveQuery.isNaO` call | Same guard and call | Hazard preserved. |
+| Predicates | Unqualified identifiers and `x` reference | Same identifier references | Hazard preserved. |
+| `sancha`, `sift`, `watch` | Same undeclared identifiers, guard/callback paths and observer behavior in inspected sections | Minified excerpt retains those paths | No material mismatch observed in inspected paths. |
+
+## Limits — do not overclaim
+
+This is a focused manual comparison, not a complete method-by-method semantic equivalence proof.
+
+- AST parity does not compare expression semantics, string constants, branch ordering, exception behavior or side effects.
+- A handful of method bodies have been inspected side-by-side; not every public method has a canonical observation fixture.
+- Existing Playwright tests compare selected source/minified outcomes, not the complete public API.
+- Browser differences, timing, event ordering, Promise assimilation and global pollution require controlled fixtures.
+- A manual visual comparison can miss subtle minifier-induced differences.
+
+## Required completion work
+
+1. Build a generated fixture registry keyed by API surface and method, covering all class methods and all prototype extension methods.
+2. Run each fixture twice in isolated pages: once importing source and once importing minified build.
+3. Normalize observations to JSON-safe values: primitive result, receiver identity marker, exception name, relevant DOM snapshot, event count and explicitly selected global keys.
+4. For async methods, capture settled/rejected state with bounded timeouts; never allow a thenable test to hang the runner.
+5. Include normal, empty, falsy, invalid, missing callback, repeated call and cross-realm inputs where applicable.
+6. Treat any unexplained mismatch as a release-blocking finding; preserve known defects as expected parity observations rather than “fixing” one build.
+7. Keep the parity gate open until all public API rows have an explicit fixture or a documented reason a fixture is not meaningful.
+
+## Current gate status
+
+- Structural AST parity: existing CI evidence.
+- Selected runtime parity: existing test evidence, coverage partial.
+- Focused manual source/minified review: completed for the high-risk methods listed above.
+- Full method-level semantic parity: **NOT PROVEN**.
+- Mastery Gate B parity criterion remains unchecked.
+
+References: [API inventory](api-inventory.md), [contract closure matrix](api-contract-closure-matrix.md), [runtime validation matrix](../testing/runtime-validation-matrix.md), [mastery gate](../mastery-gate.md).
