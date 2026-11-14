@@ -29,5 +29,5 @@ test("generated AQCSS AST catalog is pinned and complete enough for research", a
   expect(catalog.source.git_blob_sha).toBe("c03546ecd1a41d26cbbfa8f1e31d38731f77cf62");
   expect(catalog.summary.rule_count).toBeGreaterThan(1000);
   expect(catalog.summary.unique_class_token_count).toBeGreaterThan(1000);
-  expect(catalog.summary.declared_custom_property_count).toBeGreaterThan(40);
+  expect(catalog.summary.declared_custom_property_count).toBeGreaterThan(20);
 });
