@@ -359,3 +359,16 @@ test("nestedDOM handles arrays of Elements and preserves polymorphic returns", a
     noneIsOriginal: true
   });
 });
+
+test("custom String.trim differs from native Unicode whitespace semantics", async ({ page }) => {
+  const result = await page.evaluate(() => ({
+    bomCustom: "\uFEFFvalue\uFEFF".trim(),
+    zeroWidthCustom: "\u200Bvalue\u200B".trim(),
+    bomNative: window.nativeStringTrim.call("\uFEFFvalue\uFEFF"),
+    zeroWidthNative: window.nativeStringTrim.call("\u200Bvalue\u200B")
+  }));
+  expect(result.bomCustom).toBe("\uFEFFvalue\uFEFF");
+  expect(result.zeroWidthCustom).toBe("value");
+  expect(result.bomNative).toBe("value");
+  expect(result.zeroWidthNative).toBe("\u200Bvalue\u200B");
+});
