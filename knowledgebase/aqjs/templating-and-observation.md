@@ -56,7 +56,7 @@ The source adds `watch` to Element.prototype and uses MutationObserver. It:
 - The callback invokes `args.then()` without validating it exists or is callable.
 - The shown method returns the result of `observer.observe`, which is normally undefined, not the observer instance.
 - The method does not expose a clear disconnect handle in the shown API.
-- The callback uses `this` inside a normal function passed to MutationObserver, so `this.watched` does not refer to the original element by lexical binding.
+- The callback uses `this` inside a normal function passed to `mutations.forEach`. In strict module code the inner callback's `this` is undefined, so `this.watched = ...` throws TypeError before `args.then()` is called.
 - The fallback implementation is large and must be examined separately.
 - The fallback guard reads `MutationObserver` as a bare identifier before assigning `window.MutationObserver`; if the global is absent, the check itself may throw.
 
