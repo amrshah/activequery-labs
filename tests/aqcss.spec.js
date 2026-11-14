@@ -180,37 +180,40 @@ test("AQCSS hover color alpha fallback is invalid until explicit percentages are
   expect(configuredAfter).not.toBe(result.configuredBefore);
 });
 
-test("baseline mobile margin/padding left aliases are missing and right aliases affect both sides", async ({ page }) => {
-  const result = await page.evaluate(() => {
-    const marginLeft = document.createElement("div");
-    marginLeft.className = "aq-m--margin-left";
-    const marginRight = document.createElement("div");
-    marginRight.className = "aq-m--margin-right";
-    const paddingLeft = document.createElement("div");
-    paddingLeft.className = "aq-m--padding-left";
-    const paddingRight = document.createElement("div");
-    paddingRight.className = "aq-m--padding-right";
-    document.body.append(marginLeft, marginRight, paddingLeft, paddingRight);
-    const style = node => {
-      const value = getComputedStyle(node);
+test("1rem margin/padding left aliases are missing at all responsive prefixes", async ({ page }) => {
+  const configs = [
+    { width: 599, prefix: "aq-m" },
+    { width: 600, prefix: "aq-t" },
+    { width: 993, prefix: "aq-d" },
+    { width: 1440, prefix: "aq-s" }
+  ];
+  for (const config of configs) {
+    await page.setViewportSize({ width: config.width, height: 900 });
+    const result = await page.evaluate(prefix => {
+      const marginLeft = document.createElement("div");
+      marginLeft.className = `${prefix}--margin-left`;
+      const marginRight = document.createElement("div");
+      marginRight.className = `${prefix}--margin-right`;
+      const paddingLeft = document.createElement("div");
+      paddingLeft.className = `${prefix}--padding-left`;
+      const paddingRight = document.createElement("div");
+      paddingRight.className = `${prefix}--padding-right`;
+      document.body.append(marginLeft, marginRight, paddingLeft, paddingRight);
+      const style = node => getComputedStyle(node);
       return {
-        marginLeft: parseFloat(value.marginLeft),
-        marginRight: parseFloat(value.marginRight),
-        paddingLeft: parseFloat(value.paddingLeft),
-        paddingRight: parseFloat(value.paddingRight)
+        marginLeft: parseFloat(style(marginLeft).marginLeft),
+        marginRightLeft: parseFloat(style(marginRight).marginLeft),
+        marginRightRight: parseFloat(style(marginRight).marginRight),
+        paddingLeft: parseFloat(style(paddingLeft).paddingLeft),
+        paddingRightLeft: parseFloat(style(paddingRight).paddingLeft),
+        paddingRightRight: parseFloat(style(paddingRight).paddingRight)
       };
-    };
-    return {
-      marginLeft: style(marginLeft),
-      marginRight: style(marginRight),
-      paddingLeft: style(paddingLeft),
-      paddingRight: style(paddingRight)
-    };
-  });
-  expect(result.marginLeft.marginLeft).toBe(0);
-  expect(result.marginRight.marginLeft).toBeGreaterThan(0);
-  expect(result.marginRight.marginRight).toBeGreaterThan(0);
-  expect(result.paddingLeft.paddingLeft).toBe(0);
-  expect(result.paddingRight.paddingLeft).toBeGreaterThan(0);
-  expect(result.paddingRight.paddingRight).toBeGreaterThan(0);
+    }, config.prefix);
+    expect(result.marginLeft, `left margin alias at ${config.width}px`).toBe(0);
+    expect(result.marginRightLeft).toBeGreaterThan(0);
+    expect(result.marginRightRight).toBeGreaterThan(0);
+    expect(result.paddingLeft).toBe(0);
+    expect(result.paddingRightLeft).toBeGreaterThan(0);
+    expect(result.paddingRightRight).toBeGreaterThan(0);
+  }
 });
