@@ -1083,3 +1083,46 @@ test("early lifecycle registration receives ready, init, run and constructor com
   });
   expect(result).toEqual({ ready: 1, init: 1, run: 1, complete: 1 });
 });
+
+
+test("instance lifecycle on supports offline online and close while ignoring unknown names", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const instance = new window.AQ("");
+    const calls = { offline: 0, online: 0, close: 0, unknown: 0 };
+    const returned = {
+      offline: instance.on("offline", () => calls.offline++),
+      online: instance.on("online", () => calls.online++),
+      close: instance.on("close", () => calls.close++),
+      unknown: instance.on("custom-event", () => calls.unknown++)
+    };
+    window.dispatchEvent(new Event("offline"));
+    window.dispatchEvent(new Event("online"));
+    window.dispatchEvent(new Event("beforeunload"));
+    window.dispatchEvent(new Event("custom-event"));
+    return {
+      calls,
+      allReturnInstance: Object.values(returned).every(value => value === instance)
+    };
+  });
+  expect(result).toEqual({
+    calls: { offline: 1, online: 1, close: 1, unknown: 0 },
+    allReturnInstance: true
+  });
+});
+
+test("NodeList index helper handles numeric strings, out-of-range and empty collections", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const list = document.querySelectorAll(".target");
+    const empty = document.querySelectorAll(".missing");
+    return {
+      numericString: list.i("1")?.id,
+      outOfRangeUndefined: list.i(99) === undefined,
+      emptyReturnsSame: empty.i(0) === empty
+    };
+  });
+  expect(result).toEqual({
+    numericString: "target-b",
+    outOfRangeUndefined: true,
+    emptyReturnsSame: true
+  });
+});
