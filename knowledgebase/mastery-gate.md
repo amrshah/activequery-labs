@@ -13,7 +13,7 @@ The mastery label is withheld until every gate below has objective evidence. A l
 
 - [x] Every AQCSS selector rule is inventoried structurally; the PostCSS AST catalog is generated and validated in CI.
 - [x] Every unique class token is mapped to rule IDs, selectors and source lines; complete declarations are available in the rule catalog.
-- [x] Custom properties are indexed across declarations and `var()` references (46 declared names; 91 names across declarations/references).
+- [x] Custom properties are indexed across declarations and `var()` references (26 declared names; 71 names across declarations/references).
 - [ ] All media queries and selector overrides mapped.
 - [x] AQJS export, constructor, static methods and prototype extension method families are inventoried.
 - [ ] Third-party/bundled code distinguished from AQ-authored code.
@@ -32,7 +32,7 @@ The mastery label is withheld until every gate below has objective evidence. A l
 
 ## Gate C — Runtime validation
 
-- [x] Minimal reproducible AQJS test harness runs in at least two modern browser engines (78 authored tests / 156 browser cases passed in Chromium and Firefox in [run #281](https://github.com/amrshah/activequery-labs/actions/runs/43638192585)).
+- [x] Minimal reproducible AQJS test harness runs in at least two modern browser engines (78 authored tests / 156 browser cases passed in Chromium and Firefox in [run #292](https://github.com/amrshah/activequery-labs/actions/runs/43638562334)).
 - [x] AQCSS computed-style tests run at representative narrow, medium and wide viewports (599/600/601, 993 and 1440 CSS px); wider selector-family coverage remains incomplete.
 - [ ] Keyboard, focus, touch/pointer and reduced-motion behavior checked where relevant.
 - [x] Representative selector/API examples have passing expected-result tests in Chromium and Firefox.
