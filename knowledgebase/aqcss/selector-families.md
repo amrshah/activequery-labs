@@ -23,7 +23,7 @@ AQCSS contains legacy/base selectors, AQ-prefixed utility families, and responsi
 | Borders | `.aq-border`, `.aq-border--*`, `.aq-no-border` | Border edges, radius and variants |
 | Visual effects | `.aq-fleek--*` | Filter, opacity, overlay, dropdown and quote effects |
 | Background images | `.aq-swatch-bg-img--*` | Background image sizing, positioning and repeat helpers |
-| Touch/device visibility | `.aq-facet-hide-on-touch`, `.aq-facet-hide-on-mobile`, `.aq-facet-hide-on-tablet`, `.aq-facet-hide-on-desktop`, `.aq-facet-hide-on-screen` | Device/input-context visibility; test exact conditions |
+| Touch/device visibility | `.aq-facet-hide-on-touch`, `.aq-facet-hide-on-mobile`, `.aq-facet-hide-on-tablet`, `.aq-facet-hide-on-desktop`, `.aq-facet-hide-on-screen` | Device/input-context visibility; note the mobile helper's malformed media query is ignored by Chromium/Firefox, so do not rely on it |
 
 ## Responsive prefix interpretation
 
