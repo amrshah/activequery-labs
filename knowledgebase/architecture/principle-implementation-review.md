@@ -17,7 +17,11 @@ This document does not declare the framework defective. It identifies claims tha
 
 **Assessment:** The default constructor has a broad global side effect that is in tension with the stated local-scope/security principle. Prototype augmentation may be an intentional design choice, but it needs a clear rationale, opt-in contract and collision/isolation strategy. The default-null aliasing appears especially suspect.
 
-## 2. AQI batching and event delegation claims vs AQJS source
+## 2. Native built-in override vs environment harmony
+
+AQJS replaces the native `String.prototype.trim` during module evaluation using `Object.defineProperties`. The replacement descriptor defaults to non-writable/non-configurable. This is another global behavior change and can conflict with other libraries or prevent restoration. See JS-033.
+
+## 3. AQI batching and event delegation claims vs AQJS source
 
 **Public AQJS README claim:** AQI efficiently batches BOM/DOM updates and delegates events.
 
@@ -30,7 +34,7 @@ This document does not declare the framework defective. It identifies claims tha
 
 **Assessment:** The inspected AQJS file does not substantiate the advertised batching/delegation behavior. AQI may be a separate conceptual/runtime layer, but its source/specification was not located in this research. Treat these claims as unverified until the actual AQI implementation is provided.
 
-## 3. Event-driven AQCSS vs stylesheet behavior
+## 4. Event-driven AQCSS vs stylesheet behavior
 
 AQCSS provides CSS-state selectors, hover/focus styles, pointer/hover media queries and custom-property-driven appearance. These are declarative CSS capabilities.
 
@@ -38,13 +42,13 @@ The stylesheet itself does not execute events, schedule behavior or mutate the D
 
 **Assessment:** "Event-driven" is an ecosystem-level description, not a literal claim that the CSS file itself contains an event runtime.
 
-## 4. Progressive enhancement and context-first execution
+## 5. Progressive enhancement and context-first execution
 
 The public framework description emphasizes context-first execution and progressive enhancement. AQCSS contains responsive and input-capability media rules; AQJS adds browser event and DOM helpers. These are relevant primitives, but the inspected sources do not by themselves define a complete AQPE decision model, fallback protocol or context negotiation contract.
 
 **Assessment:** The principle is plausible but not yet a fully specified implementation contract.
 
-## 5. Dependency-free claim vs bundled third-party code
+## 6. Dependency-free claim vs bundled third-party code
 
 The AQCSS and AQJS READMEs describe dependency-free use. Their source/license notices nevertheless identify bundled third-party components:
 - AQCSS: W3CSS and Normalize.css.
@@ -52,13 +56,13 @@ The AQCSS and AQJS READMEs describe dependency-free use. Their source/license no
 
 **Assessment:** Interpret "dependency-free" as no external runtime package/import requirement, not as "contains no third-party code." Attribution and license obligations still apply.
 
-## 6. Coverage badge
+## 7. Coverage badge
 
 Both READMEs display a 100% coverage badge. Targeted checks of likely package/test/CI paths and code searches for common test frameworks did not surface a test suite or CI workflow in the inspected repositories.
 
 **Assessment:** The badge is not independently substantiated by the evidence gathered. This does not prove tests do not exist elsewhere in the repositories; a complete tree/CI inspection is still required.
 
-## 7. Blocking questions for full mastery
+## 8. Blocking questions for full mastery
 
 1. Is AQI a separate runtime, a design philosophy, or both?
 2. Where is the AQI batching/delegation implementation and its test suite?
