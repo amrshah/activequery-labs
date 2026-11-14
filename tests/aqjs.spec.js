@@ -1056,3 +1056,30 @@ test("Document and Window on return their receiver for invalid arguments", async
     windowInvalidCallbackSame: true
   });
 });
+
+
+test("early lifecycle registration receives ready, init, run and constructor completion callbacks", async ({ page }) => {
+  const result = await page.evaluate(async () => {
+    const frame = document.createElement("iframe");
+    const loaded = new Promise(resolve => frame.addEventListener("load", resolve, { once: true }));
+    frame.srcdoc = `<!doctype html><html><head></head><body>
+      <script type="module">
+        import { ActiveQuery } from "/vendor/ActiveQuery.js";
+        const instance = new ActiveQuery("");
+        window.lifecycle = { ready: 0, init: 0, run: 0, complete: 0 };
+        instance.on("ready", () => window.lifecycle.ready++);
+        instance.on("init", () => window.lifecycle.init++);
+        instance.on("run", () => window.lifecycle.run++);
+        instance.initlog.push(() => window.lifecycle.complete++);
+        window.lifecycleSetup = true;
+      <\/script>
+    </body></html>`;
+    document.body.appendChild(frame);
+    await loaded;
+    await new Promise(resolve => setTimeout(resolve, 30));
+    const state = frame.contentWindow.lifecycle;
+    frame.remove();
+    return state;
+  });
+  expect(result).toEqual({ ready: 1, init: 1, run: 1, complete: 1 });
+});
