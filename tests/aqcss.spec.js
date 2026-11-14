@@ -569,6 +569,7 @@ test("AQX-008 fixed positioning remains fixed when combined with the top helper"
 
 test("AQX-009 sticky positioning retains its top inset while scrolling its container", async ({ page }) => {
   const result = await page.evaluate(async () => {
+    document.body.style.minHeight = "1600px";
     const container = document.createElement("div");
     container.style.cssText = "width:250px;height:400px;position:relative";
     const sticky = document.createElement("div");
