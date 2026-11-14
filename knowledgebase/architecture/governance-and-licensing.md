@@ -41,6 +41,10 @@ This has practical implications when bundling, modifying, redistributing or depl
 
 AQCSS README/source identifies W3CSS and Normalize.css. AQJS source identifies Array.sortBy and is-json. Their respective notices and license texts must remain associated with any redistributed bundle. See the upstream license/notice files and verify the exact versions used.
 
+## Naming and repository conventions
+
+The Governance `CONVENTIONS.md` v25.6 defines PascalCase branding and file/folder names, Dromedary/camelCase JavaScript objects, PascalCase JavaScript classes, kebab-case CSS classes/variables, and a BEM-inspired `aq-` namespace with `--` modifiers. It describes an `AQStream` directory split into Quarks (core components) and Lepton (plugins). These are conventions and conceptual repository organization, not proof of a shared executable runtime. See `conventions.md`.
+
 ## Portal engineering policy
 
 - Keep site-authored code and upstream code in separate directories and clearly label provenance.
