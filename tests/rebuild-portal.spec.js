@@ -27,7 +27,7 @@ test.describe("clean-room portal", () => {
 
   test("executes the sample AQJS event helper inside the isolated preview", async ({ page }) => {
     await expect(page.locator("#preview-status")).toContainText("Preview updated", { timeout: 15000 });
-    await page.frameLocator("#live-preview").getByRole("button", { name: "Toggle details" }).click();
+    await page.locator("#trigger-preview-event").click();
     await expect(page.locator("#preview-status")).toContainText("AQJS event helper ran");
   });
 

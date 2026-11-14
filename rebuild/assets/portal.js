@@ -138,7 +138,12 @@ function createPreviewDocument() {
 
   window.addEventListener("message", (event) => {
     const payload = event.data;
-    if (!payload || payload.type !== "render") return;
+    if (!payload) return;
+    if (payload.type === "simulate-click") {
+      document.getElementById("toggle-details")?.click();
+      return;
+    }
+    if (payload.type !== "render") return;
     document.getElementById("aqcss").textContent = payload.aqcss;
     document.getElementById("user-css").textContent = payload.css;
 
@@ -192,6 +197,13 @@ for (const button of tabButtons) {
 
 editor.addEventListener("input", schedulePreview);
 $("#run-preview").addEventListener("click", renderPreview);
+$("#trigger-preview-event").addEventListener("click", () => {
+  if (!frameReady) {
+    setPreviewStatus("Preview is not ready yet");
+    return;
+  }
+  preview.contentWindow.postMessage({ type: "simulate-click" }, "*");
+});
 
 $("#reset-example").addEventListener("click", () => {
   example = { ...initialExample };

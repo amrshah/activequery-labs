@@ -23,7 +23,7 @@ The fetch script verifies Git blob hashes before copying upstream CSS/JS and the
 
 ## Preview isolation
 
-The live example runs in an iframe with `sandbox="allow-scripts"` only. It does not receive `allow-same-origin`, form submission, popup or top-navigation permissions. The parent sends source text using `postMessage`; it does not read the preview document.
+The live example runs in an iframe with `sandbox="allow-scripts"` only. It does not receive `allow-same-origin`, form submission, popup or top-navigation permissions. The parent sends source text and a sample-click command using `postMessage`; it does not read the preview document. The cross-origin boundary is preserved in both Chromium and Firefox.
 
 ## Evidence basis
 
