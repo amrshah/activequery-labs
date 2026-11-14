@@ -11,7 +11,7 @@ Legend:
 
 ## Latest authored tests — pending execution
 
-Commit `96cbe9e54b9ade9826a00e43187b4323b0d6e7cd` adds six AQJS tests covering Element `setValue`, `setChild`, `then`/`fax`; NodeList no-op stubs and `on` argument/empty-list behavior; and Array `getCount` default-operator edge cases. Workflow [#321](https://github.com/amrshah/activequery-labs/actions/runs/43644461343) is the validation target. Until it completes, the established passing baseline remains run #313 (79 tests / 158 browser cases).
+The six additional AQJS tests were authored in commit `96cbe9e54b9ade9826a00e43187b4323b0d6e7cd`. Their first run #321 exposed three incorrect test expectations, not framework regressions: `isNaF` matches arrow-function source and strings containing `function`; `Element.setValue` creates/clears a `value` property even on a generic Element; and `NodeList.on` returns the same empty collection when arguments are valid. These expectations were corrected in commits `1fe3bdbf28e7f8c56e2dcce52d8df1adbfffcbc2`, `22d6e5b125720fb4e15c489e28840733d3f7becd` and `c5f52071c476289a18f675e678fd0a6eaea9cc39`. Workflow [#324](https://github.com/amrshah/activequery-labs/actions/runs/43644670000) is the current validation target. Do not count the new coverage as passed until that run succeeds. The previous established passing baseline remains run #313 (79 tests / 158 browser cases).
 
 ## AQJS core and lifecycle
 
