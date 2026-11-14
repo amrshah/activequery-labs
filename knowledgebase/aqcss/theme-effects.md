@@ -49,7 +49,8 @@ The blockquote effect targets a `blockquote` element combined with `.aq-fleek--b
 
 ## Compatibility and accessibility
 
-- Relative-color syntax support must be tested in target browsers.
+- Relative-color syntax support must be tested in target browsers; no `@supports` fallback was found.
+- No `prefers-color-scheme`/`data-theme` dark-mode handling or `prefers-reduced-motion` override was found in the pinned stylesheet.
 - Hover-only effects need focus-visible and touch alternatives.
 - Overlay behavior needs focus management, escape handling and scroll-lock policy in the application layer.
 - Swatch combinations need contrast testing in every theme.
