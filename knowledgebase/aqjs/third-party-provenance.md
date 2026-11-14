@@ -22,7 +22,7 @@ Differences in AQJS:
 - the upstream MooTools `Array.implement` / `Array.each` / `path.each` helpers are replaced with native loops;
 - the comparator still assigns `aVal` and `bVal` without declarations.
 
-This explains the undeclared comparator variables in JS-002: the issue appears inherited from the adapted third-party algorithm, not merely an accidental one-off typo. Preserve the third-party attribution if redistributing this code.
+This explains the undeclared comparator variables in JS-002: the issue appears inherited from the adapted third-party algorithm, not merely an accidental one-off typo. Because AQJS is an ES module (strict mode), those undeclared assignments throw ReferenceError when the comparator runs rather than silently creating globals. Preserve the third-party attribution if redistributing this code.
 
 ## is-json v2.0.1
 
