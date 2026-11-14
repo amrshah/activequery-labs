@@ -197,14 +197,13 @@ test("suspect type predicates expose their source-level edge cases", async ({ pa
 test("late lifecycle registration does not replay ready or init events", async ({ page }) => {
   const result = await page.evaluate(() => {
     const instance = new window.AQ("");
-    let ready = 0;
-    let init = 0;
-    instance.on("ready", () => ready++);
-    instance.on("init", () => init++);
-    return { readyState: document.readyState, ready, init };
+    window.lifecycleCounts = { ready: 0, init: 0 };
+    instance.on("ready", () => window.lifecycleCounts.ready++);
+    instance.on("init", () => window.lifecycleCounts.init++);
+    return { readyState: document.readyState, ...window.lifecycleCounts };
   });
   await page.waitForTimeout(50);
-  const later = await page.evaluate(() => ({ ready: 0, init: 0 }));
+  const later = await page.evaluate(() => window.lifecycleCounts);
   expect(result.readyState).toBe("complete");
   expect(result.ready).toBe(0);
   expect(result.init).toBe(0);
