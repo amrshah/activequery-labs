@@ -104,6 +104,12 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | CSS-024 | `ActiveQuery.css:338-346,40-80` | Base border utilities call `rgb(var(--aq-swatch-secondary))`, but the winning root value for `--aq-swatch-secondary` is a hex color after duplicate declarations. | `rgb(#e7eaf6)` is invalid, so the base AQ border declarations are discarded unless the token is overridden with channel values. | Browser-test default token and explicit channel-list override. |
 | CSS-025 | `ActiveQuery.css:239-240` | Hover/focus color functions use `var(--aq-swatch-hover-text-opacity, inherit)` and `var(--aq-swatch-hover-button-opacity, inherit)` as alpha values. `inherit` is not a valid numeric/percentage alpha. | Default hover/focus color declarations may be discarded unless applications define valid opacity tokens. | Test hover with default variables and with explicit 100% alpha tokens. |
 
+
+| JS-040 | `ActiveQuery.js:961-979` | Element `sancha` data mode assigns `ii` and `i` without declarations. | Because AQJS is an ES module, strict mode causes ReferenceError before data rendering proceeds. Static mode returns before this path and can work. | Test static mode, data mode, and any variable placeholder branch. |
+| JS-041 | `ActiveQuery.js:624-636` | Element `getValue(needle,true)` returns `Boolean(indexOf(needle))`. | A match at index 0 returns false; a missing value returns true. | Test match-at-zero, match-after-zero and missing value. |
+| JS-042 | `ActiveQuery.js:720-814` | Several NodeList methods are explicit no-op stubs, including `getStyles`, `setChild`, `setAdjacent`, `setHtml`, `getHtml`, `setContent`, `setText`, `getText` and `getValue`. | Calling the method may silently return the collection or undefined without performing the corresponding Element operation. | Assert each stub's return and lack of mutation; never assume Element/NodeList parity. |
+| JS-043 | `ActiveQuery.js:619-622` | Element `setText(a)` writes only when `a` is truthy. | Passing an empty string cannot clear existing text content. | Test empty string, zero, false and ordinary strings. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
