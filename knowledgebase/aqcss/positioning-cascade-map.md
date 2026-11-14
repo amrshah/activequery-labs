@@ -115,7 +115,7 @@ These are source-based class-combination examples, not substitutes for testing t
 
 - **Source-confirmed:** baseline, tablet, desktop and large-screen affix rule blocks; mode importance; edge/corner aliases; center transforms; repeated ordering; absence of z-index and custom inset declarations within the affix blocks.
 - **Derived:** class-combination outcomes described above follow from selector specificity, declaration importance and source order.
-- **Not runtime-verified here:** sticky behavior across nested scroll containers, fixed positioning under transformed ancestors, absolute containing-block geometry, clipping/overflow interactions, and z-index behavior in a composed page.
+- **Runtime-verified in AQX-009:** combining sticky mode with the top helper computes to `position:sticky` and `top:0` in Chromium and Firefox. **Not runtime-verified:** actual sticky movement across nested scroll containers, fixed positioning under transformed ancestors, absolute containing-block geometry, clipping/overflow interactions, and z-index behavior in a composed page.
 - **No upstream source changes:** this is a knowledgebase-only mapping.
 
 ## Source anchors
