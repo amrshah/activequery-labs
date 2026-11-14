@@ -57,6 +57,8 @@ Status: test harness committed; execution result has not yet been confirmed from
 
 ## Execution record
 
+A pull-request validation run is being requested for the current pinned-source suite. Do not change the pending status until actual run logs are inspected.
+
 | Date | Commit / run | Result |
 |---|---|---|
 | 2026-11-14 | Workflow and initial test suite committed | Pending external GitHub Actions confirmation |
