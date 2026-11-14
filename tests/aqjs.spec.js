@@ -209,3 +209,28 @@ test("late lifecycle registration does not replay ready or init events", async (
   expect(result.init).toBe(0);
   expect(later).toEqual({ ready: 0, init: 0 });
 });
+
+test("isObjectLiteral throws for null before reaching its null guard", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const instance = new window.AQ("");
+    try {
+      return { threw: false, value: instance.isObjectLiteral(null) };
+    } catch (error) {
+      return { threw: true, error: error.name };
+    }
+  });
+  expect(result).toEqual({ threw: true, error: "TypeError" });
+});
+
+test("isEmpty uses recursive and zero-as-empty semantics", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const instance = new window.AQ("");
+    return {
+      zero: instance.isEmpty(0),
+      emptyArray: instance.isEmpty([]),
+      nestedNull: instance.isEmpty([1, null]),
+      zeroException: instance.isEmpty("0", ["0"])
+    };
+  });
+  expect(result).toEqual({ zero: true, emptyArray: false, nestedNull: true, zeroException: false });
+});
