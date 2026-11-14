@@ -71,6 +71,9 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 
 | JS-029 | `ActiveQuery.js:291-315` | Lifecycle `on("ready")` and `on("init")` register DOMContentLoaded/load listeners without checking current document state. | Registration after the corresponding event has fired does not replay the callback. | Browser-test early and late registration; document the required initialization timing. |
 
+
+| JS-030 | `ActiveQuery.js:214-216` | `isObjectLiteral(a)` calls `Object.getOwnPropertyNames(a)` before checking `!!a`. | Passing null or undefined throws before the intended guard. | Test null, undefined, primitives, arrays, Date and cross-realm objects. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
