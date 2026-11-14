@@ -31,7 +31,7 @@ The public ActiveQuery framework overview describes a philosophy plus independen
 
 - Main stylesheet: 1,808 lines, approximately 118 KB.
 - It contains broad base/framework selectors as well as the `aq-` namespace.
-- A brace-aware lexical rule-prelude scan found 1,417 selector rule blocks and 1,813 unique class tokens, plus 46 unique custom-property names. These are navigation indexes, not semantic CSS parsing: inspect full rules, media context, cascade and computed browser behavior.
+- A brace-aware lexical rule-prelude scan found 1,417 selector rule blocks and 1,813 unique class tokens, plus 46 unique declared custom-property names (91 unique names appear when declarations and var() references are combined). These are navigation indexes, not semantic CSS parsing: inspect full rules, media context, cascade and computed browser behavior.
 - Source includes multiple media-query regions. A complete breakpoint and cascade map remains pending.
 - The CSS must be studied as a whole: variables, base resets, inherited W3CSS-derived behavior, AQ-specific utilities, responsive overrides, pseudo-classes and attribute selectors all matter.
 
