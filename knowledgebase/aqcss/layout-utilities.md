@@ -75,8 +75,10 @@ The min-width blocks are cumulative: at 1440px, the 600px, 993px and 1440px rule
 
 ## Source map
 
-- Baseline spacing and sizing: lines 495–680.
-- Baseline affix and flexon: lines 681–812.
+- Baseline spacing: lines 504–579.
+- Facet sizing: lines 580–709.
+- Baseline affix: lines 710–727.
+- Baseline flexon: lines 728–812.
 - Tablet family: lines 813–1136.
 - Desktop family: lines 1137–1460.
 - Large-screen family: lines 1461–1784.
