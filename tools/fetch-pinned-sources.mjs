@@ -14,7 +14,7 @@ const revisions = [
     files: [
       ["ActiveQuery.css", "c03546ecd1a41d26cbbfa8f1e31d38731f77cf62"],
       ["ActiveQuery.min.css", "bdda032d530661c32d9a9351a4ae95219347f081"],
-      ["LICENSE.txt", "95913d2c7e4ef8d4b8d23cc9c67e5f3b3d3b5b1a"]
+      ["LICENSE.txt", "95913ab0528af615935ad360fe4ab42feb09ed3d"]
     ]
   },
   {
@@ -23,7 +23,7 @@ const revisions = [
     files: [
       ["ActiveQuery.js", "b8ec9e5be8668d048eea3385cd9012dfddb69cf0"],
       ["ActiveQuery.min.js", "594d778cd5fefe2caa039a7904343e385b77a50c"],
-      ["LICENSE.txt", "28eb7c9d4b3d4f4f87d4a4f9a2c3c5e1b7d9f010"]
+      ["LICENSE.txt", "28eb6b57f17f9af993123b943fa6eae63be43ac2"]
     ]
   }
 ];
@@ -52,9 +52,10 @@ try {
         throw new Error(`Pinned blob mismatch for ${revision.repo}/${filename}: expected ${expectedSha}, received ${actualSha}`);
       }
 
+      const outputName = filename === "LICENSE.txt" ? `${revision.repo}-LICENSE.txt` : filename;
       const destinations = [
-        join(root, "vendor", revision.repo === "CSS" ? `AQCSS-${filename}` : `AQJS-${filename}`),
-        join(root, "rebuild", "vendor", revision.repo === "CSS" ? `AQCSS-${filename}` : `AQJS-${filename}`)
+        join(root, "vendor", outputName),
+        join(root, "rebuild", "vendor", outputName)
       ];
       for (const destination of destinations) {
         mkdirSync(resolve(destination, ".."), { recursive: true });
