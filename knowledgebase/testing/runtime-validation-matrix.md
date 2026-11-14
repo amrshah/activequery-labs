@@ -58,7 +58,7 @@ Legend:
 | Target | Methods / behavior | Source review | Test coverage | Current status |
 |---|---|---|---|---|
 | Element | `parent`, `name` | Inspected | Parent relationship and nodeName | Passed in run #204 |
-| Element | Attributes/styles | Inspected; falsy-value and simple parser limits | No complete test matrix | Pending authoring |
+| Element | Attributes/styles | Inspected; falsy-value and simple parser limits | Pair early-stop, attribute names/removal, inline style parsing/readback | Partial; selected contracts passed in run #204 |
 | Element | Classes | Inspected | Basic set/get/remove plus NodeList bulk class mutators | Partial; selected contracts passed in run #204 |
 | Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default tests | Partial; sibling paths passed in run #204; `i` and `setChild` remain untested |
 | Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | Guarded setAdjacent/setHtml, getHtml modes, array setContent | Partial; selected contracts passed in run #204 |
@@ -67,7 +67,7 @@ Legend:
 | Element | `sancha` | Inspected; HTML injection and undeclared identifiers | Static success and data-mode ReferenceError | Passed in run #204 |
 | Element | `sift` | Inspected: truthy selector early return | Explicit no-handler test | Passed in run #204 |
 | Element | `watch` | Inspected; callback `this` failure and missing observer return | Mutation test captures TypeError and missing user callback | Passed in run #204 |
-| NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | Bulk attributes/styles/classes, setValue, getStyles/getClasses and content no-op cases | Partial; selected contracts passed in run #195 |
+| NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | Bulk attributes/styles/classes, setValue, getStyles/getClasses and content no-op cases | Partial; selected contracts passed in run #204 |
 | NodeList | no-op stubs | Inspected: getStyles/getClasses/getHtml/setText/etc. | Representative stubs and content no-op behavior | Partial; selected stubs passed in run #204; not exhaustive |
 | Document/Window | `on` | Inspected | Native custom event listeners | Passed in run #204 |
 
@@ -77,7 +77,7 @@ Legend:
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #204 |
 | Source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #204 |
-| Breakpoints and responsive variants | Inspected: mobile-hide media query is malformed and ignored by Chromium/Firefox; tablet typography activates at 600px | 599/600/601 computed-style test; 599/600/993/1440 responsive utility test | Mobile/tablet behavior passed in run #195; broader breakpoint matrix remains incomplete |
+| Breakpoints and responsive variants | Inspected: mobile-hide media query is malformed and ignored by Chromium/Firefox; tablet typography activates at 600px | 599/600/601 computed-style test; 599/600/993/1440 responsive utility test | Mobile/tablet behavior passed in run #204; broader breakpoint matrix remains incomplete |
 | Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Passed in run #204 |
 | Layout/flex/spacing | Multiple source defects documented | Facet, row-gap, flex base, spacing aliases and responsive alignment tests | Passed in run #204 |
 | Swatches and color functions | Token duplication and invalid rgb() usage documented | Base border token and hover alpha tests | Partial; selected cases passed in run #204; more theme/swatch coverage remains |
