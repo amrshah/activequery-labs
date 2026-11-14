@@ -48,7 +48,7 @@ These are navigational line ranges for the pinned revision. Recalculate them whe
 
 - `.aq-text--center`: line 311.
 - `.aq-border`: line 355.
-- `.aq-swatch--primary`: line 367 (verify full exact line when editing this index).
+- `.aq-swatch--primary`: line 357.
 - `.aq-fleek--dropdown-click`: line 439.
 - `.aq-facet--third`: line 586; repeated in responsive blocks.
 - `.aq-flexon--row-gap-xlarge`: line 809.
