@@ -33,7 +33,7 @@ Purpose: prove that an AI agent can implement and reason about ActiveQuery using
    - Reference: `aqcss/tokens-and-responsive.md`, `aqcss/theme-effects.md`.
 
 5. **What accessibility risks must be addressed when using AQCSS controls?**
-   - Expected: global outline resets, hover-only tooltip/dropdown, disabled descendant selectors that style children rather than the disabled control itself, contrast testing and keyboard/touch alternatives. The mobile-hide helper is also ineffective in tested engines.
+   - Expected: global outline resets, hover-only tooltip/dropdown, disabled descendant selectors that style children rather than the disabled control itself, no reduced-motion override for `.input-animate`, and the browser-divergent short-landscape overlay. The mobile/tablet/desktop hide helpers are ineffective in tested engines; include keyboard/touch alternatives.
    - Reference: `aqcss/base-controls.md`, `testing/source-findings.md`.
 
 ### AQJS
