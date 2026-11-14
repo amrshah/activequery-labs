@@ -43,24 +43,19 @@ The responsive copies are `aq-t-affix`, `aq-d-affix` and `aq-s-affix`.
 
 ## Flexon
 
-The `aq-flexon` family provides:
-- flex display;
-- initial, row, row-reverse, column and column-reverse flow;
-- wrap and nowrap behavior;
-- row/column combinations with reverse wrapping;
-- center/edge alignment and aliases;
-- stretch/grow/shrink controls;
-- space-around, space-evenly and space-between distribution;
-- small/default/large/xlarge row and column gap helpers.
+The `aq-flexon` family covers display, flow/wrapping, alignment, stretch/shrink, distribution and row/column gaps. Its actual selector behavior is uneven: the base display list and several base aliases are malformed, and responsive display lists contain spelling mismatches.
 
-Important distinctions:
-- `aq-flexon--gap` sets row-gap, not both row and column gap.
-- Use `aq-flexon--row-gap` and `aq-flexon--column-gap` for explicit axes.
-- The `row-gap-xlarge` declaration has unitless `2` and is invalid as a CSS length.
-- Display selectors in the base family contain missing commas; several intended classes become descendant selector chains.
-- `nowrap` vs `no-wrap` and `warp-reverse` vs `wrap-reverse` mismatches occur in display selector lists.
+Important operational facts:
+- Base `.aq-flexon` / `.aq-m-flexon` reliably establish flex display. Most base modifier-only classes do not, because the display selector list has missing commas. Add the base container class when using base flow modifiers.
+- Responsive display lists are comma-separated, but include `--nowrap`, `--column-warp-reverse` and `--row-warp-reverse`; the corresponding flow declarations use `--no-wrap`, `--column-wrap-reverse` and `--row-wrap-reverse`.
+- Base `aq-m-` alignment aliases and the `shrink-no` alias have compound-selector defects; responsive aliases are comma-separated.
+- The `--stretch`, `--stretch-no` and `--no-stretch` selectors intended to set `flex-grow` use `:not([class*=flexon])`, which cannot match an element carrying the flexon utility class itself. Their companion rules set `align-items`, not flex-grow.
+- `--gap` sets row-gap only. Use `--row-gap` or `--column-gap` to state the axis explicitly.
+- `--row-gap-xlarge` has unitless `2` and is invalid; `--gap-xlarge` and `--column-gap-xlarge` use valid `2rem`.
+- The `right-bottom` / `bottom-right` alignment declaration omits `!important`, unlike the other alignment helpers.
+- Small gap helpers exist in the base family only; responsive families start at the default 1rem gap.
 
-See CSS-003, CSS-008 and CSS-009 in `testing/source-findings.md`. Do not treat the family as a reliable grid/flex abstraction until the individual selectors are browser-tested.
+See [the flex utility cascade map](flex-cascade-map.md) for exact source lines, selector parsing, responsive cascade and all known caveats. See CSS-003, CSS-008, CSS-009 and CSS-027–CSS-031 in `testing/source-findings.md`. Do not assume a flexon token works as a standalone display trigger without checking its exact selector.
 
 ## Responsive prefix semantics
 
