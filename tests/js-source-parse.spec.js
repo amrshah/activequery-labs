@@ -13,7 +13,14 @@ test("AQJS source and minified files parse and expose matching API inventories",
   expect(catalog.source.exports).toContain("ActiveQuery");
   expect(catalog.source.extension_targets).toContain("element");
   expect(catalog.source.extension_targets).toContain("nodelist");
-  expect(catalog.source.extension_methods.length).toBeGreaterThan(50);
+  expect(catalog.summary).toEqual({
+    class_method_count: 35,
+    extension_target_count: 9,
+    extension_method_count: 76,
+    event_listener_call_count: 11,
+    dynamic_import_count: 1,
+    global_prototype_write_count: 4
+  });
   expect(catalog.summary.class_method_count).toBe(catalog.source.class_methods.length);
   expect(catalog.summary.extension_target_count).toBe(catalog.source.extension_targets.length);
   expect(catalog.summary.extension_method_count).toBe(catalog.source.extension_methods.length);
