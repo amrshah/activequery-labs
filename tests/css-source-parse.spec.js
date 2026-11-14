@@ -27,7 +27,27 @@ test("generated AQCSS AST catalog is pinned and complete enough for research", a
   const catalog = JSON.parse(fs.readFileSync("./knowledgebase/aqcss/generated-ast-catalog.json", "utf8"));
   expect(catalog.parser).toBe("PostCSS AST");
   expect(catalog.source.git_blob_sha).toBe("c03546ecd1a41d26cbbfa8f1e31d38731f77cf62");
-  expect(catalog.summary.rule_count).toBeGreaterThan(1000);
-  expect(catalog.summary.unique_class_token_count).toBeGreaterThan(1000);
-  expect(catalog.summary.declared_custom_property_count).toBeGreaterThan(20);
+  expect(catalog.summary.rule_count).toBe(1417);
+  expect(catalog.summary.unique_selector_text_count).toBe(1409);
+  expect(catalog.summary.unique_class_token_count).toBe(1813);
+  expect(catalog.summary.declared_custom_property_count).toBe(26);
+  expect(catalog.summary.custom_property_names_in_declarations_or_references).toBe(71);
+  expect(catalog.summary.media_query_count).toBe(10);
+});
+
+
+test("custom property index excludes BEM selector modifiers misread as variables", async () => {
+  const index = JSON.parse(fs.readFileSync("./knowledgebase/aqcss/custom-property-index.json", "utf8"));
+  expect(index.unique_custom_property_count).toBe(71);
+  expect(index.summary).toEqual({
+    unique_names: 71,
+    declared_names: 26,
+    reference_only_names: 45,
+    declaration_occurrences: 37,
+    var_reference_occurrences: 239
+  });
+  expect(index.properties["--aq-swatch-primary"].declarations.length).toBeGreaterThan(0);
+  expect(index.properties["--aq-swatch-hover-text-opacity"].references.length).toBeGreaterThan(0);
+  expect(index.properties["--bold-hover"]).toBeUndefined();
+  expect(index.properties["--dropdown-hover"]).toBeUndefined();
 });
