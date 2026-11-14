@@ -40,6 +40,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - `agent-reference/` — fast capability index, task-to-reference routing and concise agent instructions.
 - `source-traceability/` — symbol/selector-to-source map and verification records.
 - `mastery-gate.md` — explicit acceptance criteria; status remains NOT PASSED until evidence exists.
+- `evaluation/` — fresh-agent retrieval and implementation acceptance tests.
 
 ## Current high-value references
 
