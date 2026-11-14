@@ -19,14 +19,14 @@ Snapshot: 2026-11-14.
 | `min-width: 600px` | Tablet-prefixed utility family begins |
 | `min-width: 993px` | Desktop-prefixed utility family begins |
 | `min-width: 1440px` | Large-screen utility family begins |
-| Source text `@media (min-width:1px)and(max-width:600px)` | Intended mobile-hide/viewport helper range, but malformed syntax is ignored by Chromium and Firefox |
+| Source text `@media (min-width:1px)and(max-width:600px)`, `@media(min-width:601px)and(max-width:992px)`, `@media(min-width:993px)and(max-width:1439px)` | Intended mobile/tablet/desktop hide ranges, but all three malformed conditions are ignored by Chromium and Firefox |
 | `min-width: 601px and max-width: 992px` | Tablet-specific range |
 | `min-width: 993px and max-width: 1439px` | Desktop-specific range |
 | `max-height: 550px and orientation: landscape` | Short-landscape overlay behavior |
 | `pointer: coarse and hover: none` | Touch/coarse-pointer context |
 | `pointer: fine and hover: hover` | Fine-pointer/hover context |
 
-The tablet-prefixed utility family starts at 600px. Although the stylesheet appears to intend a mobile helper range through 600px, the actual media prelude lacks required separation around `and`; Chromium and Firefox ignore it. The `.aq-facet-hide-on-mobile` helper therefore remains visible at 599, 600 and 601px in the tested engines. Do not describe this as an active breakpoint overlap.
+The tablet-prefixed utility family starts at 600px. Although the stylesheet appears to intend mobile, tablet and desktop hide ranges, all three range media preludes lack required separation around `and`; Chromium and Firefox ignore them. The three range helpers remain visible at 599/600/601, 601/992 and 993/1439px. The simple 1440px screen-hide query works. Do not describe this as an active breakpoint overlap.
 
 ## Important declarations
 
@@ -63,6 +63,6 @@ See `custom-property-index.json`, `theme-effects.md` and source findings CSS-019
 
 ## Runtime work completed and remaining
 
-Verified in Chromium and Firefox by the current Playwright suite: 599/600/601 tablet/mobile helper behavior, 993/1440 responsive utilities, invalid row-gap, facet width, base border token, relative-color alpha support, flex/spacing aliases, focus outline, disabled descendants, tooltip and dropdown interaction, plus source/minified AST parity.
+Verified in Chromium and Firefox by the current Playwright suite: 599/600/601, 601/992, 993/1439 and 1440 breakpoint behavior; invalid range hide helpers; valid screen-hide helper; responsive prefixes; invalid row-gap; facet width; base border token; relative-color alpha support; flex/spacing aliases; focus outline; disabled descendants; tooltip and dropdown interaction; plus source/minified AST parity.
 
 Still pending: 992/993 and 1439/1440 boundary coverage for additional selector families, touch/hybrid pointer behavior, short-landscape overlay behavior, broad color-token coverage across themes, and wider browser compatibility beyond Chromium/Firefox.
