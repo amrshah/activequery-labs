@@ -59,6 +59,12 @@
     "traceability": "../knowledgebase/source-traceability/index.md",
     "mastery_gate": "../knowledgebase/mastery-gate.md",
     "status": "in_progress_not_mastered",
-    "browser_tests": "../knowledgebase/testing/browser-test-plan.md"
+    "browser_tests": "../knowledgebase/testing/browser-test-plan.md",
+    "aqcss_class_index": "../knowledgebase/aqcss/class-token-index.json",
+    "aqcss_rule_index": "../knowledgebase/aqcss/rule-selector-index.json",
+    "aqcss_custom_properties": "../knowledgebase/aqcss/custom-property-index.json",
+    "aqcss_tokens": "../knowledgebase/aqcss/tokens-and-responsive.md",
+    "framework_overview": "../knowledgebase/architecture/framework-overview.md",
+    "governance": "../knowledgebase/architecture/governance-and-licensing.md"
   }
 }
