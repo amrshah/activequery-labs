@@ -28,6 +28,25 @@ Snapshot: 2026-11-14.
 
 The tablet-prefixed utility family starts at 600px. Although the stylesheet appears to intend mobile, tablet and desktop hide ranges, all three range media preludes lack required separation around `and`; Chromium and Firefox ignore them. The three range helpers remain visible at 599/600/601, 601/992 and 993/1439px. The simple 1440px screen-hide query works. Do not describe this as an active breakpoint overlap.
 
+## Rule distribution by media context
+
+The generated PostCSS rule catalog groups all 1,417 rule blocks by their exact enclosing media context:
+
+| Exact source context | Rule blocks | Runtime interpretation |
+|---|---:|---|
+| Base (no media query) | 500 | Always eligible, subject to selector matching and cascade |
+| `@media(min-width:600px)` | 303 | Tablet-prefixed family; active at 600px and wider |
+| `@media(min-width:993px)` | 303 | Desktop-prefixed family; active at 993px and wider |
+| `@media(min-width:1440px)` | 304 | Large-screen family plus the valid screen-hide rule |
+| `@media(pointer: coarse)  and (hover: none)` | 1 | Coarse pointer with no hover |
+| `@media (min-width:1px)and(max-width:600px)` | 1 | Malformed mobile-hide range; ignored in Chromium/Firefox |
+| `@media(min-width:601px)and(max-width:992px)` | 1 | Malformed tablet-hide range; ignored in Chromium/Firefox |
+| `@media(max-height:550px) and (orientation: landscape)` | 2 | Short-landscape orientation overlay |
+| `@media(pointer: fine) and (hover: hover)` | 1 | Fine pointer with hover |
+| `@media(min-width:993px)and(max-width:1439px)` | 1 | Malformed desktop-hide range; ignored in Chromium/Firefox |
+
+The catalog has ten media-query occurrences and nine unique conditions because the `min-width:1440px` condition occurs twice. Counts above are rule blocks, not selector count or declaration count. The three `min-width` utility contexts are cumulative; the three malformed hide contexts remain separate and ineffective.
+
 ## Important declarations
 
 The high number of `!important` declarations is a defining cascade constraint.
