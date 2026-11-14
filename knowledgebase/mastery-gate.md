@@ -48,7 +48,7 @@ The mastery label is withheld until every gate below has objective evidence. A l
 - [ ] Answers cite the knowledgebase and point back to upstream source.
 - [ ] Fresh-agent evaluation scores at least 22/24 with zero critical errors.
 - [ ] Implementation exercise passes browser tests and source review.
-- [ ] Retrieval evaluation has documented prompts, expected answers and scoring.
+- [x] Retrieval evaluation has documented prompts, expected answers and scoring (`testing/fresh-agent-evaluation-prompts.md` and `testing/fresh-agent-evaluation-answer-key.md`); administration and scoring remain pending.
 
 ## Gate E — Build-from-scratch proof
 
