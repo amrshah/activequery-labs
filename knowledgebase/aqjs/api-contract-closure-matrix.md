@@ -9,7 +9,7 @@ Every public method should have its exact receiver and signature/defaults, accep
 
 ## Newly authored coverage (pending run #321)
 
-Six additional Playwright tests have been added in `tests/aqjs.spec.js` at commit `96cbe9e54b9ade9826a00e43187b4323b0d6e7cd`. They cover Element `setValue`, `setChild`, `then` and `fax`; NodeList no-op stubs and `on` validation; and Array `getCount` default-operator delimiter/missing-property behavior. These tests are authored but remain **pending** until workflow #321 completes successfully in both browser projects. Do not count them as passed yet.
+Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passed in run [#324](https://github.com/amrshah/activequery-labs/actions/runs/43644712359): Element `setValue`, `setChild`, `then` and `fax`; NodeList no-op stubs and `on` validation; and Array `getCount` default-operator delimiter/missing-property behavior. The initial test assumptions were corrected after source review; no upstream code was changed. A further source/minified behavior fixture is pending run #325.
 
 ## Priority 0 — unresolved API contracts
 
