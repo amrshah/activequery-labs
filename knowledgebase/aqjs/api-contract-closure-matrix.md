@@ -26,7 +26,8 @@ Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passe
 | NodeList.i | indexing and guard semantics | zero/one/multiple, invalid index, empty list | index 0 and invalid string guard passed in run #313; out-of-range/empty collection pending |
 | NodeList.siblings | current behavior likely throws | next/prev/default with 0/1/multiple members | next/default TypeError reproduced in run #313; preserve as unsupported |
 | NodeList stubs | exact no-op return values and coverage | each stub with normal args; assert identity/no mutation/undefined | all identified no-op stubs invoked with representative arguments and passed in run #324; additional input variations pending |
-| NodeList.on | event validation and return value | valid/invalid event, empty and non-empty collections, callback invocation | valid/invalid arguments, empty collection identity and listener dispatch passed in run #324 |\n| Document/Window.on | event validation and return value | valid/invalid event, missing callback, listener cleanup limits | custom event dispatch passed in run #313; invalid event/callback receiver identity and source/minified parity passed in run #327 |
+| NodeList.on | event validation and return value | valid/invalid event, empty and non-empty collections, callback invocation | valid/invalid arguments, empty collection identity and listener dispatch passed in run #324 |
+| Document/Window.on | event validation and return value | valid/invalid event, missing callback, listener cleanup limits | custom event dispatch passed in run #313; invalid event/callback receiver identity and source/minified parity passed in run #327 |
 | Lifecycle on | early/late registration and replay semantics | before/after DOMContentLoaded/load/pageshow; unknown event | late registration tested; broader timing pending |
 
 ## Priority 1 — predicate and value truth tables
