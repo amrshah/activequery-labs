@@ -29,7 +29,7 @@
   let active = "html", timer;
   Object.keys(fields).forEach(key => fields[key].value = initial[key]);
   function buildDocument() {
-    const aqcss = document.querySelector("#load-aqcss").checked ? '<link rel="stylesheet" href="https://raw.githubusercontent.com/ActiveQuery/CSS/main/ActiveQuery.css">' : "";
+    const aqcss = document.querySelector("#load-aqcss").checked ? '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ActiveQuery/CSS@main/ActiveQuery.css">' : "";
     const aqjs = document.querySelector("#load-aqjs").checked ? '<script type="module">import { ActiveQuery } from "https://cdn.jsdelivr.net/gh/ActiveQuery/JS@main/ActiveQuery.js"; window.AQ = new ActiveQuery(); window.dispatchEvent(new Event("aqjs-ready"));<\/script>' : "";
     const html = fields.html.value.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "");
     const css = fields.css.value.replace(/<\/style/gi,"<\\/style");
