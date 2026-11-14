@@ -26,7 +26,7 @@ The constructor accepts `a = null` and initializes `this.initlog = []`. It copie
 
 The source assigns `this.extend` twice; this is redundant but observable source structure.
 
-The constructor registers a `readystatechange` listener on `document`. When the target's `readyState` equals `complete`, it iterates `initlog` and invokes entries whose type is `function`.
+The constructor registers a `readystatechange` listener on `document`. When the target's `readyState` equals `complete`, it iterates `initlog` and invokes entries whose type is `function`. It does not immediately check the current `document.readyState`; an instance created after the final `readystatechange` event may never execute callbacks later pushed to `initlog`.
 
 **Important unresolved contract:** the inspected constructor does not expose a dedicated public method for adding callbacks to `initlog` in the constructor block. Determine intended population path and behavior with further source/runtime investigation before relying on this mechanism.
 
@@ -61,7 +61,7 @@ The implementation first validates that the argument is a non-empty string and t
 
 For Element/Document-like contexts with `querySelectorAll`, it queries descendants and returns the original context when there are no matches, a single Element for one match, or a NodeList for multiple matches.
 
-For NodeList or Array contexts, it loops through each item, queries descendants, flattens matches into a plain array, and returns the original collection if no matches, one Element if one match, or the plain array if multiple matches.
+For NodeList or Array contexts, it loops through each item, queries descendants, flattens matches into a plain array, and returns the original collection if no matches, one Element if one match, or the plain array if multiple matches. Although HTMLCollection passes the initial type gate, it has neither the Element/Document `querySelectorAll` method nor the NodeList/Array branch condition, so an HTMLCollection context falls through and is returned unchanged. This is a source-level mismatch with the initial validation/comment and needs a dedicated test.
 
 Do not treat its collection result as always a NodeList. Its no-match behavior also differs from `DOM()`.
 
