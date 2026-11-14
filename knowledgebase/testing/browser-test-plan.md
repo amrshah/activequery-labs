@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run #195 passed all 138 browser cases (69 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: run #204 passed all 140 browser cases (70 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -50,6 +50,7 @@ Status: run #195 passed all 138 browser cases (69 authored tests × Chromium/Fir
 | Circle border utility | Computed radius is non-zero | `tests/aqcss.spec.js` |
 | Tablet-prefixed typography | `aq-t-` rule activates at 600px | `tests/aqcss.spec.js` |
 | Mobile hide helper | Pinned media query is malformed and ignored; helper remains visible at 599/600/601px in Chromium/Firefox | `tests/aqcss.spec.js` |
+| Dropdown interaction | Hover variant opens on pointer hover but not keyboard focus; click variant has no click-to-open behavior | `tests/aqcss.spec.js` |
 | Third-width anomaly | Computed width remains a small fraction, capturing source value without normalizing | `tests/aqcss.spec.js` |
 | Xlarge row-gap anomaly | Invalid `2` unitless declaration does not compute as 2px | `tests/aqcss.spec.js` |
 
@@ -67,15 +68,15 @@ Status: run #195 passed all 138 browser cases (69 authored tests × Chromium/Fir
 ## Current authored test inventory
 
 - `tests/aqjs.spec.js`: 45 targeted browser tests.
-- `tests/aqcss.spec.js`: 17 targeted computed-style/browser tests.
+- `tests/aqcss.spec.js`: 18 targeted computed-style/browser tests.
 - Additional source-structure and minified-parity specs are present and should be counted/reviewed as part of the first CI execution.
-- The workflow is configured for both `push` and `pull_request` to `main`. Run #195 proves the current 69-test suite passed in both configured browser projects; future changes must continue to pass the workflow.
+- The workflow is configured for both `push` and `pull_request` to `main`. Run #204 proves the current 70-test suite passed in both configured browser projects; future changes must continue to pass the workflow.
 
 ## Execution record
 
 | Date | Commit / run | Result |
 |---|---|---|
 | 2026-11-14 | Run #171, commit `77a78e44235dbbca6b07320074f4149d6131dd55` | Failed: 106 passed, 16 failed across 122 Chromium/Firefox cases. Failures traced to incorrect expectations/fixture issues in `defer`, native trim descriptor flags, `Array.setItem` thenable result serialization, Array `nestedDOM` support, mobile hide breakpoint, hover alpha support assertion, and zero-size tooltip fixture. No upstream source changes. |
-| 2026-11-15 | Run #195, commit `5666320ae68016d0df9265a32d9e00b11f7987e1` | **Success:** 138 passed, 0 failed, 0 skipped across Chromium 141.0.7390.37 and Firefox 142.0.1 on Ubuntu 24.04.5 / Node 22.23.4. [Workflow evidence](https://github.com/amrshah/activequery-labs/actions/runs/43635407735). |
+| 2026-11-15 | Run #204, commit `433baee9d8a0815581fcee5a03dead55a898c125` | **Success:** 140 passed, 0 failed, 0 skipped across Chromium 141.0.7390.37 and Firefox 142.0.1 on Ubuntu 24.04.5 / Node 22.23.4. [Workflow evidence](https://github.com/amrshah/activequery-labs/actions/runs/43635697793). |
 
 Update this table only after retrieving the actual workflow run, job logs and test summary. A successful workflow file commit is not a successful test run.
