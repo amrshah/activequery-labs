@@ -14,7 +14,7 @@ Status: source-derived truth/failure analysis. Runtime coverage is partial; do n
 | `isObjectMap(a)` | `!!a && a instanceof Map` | True for same-realm Map instances. |
 | `isNaOM(a)` | Negation of Map expression | True for falsy values and non-Maps. |
 | `isString(a)` | Primitive string OR `a instanceof String` | Supports primitive and boxed strings. |
-| `isNaS(a)` | `typeof a !== "string" || !(a instanceof String)` | True for primitive strings (boxed check fails) and ordinary non-string values; false only for boxed String instances that satisfy the first condition. It is not a logical negation of isString. |
+| `isNaS(a)` | `typeof a !== "string" || !(a instanceof String)` | Always true: primitive strings fail the boxed-instance test; boxed strings and all other values satisfy the first disjunct. It is not a logical negation of isString. |
 | `isObject(a)` | `!!a && a.constructor === Object` | Same-realm ordinary objects commonly pass; null/falsy fail; custom/cross-realm objects may not. |
 | `isNaO(a)` | Negation of object expression | True for falsy and non-plain-object values. |
 | `isObjectLiteral(a)` | Reads `Object.getOwnPropertyNames(a)` before checking truthiness/type | Null/undefined throw before its later guard; not a robust plain-object test. |
