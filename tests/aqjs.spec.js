@@ -283,3 +283,55 @@ test("AQJS overwrites native String.prototype.trim and freezes its descriptor", 
   expect(result.configurable).toBe(false);
   expect(result.enumerable).toBe(false);
 });
+
+test("Array.setSort throws in strict module code because comparator assigns undeclared variables", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const values = [{ score: 2 }, { score: 1 }];
+    try {
+      values.setSort("score");
+      return { threw: false, error: null };
+    } catch (error) {
+      return { threw: true, error: error.name };
+    }
+  });
+  expect(result).toEqual({ threw: true, error: "ReferenceError" });
+});
+
+test("Array.getIndex equals branch assigns instead of comparing", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const values = [{ id: 1 }, { id: 2 }];
+    const index = values.getIndex("id", "=", 99);
+    return { index, ids: values.map(item => item.id) };
+  });
+  expect(result).toEqual({ index: 0, ids: [99, 2] });
+});
+
+test("Array.setItem skips ordinary truthy index and value", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const values = [1, 2];
+    values.setItem(1, 3);
+    return values;
+  });
+  expect(result).toEqual([1, 2]);
+});
+
+test("Array.i fails because ActiveQuery.isNaN is not defined", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    try {
+      return { threw: false, value: [10, 20].i(0) };
+    } catch (error) {
+      return { threw: true, error: error.name };
+    }
+  });
+  expect(result).toEqual({ threw: true, error: "TypeError" });
+});
+
+test("Object setValues and hasValues guards skip normal truthy arguments", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const value = { existing: 1 };
+    const setResult = value.setValues("newKey", 2);
+    const getResult = value.hasValues("existing");
+    return { value, setSame: setResult === value, getSame: getResult === value };
+  });
+  expect(result).toEqual({ value: { existing: 1 }, setSame: true, getSame: true });
+});
