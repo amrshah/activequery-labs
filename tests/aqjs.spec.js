@@ -184,29 +184,63 @@ test("defer stringifies callback arrays instead of invoking the callback", async
   expect(calls).toBe(0);
 });
 
+test("getPlugin imports string specifiers and returns the instance for non-strings", async ({ page }) => {
+  const result = await page.evaluate(async () => {
+    const instance = new window.AQ("");
+    const module = await instance.getPlugin("/tests/fixture-plugin.js");
+    const fallback = await instance.getPlugin(42);
+    return {
+      fixtureValue: module.fixtureValue,
+      defaultValue: module.default,
+      nonStringReturnsInstance: fallback === instance
+    };
+  });
+  expect(result).toEqual({
+    fixtureValue: "aq-plugin-loaded",
+    defaultValue: "plugin-default",
+    nonStringReturnsInstance: true
+  });
+});
+
 test("suspect type predicates expose their source-level edge cases", async ({ page }) => {
   const result = await page.evaluate(() => {
     const instance = new window.AQ("");
     let objectLikeError = null;
+    let negativeObjectLikeError = null;
     let nodeListError = null;
     try { instance.isObjectLike({}); } catch (error) { objectLikeError = error.name; }
+    try { instance.isNaOL({}); } catch (error) { negativeObjectLikeError = error.name; }
     try { instance.isNodeList(document.querySelectorAll(".target")); } catch (error) { nodeListError = error.name; }
     return {
+      isStringBoxed: instance.isString(new String("value")),
+      isObjectLiteralPlain: instance.isObjectLiteral({ value: 1 }),
+      isNaFFunction: instance.isNaF(() => true),
+      isNaFString: instance.isNaF("not a function"),
+      isNaCClass: instance.isNaC(class Example {}),
+      isNaCFunction: instance.isNaC(function named() {}),
       isNaSPrimitive: instance.isNaS("value"),
       isNaSBoxed: instance.isNaS(new String("value")),
       isSetEmptyArray: instance.isSet([]),
       isSetNonEmptyArray: instance.isSet([1]),
       isJSONNull: instance.isJSON(null),
       objectLikeError,
+      negativeObjectLikeError,
       nodeListError
     };
   });
+  expect(result.isStringBoxed).toBe(true);
+  expect(result.isObjectLiteralPlain).toBe(true);
+  expect(result.isNaFFunction).toBe(false);
+  expect(result.isNaFString).toBe(true);
+  expect(result.isNaCClass).toBe(false);
+  expect(result.isNaCFunction).toBe(true);
   expect(result.isNaSPrimitive).toBe(true);
   expect(result.isNaSBoxed).toBe(true);
   expect(result.isSetEmptyArray).toBe(false);
   expect(result.isSetNonEmptyArray).toBe(true);
   expect(result.isJSONNull).toBe(true);
   expect(result.objectLikeError).toBe("ReferenceError");
+  expect(result.negativeObjectLikeError).toBe("ReferenceError");
   expect(result.nodeListError).toBe("ReferenceError");
 });
 
@@ -622,6 +656,7 @@ test("Array query helpers implement loose, strict, substring and first-index con
       looseIndex: values.getIndex("key", "==", 1),
       strictCount: values.getCount("key", "===", 1),
       substringCount: strings.getCount("key", "*", "bc"),
+      defaultCount: strings.getCount("key", "contains", "bc"),
       hasExact: values.has("key", "abc"),
       foundIndex: values.getIndexs("key", "abcd"),
       missingIndex: values.getIndexs("key", "missing"),
@@ -633,6 +668,7 @@ test("Array query helpers implement loose, strict, substring and first-index con
     looseIndex: 0,
     strictCount: 1,
     substringCount: 2,
+    defaultCount: 2,
     hasExact: true,
     foundIndex: 3,
     missingIndex: false,
