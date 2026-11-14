@@ -27,6 +27,12 @@ A direct source/minified inspection of the high-risk methods below found the sam
 | Predicates | Unqualified identifiers and `x` reference | Same identifier references | Hazard preserved. |
 | `sancha`, `sift`, `watch` | Same undeclared identifiers, guard/callback paths and observer behavior in inspected sections | Minified excerpt retains those paths | No material mismatch observed in inspected paths. |
 
+## Runtime parity evidence added
+
+Playwright test `AQJS source and minified builds preserve Element value/child and NodeList event contracts` was added in commit `5769645f9aa327c627ce58f8dda9a5b40934b8db` and passed in [run #325](https://github.com/amrshah/activequery-labs/actions/runs/43644825180). It compares both builds for Element `setValue` truthy/falsy behavior, generic-Element value-property creation, `setChild` array append/receiver identity, Element `then` callback return, NodeList event registration and empty-collection return, and Array `getCount` default-operator behavior. The complete run passed 176 browser cases across 88 authored tests in Chromium and Firefox.
+
+This is a meaningful additional sample, not a substitute for a method-by-method parity harness.
+
 ## Limits — do not overclaim
 
 This is a focused manual comparison, not a complete method-by-method semantic equivalence proof.
