@@ -104,3 +104,50 @@ test("minified AQJS default constructor triggers the same prototype mutation", a
   });
   expect(result).toEqual({ windowNull: true, objectZero: true, objectZeroEnumerable: true });
 });
+
+
+test("AQJS source and minified builds match selected edge-case contracts", async ({ page }) => {
+  const collect = async path => {
+    await page.goto(path);
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const rows = [{ key: 1 }, { key: 2 }];
+      const assignedIndex = rows.getIndex("key", "=", 99);
+      const values = [1, 2];
+      const setItemReturn = values.setItem(1, 3);
+      const arrayContext = [document.querySelector("#scope-a")];
+      const nodeList = document.querySelectorAll(".target");
+      const target = document.querySelector("#single");
+      target.textContent = "preserve";
+      target.setText("");
+      let arrayLikeError = null;
+      try { new window.AQ("").isArrayLike([1]); } catch (error) { arrayLikeError = error.name; }
+      return {
+        assignedIndex,
+        assignedValue: rows[0].key,
+        setItemValues: [...values],
+        setItemReturnSame: setItemReturn === values,
+        arrayNestedSame: window.AQ.nestedDOM.call(arrayContext, ".target") === arrayContext,
+        nodeListGetHtmlSame: nodeList.getHtml() === nodeList,
+        nodeListGetStylesSame: nodeList.getStyles(["color"]) === nodeList,
+        emptySetTextPreserves: target.textContent === "preserve",
+        arrayLikeError
+      };
+    });
+  };
+
+  const sourceResult = await collect("/");
+  const minifiedResult = await collect("/tests/fixture-min.html");
+  expect(minifiedResult).toEqual(sourceResult);
+  expect(sourceResult).toEqual({
+    assignedIndex: 0,
+    assignedValue: 99,
+    setItemValues: [1, 2],
+    setItemReturnSame: true,
+    arrayNestedSame: true,
+    nodeListGetHtmlSame: true,
+    nodeListGetStylesSame: true,
+    emptySetTextPreserves: true,
+    arrayLikeError: "ReferenceError"
+  });
+});
