@@ -38,6 +38,17 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - `testing/` — reproducible test cases, compatibility, edge cases and known limitations.
 - `agent-reference/` — fast capability index, task-to-reference routing and concise agent instructions.
 - `source-traceability/` — symbol/selector-to-source map and verification records.
+- `mastery-gate.md` — explicit acceptance criteria; status remains NOT PASSED until evidence exists.
+
+## Current high-value references
+
+- [AQJS runtime model](architecture/aqjs-runtime-model.md)
+- [AQJS API inventory](aqjs/api-inventory.md)
+- [AQCSS selector families](aqcss/selector-families.md)
+- [Source findings and verification queue](testing/source-findings.md)
+- [Integration guidance](integration/README.md)
+- [Source traceability index](source-traceability/index.md)
+- [Mastery gate](mastery-gate.md)
 
 ## Authoring requirements
 
