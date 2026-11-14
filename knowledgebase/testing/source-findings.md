@@ -56,6 +56,9 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | CSS-017 | `ActiveQuery.css:245-246` | `.disabled *` and `:disabled *` target descendants of disabled containers/elements, not the disabled element itself. | The control itself may not receive the expected cursor/opacity/pointer-events styles. | Test disabled native controls and disabled wrapper classes. |
 | CSS-018 | `ActiveQuery.css:813,1786` | Tablet utilities begin at min-width 600px, while the mobile-hide helper applies through max-width 600px. | Exactly 600px matches both conditions. This may be intentional but should be explicit in the responsive contract. | Test 599px, 600px and 601px. |
 
+
+| JS-023 | `ActiveQuery.js:38-55` | Constructor defaults `a=null`, then `/[a-z$]/.test(a)` coerces null to `"null"` and matches. The alias block therefore runs for `new ActiveQuery()`; `a+a` evaluates to numeric 0, creating `window.null` and enumerable `"0"` properties on Element, NodeList and Object prototypes. | Default construction mutates global and native prototype surfaces, including Object.prototype. This is more severe than optional aliasing. | Browser test default vs explicit empty-string construction; inspect own properties and `for...in` enumeration on ordinary objects. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
