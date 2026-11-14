@@ -18,7 +18,7 @@
     aqjs: {
       html: '<main style="font-family:system-ui;padding:28px"><h1>AQJS module starter</h1><p id="aqjs-status">Waiting for the AQJS module…</p><button id="aqjs-check">Check instance</button><p>Open the browser console to inspect the module import and instance.</p></main>',
       css: 'body{color:#172235}button{padding:10px 14px;border-radius:7px;border:1px solid #3158d5;background:#3158d5;color:white;cursor:pointer}',
-      js: 'document.querySelector("#aqjs-check").addEventListener("click", () => {\n  document.querySelector("#aqjs-status").textContent = window.AQ ? "AQJS instance is available on window.AQ" : "AQJS has not loaded. Enable the AQJS option above.";\n});'
+      js: 'window.addEventListener("load", () => {\n  const status = window.AQ ? window.AQ.DOM("#aqjs-status") : null;\n  if (status) status.textContent = "AQJS loaded. Its instance DOM helper selected this element.";\n});\ndocument.querySelector("#aqjs-check").addEventListener("click", () => {\n  const status = window.AQ ? window.AQ.DOM("#aqjs-status") : null;\n  if (status) status.textContent = "AQJS instance is available. DOM helper returned this element.";\n});'
     }
   };
   const initial = starters.card;
