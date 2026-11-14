@@ -495,3 +495,24 @@ test("sancha static mode works but data mode throws in strict module code", asyn
   });
   expect(result).toEqual({ staticHtml: "<li>static</li>", dataError: "ReferenceError" });
 });
+
+test("watch callback fails on undefined this and does not invoke the user callback", async ({ page }) => {
+  const pageErrors = [];
+  page.on("pageerror", error => pageErrors.push(error.name));
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    let calls = 0;
+    const observerResult = node.watch({
+      children: true,
+      then: () => calls++
+    });
+    node.appendChild(document.createElement("span"));
+    window.watchCalls = () => calls;
+    return { observerResult, resultType: typeof observerResult };
+  });
+  await page.waitForTimeout(50);
+  const calls = await page.evaluate(() => window.watchCalls());
+  expect(result.resultType).toBe("undefined");
+  expect(calls).toBe(0);
+  expect(pageErrors).toContain("TypeError");
+});
