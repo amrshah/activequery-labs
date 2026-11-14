@@ -16,7 +16,8 @@ Pinned source: AQCSS SHA `c03546ecd1a41d26cbbfa8f1e31d38731f77cf62`; AQJS SHA `b
 | Static isEmpty | 261–274 |
 | Lifecycle event helper | 291–315 |
 | Array prototype extensions | 319–426 |
-| Element prototype extensions | 428–641 |
+| Element prototype extensions | 428–641; Element `siblings` at 557 |
+| NodeList `siblings` implementation | 776–791 |
 | Element/Document/Window event helpers | 642–661 |
 | NodeList core prototype extensions | 663–815; no-op stubs also at 999, 1037 and 1145 |
 | Number prototype trim | 816–869 |
