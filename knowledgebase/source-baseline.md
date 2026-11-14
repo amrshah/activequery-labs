@@ -19,6 +19,12 @@ This file pins the exact upstream source revisions used for the current systemat
 - Never relabel upstream code as MIT or assume the Labs repository's license applies to upstream assets.
 - Preserve upstream copyright and license notices if upstream source is redistributed.
 
+## Governance and licensing context
+
+The Governance repository identifies the Compliance Framework v21.1 and provides an Ethical Source Policy, Code of Conduct Policy, DCO and OSL-3.0 license. The OSL text includes an External Deployment provision that treats making the Original Work or Derivative Works available over a network to others as distribution under section 1(c). This is a material consideration for a public portal that bundles or deploys upstream source; obtain legal review before deciding a distribution model. See `architecture/governance-and-licensing.md`.
+
+The public ActiveQuery framework overview describes a philosophy plus independent libraries and names AQS, AQI, AQPE, AQKISS, AQDB, AQPHP, AQPY and AQML. The inspected public repositories in this research provide concrete AQCSS and AQJS implementations; other named layers remain conceptual/unverified until their authoritative specifications and code are located. See `architecture/framework-overview.md`.
+
 ## First-pass structural observations
 
 ### AQCSS
