@@ -129,6 +129,7 @@ test("AQJS source and minified builds match selected edge-case contracts", async
         setItemReturnSame: setItemReturn === values,
         arrayNestedSame: window.AQ.nestedDOM.call(arrayContext, ".target") === arrayContext,
         nodeListGetHtmlSame: nodeList.getHtml() === nodeList,
+        nodeListGetClassesSame: nodeList.getClasses() === nodeList,
         nodeListGetStylesUndefined: nodeList.getStyles(["color"]) === undefined,
         emptySetTextPreserves: target.textContent === "preserve",
         arrayLikeError
@@ -146,6 +147,7 @@ test("AQJS source and minified builds match selected edge-case contracts", async
     setItemReturnSame: true,
     arrayNestedSame: true,
     nodeListGetHtmlSame: true,
+    nodeListGetClassesSame: true,
     nodeListGetStylesUndefined: true,
     emptySetTextPreserves: true,
     arrayLikeError: "ReferenceError"
