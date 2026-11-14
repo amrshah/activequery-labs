@@ -51,7 +51,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS selector families](aqcss/selector-families.md)
 - [AQCSS class token index](aqcss/class-token-index.json) — 1,813 unique class tokens with source line/selector references.
 - [AQCSS rule selector index](aqcss/rule-selector-index.json) — 1,417 rule selector entries.
-- [AQCSS custom property index](aqcss/custom-property-index.json) — declaration occurrences for 46 custom-property names.
+- [AQCSS custom property index](aqcss/custom-property-index.json) — declaration occurrences for 46 declared custom-property names and 91 names across declarations/references.
 - [AQCSS tokens and responsive semantics](aqcss/tokens-and-responsive.md)
 - [AQCSS base styles and controls](aqcss/base-controls.md)
 - [AQCSS layout utilities](aqcss/layout-utilities.md)
