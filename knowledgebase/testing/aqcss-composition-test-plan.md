@@ -1,7 +1,7 @@
 # AQCSS Focused Composition Test Plan
 
 Source: AQCSS v25.6.0, pinned SHA c03546ecd1a41d26cbbfa8f1e31d38731f77cf62.
-Status: proposed targeted tests. The cases below are not claimed implemented or passed. Existing evidence is linked to run #313; do not rerun the full suite merely to validate this plan.
+Status: partially implemented and browser-validated. Run [#365](https://github.com/amrshah/activequery-labs/actions/runs/43647892108) passed AQX-001–008 and AQX-010–019 in Chromium and Firefox. AQX-009 currently verifies computed `position:sticky` and `top:0` cascade only; its real scroll-container behavior remains unverified and is not counted as fully accepted.
 
 ## Existing coverage — avoid blind duplication
 
@@ -21,7 +21,7 @@ See [browser-test-plan.md](browser-test-plan.md) and [runtime-validation-matrix.
 | AQX-006 | aq--margin-all + aq--margin-left | all four computed margin sides |
 | AQX-007 | aq--padding-all + aq--padding-left | all four computed padding sides |
 | AQX-008 | aq-affix--fixed + aq-affix--top | position and top |
-| AQX-009 | aq-affix--sticky + aq-affix--top | position, top and real scroll behavior |
+| AQX-009 | aq-affix--sticky + aq-affix--top | position and top computed cascade; real scroll behavior pending |
 | AQX-010 | aq-flexon + aq-flexon--column + aq-flexon--center-top | display, flex-direction, align-items, justify-content |
 | AQX-011 | base swatch + hover swatch | background/color before and during hover |
 | AQX-012 | grayscale + invert | computed filter string; replacement rather than composition |
@@ -51,13 +51,13 @@ See [browser-test-plan.md](browser-test-plan.md) and [runtime-validation-matrix.
 
 ## Suggested implementation order
 
-1. AQX-001–007: border, dimensions and spacing.
-2. AQX-008–010: position and flex.
-3. AQX-011–014: swatches, filters, opacity and images.
-4. AQX-015–019: responsive precedence.
+1. AQX-001–007: implemented and passed in run #365.
+2. AQX-008 and AQX-010: implemented and passed; AQX-009 computed cascade passed but real sticky scroll behavior remains pending.
+3. AQX-011–014: implemented and passed in run #365.
+4. AQX-015–019: implemented and passed in run #365.
 
 Implement as one deliberate test PR/batch when runtime validation is scheduled. Documentation-only updates should continue to use [skip ci].
 
 ## Acceptance
 
-A test is accepted only when it asserts actual computed properties/geometry, has a meaningful fixture, records browser/version/viewport, is linked from the runtime validation matrix, and does not conceal upstream defects.
+A test is accepted only when it asserts actual computed properties/geometry, has a meaningful fixture, records browser/version/viewport, is linked from the runtime validation matrix, and does not conceal upstream defects. AQX-009 is explicitly partial until a stable real-scroll fixture passes in both browser engines.
