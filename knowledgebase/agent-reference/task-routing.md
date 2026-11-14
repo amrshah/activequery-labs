@@ -1,18 +1,29 @@
-# ActiveQuery Knowledgebase — Agent Task Routing
+# ActiveQuery Knowledgebase Task Routing
 
-1. Read `knowledgebase/README.md` and `source-baseline.md`.
-2. For framework architecture/initialization, read `architecture/aqjs-runtime-model.md`.
-3. For AQJS usage, read `aqjs/api-inventory.md`; if the method is marked suspicious/unverified, do not recommend it without tests.
-4. For AQCSS selectors, read `aqcss/selector-families.md`; this is currently a taxonomy, not a complete class-by-class API. Use upstream source for any missing selector until the catalogue is complete.
-5. For integration patterns, read `integration/README.md` when it exists; otherwise mark the knowledge gap.
-6. For visual behavior or browser compatibility, require a runtime test record. Source inspection alone is not proof of rendered behavior.
-7. Never claim framework mastery until all acceptance gates in `mastery-gate.md` pass.
+Read `knowledgebase/README.md` first. Then use this routing table to load only the relevant references. Do not reread full upstream files for questions already answered here.
 
-## Do not do these things
+| Task | Read first | Then consult |
+|---|---|---|
+| Understand the overall framework | `architecture/framework-overview.md` | `architecture/tea-istm-concepts.md`, `architecture/principle-implementation-review.md`, `architecture/conventions.md` |
+| Style a component with AQCSS | `aqcss/selector-families.md` | `aqcss/base-controls.md`, `aqcss/layout-utilities.md`, `aqcss/theme-effects.md`, class/rule indexes |
+| Understand responsive behavior | `aqcss/tokens-and-responsive.md` | `aqcss/layout-utilities.md`, `testing/source-findings.md` |
+| Change colors or implement themes | `aqcss/tokens-and-responsive.md` | `aqcss/theme-effects.md`, custom-property index; remember dark mode is not established upstream |
+| Use AQJS selectors | `architecture/aqjs-runtime-model.md` | `aqjs/api-inventory.md`, browser tests |
+| Use Element/NodeList helpers | `aqjs/behavior-matrix.md` | `aqjs/api-inventory.md`, `testing/source-findings.md` |
+| Use type checks / validation | `aqjs/type-predicates-and-guards.md` | `aqjs/api-inventory.md`, browser tests |
+| Use templating/filtering/observation | `aqjs/templating-and-observation.md` | `testing/source-findings.md`; prefer native APIs when AQJS behavior is suspect |
+| Extend prototypes or register custom elements | `aqjs/extend-and-custom-elements.md` | `architecture/aqjs-runtime-model.md`, governance notes |
+| Investigate a bug or surprising behavior | `testing/source-findings.md` | exact source line via `source-traceability/index.md`, then reproduce in browser |
+| Integrate AQCSS and AQJS | `integration/README.md` | relevant domain references and browser tests |
+| Check licenses, DCO or brand usage | `architecture/governance-and-licensing.md` | `architecture/conventions.md`, upstream license files |
+| Update to a new upstream version | `source-freshness.md` | `source-baseline.md`, regenerate both AST catalogs, compare source/minified builds, update all references |
+| Build the new Labs portal | First pass Gate A–D in `mastery-gate.md` | component and integration skills; do not use the existing portal as the design blueprint |
 
-- Do not recreate the Labs portal yet.
-- Do not add dark mode yet.
-- Do not redesign or patch upstream AQCSS/AQJS source.
-- Do not infer that a similarly named class/API has expected conventional behavior.
-- Do not conceal likely upstream defects; report and isolate them.
-- Do not call community-authored components native AQ features.
+## Evidence discipline
+
+- **Source-confirmed** does not mean runtime-verified.
+- **Runtime-verified** requires a retained test and browser/version/viewport details.
+- **Derived** claims must show their reasoning.
+- **Unverified** claims must not become implementation guarantees.
+
+If a page does not answer the question, inspect only the relevant upstream symbol/rule, add the result to the knowledgebase and update the machine-readable index if needed.
