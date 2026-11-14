@@ -130,6 +130,6 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | CSS-027 | `ActiveQuery.css:728-746` | Main flex display selector list omits commas between several modifier selector lines. | A modifier such as `.aq-flexon--column` does not itself establish `display:flex`; use the base `.aq-flexon` class plus modifier. | Test modifier-only versus base+modifier computed display and flex direction. |
 | CSS-028 | `ActiveQuery.css:762-770` | Mobile alignment aliases are chained without commas, e.g. `.aq-m-flexon--middle.aq-flexon--center`. | `.aq-m-flexon--middle` alone does not match; use the working `.aq-m-flexon--center` alias or combine the exact classes. | Test mobile middle and center aliases independently. |
 
-## Corrective policy
+| JS-048 | `ActiveQuery.js:211-212` | `isNaS(a)` returns `typeof a !== "string" || !(a instanceof String)`. The first disjunct is true for boxed strings and non-strings; the second is true for primitive strings. | The method returns true for every input and is not the logical negation of `isString`. | Test primitive string, boxed String, number, null and undefined; retain the result as an unsafe predicate finding. |\n\n## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
