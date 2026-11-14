@@ -101,3 +101,30 @@ test("explicit empty-string constructor avoids the default alias side effect", a
   });
   expect(result).toEqual({ windowNull: false, objectZero: false, elementZero: false, nodeListZero: false });
 });
+
+test("nestedDOM returns an HTMLCollection unchanged instead of querying descendants", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const collection = document.getElementsByClassName("scope");
+    const returned = window.AQ.nestedDOM.call(collection, ".target");
+    return {
+      isSameCollection: returned === collection,
+      isHTMLCollection: returned instanceof HTMLCollection
+    };
+  });
+  expect(result).toEqual({ isSameCollection: true, isHTMLCollection: true });
+});
+
+test("instance created after document load does not replay initlog callbacks", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const instance = new window.AQ("");
+    let calls = 0;
+    instance.initlog.push(() => calls++);
+    window.lateInitCalls = () => calls;
+    return { readyState: document.readyState, initialCalls: calls };
+  });
+  await page.waitForTimeout(50);
+  const calls = await page.evaluate(() => window.lateInitCalls());
+  expect(result.readyState).toBe("complete");
+  expect(result.initialCalls).toBe(0);
+  expect(calls).toBe(0);
+});
