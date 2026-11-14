@@ -84,6 +84,10 @@ Legend:
 | Controls/focus/tooltip/dropdown | Source inspected | Focus outline, hover-only tooltip, hover/focus/click dropdown tests | Partial; keyboard/pointer tests passed in run #313; touch behavior remains untested |
 | Reduced motion/dark mode | No built-in reduced-motion override or dark-mode query found in pinned stylesheet | Reduced-motion emulation test; dark-mode source absence review | Reduced-motion gap passed in run #313; dark mode remains an application-level feature |
 
+## Proposed AQCSS composition coverage
+
+The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specifies additional cross-family and responsive tests. These are pending authoring and must not be counted as runtime coverage until implemented and run. Existing run #313 remains the current passing baseline.
+
 ## Execution and acceptance
 
 1. Continue adding source-grounded tests for untested API branches, accessibility and compatibility.
