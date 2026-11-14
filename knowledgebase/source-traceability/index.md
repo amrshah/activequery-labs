@@ -57,6 +57,9 @@ These are navigational line ranges for the pinned revision. Recalculate them whe
 - `.aq-fleek--dropdown-click`: line 439.
 - `.aq-facet--third`: line 586; repeated in responsive blocks.
 - `.aq-flexon--row-gap-xlarge`: line 810.
+- `--aq-paragraph-size` declaration/use: lines 50, 288 and 455.
+- Large-screen uppercase `aq-S-text--fs-2/fs-3`: lines 1477–1478.
+- Base border token use: lines 338–346; hover alpha fallback: lines 239–240.
 - Tablet media query: line 813.
 - Desktop media query: line 1137.
 - Large-screen media query: line 1461.
