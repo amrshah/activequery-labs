@@ -12,7 +12,8 @@ Example structure (the exact URLs/packaging should be pinned to a verified relea
 <link rel="stylesheet" href="path/to/ActiveQuery.css">
 <script type="module">
   import { ActiveQuery } from "./path/to/ActiveQuery.js";
-  const aq = new ActiveQuery();
+  // Explicit empty string avoids the constructor's default-null alias branch.
+  const aq = new ActiveQuery("");
   // use only APIs documented and tested in the knowledgebase
 </script>
 ```
