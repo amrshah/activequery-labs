@@ -19,7 +19,7 @@ This document does not declare the framework defective. It identifies claims tha
 
 ## 2. Native built-in override vs environment harmony
 
-AQJS replaces the native `String.prototype.trim` during module evaluation using `Object.defineProperties`. The replacement descriptor defaults to non-writable/non-configurable. This is another global behavior change and can conflict with other libraries or prevent restoration. See JS-033.
+AQJS replaces the native `String.prototype.trim` implementation during module evaluation using `Object.defineProperties`. Because the native property already exists and is configurable/writable, omitted descriptor flags preserve its native writable/configurable true and enumerable false values. This remains a global semantic override that can conflict with other libraries, but it does not freeze the descriptor. See JS-033.
 
 ## 3. AQI batching and event delegation claims vs AQJS source
 
