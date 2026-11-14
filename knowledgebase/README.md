@@ -68,6 +68,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS custom property index](aqcss/custom-property-index.json) — declaration/reference index for 26 declared custom-property names and 71 names across declarations/references.
 - [AQCSS tokens and responsive semantics](aqcss/tokens-and-responsive.md)
 - [AQCSS cascade and specificity](aqcss/cascade-and-specificity.md)
+- [AQCSS media-query and responsive selector map](aqcss/media-query-and-selector-map.md) — exact media-query inventory, responsive token correspondence, duplicated selectors and verified runtime caveats.
 - [AQCSS base styles and controls](aqcss/base-controls.md)
 - [AQCSS layout utilities](aqcss/layout-utilities.md)
 - [AQCSS theme and effects](aqcss/theme-effects.md)
