@@ -6,6 +6,7 @@ on:
     paths:
       - "knowledgebase/**"
       - "tests/**"
+      - "tools/**"
       - "vendor/**"
       - "package.json"
       - "playwright.config.js"
@@ -42,7 +43,17 @@ jobs:
           mkdir -p vendor
           cp /tmp/aqcss/ActiveQuery.css vendor/ActiveQuery.css
           cp /tmp/aqjs/ActiveQuery.js vendor/ActiveQuery.js
+      - name: Generate AQCSS AST catalog
+        run: npm run catalog:aqcss -- vendor/ActiveQuery.css knowledgebase/aqcss/generated-ast-catalog.json
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium firefox
       - name: Run browser tests
         run: npm test
+
+      - name: Upload generated AQCSS catalog
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aqcss-postcss-catalog
+          path: knowledgebase/aqcss/generated-ast-catalog.json
+          if-no-files-found: ignore
