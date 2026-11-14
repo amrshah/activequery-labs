@@ -52,6 +52,8 @@ jobs:
           test "$(git -C /tmp/aqjs show HEAD:ActiveQuery.min.js | git hash-object --stdin)" = "594d778cd5fefe2caa039a7904343e385b77a50c"
       - name: Generate AQCSS AST catalog
         run: npm run catalog:aqcss -- vendor/ActiveQuery.css knowledgebase/aqcss/generated-ast-catalog.json
+      - name: Generate AQJS AST catalog
+        run: npm run catalog:aqjs -- vendor/ActiveQuery.js vendor/ActiveQuery.min.js knowledgebase/aqjs/generated-ast-catalog.json
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium firefox
       - name: Run browser tests
@@ -62,5 +64,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: aqcss-postcss-catalog
-          path: knowledgebase/aqcss/generated-ast-catalog.json
+          path: |
+            knowledgebase/aqcss/generated-ast-catalog.json
+            knowledgebase/aqjs/generated-ast-catalog.json
           if-no-files-found: ignore
