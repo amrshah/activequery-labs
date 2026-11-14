@@ -1,7 +1,7 @@
 # AQCSS Base Styles, Controls and Utility Elements
 
 Source: `ActiveQuery.css` SHA `c03546ecd1a41d26cbbfa8f1e31d38731f77cf62`.
-Evidence: source-confirmed declarations; visual/accessibility behavior still requires browser tests.
+Evidence: source-confirmed declarations; selected focus, disabled-state, tooltip and dropdown behavior has been browser-tested in Chromium/Firefox; touch and full accessibility coverage remains open.
 
 ## Document and element baseline
 
@@ -56,9 +56,9 @@ Button themes are controlled through custom properties for button background/tex
 
 ## Focus and accessibility
 
-The source applies `outline:none` or `outline-width:0` to links and form controls. The inspected source does not provide a comprehensive replacement focus-visible treatment for every interactive element.
+The source applies `outline:none` or `outline-width:0` to links and form controls. Browser tests confirm focused anchors and buttons have no visible outline in the pinned build. The inspected source does not provide a comprehensive replacement focus-visible treatment for every interactive element.
 
-The disabled selector targets descendants of `.disabled` and `:disabled`, not the disabled element itself. See CSS-014 and CSS-017.
+Browser tests confirm the disabled selector styles descendants of `.disabled`/`:disabled`, not the disabled element itself. See CSS-014 and CSS-017.
 
 A production component must explicitly provide:
 - visible keyboard focus;
@@ -74,7 +74,7 @@ A production component must explicitly provide:
 |---|---|
 | `.input-animate` | Width transition; focus sets width to 100% |
 | `.tooltip .text` | Hides text child by default |
-| `.tooltip:hover .text` | Displays text child on hover |
+| `.tooltip:hover .text` | Displays text child on hover; keyboard focus alone does not reveal it in browser tests |
 | `.code` | Adds top/bottom margin |
 | `.tag` | Inline-block label with background/text tokens and horizontal padding |
 | `.bar-item` | Float-left horizontal bar item with padding and no border |
