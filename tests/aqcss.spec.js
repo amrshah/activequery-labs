@@ -262,3 +262,69 @@ test("AQCSS mobile middle alignment alias requires a second class", async ({ pag
   expect(result.center.alignItems).toBe("center");
   expect(result.center.justifyContent).toBe("center");
 });
+
+test("AQCSS removes visible outline from focused anchors and buttons", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const anchor = document.createElement("a");
+    anchor.href = "#";
+    anchor.textContent = "Focus link";
+    document.body.appendChild(anchor);
+    const button = document.createElement("button");
+    button.textContent = "Focus button";
+    document.body.appendChild(button);
+    anchor.focus();
+    const anchorOutline = getComputedStyle(anchor).outlineStyle;
+    button.focus();
+    const buttonOutline = getComputedStyle(button).outlineStyle;
+    return { anchorOutline, buttonOutline };
+  });
+  expect(result.anchorOutline).toBe("none");
+  expect(result.buttonOutline).toBe("none");
+});
+
+test("AQCSS disabled descendant rule styles children but not the disabled wrapper/control itself", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "disabled";
+    const child = document.createElement("button");
+    child.textContent = "Child";
+    wrapper.appendChild(child);
+    const disabledButton = document.createElement("button");
+    disabledButton.disabled = true;
+    document.body.append(wrapper, disabledButton);
+    const wrapperStyle = getComputedStyle(wrapper);
+    const childStyle = getComputedStyle(child);
+    const disabledStyle = getComputedStyle(disabledButton);
+    return {
+      wrapperOpacity: wrapperStyle.opacity,
+      childOpacity: childStyle.opacity,
+      childPointerEvents: childStyle.pointerEvents,
+      disabledOpacity: disabledStyle.opacity,
+      disabledPointerEvents: disabledStyle.pointerEvents
+    };
+  });
+  expect(result.wrapperOpacity).toBe("1");
+  expect(result.childOpacity).toBe("0.3");
+  expect(result.childPointerEvents).toBe("none");
+  expect(result.disabledOpacity).toBe("1");
+  expect(result.disabledPointerEvents).not.toBe("none");
+});
+
+test("AQCSS tooltip text opens on hover but not keyboard focus", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "tooltip";
+    wrapper.tabIndex = 0;
+    const text = document.createElement("span");
+    text.className = "text";
+    text.textContent = "Tooltip";
+    wrapper.appendChild(text);
+    document.body.appendChild(wrapper);
+    wrapper.focus();
+    return getComputedStyle(text).display;
+  });
+  expect(result).toBe("none");
+  await page.locator(".tooltip").hover();
+  const hovered = await page.locator(".tooltip .text").evaluate(node => getComputedStyle(node).display);
+  expect(hovered).toBe("inline-block");
+});
