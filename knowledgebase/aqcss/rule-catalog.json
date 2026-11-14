@@ -7,16 +7,15 @@
     "sha": "c03546ecd1a41d26cbbfa8f1e31d38731f77cf62",
     "snapshot": "2026-11-14"
   },
-  "parser": "brace-aware lexical rule extraction; preserves raw selector and declaration blocks; records enclosing @media context",
+  "method": "brace-aware lexical extraction preserving selector, declarations and enclosing @media context",
   "limitations": [
-    "Not a standards-compliant CSS parser; validate complex syntax and edge cases before treating this as a complete AST.",
+    "Not a standards-compliant CSS AST parser; a PostCSS/CSS parser pass is still required.",
     "Declarations are preserved verbatim and not normalized or cascade-resolved.",
-    "Third-party-origin rules are not yet attributed separately from AQ-authored rules.",
+    "Third-party-origin rules are not attributed separately from AQ-authored rules.",
     "Browser computed styles and compatibility are not inferred."
   ],
   "rule_count": 1417,
   "unique_selector_text_count": 1409,
-  "unique_class_token_count": 1813,
   "rules": [
     {
       "id": 1,
@@ -13154,7 +13153,7 @@
       "context": [
         "@media(max-height:550px) and (orientation: landscape)"
       ],
-      "line_start": 1789,
+      "line_start": 1790,
       "line_end": 1803,
       "declarations": "content: \"📱 Turn Holding Position\";\r\n    background: white;\r\n    top: 0;\r\n    left: 0;\r\n    bottom: 0;\r\n    right: 0;\r\n    position: fixed;\r\n    color:black;\r\n    display: flex;\r\n    font-size:30px;\r\n    justify-content: center;\r\n    align-items: center;"
     },
