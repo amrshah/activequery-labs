@@ -16,7 +16,7 @@ Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passe
 | Surface | Missing contract | Required test focus | Current evidence |
 |---|---|---|---|
 | getPlugin(name) | allowed input, rejection path, import errors, security boundary | approved module, invalid type, rejected module, allowlist boundary | approved fixture, non-string fallback and rejected import TypeError passed in runs #313/#327; allowlist/security boundary remains an application responsibility and is not tested |
-| Array.i | guard and index coercion | default, integer/string index, out-of-range, falsy | untested |
+| Array.i | guard and index coercion | default, integer/string index, out-of-range, falsy | a direct call reproduces `ReferenceError` because `ActiveQuery.isNaN` is undefined; tested in the existing browser suite, but normal indexing remains unavailable |
 | Array.getCount | full default-operator grammar and malformed input behavior | each operator, delimiter/no-delimiter, missing property, no match, multiple matches | delimiter, no-delimiter and missing-property cases passed in run #324; other operator shapes pending |
 | Array.then | Promise resolver assimilation | callback, missing callback, non-function callback, thenable resolution; isolate hang risk | direct callback result, missing/non-function callback and source/minified parity passed in run #327; Promise resolver assimilation remains untested because the self-thenable can hang resolution |
 | Element.setValue | falsy clearing and supported element types | input/select/textarea/checkbox; zero, false, empty string; generic Element | truthy/falsy input and generic Element property creation passed in run #324; full control-type matrix pending |
