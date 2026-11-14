@@ -162,4 +162,4 @@ const catalog = {
 
 fs.mkdirSync(outputPath.substring(0, outputPath.lastIndexOf("/")), { recursive: true });
 fs.writeFileSync(outputPath, JSON.stringify(catalog, null, 2) + "\n");
-process.stdout.write(JSON.stringify({ source: sourceCatalog.git_blob_sha, minified: minCatalog.git_blob_sha, parity: catalog.parity }, null, 2) + "\n");
+process.stdout.write(JSON.stringify({ source: sourceCatalog.git_blob_sha, minified: minCatalog.git_blob_sha, summary, parity: catalog.parity }, null, 2) + "\n");
