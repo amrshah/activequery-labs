@@ -698,7 +698,7 @@ test("type predicate families expose positive, negative and broken array-like ch
       isObject: instance.isObject({ value: 1 }),
       isNaO: instance.isNaO({ value: 1 }),
       isNaM: instance.isNaM(new Map()),
-      isFunction: instance.isFunction(() => true),
+      isFunction: instance.isFunction(function named() { return true; }),
       isClass: instance.isClass(class Example {}),
       isArgumentEmpty: instance.isArgument(""),
       isArgumentNull: instance.isArgument(null),
