@@ -9,16 +9,16 @@ Every public method should have its exact receiver and signature/defaults, accep
 
 ## Newly authored coverage (passed in run #324)
 
-Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passed in run [#324](https://github.com/amrshah/activequery-labs/actions/runs/43644712359): Element `setValue`, `setChild`, `then` and `fax`; NodeList no-op stubs and `on` validation; and Array `getCount` default-operator delimiter/missing-property behavior. The initial test assumptions were corrected after source review; no upstream code was changed. A further source/minified behavior fixture was added in commit `5769645f9aa327c627ce58f8dda9a5b40934b8db` and passed in [run #325](https://github.com/amrshah/activequery-labs/actions/runs/43644825180). It compares Element value/child/then behavior, NodeList event behavior and the Array `getCount` default branch across source and minified builds. This remains selected-method parity, not full semantic proof.
+Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passed in run [#324](https://github.com/amrshah/activequery-labs/actions/runs/43644712359): Element `setValue`, `setChild`, `then` and `fax`; NodeList no-op stubs and `on` validation; and Array `getCount` default-operator delimiter/missing-property behavior. The initial test assumptions were corrected after source review; no upstream code was changed. A further source/minified behavior fixture was added in commit `5769645f9aa327c627ce58f8dda9a5b40934b8db` and passed in [run #325](https://github.com/amrshah/activequery-labs/actions/runs/43644825180). It compares Element value/child/then behavior, NodeList event behavior and the Array `getCount` default branch across source and minified builds. Run [#327](https://github.com/amrshah/activequery-labs/actions/runs/43645400008) then added `getPlugin` rejected-import coverage, invalid-argument `Document.on`/`Window.on` receiver checks, and a source/minified fixture for Array `then` direct callback semantics plus document/window event registration. The full run passed 182 browser cases across 91 authored tests. This remains selected-method parity, not full semantic proof.
 
 ## Priority 0 — unresolved API contracts
 
 | Surface | Missing contract | Required test focus | Current evidence |
 |---|---|---|---|
-| getPlugin(name) | allowed input, rejection path, import errors, security boundary | approved module, invalid type, rejected module, allowlist boundary | inspected only; no allowlist/security test |
+| getPlugin(name) | allowed input, rejection path, import errors, security boundary | approved module, invalid type, rejected module, allowlist boundary | approved fixture, non-string fallback and rejected import TypeError passed in runs #313/#327; allowlist/security boundary remains an application responsibility and is not tested |
 | Array.i | guard and index coercion | default, integer/string index, out-of-range, falsy | untested |
 | Array.getCount | full default-operator grammar and malformed input behavior | each operator, delimiter/no-delimiter, missing property, no match, multiple matches | delimiter, no-delimiter and missing-property cases passed in run #324; other operator shapes pending |
-| Array.then | Promise resolver assimilation | callback, missing callback, thenable resolution; isolate hang risk | callback tested; interoperability pending |
+| Array.then | Promise resolver assimilation | callback, missing callback, non-function callback, thenable resolution; isolate hang risk | direct callback result, missing/non-function callback and source/minified parity passed in run #327; Promise resolver assimilation remains untested because the self-thenable can hang resolution |
 | Element.setValue | falsy clearing and supported element types | input/select/textarea/checkbox; zero, false, empty string; generic Element | truthy/falsy input and generic Element property creation passed in run #324; full control-type matrix pending |
 | Element.setChild | single/array append and invalid node handling | Element, fragment, array, empty array, invalid member | single Element, array and empty array passed in run #324; fragment/invalid member pending |
 | Element.then | callback and receiver/return semantics | callable, absent/non-function callback, returned value | callback result and missing/non-function callback passed in run #324 |
@@ -26,7 +26,7 @@ Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passe
 | NodeList.i | indexing and guard semantics | zero/one/multiple, invalid index, empty list | index 0 and invalid string guard passed in run #313; out-of-range/empty collection pending |
 | NodeList.siblings | current behavior likely throws | next/prev/default with 0/1/multiple members | next/default TypeError reproduced in run #313; preserve as unsupported |
 | NodeList stubs | exact no-op return values and coverage | each stub with normal args; assert identity/no mutation/undefined | all identified no-op stubs invoked with representative arguments and passed in run #324; additional input variations pending |
-| NodeList.on | event validation and return value | valid/invalid event, empty and non-empty collections, callback invocation | valid/invalid arguments, empty collection identity and listener dispatch passed in run #324 |\n| Document/Window.on | event validation and return value | valid/invalid event, missing callback, listener cleanup limits | basic custom events passed in run #313 |
+| NodeList.on | event validation and return value | valid/invalid event, empty and non-empty collections, callback invocation | valid/invalid arguments, empty collection identity and listener dispatch passed in run #324 |\n| Document/Window.on | event validation and return value | valid/invalid event, missing callback, listener cleanup limits | custom event dispatch passed in run #313; invalid event/callback receiver identity and source/minified parity passed in run #327 |
 | Lifecycle on | early/late registration and replay semantics | before/after DOMContentLoaded/load/pageshow; unknown event | late registration tested; broader timing pending |
 
 ## Priority 1 — predicate and value truth tables
@@ -96,7 +96,7 @@ The current source-review pass adds four focused references:
 - [Predicate truth and failure-path audit](predicate-truth-table.md) — source expressions and ambient-global hazards.
 - [Source/minified parity audit](source-minified-parity-audit.md) — inspected high-risk methods and the limits of current parity evidence.
 
-These are source-review improvements. The six new contract tests passed in run #324 and the selected source/minified fixture passed in run #325. They do not close the remaining runtime or full semantic-parity criteria.
+These are source-review improvements. The six new contract tests passed in run #324 and selected source/minified fixtures passed in runs #325 and #327. They do not close the remaining runtime or full semantic-parity criteria.
 
 ## References
 
