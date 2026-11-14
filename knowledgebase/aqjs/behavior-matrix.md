@@ -51,8 +51,8 @@ Evidence: source-confirmed behavior; runtime status pending.
 
 | Method | Source lines | Contract and cautions |
 |---|---:|---|
-| `setValues(key,value,c=false)` | 872–877 | Guard blocks truthy key/value; when it proceeds, optionally avoids overwrite unless c is true. |
-| `hasValues(key)` | 878–881 | Guard blocks truthy key; normal property lookup path is therefore bypassed. |
+| `setValues(key,value,c=false)` | 872–877 | Calls `ActiveQuery.isNaO(this)` as though it were static; the inspected class defines it as an instance method, so the call throws TypeError. |
+| `hasValues(key)` | 878–881 | Calls missing static `ActiveQuery.isNaO(this)` and throws TypeError before property lookup. |
 
 ## String and Number extensions
 
