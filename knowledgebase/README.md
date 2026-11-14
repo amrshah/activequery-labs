@@ -88,6 +88,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [Source findings and verification queue](testing/source-findings.md)
 - [AQCSS focused composition test plan](testing/aqcss-composition-test-plan.md) — proposed cross-family and responsive computed-style tests, separated from existing run evidence.
 - [Browser validation plan and coverage](testing/browser-test-plan.md)
+- [Fresh-agent evaluation prompts](testing/fresh-agent-evaluation-prompts.md) and [answer key / scoring rubric](testing/fresh-agent-evaluation-answer-key.md) — 24-question retrieval benchmark; prepared but not yet administered.
 - [Runtime validation matrix](testing/runtime-validation-matrix.md) — source coverage, authored tests, verified browser runs and remaining gaps.
 - [Source/minified distribution parity](testing/minified-parity.md)
 - [Integration guidance](integration/README.md)
