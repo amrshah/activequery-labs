@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ActiveQuery knowledgebase test fixture</title>
+  <link rel="stylesheet" href="/vendor/ActiveQuery.min.css">
+</head>
+<body>
+  <main id="fixture">
+    <div id="scope-a" class="scope">
+      <span class="target" id="target-a">A</span>
+      <span class="target" id="target-b">B</span>
+    </div>
+    <div id="scope-b" class="scope">
+      <span class="target" id="target-c">C</span>
+    </div>
+    <div id="single" class="aq-text--center">Centered</div>
+    <div id="circle" class="aq-border--circle">Circle</div>
+    <div id="responsive" class="aq-t-text--large">Responsive</div>
+    <div id="third" class="aq-facet--third"></div>
+    <div id="gap" class="aq-flexon aq-flexon--row aq-flexon--row-gap-xlarge">
+      <span>One</span><span>Two</span>
+    </div>
+    <div id="event-target"></div>
+  </main>
+  <script type="module">
+    import { ActiveQuery } from "/vendor/ActiveQuery.min.js";
+    window.AQ = ActiveQuery;
+    // Avoid default constructor aliasing during the general fixture; test it in isolation.
+    window.fixtureReady = true;
+  </script>
+</body>
+</html>
