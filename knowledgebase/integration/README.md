@@ -45,7 +45,7 @@ The inspected AQCSS root contains theme-related custom properties and a canvas d
 1. Load AQCSS with semantic HTML and confirm baseline styles.
 2. Load AQJS as a module and instantiate with an explicit empty string only if an instance is required; separately test import-time prototype mutations.
 3. Exercise `DOM` with zero, one and multiple matches.
-4. Exercise `nestedDOM` with Element, Document, NodeList and Array contexts; confirm HTMLCollection is returned unchanged.
+4. Exercise `nestedDOM` with Element, Document and NodeList contexts; confirm Array and HTMLCollection are returned unchanged.
 5. Exercise Element methods and compare them with NodeList equivalents.
 6. Exercise lifecycle events at different script-loading points.
 7. Verify default construction creates `window.null` and enumerable `Object.prototype[0]`; verify explicit empty string avoids this constructor branch, while import-time prototype changes still occur.
