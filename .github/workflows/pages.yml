@@ -28,6 +28,18 @@ jobs:
             docs/aqjs/index.html
             docs/ecosystem/index.html
             examples/index.html
+            components/index.html
+            components/components.css
+            components/components.js
+            playground/index.html
+            playground/playground.css
+            playground/playground.js
+            docs/RESEARCH-BASELINE.md
+            skills/README.md
+            agent-reference/activequery-index.json
+            examples/aqcss-utility-tour/index.html
+            examples/aqjs-dom-helper/index.html
+            examples/operations-dashboard/index.html
             examples/responsive-dashboard/index.html
             examples/responsive-dashboard/dashboard.css
             examples/responsive-dashboard/dashboard.js
@@ -36,6 +48,10 @@ jobs:
             test -s "$file" || { echo "Missing or empty: $file"; exit 1; }
           done
           echo "Validated ${#required[@]} required files."
+          node --check playground/playground.js
+          node --check components/components.js
+          node --check tools/aq-inspect.mjs
+          echo "JavaScript syntax checks passed."
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
