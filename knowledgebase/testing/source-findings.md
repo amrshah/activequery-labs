@@ -118,7 +118,7 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | JS-046 | `ActiveQuery.js:119` | The same regex excludes digits, although digits are permitted in custom-element names after the first character. | Valid names containing digits may be rejected before browser registration. | Test spec-valid names containing digits and compare against AQ's regex. |
 
 
-| CSS-026 | `ActiveQuery.css:521-522,548-549` | Baseline `aq-m--margin-left` and `aq-m--padding-left` aliases are missing; the left-side declarations mistakenly use `aq-m--margin-right` and `aq-m--padding-right`, which are also used by right-side declarations. | The mobile/right class applies both left and right spacing, while the mobile/left class has no default-size rule. | Test baseline aliases and inspect other responsive scales separately. |
+| CSS-026 | `ActiveQuery.css:521-522,548-549` | The 1rem `margin-left` and `padding-left` declarations mistakenly reuse the matching `*-right` selector in all four prefix families: `aq-m`, `aq-t`, `aq-d` and `aq-s`. | Each right-side class therefore applies both left and right spacing, while the corresponding left-side class has no default 1rem rule. | Test baseline aliases and inspect other responsive scales separately. |
 
 ## Corrective policy
 
