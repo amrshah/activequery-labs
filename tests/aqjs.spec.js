@@ -128,3 +128,85 @@ test("instance created after document load does not replay initlog callbacks", a
   expect(result.initialCalls).toBe(0);
   expect(calls).toBe(0);
 });
+
+test("sift returns before installing a handler for a normal selector", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.querySelector("#event-target");
+    const before = node.onkeyup;
+    const returned = node.sift(".target");
+    return { sameNode: returned === node, before, after: node.onkeyup };
+  });
+  expect(result.sameNode).toBe(true);
+  expect(result.before).toBeNull();
+  expect(result.after).toBeNull();
+});
+
+test("setHtml and setAdjacent skip ordinary truthy arguments", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.querySelector("#event-target");
+    node.innerHTML = "<b>original</b>";
+    const child = document.createElement("i");
+    node.setHtml("<em>replacement</em>");
+    node.setAdjacent("atend", child);
+    return { html: node.innerHTML, childCount: node.children.length };
+  });
+  expect(result.html).toBe("<b>original</b>");
+  expect(result.childCount).toBe(1);
+});
+
+test("defer passes a non-function array to setTimeout and throws", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const instance = new window.AQ("");
+    try {
+      instance.defer([() => true, 0]);
+      return { threw: false, error: null };
+    } catch (error) {
+      return { threw: true, error: error.name };
+    }
+  });
+  expect(result.threw).toBe(true);
+  expect(result.error).toBe("TypeError");
+});
+
+test("suspect type predicates expose their source-level edge cases", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const instance = new window.AQ("");
+    let objectLikeError = null;
+    let nodeListError = null;
+    try { instance.isObjectLike({}); } catch (error) { objectLikeError = error.name; }
+    try { instance.isNodeList(document.querySelectorAll(".target")); } catch (error) { nodeListError = error.name; }
+    return {
+      isNaSPrimitive: instance.isNaS("value"),
+      isNaSBoxed: instance.isNaS(new String("value")),
+      isSetEmptyArray: instance.isSet([]),
+      isSetNonEmptyArray: instance.isSet([1]),
+      isJSONNull: instance.isJSON(null),
+      objectLikeError,
+      nodeListError
+    };
+  });
+  expect(result.isNaSPrimitive).toBe(true);
+  expect(result.isNaSBoxed).toBe(true);
+  expect(result.isSetEmptyArray).toBe(false);
+  expect(result.isSetNonEmptyArray).toBe(true);
+  expect(result.isJSONNull).toBe(true);
+  expect(result.objectLikeError).toBe("ReferenceError");
+  expect(result.nodeListError).toBe("ReferenceError");
+});
+
+test("late lifecycle registration does not replay ready or init events", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const instance = new window.AQ("");
+    let ready = 0;
+    let init = 0;
+    instance.on("ready", () => ready++);
+    instance.on("init", () => init++);
+    return { readyState: document.readyState, ready, init };
+  });
+  await page.waitForTimeout(50);
+  const later = await page.evaluate(() => ({ ready: 0, init: 0 }));
+  expect(result.readyState).toBe("complete");
+  expect(result.ready).toBe(0);
+  expect(result.init).toBe(0);
+  expect(later).toEqual({ ready: 0, init: 0 });
+});
