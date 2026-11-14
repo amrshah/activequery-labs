@@ -38,6 +38,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - `cookbook/` — tested recipes and implementation patterns.
 - `testing/` — reproducible test cases, compatibility, edge cases and known limitations.
 - `agent-reference/` — fast capability index, task-to-reference routing and concise agent instructions.
+- [Task routing guide](agent-reference/task-routing.md) — selects the smallest relevant reference for each agent task.
 - `source-traceability/` — symbol/selector-to-source map and verification records.
 - `mastery-gate.md` — explicit acceptance criteria; status remains NOT PASSED until evidence exists.
 - `evaluation/` — fresh-agent retrieval and implementation acceptance tests.
