@@ -68,6 +68,9 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | JS-027 | `ActiveQuery.js:69-110` | `nestedDOM` explicitly accepts HTMLCollection in its initial type gate, but its query branch only handles contexts with `querySelectorAll` and its collection branch only handles NodeList or Array. | HTMLCollection context returns unchanged without querying descendants, contrary to the broad validation/comment. | Test HTMLCollection context and compare with NodeList and Array contexts. |
 | JS-028 | `ActiveQuery.js:38-55` | Constructor registers a `readystatechange` listener but does not check whether `document.readyState` is already `complete`. | An instance created after the complete event may never execute callbacks pushed into `initlog`. | Create instance after load, push callback and verify whether it executes; also test early construction. |
 
+
+| JS-029 | `ActiveQuery.js:291-315` | Lifecycle `on("ready")` and `on("init")` register DOMContentLoaded/load listeners without checking current document state. | Registration after the corresponding event has fired does not replay the callback. | Browser-test early and late registration; document the required initialization timing. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
