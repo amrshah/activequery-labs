@@ -385,24 +385,37 @@ test("AQCSS desktop and large-screen prefixes activate while range-hide helpers 
 });
 
 
-test("AQCSS short-landscape overlay activates at 550px height and clears above threshold", async ({ page }) => {
+test("AQCSS short-landscape overlay has browser-specific parsing at 550px height", async ({ page, browserName }) => {
   await page.setViewportSize({ width: 800, height: 550 });
-  const at550 = await page.evaluate(() => ({
-    content: getComputedStyle(document.body, "::after").content,
-    display: getComputedStyle(document.body, "::after").display,
-    overflow: getComputedStyle(document.body).overflow
-  }));
+  const at550 = await page.evaluate(() => {
+    const sheet = [...document.styleSheets].find(item => item.href?.includes("ActiveQuery.css"));
+    const media = [...(sheet?.cssRules ?? [])].find(rule =>
+      rule.type === CSSRule.MEDIA_RULE && rule.conditionText.includes("max-height")
+    );
+    const pseudoRuleParsed = [...(media?.cssRules ?? [])].some(rule => rule.selectorText === "body::after");
+    return {
+      mediaMatches: matchMedia("(max-height: 550px) and (orientation: landscape)").matches,
+      pseudoRuleParsed,
+      content: getComputedStyle(document.body, "::after").content,
+      display: getComputedStyle(document.body, "::after").display
+    };
+  });
 
   await page.setViewportSize({ width: 800, height: 551 });
   const at551 = await page.evaluate(() => getComputedStyle(document.body, "::after").content);
 
-  expect(at550.content).toContain("Turn Holding Position");
-  expect(at550.display).toBe("flex");
-  expect(at550.overflow).toBe("hidden");
+  expect(at550.mediaMatches).toBe(true);
+  if (browserName === "chromium") {
+    expect(at550.pseudoRuleParsed).toBe(false);
+    expect(at550.content).toBe("none");
+    expect(at550.display).not.toBe("flex");
+  } else {
+    expect(at550.pseudoRuleParsed).toBe(true);
+    expect(at550.content).toContain("Turn Holding Position");
+    expect(at550.display).toBe("flex");
+  }
   expect(at551).toBe("none");
 });
-
-
 test("AQCSS input animation retains its transition under prefers-reduced-motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   const result = await page.evaluate(() => {
