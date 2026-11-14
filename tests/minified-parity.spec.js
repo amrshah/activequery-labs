@@ -285,3 +285,89 @@ test("AQJS source and minified builds preserve early lifecycle and initlog timin
   expect(minified).toEqual(source);
   expect(source).toEqual({ ready: 1, init: 1, run: 1, complete: 1 });
 });
+
+
+test("AQJS source and minified builds preserve Array query helper contracts", async ({ page }) => {
+  const collect = async modulePath => {
+    await page.goto(modulePath.includes(".min.") ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const values = [{ key: 1 }, { key: "1" }, { key: "abc" }, { key: "abcd" }];
+      const strings = [{ key: "abc" }, { key: "abcd" }];
+      const assignmentRows = [{ key: 1 }, { key: 2 }];
+      const assignedIndex = assignmentRows.getIndex("key", "=", 99);
+      return {
+        looseCount: values.getCount("key", "==", 1),
+        strictCount: values.getCount("key", "===", 1),
+        substringCount: strings.getCount("key", "*", "bc"),
+        defaultCount: strings.getCount("key", "contains", "bc"),
+        hasExact: values.has("key", "abc"),
+        foundIndex: values.getIndexs("key", "abcd"),
+        missingIndex: values.getIndexs("key", "missing"),
+        assignedIndex,
+        assignedValue: assignmentRows[0].key
+      };
+    });
+  };
+  const source = await collect("/vendor/ActiveQuery.js");
+  const minified = await collect("/vendor/ActiveQuery.min.js");
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    looseCount: 2,
+    strictCount: 1,
+    substringCount: 2,
+    defaultCount: 2,
+    hasExact: true,
+    foundIndex: 3,
+    missingIndex: false,
+    assignedIndex: 0,
+    assignedValue: 99
+  });
+});
+
+test("AQJS source and minified builds preserve Element and NodeList bulk mutations", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const node = document.createElement("div");
+      const attributesReturn = node.setAttributes(["data-one", "1", "data-stop", "", "data-after", "3"]);
+      node.setAttributeName(["hidden", "inert"]);
+      node.removeAttributes(["inert"]);
+      node.setStyles(["color: red", "marginTop: 2px"]);
+      node.setClasses(["alpha", "beta"]);
+      node.toggleClasses("beta");
+      const list = document.querySelectorAll(".target");
+      list.setAttributes(["data-bulk", "yes"]);
+      list.setStyles(["color: blue"]);
+      list.setClasses(["bulk"]);
+      return {
+        attributesReturnSame: attributesReturn === node,
+        firstAttribute: node.getAttribute("data-one"),
+        stoppedAttribute: node.hasAttribute("data-after"),
+        hidden: node.hasAttribute("hidden"),
+        inertRemoved: !node.hasAttribute("inert"),
+        inlineStyles: node.getStyles(["color", "marginTop", true]),
+        classes: node.getClasses(["alpha", "beta"]),
+        nodeListAttributes: [...list].map(item => item.getAttribute("data-bulk")),
+        nodeListStyles: [...list].map(item => item.style.color),
+        nodeListClasses: [...list].map(item => item.classList.contains("bulk"))
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    attributesReturnSame: true,
+    firstAttribute: "1",
+    stoppedAttribute: false,
+    hidden: true,
+    inertRemoved: true,
+    inlineStyles: ["red", "2px"],
+    classes: false,
+    nodeListAttributes: ["yes", "yes", "yes"],
+    nodeListStyles: ["blue", "blue", "blue"],
+    nodeListClasses: [true, true, true]
+  });
+});
