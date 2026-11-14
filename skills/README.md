@@ -7,7 +7,7 @@ These portable skills teach coding agents to research, implement, document and v
 - [ActiveQuery foundation](activequery-foundation/SKILL.md)
 - [AQCSS engineering](aqcss-engineering/SKILL.md)
 - [AQJS engineering](aqjs-engineering/SKILL.md)
-- [Component engineering](activequery-component-engineering/SKILL.md)
+- [Component engineering](activequery-component-engineering/SKILL.md)\n- [Responsive design](activequery-responsive-design/SKILL.md)\n- [Documentation engineering](activequery-documentation/SKILL.md)\n- [Integration engineering](activequery-integration/SKILL.md)
 
 ## Agent contract
 
