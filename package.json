@@ -4,10 +4,12 @@
   "type": "module",
   "scripts": {
     "test": "playwright test",
-    "catalog:aqcss": "node tools/build-aqcss-catalog.mjs"
+    "catalog:aqcss": "node tools/build-aqcss-catalog.mjs",
+    "catalog:aqjs": "node tools/build-aqjs-catalog.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",
-    "postcss": "8.5.6"
+    "postcss": "8.5.6",
+    "acorn": "8.15.0"
   }
 }
