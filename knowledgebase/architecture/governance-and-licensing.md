@@ -39,6 +39,8 @@ This has practical implications when bundling, modifying, redistributing or depl
 
 ## Third-party components
 
+The exact W3CSS 4.10 and Normalize.css 8.0.1 sources and MIT licenses have been retrieved and fingerprinted. Only a small number of rules matched exactly in an initial lexical comparison; modified/renamed/merged code remains possible, so rule-level provenance is not fully resolved. See `third-party-provenance.md`.
+
 AQCSS README/source identifies W3CSS and Normalize.css. AQJS source identifies Array.sortBy and is-json. Their respective notices and license texts must remain associated with any redistributed bundle. See the upstream license/notice files and verify the exact versions used.
 
 ## Naming and repository conventions
