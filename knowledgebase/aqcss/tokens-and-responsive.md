@@ -1,7 +1,7 @@
 # AQCSS Tokens, Typography and Responsive Semantics
 
 Source: `ActiveQuery.css`, pinned SHA `c03546ecd1a41d26cbbfa8f1e31d38731f77cf62`.
-Status: source-confirmed declarations; browser rendering and compatibility remain unverified.
+Status: source-confirmed declarations; selected computed-style behavior is runtime-verified in Chromium and Firefox; broad rendering and compatibility coverage remains incomplete.
 
 ## Root setup
 
@@ -78,7 +78,7 @@ The `*-flexon--row-gap-xlarge` rules use `row-gap: 2!important` without a unit. 
 
 At the end of the stylesheet:
 - `(pointer: coarse) and (hover: none)` hides touch-specific content;
-- width 1–600px hides mobile-specific content;
+- a malformed width 1–600px media prelude attempts to hide mobile-specific content but is ignored by Chromium/Firefox;
 - width 601–992px hides tablet-specific content;
 - fine pointer plus hover hides no-touch-specific content;
 - width 993–1439px hides desktop-specific content;
