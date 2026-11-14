@@ -83,7 +83,7 @@ Native headings receive global size, line-height, weight, margin and color rules
 ## 8. Themed bordered panel
 
 ~~~html
-<section class="aq-border aq-swatch-bg--primary aq-swatch-border--secondary">...</section>
+<section class="aq-border aq-swatch--primary aq-swatch-border--secondary">...</section>
 ~~~
 
 The border utility establishes border style/width; background swatch supplies background (and paired foreground where declared); border swatch supplies border color only. Root swatch declarations mix RGB triplets and later hex values; legacy rgb(var(...)) consumers can fail with the effective hex token. aq-border--no is important and removes the border even if a border-color utility is present. Confirm contrast, hover and token values in the actual browser. This is not a verified accessible theme.
