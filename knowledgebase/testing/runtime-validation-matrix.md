@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-15.
-Run #171 completed with 106 passed and 16 failed. After run #313, additional test coverage was added. The latest completed browser run #327 passed: **182 passed, 0 failed, 0 skipped** across Chromium and Firefox (91 authored tests in two browser projects). Run #325 remains the previous 88-test baseline; run #313 remains the historical 79-test baseline. Run #313 remains the historical 79-test baseline. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run #171 completed with 106 passed and 16 failed. After run #313, additional test coverage was added. The latest completed browser run #327 passed: **182 passed, 0 failed, 0 skipped** across Chromium and Firefox (91 authored tests in two browser projects). Run #325 remains the previous 88-test baseline; run #313 remains the historical 79-test baseline. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
