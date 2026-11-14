@@ -65,21 +65,29 @@ test("large-screen fs-2 and fs-3 lowercase classes miss uppercase selectors", as
   expect(result[5]).toBeGreaterThan(result[2]);
 });
 
-test("AQCSS facet third width is 3.33333 percent rather than one third", async ({ page }) => {
-  const result = await page.evaluate(() => {
-    const container = document.createElement("div");
-    container.style.width = "300px";
-    const child = document.createElement("div");
-    child.className = "aq-facet--third";
-    container.appendChild(child);
-    document.body.appendChild(container);
-    return {
-      width: parseFloat(getComputedStyle(child).width),
-      containerWidth: parseFloat(getComputedStyle(container).width)
-    };
-  });
-  expect(result.width).toBeCloseTo(result.containerWidth / 30, 1);
-  expect(result.width).toBeLessThan(result.containerWidth / 10);
+test("AQCSS third-width facet is 3.33333 percent at all responsive prefixes", async ({ page }) => {
+  const configs = [
+    { width: 599, className: "aq-m-facet--third" },
+    { width: 600, className: "aq-t-facet--third" },
+    { width: 993, className: "aq-d-facet--third" },
+    { width: 1440, className: "aq-s-facet--third" }
+  ];
+  for (const config of configs) {
+    await page.setViewportSize({ width: config.width, height: 900 });
+    const result = await page.evaluate(className => {
+      const container = document.createElement("div");
+      container.style.width = "300px";
+      const child = document.createElement("div");
+      child.className = className;
+      container.appendChild(child);
+      document.body.appendChild(container);
+      return {
+        width: parseFloat(getComputedStyle(child).width),
+        containerWidth: parseFloat(getComputedStyle(container).width)
+      };
+    }, config.className);
+    expect(result.width, config.className).toBeCloseTo(result.containerWidth / 30, 1);
+  }
 });
 
 test("AQCSS row-gap xlarge unitless value is discarded by the browser", async ({ page }) => {
