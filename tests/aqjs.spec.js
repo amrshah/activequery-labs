@@ -326,12 +326,14 @@ test("Array.i fails because ActiveQuery.isNaN is not defined", async ({ page }) 
   expect(result).toEqual({ threw: true, error: "TypeError" });
 });
 
-test("Object setValues and hasValues guards skip normal truthy arguments", async ({ page }) => {
+test("Object setValues and hasValues call a missing static predicate", async ({ page }) => {
   const result = await page.evaluate(() => {
     const value = { existing: 1 };
-    const setResult = value.setValues("newKey", 2);
-    const getResult = value.hasValues("existing");
-    return { value, setSame: setResult === value, getSame: getResult === value };
+    let setError = null;
+    let getError = null;
+    try { value.setValues("newKey", 2); } catch (error) { setError = error.name; }
+    try { value.hasValues("existing"); } catch (error) { getError = error.name; }
+    return { value, setError, getError };
   });
-  expect(result).toEqual({ value: { existing: 1 }, setSame: true, getSame: true });
+  expect(result).toEqual({ value: { existing: 1 }, setError: "TypeError", getError: "TypeError" });
 });
