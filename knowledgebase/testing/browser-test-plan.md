@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run #292 passed all 156 browser cases (78 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: run #292 passed all 156 browser cases (78 authored tests × Chromium/Firefox). A 79th authored test now verifies that `defer` does not invoke its callback; it awaits CI. Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -69,10 +69,10 @@ Status: run #292 passed all 156 browser cases (78 authored tests × Chromium/Fir
 
 ## Current authored test inventory
 
-- `tests/aqjs.spec.js`: 46 targeted browser tests.
+- `tests/aqjs.spec.js`: 47 targeted browser tests.
 - `tests/aqcss.spec.js`: 21 targeted computed-style/browser tests.
-- Additional source-structure and minified-parity specs bring the total to 78 authored tests.
-- The workflow is configured for both `push` and `pull_request` to `main`. Run #292 proves the current 78-test suite passed in both configured browser projects; future changes must continue to pass the workflow.
+- Additional source-structure and minified-parity specs bring the total to 79 authored tests.
+- The workflow is configured for both `push` and `pull_request` to `main`. Run #292 proves the 78-test suite at that commit passed in both configured browser projects. The new 79th test awaits a subsequent run; future changes must continue to pass the workflow.
 
 ## Execution record
 
