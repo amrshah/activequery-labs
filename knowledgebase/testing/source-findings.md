@@ -90,6 +90,13 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | JS-032 | `ActiveQuery.js:557-569,776-791` | Element `siblings()` default branch references undeclared `target`; NodeList `siblings()` indexes the first Element again via `t[0]`. | Element next/prev work, but default all-siblings throws; NodeList next/default paths throw. | Test Element next/prev/default and NodeList next/default separately. |
 | JS-033 | `ActiveQuery.js:885-939` | AQJS calls `ActiveQuery.extend("string", { trim: ... })`, redefining the existing native `String.prototype.trim`. The descriptor omits writable/configurable flags, so the replacement becomes non-writable and non-configurable. | Importing AQJS globally replaces a standard built-in method and makes later restoration/overrides impossible in the page realm. | Capture native trim before importing AQJS; compare function identity and descriptor flags in Chromium/Firefox. |
 
+
+| JS-034 | `ActiveQuery.js:373-407` | `setSort` comparator assigns `aVal` and `bVal` without declarations. Since AQJS is an ES module, strict mode applies. | Sorting invokes the comparator and throws ReferenceError rather than sorting. | Browser-test in Chromium/Firefox and compare with the upstream Array.sortBy adaptation. |
+| JS-035 | `ActiveQuery.js:326-337` | `getIndex(key,"=",value)` uses assignment in the `findIndex` predicate instead of comparison. | It mutates the first matching candidate and returns based on the assigned value's truthiness. | Test truthy and falsy assignment values and verify array mutation. |
+| JS-036 | `ActiveQuery.js:409-413` | `setItem(index,value)` returns early if either argument is truthy. | Normal insertions with a valid index/value are skipped. | Test normal truthy inputs and edge falsy inputs. |
+| JS-037 | `ActiveQuery.js:870-881` | Object `setValues` and `hasValues` return early for normal truthy key/value arguments. | Standard set/read calls are bypassed. | Test truthy and falsy key/value combinations. |
+| JS-038 | `ActiveQuery.js:320-323` | Array `i` calls `ActiveQuery.isNaN`, which is not defined in the inspected class/static API. | Normal index access throws TypeError. | Test valid numeric and invalid index arguments. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
