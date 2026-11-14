@@ -18,11 +18,12 @@ Pinned source: AQCSS SHA `c03546ecd1a41d26cbbfa8f1e31d38731f77cf62`; AQJS SHA `b
 | Array prototype extensions | 319–426 |
 | Element prototype extensions | 428–641 |
 | Element/Document/Window event helpers | 642–661 |
-| NodeList prototype extensions | 663–870 |
-| Number prototype trim | 871–917 |
-| Object prototype methods | 919–939 |
-| Element sancha templating | 940–1003 |
-| Element sift filter | 1004–1044 |
+| NodeList core prototype extensions | 663–815; no-op stubs also at 999, 1037 and 1145 |
+| Number prototype trim | 816–869 |
+| Object prototype methods | 870–884; no-op stubs also at 1001, 1041 and 1149 |
+| String prototype trim | 885–939 |
+| Element sancha templating | 940–1005 |
+| Element sift filter | 1006–1044 |
 | Element watch / MutationObserver fallback | 1045–1152 |
 
 These are navigational line ranges for the pinned revision. Recalculate them when the blob SHA changes.
@@ -31,14 +32,17 @@ These are navigational line ranges for the pinned revision. Recalculate them whe
 
 | Concern | Source lines |
 |---|---:|
-| Root typography/dimension/theme variables | 37–80 |
+| Root typography/dimension/theme variables | 40–80 |
 | Base document reset and semantic element styling | 81–279 |
-| Text and typography utilities | 280–353 |
-| Border utilities | 354–366 |
-| Swatch background/text/border families | 367 onward (inspect full block) |
-| Fleek filters, overlay and dropdown | 400–450 |
-| Base spacing and facet sizing | 451–640 |
-| Base and responsive flex/position utilities | 641–812 |
+| Text and typography utilities | 280–337 and 471–503 |
+| Border utilities | 338–352 |
+| Swatch background/text/border families | 354–388 |
+| Background-image helpers | 391–411 |
+| Fleek filters, overlay and dropdown | 414–470 |
+| Base spacing utilities | 504–579 |
+| Facet sizing | 580–709 |
+| Base affix positioning | 710–727 |
+| Base flexon utilities | 728–812 |
 | Tablet `aq-t-` family | 813–1136 |
 | Desktop `aq-d-` family | 1137–1460 |
 | Large-screen `aq-s-` family | 1461–1784 |
@@ -47,11 +51,11 @@ These are navigational line ranges for the pinned revision. Recalculate them whe
 ## Verified selector examples with exact anchors
 
 - `.aq-text--center`: line 311.
-- `.aq-border`: line 355.
-- `.aq-swatch--primary`: line 357.
+- `.aq-border`: line 338.
+- `.aq-swatch--primary`: line 355.
 - `.aq-fleek--dropdown-click`: line 439.
 - `.aq-facet--third`: line 586; repeated in responsive blocks.
-- `.aq-flexon--row-gap-xlarge`: line 809.
+- `.aq-flexon--row-gap-xlarge`: line 810.
 - Tablet media query: line 813.
 - Desktop media query: line 1137.
 - Large-screen media query: line 1461.
