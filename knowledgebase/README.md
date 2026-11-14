@@ -58,6 +58,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQJS type predicates and guards](aqjs/type-predicates-and-guards.md)
 - [AQJS templating and observation](aqjs/templating-and-observation.md)
 - [AQJS extension and custom elements](aqjs/extend-and-custom-elements.md)
+- [AQJS third-party code provenance](aqjs/third-party-provenance.md)
 - [AQJS AST catalog generator](../tools/build-aqjs-catalog.mjs) — emits source/minified API inventories in CI.
 - [AQCSS AST catalog generator](../tools/build-aqcss-catalog.mjs) — emits rule, class and custom-property inventories in CI.
 - [AQCSS selector families](aqcss/selector-families.md)
