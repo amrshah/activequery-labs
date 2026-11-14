@@ -64,6 +64,10 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | JS-025 | `ActiveQuery.js:119` | The `dom` custom-element name regex `/^[a-z][a-z-]*[a-z]$/` does not require the hyphen required by the browser custom-elements naming rules. | A name can pass AQ's check but be rejected by `customElements.define`; the regex also excludes digits. | Test names against the browser specification and across engines. |
 | JS-026 | `ActiveQuery.js:145-180` | Prototype extension branches call `Object.defineProperties` using descriptor objects without consistently validating shape or existing property descriptors. | Existing non-configurable properties or malformed descriptors can throw; new properties default to non-enumerable/non-writable/non-configurable. | Test collisions, descriptor flags, repeated extension calls and browser-native properties. |
 
+
+| JS-027 | `ActiveQuery.js:69-110` | `nestedDOM` explicitly accepts HTMLCollection in its initial type gate, but its query branch only handles contexts with `querySelectorAll` and its collection branch only handles NodeList or Array. | HTMLCollection context returns unchanged without querying descendants, contrary to the broad validation/comment. | Test HTMLCollection context and compare with NodeList and Array contexts. |
+| JS-028 | `ActiveQuery.js:38-55` | Constructor registers a `readystatechange` listener but does not check whether `document.readyState` is already `complete`. | An instance created after the complete event may never execute callbacks pushed into `initlog`. | Create instance after load, push callback and verify whether it executes; also test early construction. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
