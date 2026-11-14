@@ -51,3 +51,17 @@ test("custom property index excludes BEM selector modifiers misread as variables
   expect(index.properties["--bold-hover"]).toBeUndefined();
   expect(index.properties["--dropdown-hover"]).toBeUndefined();
 });
+
+
+test("committed AQCSS navigation indexes match the pinned PostCSS catalog", async () => {
+  const classIndex = JSON.parse(fs.readFileSync("./knowledgebase/aqcss/class-token-index.json", "utf8"));
+  const ruleCatalog = JSON.parse(fs.readFileSync("./knowledgebase/aqcss/rule-catalog.json", "utf8"));
+  expect(classIndex.source.sha).toBe("c03546ecd1a41d26cbbfa8f1e31d38731f77cf62");
+  expect(classIndex.rule_count).toBe(1417);
+  expect(classIndex.unique_class_token_count).toBe(1813);
+  expect(classIndex.classes).toHaveLength(1813);
+  expect(ruleCatalog.source.sha).toBe("c03546ecd1a41d26cbbfa8f1e31d38731f77cf62");
+  expect(ruleCatalog.rule_count).toBe(1417);
+  expect(ruleCatalog.unique_selector_text_count).toBe(1409);
+  expect(ruleCatalog.rules).toHaveLength(1417);
+});
