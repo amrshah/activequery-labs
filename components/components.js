@@ -1,0 +1,1 @@
+(() => { const tabs=[...document.querySelectorAll(".demo-tab")]; tabs.forEach(tab=>tab.addEventListener("click",()=>{tabs.forEach(t=>{const active=t===tab;t.classList.toggle("selected",active);t.setAttribute("aria-selected",String(active));});document.querySelectorAll(".tab-content").forEach(panel=>panel.hidden=panel.id!==tab.dataset.panel);})); })();
