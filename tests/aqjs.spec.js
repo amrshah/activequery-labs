@@ -238,3 +238,48 @@ test("isEmpty uses recursive and zero-as-empty semantics", async ({ page }) => {
   });
   expect(result).toEqual({ zero: true, emptyArray: false, nestedNull: true, zeroException: false });
 });
+
+test("Element siblings next/prev work but all-siblings branch throws", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const element = document.querySelector("#target-a");
+    let allError = null;
+    try { element.siblings(); } catch (error) { allError = error.name; }
+    return {
+      next: element.siblings("next")?.id,
+      prev: element.siblings("prev"),
+      allError
+    };
+  });
+  expect(result.next).toBe("target-b");
+  expect(result.prev).toBeNull();
+  expect(result.allError).toBe("ReferenceError");
+});
+
+test("NodeList siblings methods throw due to double indexing", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const list = document.querySelectorAll(".target");
+    let nextError = null;
+    let allError = null;
+    try { list.siblings("next"); } catch (error) { nextError = error.name; }
+    try { list.siblings(); } catch (error) { allError = error.name; }
+    return { nextError, allError };
+  });
+  expect(result.nextError).toBe("TypeError");
+  expect(result.allError).toBe("TypeError");
+});
+
+test("AQJS overwrites native String.prototype.trim and freezes its descriptor", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const descriptor = Object.getOwnPropertyDescriptor(String.prototype, "trim");
+    return {
+      sameAsNative: String.prototype.trim === window.nativeStringTrim,
+      writable: descriptor.writable,
+      configurable: descriptor.configurable,
+      enumerable: descriptor.enumerable
+    };
+  });
+  expect(result.sameAsNative).toBe(false);
+  expect(result.writable).toBe(false);
+  expect(result.configurable).toBe(false);
+  expect(result.enumerable).toBe(false);
+});
