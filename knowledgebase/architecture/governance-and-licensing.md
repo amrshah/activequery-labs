@@ -28,11 +28,12 @@ OSL-3.0 section 4 also expressly excludes a license to the Licensor's names and 
 ## OSL-3.0 implications
 
 The inspected Governance LICENSE contains the Open Software License 3.0 text. The license includes:
-- source-code and derivative-work terms, including a requirement to provide machine-readable source with distributed copies (the licensor may satisfy its own obligation through a reasonably accessible repository);
+- Section 3's source-availability obligation on the Licensor: the Licensor must provide a machine-readable copy of the Original Work's Source Code with each copy it distributes, and may satisfy that obligation through a reasonably accessible repository while it continues distributing the Original Work. Do not overstate this as a blanket downstream source-delivery clause for every derivative copy; Sections 1(c), 5, 6 and 9 govern the licensee's distribution/deployment obligations;
 - an external-deployment definition covering use, distribution or communication where others may use the Original Work or Derivative Works, including applications made available over a network;
 - an express condition that any such External Deployment be treated as a distribution under section 1(c);
 - attribution rights requiring copyright, patent, trademark, licensing and attribution notices to be retained in derivative source, plus a prominent notice that the Original Work was modified;
-- OSL-3.0 licensing requirements for distributed copies of the Original Work or Derivative Works.
+- OSL-3.0 licensing requirements for distributed copies of the Original Work or Derivative Works;
+- a reasonable-effort requirement to obtain recipients' express assent to the license terms when communicating/distributing copies, with immediate termination for failure to honor Section 1(c) conditions.
 
 This has practical implications when bundling, modifying, redistributing or deploying upstream AQCSS/AQJS as part of a public portal. Do not assume that putting site-authored code under MIT changes the upstream license, or that network use is automatically outside OSL terms.
 
