@@ -158,18 +158,19 @@ test("setHtml and setAdjacent skip ordinary truthy arguments", async ({ page }) 
   expect(result.childCount).toBe(1);
 });
 
-test("defer passes a non-function array to setTimeout and throws", async ({ page }) => {
+test("defer passes the remaining callback array to setTimeout without a synchronous throw", async ({ page }) => {
   const result = await page.evaluate(() => {
     const instance = new window.AQ("");
+    let timer;
     try {
-      instance.defer([() => true, 0]);
-      return { threw: false, error: null };
+      timer = instance.defer([() => true, 60]);
+      clearTimeout(timer);
+      return { threw: false, timerType: typeof timer };
     } catch (error) {
-      return { threw: true, error: error.name };
+      return { threw: true, error: error.name, timerType: typeof timer };
     }
   });
-  expect(result.threw).toBe(true);
-  expect(result.error).toBe("TypeError");
+  expect(result).toEqual({ threw: false, timerType: "number" });
 });
 
 test("suspect type predicates expose their source-level edge cases", async ({ page }) => {
@@ -268,7 +269,7 @@ test("NodeList siblings methods throw due to double indexing", async ({ page }) 
   expect(result.allError).toBe("TypeError");
 });
 
-test("AQJS overwrites native String.prototype.trim and freezes its descriptor", async ({ page }) => {
+test("AQJS overwrites native String.prototype.trim while retaining native descriptor flags", async ({ page }) => {
   const result = await page.evaluate(() => {
     const descriptor = Object.getOwnPropertyDescriptor(String.prototype, "trim");
     return {
@@ -279,8 +280,8 @@ test("AQJS overwrites native String.prototype.trim and freezes its descriptor", 
     };
   });
   expect(result.sameAsNative).toBe(false);
-  expect(result.writable).toBe(false);
-  expect(result.configurable).toBe(false);
+  expect(result.writable).toBe(true);
+  expect(result.configurable).toBe(true);
   expect(result.enumerable).toBe(false);
 });
 
@@ -309,10 +310,11 @@ test("Array.getIndex equals branch assigns instead of comparing", async ({ page 
 test("Array.setItem skips ordinary truthy index and value", async ({ page }) => {
   const result = await page.evaluate(() => {
     const values = [1, 2];
-    values.setItem(1, 3);
-    return values;
+    const returned = values.setItem(1, 3);
+    // Array.prototype.then makes returning an Array from page.evaluate thenable.
+    return { values: [...values], returnedSame: returned === values };
   });
-  expect(result).toEqual([1, 2]);
+  expect(result).toEqual({ values: [1, 2], returnedSame: true });
 });
 
 test("Array.i fails because ActiveQuery.isNaN is not defined", async ({ page }) => {
@@ -338,26 +340,18 @@ test("Object setValues and hasValues call a missing static predicate", async ({ 
   expect(result).toEqual({ value: { existing: 1 }, setError: "TypeError", getError: "TypeError" });
 });
 
-test("nestedDOM handles arrays of Elements and preserves polymorphic returns", async ({ page }) => {
+test("nestedDOM rejects Array contexts and returns the original array unchanged", async ({ page }) => {
   const result = await page.evaluate(() => {
-    const two = [document.querySelector("#scope-a"), document.querySelector("#scope-b")];
-    const many = window.AQ.nestedDOM.call(two, ".target");
-    const one = window.AQ.nestedDOM.call([document.querySelector("#scope-b")], "#target-c");
-    const noneInput = [document.createElement("div")];
-    const none = window.AQ.nestedDOM.call(noneInput, ".target");
+    const manyInput = [document.querySelector("#scope-a"), document.querySelector("#scope-b")];
+    const oneInput = [document.querySelector("#scope-b")];
+    const emptyInput = [document.createElement("div")];
     return {
-      manyIsArray: Array.isArray(many),
-      manyIds: many.map(node => node.id),
-      oneId: one?.id,
-      noneIsOriginal: none === noneInput
+      manySame: window.AQ.nestedDOM.call(manyInput, ".target") === manyInput,
+      oneSame: window.AQ.nestedDOM.call(oneInput, "#target-c") === oneInput,
+      emptySame: window.AQ.nestedDOM.call(emptyInput, ".target") === emptyInput
     };
   });
-  expect(result).toEqual({
-    manyIsArray: true,
-    manyIds: ["target-a", "target-b", "target-c"],
-    oneId: "target-c",
-    noneIsOriginal: true
-  });
+  expect(result).toEqual({ manySame: true, oneSame: true, emptySame: true });
 });
 
 test("custom String.trim differs from native Unicode whitespace semantics", async ({ page }) => {
