@@ -82,6 +82,10 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | CSS-020 | Full pinned `ActiveQuery.css` source | No `prefers-color-scheme`, `data-theme`, `dark-mode`, `.dark` or `color-scheme` handling was found. | Theme tokens exist, but a built-in light/dark switching contract is not present in this stylesheet. | Treat dark mode as a Labs/application feature unless newer upstream evidence appears. |
 | CSS-021 | `ActiveQuery.css:142,227-240,249,354-388,441,446` | Relative-color syntax `rgb(from ...)` is used in many declarations, but no `@supports` fallback block was found. | Browsers without support may discard those color declarations; `var()` fallback values do not guarantee a fallback for unsupported relative-color syntax. | Test current target browsers and provide a conventional color fallback where required. |
 
+
+| CSS-022 | `ActiveQuery.css:50,288,455` | Root `--aq-paragraph-size` is `1.2` without a unit, but it is consumed as a `font-size` value with a `1.2rem` fallback. Because the variable exists, the fallback is not used and the unitless nonzero value is invalid for `font-size`. | Paragraph and blockquote size rules may be discarded and inherit instead of applying the intended 1.2rem size. | Browser-test computed font size with the default token and with a valid rem override. |
+| CSS-023 | `ActiveQuery.css:1477-1478` | Large-screen typography selectors for fs-2 and fs-3 use uppercase `aq-S-text` while the surrounding family uses lowercase `aq-s-text`. | Lowercase class names will not match these case-different selectors in HTML. | Test `aq-s-text--fs-1` through `fs-5` at 1440px and verify the fs-2/fs-3 mismatch. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
