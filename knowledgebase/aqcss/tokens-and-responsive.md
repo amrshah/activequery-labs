@@ -33,6 +33,18 @@ The source declares the swatch variables twice in the root block: first as comma
 
 No `prefers-color-scheme` query was found in the inspected source. Token presence alone is not evidence of a complete built-in light/dark mode. A theme switch can likely be authored by overriding custom properties, but that is a custom integration and must be tested for all dependent selectors.
 
+### Token consumers and theme hazards
+
+The later hex token values are consumed differently by different rule families:
+- Swatch background/text/border helpers use relative-color syntax such as `rgb(from var(--aq-swatch-primary) r g b / ...)`.
+- The basic `.aq-border` and side-border utilities use legacy `rgb(var(--aq-swatch-secondary))`, which expects channel values and is incompatible with the effective hex token by default (CSS-001).
+- Opacity tokens are role-specific: canvas/background, text, border and mark. Changing one does not change the others.
+- `.aq-swatch--secondary` sets its background but does not set a foreground color in the same rule; the foreground comes from other matching styles or inheritance.
+- Border-color swatches do not create border width/style.
+- A theme override must be checked against every consumer's expected token syntax, not merely the variable name. A single token type can be valid for relative-color consumers and invalid for legacy `rgb(var())` consumers.
+
+The detailed consumers and combination behavior are in [the border, swatch and effects cascade map](theme-effects.md). No automatic dark-mode switch is provided.
+
 ## Typography
 
 The source styles paragraph text and headings globally and provides AQ utility aliases. Confirmed examples at lines 280–353:
