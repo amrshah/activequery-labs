@@ -25,7 +25,7 @@ The pinned AQJS source is parsed with Acorn in CI. The generated AST catalog rec
 | Method | Source-observed role | Notes requiring care |
 |---|---|---|
 | `constructor(a=null)` | Initializes helper references, event listener and optional alias | See runtime model; global/prototype mutations |
-| `defer(a)` | Copies iterable, pops last value, multiplies by 1000, passes remaining array to `setTimeout` | In Chromium/Firefox the array is coerced to a string and no synchronous error is thrown; whether the timer executes useful callback logic remains unresolved. See JS-016 |
+| `defer(a)` | Copies iterable, pops last value, multiplies by 1000, passes remaining array to `setTimeout` | In Chromium/Firefox the array is coerced to a string; it does not synchronously throw, but the supplied arrow-function callback is evaluated as an expression and not invoked. See JS-016 |
 | `getPlugin(name)` | Dynamically imports the string module specifier with `import(name)` | Do not pass untrusted user-controlled module specifiers; restrict allowed modules at the application boundary |
 | `isArray(a)` / `isNaA(a)` | Positive/negative array checks | `isNaA` is negation |
 | `isArraySet(a)` / `isNaAS(a)` | Set checks | Negative counterpart |
