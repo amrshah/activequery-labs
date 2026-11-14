@@ -413,18 +413,63 @@ test("NodeList getter and content helpers include no-op stubs", async ({ page })
   const result = await page.evaluate(() => {
     const list = document.querySelectorAll(".target");
     const before = [...list].map(node => node.textContent);
+    const child = document.createElement("i");
     const styles = list.getStyles();
     const classes = list.getClasses();
-    list.setText("changed");
-    list.setHtml("<b>changed</b>");
-    list.setContent(document.createElement("i"));
+    const returns = [
+      list.setChild(child),
+      list.setAdjacent("beforeend", child),
+      list.setHtml("<b>changed</b>"),
+      list.getHtml(),
+      list.setContent(child),
+      list.setText("changed"),
+      list.getText(),
+      list.getValue(),
+      list.fax()
+    ];
     return {
       stylesUndefined: styles === undefined,
       classesSame: classes === list,
+      noOpReturnsSame: returns.every(value => value === list),
+      childNotAppended: [...list].every(node => !node.contains(child)),
       textUnchanged: [...list].map(node => node.textContent).every((value, i) => value === before[i])
     };
   });
-  expect(result).toEqual({ stylesUndefined: true, classesSame: true, textUnchanged: true });
+  expect(result).toEqual({
+    stylesUndefined: true,
+    classesSame: true,
+    noOpReturnsSame: true,
+    childNotAppended: true,
+    textUnchanged: true
+  });
+});
+
+test("Element and NodeList index, then and fax extensions have distinct contracts", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const element = document.querySelector("#single");
+    const list = document.querySelectorAll(".target");
+    const form = document.createElement("form");
+    return {
+      elementIndexSame: element.i() === element,
+      nodeListIndex: list.i(0)?.id,
+      invalidNodeListIndexSame: list.i("not-an-index") === list,
+      elementThenValue: element.then(node => node.id),
+      nodeListThenValue: list.then(nodes => nodes.length),
+      elementFaxSame: element.fax() === element,
+      formFaxUndefined: form.fax() === undefined,
+      nodeListFaxSame: list.fax() === list
+    };
+  });
+  expect(result).toEqual({
+    elementIndexSame: true,
+    nodeListIndex: "target-a",
+    invalidNodeListIndexSame: true,
+    elementThenValue: "single",
+    nodeListThenValue: 3,
+    elementFaxSame: true,
+    formFaxUndefined: true,
+    nodeListFaxSame: true
+  });
 });
 
 test("NodeList setValue updates form controls in the collection", async ({ page }) => {
