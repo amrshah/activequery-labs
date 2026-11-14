@@ -72,4 +72,4 @@ For each selector, the final reference must record:
 - runtime example with viewport and browser;
 - whether the selector is AQ-authored, W3CSS-derived, Normalize-derived or unclear.
 
-A lexical scan of `.` tokens is not a reliable count of CSS class selectors. The final catalogue must use a CSS-aware parser or carefully reviewed rule extraction and must separate selector occurrences from unique class names.
+A raw scan of `.` tokens is not a reliable count of CSS class selectors. The current navigation indexes use brace-aware rule-prelude extraction and separate selector occurrences from unique class tokens. A PostCSS AST generator is also committed for CI; its output is not yet available because no workflow run result has been retrieved. These inventories still do not resolve cascade, browser-computed styles or third-party provenance.
