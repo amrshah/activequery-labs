@@ -34,7 +34,7 @@
     "../skills/activequery-foundation/SKILL.md",
     "../skills/aqcss-engineering/SKILL.md",
     "../skills/aqjs-engineering/SKILL.md",
-    "../skills/activequery-component-engineering/SKILL.md"
+    "../skills/activequery-component-engineering/SKILL.md",\n    "../skills/activequery-responsive-design/SKILL.md",\n    "../skills/activequery-documentation/SKILL.md",\n    "../skills/activequery-integration/SKILL.md"
   ],
   "verification_policy": "Source-first. Treat names, signatures, behavior, compatibility and licensing as unverified until checked against the current upstream source and a reproducible test."
 }
