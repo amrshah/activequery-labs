@@ -33,7 +33,7 @@ Examples:
 - `.aq-facet--vh-1` through `.aq-facet--vh-12`: viewport-height fractions.
 - `--w-min-*`, `--w-max-*`, `--h-min-*`, `--h-max-*`, `--vh-min-*` and `--vh-max-*`: min/max constraints.
 
-The quarter/third/half/two-third/three-quarter shortcuts exist for width and height. The source has a likely width typo: `.aq-facet--third` is declared as 3.33333% width. See CSS-002. Never silently assume it means 33.33333%.
+The quarter/third/half/two-third/three-quarter shortcuts exist for width and height. The width shortcut defect is source-confirmed: `.aq-facet--third` and its base/responsive copies are declared as 3.33333% width, while the related height and viewport-height third shortcuts use 33.33333. Do not assume the width shortcut means 33.33333%. See [the facet sizing cascade map](sizing-cascade-map.md) for the complete source trace, `!important` behavior and responsive combinations.
 
 ## Positioning / affix
 
@@ -76,7 +76,7 @@ The min-width blocks are cumulative: at 1440px, the 600px, 993px and 1440px rule
 ## Source map
 
 - Baseline spacing: lines 504–579.
-- Facet sizing: lines 580–709.
+- Facet sizing: base lines 575–708; detailed cascade map in `sizing-cascade-map.md`.
 - Baseline affix: lines 710–727.
 - Baseline flexon: lines 728–812.
 - Tablet family: lines 813–1136.
