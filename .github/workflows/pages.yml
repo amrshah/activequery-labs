@@ -1,0 +1,54 @@
+name: Deploy ActiveQuery Labs
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate required site files
+        shell: bash
+        run: |
+          set -euo pipefail
+          required=(
+            index.html
+            assets/site.css
+            assets/site.js
+            docs/aqcss/index.html
+            docs/aqjs/index.html
+            docs/ecosystem/index.html
+            examples/index.html
+            examples/responsive-dashboard/index.html
+            examples/responsive-dashboard/dashboard.css
+            examples/responsive-dashboard/dashboard.js
+          )
+          for file in "${required[@]}"; do
+            test -s "$file" || { echo "Missing or empty: $file"; exit 1; }
+          done
+          echo "Validated ${#required[@]} required files."
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
