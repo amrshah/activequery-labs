@@ -74,10 +74,12 @@
     "aqjs_type_predicates": "../knowledgebase/aqjs/type-predicates-and-guards.md",
     "aqjs_templating": "../knowledgebase/aqjs/templating-and-observation.md",
     "aqjs_extend": "../knowledgebase/aqjs/extend-and-custom-elements.md",
-    "aqjs_ast_catalog": "../knowledgebase/aqjs/generated-ast-catalog.json",
     "principle_implementation_review": "../knowledgebase/architecture/principle-implementation-review.md",
     "conventions": "../knowledgebase/architecture/conventions.md",
     "minified_parity": "../knowledgebase/testing/minified-parity.md",
-    "fresh_agent_evaluation": "../knowledgebase/evaluation/fresh-agent-acceptance.md"
+    "fresh_agent_evaluation": "../knowledgebase/evaluation/fresh-agent-acceptance.md",
+    "aqjs_ast_catalog_generator": "../tools/build-aqjs-catalog.mjs",
+    "aqcss_ast_catalog_generator": "../tools/build-aqcss-catalog.mjs",
+    "aqcss_full_rule_catalog": "../knowledgebase/aqcss/rule-catalog.json"
   }
 }
