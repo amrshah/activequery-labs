@@ -59,6 +59,11 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 
 | JS-023 | `ActiveQuery.js:38-55` | Constructor defaults `a=null`, then `/[a-z$]/.test(a)` coerces null to `"null"` and matches. The alias block therefore runs for `new ActiveQuery()`; `a+a` evaluates to numeric 0, creating `window.null` and enumerable `"0"` properties on Element, NodeList and Object prototypes. | Default construction mutates global and native prototype surfaces, including Object.prototype. This is more severe than optional aliasing. | Browser test default vs explicit empty-string construction; inspect own properties and `for...in` enumeration on ordinary objects. |
 
+
+| JS-024 | `ActiveQuery.js:113-181` | `extend("dom")` and `extend("htmltag")` call `a[2].toString()` without validating argument presence/type and inspect `a[2].__proto__.name`. | Invalid or missing arguments may throw; constructor detection is based on string/prototype-name heuristics. | Test invalid arity, ordinary functions, class expressions, subclasses of HTMLElement and built-in HTML elements. |
+| JS-025 | `ActiveQuery.js:119` | The `dom` custom-element name regex `/^[a-z][a-z-]*[a-z]$/` does not require the hyphen required by the browser custom-elements naming rules. | A name can pass AQ's check but be rejected by `customElements.define`; the regex also excludes digits. | Test names against the browser specification and across engines. |
+| JS-026 | `ActiveQuery.js:145-180` | Prototype extension branches call `Object.defineProperties` using descriptor objects without consistently validating shape or existing property descriptors. | Existing non-configurable properties or malformed descriptors can throw; new properties default to non-enumerable/non-writable/non-configurable. | Test collisions, descriptor flags, repeated extension calls and browser-native properties. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
