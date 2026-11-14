@@ -116,6 +116,8 @@ Do not assume API parity between Element and NodeList.
 
 ## Contract closure tracking
 
+See the [API signature and return contract reference](api-signature-reference.md) for exact receiver/signature/return summaries, and the [predicate truth table](predicate-truth-table.md), [Element/NodeList edge-case audit](nodelist-edge-case-audit.md), and [source/minified parity audit](source-minified-parity-audit.md) for deeper source review.
+
 The [AQJS API contract closure matrix](api-contract-closure-matrix.md) tracks remaining method-level contracts, edge-case tests, unsafe classifications and semantic source/minified parity work. Use it alongside this inventory; do not interpret structural AST parity as full behavioral equivalence.
 
 ## Critical API documentation rule
