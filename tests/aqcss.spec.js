@@ -340,3 +340,46 @@ test("AQCSS dropdown hover opens on pointer hover but click variant has no click
     clickDisplay: "none"
   });
 });
+
+
+test("AQCSS desktop and large-screen prefixes activate while range-hide helpers are ignored", async ({ page }) => {
+  const sample = async (width, textClass, hideClass) => {
+    await page.setViewportSize({ width, height: 900 });
+    return page.evaluate(({ textClass, hideClass }) => {
+      const text = document.createElement("div");
+      text.className = textClass;
+      document.body.appendChild(text);
+      const hidden = document.createElement("div");
+      hidden.className = hideClass;
+      document.body.appendChild(hidden);
+      return {
+        root: parseFloat(getComputedStyle(document.documentElement).fontSize),
+        text: parseFloat(getComputedStyle(text).fontSize),
+        hidden: getComputedStyle(hidden).display
+      };
+    }, { textClass, hideClass });
+  };
+
+  const tablet601 = await sample(601, "aq-d-text--large", "aq-facet-hide-on-tablet");
+  const tablet992 = await sample(992, "aq-d-text--large", "aq-facet-hide-on-tablet");
+  const desktop993 = await sample(993, "aq-d-text--large", "aq-facet-hide-on-desktop");
+  const desktop1439 = await sample(1439, "aq-d-text--large", "aq-facet-hide-on-desktop");
+  const large1439 = await sample(1439, "aq-s-text--large", "aq-facet-hide-on-screen");
+  const large1440 = await sample(1440, "aq-s-text--large", "aq-facet-hide-on-screen");
+
+  expect(tablet601.text).toBeCloseTo(tablet601.root, 1);
+  expect(tablet992.text).toBeCloseTo(tablet992.root, 1);
+  expect(desktop993.text).toBeGreaterThan(desktop993.root);
+  expect(desktop1439.text).toBeGreaterThan(desktop1439.root);
+  expect(large1439.text).toBeCloseTo(large1439.root, 1);
+  expect(large1440.text).toBeGreaterThan(large1440.root);
+
+  // Tablet/desktop range media preludes also omit whitespace around "and".
+  expect(tablet601.hidden).not.toBe("none");
+  expect(tablet992.hidden).not.toBe("none");
+  expect(desktop993.hidden).not.toBe("none");
+  expect(desktop1439.hidden).not.toBe("none");
+  // The simple min-width:1440px screen helper remains valid.
+  expect(large1439.hidden).not.toBe("none");
+  expect(large1440.hidden).toBe("none");
+});
