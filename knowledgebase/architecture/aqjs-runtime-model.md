@@ -32,13 +32,17 @@ The constructor registers a `readystatechange` listener on `document`. When the 
 
 ## Optional global/prototype aliasing
 
-If the constructor argument matches the source condition `/[a-z$]/`, the constructor:
+The constructor defaults `a` to `null`, then evaluates `/[a-z$]/.test(a)`. JavaScript coerces `null` to the string `"null"`, which matches the regex. Therefore **`new ActiveQuery()` triggers the alias block by default**. With null, `a + a` evaluates to numeric `0`, so the constructor assigns `window.null` and writes property `"0"` to Element, NodeList and Object prototypes. The Object.prototype mutation is enumerable under ordinary assignment and affects inherited property enumeration across ordinary objects.
+
+An explicit empty-string argument does not match the regex, so `new ActiveQuery("")` avoids this particular alias/prototype mutation. This is a source-derived workaround, not a change to upstream behavior.
+
+For any other argument that matches the source condition `/[a-z$]/`, the constructor:
 - assigns `window[a] = ActiveQuery.DOM`;
 - assigns `Element.prototype[a + a] = ActiveQuery.nestedDOM`;
 - assigns `NodeList.prototype[a + a] = ActiveQuery.nestedDOM`;
 - assigns `Object.prototype[a + a] = ActiveQuery.nestedDOM`.
 
-This is a global side effect. It can overwrite an existing window property and changes native prototype surfaces. The regex condition is permissive: it tests whether the string contains at least one lowercase ASCII letter or dollar sign; it is not a strict identifier validator. Do not enable it casually in a production portal or shared page.
+This is a global side effect. It can overwrite an existing window property and changes native prototype surfaces. The regex condition is permissive: it tests whether the coerced value contains at least one lowercase ASCII letter or dollar sign; it is not a strict identifier validator. The default null argument is itself enough to trigger the block. Do not instantiate with the default argument in a production portal or shared page until the behavior is deliberately handled.
 
 ## Static selector functions
 
