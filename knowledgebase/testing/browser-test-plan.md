@@ -1,10 +1,10 @@
 # Browser Validation Plan and Current Coverage
 
-Status: test harness committed; execution result has not yet been confirmed from GitHub Actions. Do not describe these tests as passed until a completed run is inspected.
+Status: first full browser execution completed with failures; assertion corrections are now committed and a rerun is in progress. Do not describe runtime validation as passed until the corrected run completes.
 
 ## Test environment
 
-- Runner: GitHub Actions, Ubuntu latest.
+- Runner: GitHub Actions, Ubuntu 24.04 (pinned; Playwright 1.56.1 does not support the newer Ubuntu 26.04 runner image).
 - Node: 22.
 - Browser engines: Chromium and Firefox.
 - Playwright: `@playwright/test` pinned to 1.56.1.
@@ -67,6 +67,7 @@ Status: test harness committed; execution result has not yet been confirmed from
 
 | Date | Commit / run | Result |
 |---|---|---|
-| 2026-11-14 | Workflow and expanding Playwright suite committed | No commit status checks or workflow runs returned for the latest main commit; pending first confirmed execution |
+| 2026-11-14 | Run #171, commit `77a78e44235dbbca6b07320074f4149d6131dd55` | Failed: 106 passed, 16 failed across 122 Chromium/Firefox cases. Failures traced to incorrect expectations/fixture issues in `defer`, native trim descriptor flags, `Array.setItem` thenable result serialization, Array `nestedDOM` support, mobile hide breakpoint, hover alpha support assertion, and zero-size tooltip fixture. No upstream source changes. |
+| 2026-11-15 | Commits `9bae1d1`, `625d72e`, `ef68245` | Corrected the identified tests and updated behavior documentation; rerun pending. |
 
 Update this table only after retrieving the actual workflow run, job logs and test summary. A successful workflow file commit is not a successful test run.
