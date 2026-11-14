@@ -138,3 +138,42 @@ test("AQCSS tablet utility activates at 600px while mobile hide still includes 6
   });
   expect(at601).not.toBe("none");
 });
+
+test("AQCSS base border token requires channel values rather than the default hex value", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.className = "aq-border";
+    document.body.appendChild(node);
+    const defaultStyle = getComputedStyle(node).borderTopStyle;
+    node.style.setProperty("--aq-swatch-secondary", "231,234,246");
+    const overrideStyle = getComputedStyle(node).borderTopStyle;
+    return { defaultStyle, overrideStyle };
+  });
+  expect(result.defaultStyle).toBe("none");
+  expect(result.overrideStyle).toBe("solid");
+});
+
+test("AQCSS hover color alpha fallback is invalid until explicit percentages are supplied", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const plain = document.createElement("button");
+    plain.className = "button";
+    plain.textContent = "Plain";
+    document.body.appendChild(plain);
+    const configured = document.createElement("button");
+    configured.className = "button";
+    configured.textContent = "Configured";
+    configured.style.setProperty("--aq-swatch-hover-text-opacity", "100%");
+    configured.style.setProperty("--aq-swatch-hover-button-opacity", "100%");
+    document.body.appendChild(configured);
+    return {
+      plainBefore: getComputedStyle(plain).backgroundColor,
+      configuredBefore: getComputedStyle(configured).backgroundColor
+    };
+  });
+  await page.locator("button").first().hover();
+  const plainAfter = await page.locator("button").first().evaluate(node => getComputedStyle(node).backgroundColor);
+  await page.locator("button").nth(1).hover();
+  const configuredAfter = await page.locator("button").nth(1).evaluate(node => getComputedStyle(node).backgroundColor);
+  expect(plainAfter).toBe(result.plainBefore);
+  expect(configuredAfter).not.toBe(result.configuredBefore);
+});
