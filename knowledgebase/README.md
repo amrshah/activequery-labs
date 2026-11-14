@@ -46,6 +46,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQJS API inventory](aqjs/api-inventory.md)
 - [AQCSS selector families](aqcss/selector-families.md)
 - [Source findings and verification queue](testing/source-findings.md)
+- [Browser validation plan and coverage](testing/browser-test-plan.md)
 - [Integration guidance](integration/README.md)
 - [Source traceability index](source-traceability/index.md)
 - [Mastery gate](mastery-gate.md)
