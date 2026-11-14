@@ -24,7 +24,7 @@ Legend:
 | `extend(...args)` | Inspected; argument validation and custom-element branches mapped | No dedicated browser tests yet | Pending authoring |
 | `isEmpty` | Inspected: zero/false/null/empty string and recursive array semantics | Representative cases | Test authored; pending run |
 | `exit` | Inspected as no-op returning this | No test | Pending authoring |
-| `keepOn` | Inspected: returns input only for empty length and non-debug | No test | Pending authoring |
+| `keepOn` | Inspected: returns input only for empty length and non-debug | Empty/non-empty/debug cases | Test authored; pending run |
 | `defer` | Inspected: passes array to setTimeout | TypeError test | Test authored; pending run |
 | `getPlugin` | Inspected: dynamic import by string | No allowlist/security test | Pending authoring |
 | Lifecycle `on` | Inspected: fixed event names, no late replay | Late ready/init test | Test authored; pending run |
@@ -49,9 +49,9 @@ Legend:
 |---|---|---|---|---|
 | Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified | i, getIndex, setSort, setItem | Partial; pending run and remaining methods |
 | Object | `setValues`, `hasValues` | Missing static predicate call | Both error cases | Test authored; pending run |
-| Number | `trim` | Inspected | No runtime tests | Pending authoring |
+| Number | `trim` | Inspected | Primitive trim test | Test authored; pending run |
 | String | `trim` | Native override and Unicode mismatch identified | Descriptor and U+FEFF/U+200B comparisons | Test authored; pending run |
-| Function | `then` | Inspected | No runtime test | Pending authoring |
+| Function | `then` | Inspected | Callback test | Test authored; pending run |
 
 ## AQJS Element/NodeList/Document/Window
 
@@ -64,12 +64,12 @@ Legend:
 | Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | setAdjacent/setHtml only | Partial; pending run |
 | Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior | Not yet tested | Pending authoring |
 | Element | `then`, `fax`, `on` | Inspected | on tested; then/fax pending | Partial; pending run |
-| Element | `sancha` | Inspected; HTML injection and undeclared identifiers | No browser test | Pending authoring |
+| Element | `sancha` | Inspected; HTML injection and undeclared identifiers | Static success and data-mode ReferenceError | Test authored; pending run |
 | Element | `sift` | Inspected: truthy selector early return | Explicit no-handler test | Test authored; pending run |
 | Element | `watch` | Inspected; callback/observer lifecycle issues | No browser test | Pending authoring |
-| NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | Only sibling and nestedDOM paths | Pending authoring |
+| NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | setValue, getStyles/getClasses and content no-op cases | Partial; pending run |
 | NodeList | no-op stubs | Inspected: getStyles/getClasses/getHtml/setText/etc. | Not exhaustively asserted | Pending authoring |
-| Document/Window | `on` | Inspected | No event tests | Pending authoring |
+| Document/Window | `on` | Inspected | Native custom event listeners | Test authored; pending run |
 
 ## AQCSS validation
 
