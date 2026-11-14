@@ -25,7 +25,7 @@ The AQJS source is an ES module with a named `ActiveQuery` export. Do not use a 
 - Start with semantic HTML and native browser behavior.
 - Use AQCSS selectors only after confirming their source rule and breakpoint behavior.
 - Use AQJS only where its actual implementation provides a tested benefit.
-- Avoid the constructor's optional global alias unless a project has explicitly accepted the prototype/global mutation.
+- Never use the default constructor argument: null triggers global/prototype aliasing. Explicit empty string avoids that one constructor branch only; module import still mutates native prototypes, including String.prototype.trim.
 - Prefer Element-level APIs only after confirming their guards and return values.
 - Do not assume NodeList methods are equivalent to Element methods; the source contains no-op stubs.
 - Escape or safely construct user-provided data before using `sancha`, which writes HTML strings.
@@ -43,12 +43,12 @@ The inspected AQCSS root contains theme-related custom properties and a canvas d
 ## Runtime test cases required
 
 1. Load AQCSS with semantic HTML and confirm baseline styles.
-2. Load AQJS as a module and instantiate `ActiveQuery`.
+2. Load AQJS as a module and instantiate with an explicit empty string only if an instance is required; separately test import-time prototype mutations.
 3. Exercise `DOM` with zero, one and multiple matches.
-4. Exercise `nestedDOM` with Element, Document and NodeList contexts.
+4. Exercise `nestedDOM` with Element, Document, NodeList and Array contexts; confirm HTMLCollection is returned unchanged.
 5. Exercise Element methods and compare them with NodeList equivalents.
 6. Exercise lifecycle events at different script-loading points.
-7. Confirm no unintended global alias/prototype changes when constructor has no argument.
+7. Verify default construction creates `window.null` and enumerable `Object.prototype[0]`; verify explicit empty string avoids this constructor branch, while import-time prototype changes still occur.
 8. Check console errors and computed styles at each breakpoint.
 9. Verify keyboard focus, touch pointer behavior and short landscape viewport behavior.
 10. Record browser, version, viewport, exact steps and expected/actual results.
