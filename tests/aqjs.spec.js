@@ -563,6 +563,7 @@ test("Array query helpers implement loose, strict, substring and first-index con
     const strings = [{ key: "abc" }, { key: "abcd" }];
     return {
       looseCount: values.getCount("key", "==", 1),
+      looseIndex: values.getIndex("key", "==", 1),
       strictCount: values.getCount("key", "===", 1),
       substringCount: strings.getCount("key", "*", "bc"),
       hasExact: values.has("key", "abc"),
@@ -573,6 +574,7 @@ test("Array query helpers implement loose, strict, substring and first-index con
   });
   expect(result).toEqual({
     looseCount: 2,
+    looseIndex: 0,
     strictCount: 1,
     substringCount: 2,
     hasExact: true,
@@ -727,5 +729,38 @@ test("type predicate families expose positive, negative and broken array-like ch
     arrayLikeError: "ReferenceError",
     negativeArrayLikeError: "ReferenceError",
     negativeNodeListError: "ReferenceError"
+  });
+});
+
+
+test("ActiveQuery.exit and Element chain helpers return their receiver", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const instance = new window.AQ("");
+    const parent = document.createElement("div");
+    const first = document.createElement("span");
+    const second = document.createElement("b");
+    const childReturn = parent.setChild([first, second]);
+    const input = document.createElement("input");
+    input.setValue("initial");
+    const setReturn = input.setValue("");
+    const thenValue = parent.then(node => node.children.length);
+    return {
+      staticExitSame: window.AQ.exit() === window.AQ,
+      instanceExitSame: instance.exit() === instance,
+      childReturnSame: childReturn === parent,
+      childCount: parent.children.length,
+      setReturnSame: setReturn === input,
+      clearedValue: input.value,
+      thenValue
+    };
+  });
+  expect(result).toEqual({
+    staticExitSame: true,
+    instanceExitSame: true,
+    childReturnSame: true,
+    childCount: 2,
+    setReturnSame: true,
+    clearedValue: "",
+    thenValue: 2
   });
 });
