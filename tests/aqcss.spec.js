@@ -313,6 +313,7 @@ test("AQCSS disabled descendant rule styles children but not the disabled wrappe
 test("AQCSS tooltip text opens on hover but not keyboard focus", async ({ page }) => {
   const result = await page.evaluate(() => {
     const wrapper = document.createElement("div");
+    wrapper.id = "tooltip-test";
     wrapper.className = "tooltip";
     wrapper.tabIndex = 0;
     const text = document.createElement("span");
@@ -324,7 +325,7 @@ test("AQCSS tooltip text opens on hover but not keyboard focus", async ({ page }
     return getComputedStyle(text).display;
   });
   expect(result).toBe("none");
-  await page.locator(".tooltip").hover();
-  const hovered = await page.locator(".tooltip .text").evaluate(node => getComputedStyle(node).display);
+  await page.locator("#tooltip-test").hover();
+  const hovered = await page.locator("#tooltip-test .text").evaluate(node => getComputedStyle(node).display);
   expect(hovered).toBe("inline-block");
 });
