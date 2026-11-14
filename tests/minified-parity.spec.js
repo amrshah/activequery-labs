@@ -77,7 +77,7 @@ test("AQJS source and minified builds expose equivalent core DOM behavior", asyn
   expect(minifiedResult).toEqual(sourceResult);
 });
 
-test("minified AQJS also overwrites native String.trim", async ({ page }) => {
+test("minified AQJS overwrites native String.trim and retains native descriptor flags", async ({ page }) => {
   await page.goto("/tests/fixture-min.html");
   await page.waitForFunction(() => window.fixtureReady === true);
   const result = await page.evaluate(() => {
@@ -88,7 +88,7 @@ test("minified AQJS also overwrites native String.trim", async ({ page }) => {
       configurable: descriptor.configurable
     };
   });
-  expect(result).toEqual({ sameAsNative: false, writable: false, configurable: false });
+  expect(result).toEqual({ sameAsNative: false, writable: true, configurable: true });
 });
 
 test("minified AQJS default constructor triggers the same prototype mutation", async ({ page }) => {
