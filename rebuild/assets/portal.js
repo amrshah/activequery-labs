@@ -115,6 +115,11 @@ function createPreviewDocument() {
     parent.postMessage({ type: "preview-error", message: event.message || "Preview script error" }, "*");
   });
 
+  window.addEventListener("aqjs-ready", () => {
+    window.__aqRuntimeReady = true;
+    render(window.__aqPendingPayload);
+  });
+
   function render(payload) {
     const mount = document.getElementById("mount");
     mount.innerHTML = payload.html;
@@ -148,11 +153,7 @@ function createPreviewDocument() {
 
     const runtime = document.createElement("script");
     runtime.type = "module";
-    runtime.textContent = payload.aqjs + "\\nwindow.ActiveQueryRuntime = ActiveQuery;";
-    runtime.onload = () => {
-      window.__aqRuntimeReady = true;
-      render(window.__aqPendingPayload);
-    };
+    runtime.textContent = payload.aqjs + "\\nwindow.ActiveQueryRuntime = ActiveQuery;\\nwindow.dispatchEvent(new Event('aqjs-ready'));";
     runtime.onerror = () => parent.postMessage({ type: "preview-error", message: "AQJS module could not be initialized" }, "*");
     document.head.appendChild(runtime);
   });
