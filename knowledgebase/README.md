@@ -53,6 +53,9 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS rule selector index](aqcss/rule-selector-index.json) — 1,417 rule selector entries.
 - [AQCSS custom property index](aqcss/custom-property-index.json) — declaration occurrences for 46 custom-property names.
 - [AQCSS tokens and responsive semantics](aqcss/tokens-and-responsive.md)
+- [AQCSS base styles and controls](aqcss/base-controls.md)
+- [AQCSS layout utilities](aqcss/layout-utilities.md)
+- [AQCSS theme and effects](aqcss/theme-effects.md)
 - [Source findings and verification queue](testing/source-findings.md)
 - [Browser validation plan and coverage](testing/browser-test-plan.md)
 - [Integration guidance](integration/README.md)
