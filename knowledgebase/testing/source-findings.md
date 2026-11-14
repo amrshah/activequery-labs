@@ -77,6 +77,11 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 
 | JS-031 | `ActiveQuery.js:261-263` | The method named `isJSON` does not parse or validate JSON syntax; it only accepts a set of typeof values and can return true for null. The cited is-json v2.0.1 implementation is not present in the inspected source/minified files. | Method name and third-party notice can mislead users into treating it as a JSON validator. | Keep the notice; inspect full repo tree and request upstream clarification. Test strings, malformed JSON, null, numbers, arrays and plain objects. |
 
+
+| CSS-019 | `ActiveQuery.css:241` and full stylesheet | The stylesheet contains transitions but no `prefers-reduced-motion` media query. | Users requesting reduced motion receive no framework-level override for the transition found in the source. | Add reduced-motion tests for every animated component; app-level CSS may provide the override. |
+| CSS-020 | Full pinned `ActiveQuery.css` source | No `prefers-color-scheme`, `data-theme`, `dark-mode`, `.dark` or `color-scheme` handling was found. | Theme tokens exist, but a built-in light/dark switching contract is not present in this stylesheet. | Treat dark mode as a Labs/application feature unless newer upstream evidence appears. |
+| CSS-021 | `ActiveQuery.css:142,227-240,249,354-388,441,446` | Relative-color syntax `rgb(from ...)` is used in many declarations, but no `@supports` fallback block was found. | Browsers without support may discard those color declarations; `var()` fallback values do not guarantee a fallback for unsupported relative-color syntax. | Test current target browsers and provide a conventional color fallback where required. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
