@@ -70,7 +70,7 @@ The source-grounded but not-yet-implemented cross-family cases are listed in [AQ
 - Lifecycle late-registration and callback timing tests have authored coverage and remain passing through run #327; early registration and timing edge cases remain to be expanded.
 - No exhaustive CSS selector catalogue coverage.
 - Base border-token and hover alpha computed-style tests have been authored; exhaustive swatch/theme coverage remains outstanding.
-- Basic focus-outline, disabled-descendant and hover-only tooltip tests remain passing through run #325; touch/hybrid device, zoom and comprehensive accessibility audits remain outstanding. Reduced-motion and short-landscape tests also passed, including a documented browser-specific CSSOM difference.
+- Basic focus-outline, disabled-descendant and hover-only tooltip tests remain passing through run #327; touch/hybrid device, zoom and comprehensive accessibility audits remain outstanding. Reduced-motion and short-landscape tests also passed, including a documented browser-specific CSSOM difference.
 - No WebKit project yet.
 
 ## Current authored test inventory
@@ -79,7 +79,7 @@ The source-grounded but not-yet-implemented cross-family cases are listed in [AQ
 - `tests/aqcss.spec.js`: 21 targeted computed-style/browser tests.
 - `tests/minified-parity.spec.js`: 7 source/minified parity tests.
 - `tests/css-source-parse.spec.js`: 4 source/catalog tests; `tests/js-source-parse.spec.js`: 1 API inventory test; `tests/knowledgebase-integrity.spec.js`: 1 link-integrity test.
-- Total: 91 authored tests. The workflow is configured for both `push` and `pull_request` to `main`. Run #325 proves all 91 authored tests passed in both configured browser projects; future changes must continue to pass the workflow.
+- Total: 91 authored tests. The workflow is configured for both `push` and `pull_request` to `main`. Run #327 proves all 91 authored tests passed in both configured browser projects; future changes must continue to pass the workflow.
 
 ## Execution record
 
