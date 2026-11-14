@@ -77,6 +77,7 @@
     "aqjs_ast_catalog": "../knowledgebase/aqjs/generated-ast-catalog.json",
     "principle_implementation_review": "../knowledgebase/architecture/principle-implementation-review.md",
     "conventions": "../knowledgebase/architecture/conventions.md",
-    "minified_parity": "../knowledgebase/testing/minified-parity.md"
+    "minified_parity": "../knowledgebase/testing/minified-parity.md",
+    "fresh_agent_evaluation": "../knowledgebase/evaluation/fresh-agent-acceptance.md"
   }
 }
