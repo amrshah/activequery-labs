@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-15.
-Run #171 completed with 106 passed and 16 failed. After run #313, additional test coverage was added. The latest completed browser run #325 passed: **176 passed, 0 failed, 0 skipped** across Chromium and Firefox (88 authored tests in two browser projects). Run #313 remains the historical 79-test baseline. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run #171 completed with 106 passed and 16 failed. After run #313, additional test coverage was added. The latest completed browser run #327 passed: **182 passed, 0 failed, 0 skipped** across Chromium and Firefox (91 authored tests in two browser projects). Run #325 remains the previous 88-test baseline; run #313 remains the historical 79-test baseline. Run #313 remains the historical 79-test baseline. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -51,7 +51,7 @@ Six additional tests were added for Element `setValue`, `setChild`, `then`/`fax`
 
 | Target | Methods | Source review | Test coverage | Current status |
 |---|---|---|---|---|
-| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified; `then` makes Arrays thenable and can interfere with Promise-based consumers | i, getIndex, getCount default/operator branches, setSort, both setItem branches, has, getIndexs, then | Partial; delimiter, no-delimiter and missing-property default `getCount` cases passed in run #324; thenable interoperability and broader edge cases pending |
+| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified; `then` makes Arrays thenable and can interfere with Promise-based consumers | i, getIndex, getCount default/operator branches, setSort, both setItem branches, has, getIndexs, then | Partial; delimiter, no-delimiter and missing-property default `getCount` cases passed in run #324; direct callback/missing/non-function callback behavior passed in run #327; Promise resolver assimilation remains pending and must be isolated safely |
 | Object | `setValues`, `hasValues` | Missing static predicate call | Both error cases | Passed in run #313 |
 | Number | `trim` | Inspected | Primitive trim test | Passed in run #313 |
 | String | `trim` | Native override and Unicode mismatch identified | Descriptor and U+FEFF/U+200B comparisons | Passed in run #313 |
@@ -73,14 +73,14 @@ Six additional tests were added for Element `setValue`, `setChild`, `then`/`fax`
 | Element | `watch` | Inspected; callback `this` failure and missing observer return | Mutation test captures TypeError and missing user callback | Passed in run #313 |
 | NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | Bulk attributes/styles/classes, setValue, stubs and valid/invalid/empty-list `on` | Selected contracts passed in run #324; broader collection edge cases remain pending |
 | NodeList | no-op stubs | Inspected: getStyles/getClasses/getHtml/setText/etc. | All identified no-op stubs invoked with representative arguments; no mutation and return shape asserted | Identified stub set passed in run #324; broader argument combinations remain pending |
-| Document/Window | `on` | Inspected | Native custom event listeners | Passed in run #313 |
+| Document/Window | `on` | Inspected | Native custom event listeners; invalid event/callback arguments and receiver identity | Valid event dispatch passed in run #313; invalid-argument receiver identity passed in run #327 |
 
 ## AQCSS validation
 
 | Area | Source review | Test coverage | Current status |
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
-| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, selected edge cases, Element value/child/then, NodeList events and Array `getCount` default branch | Selected fixtures passed in run #325; complete method-level semantic parity remains pending |
+| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, selected edge cases, Element value/child/then, NodeList events, Array `getCount` default branch, Array `then`, and Document/Window events | Selected fixtures passed in runs #325 and #327; complete method-level semantic parity remains pending |
 | Breakpoints and responsive variants | Inspected: mobile/tablet/desktop hide range queries are malformed and ignored by Chromium/Firefox; tablet/desktop/large typography prefixes activate at their min-width thresholds | 599/600/601, 601/992, 993/1439 and 1440 computed-style tests | All tested breakpoint and hide-helper behavior passed in run #313; short-landscape and touch/hybrid behavior remain untested |
 | Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Passed in run #313 |
 | Layout/flex/spacing | Multiple source defects documented | Facet, row-gap, flex base, spacing aliases and responsive alignment tests | Passed in run #313 |
@@ -90,7 +90,7 @@ Six additional tests were added for Element `setValue`, `setChild`, `then`/`fax`
 
 ## Proposed AQCSS composition coverage
 
-The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specifies additional cross-family and responsive tests. These are pending authoring and must not be counted as runtime coverage until implemented and run. Run #324 is the latest passing baseline; run #313 remains the earlier AQCSS coverage baseline.
+The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specifies additional cross-family and responsive tests. These are pending authoring and must not be counted as runtime coverage until implemented and run. Run #327 is the latest passing baseline; run #313 remains the earlier AQCSS coverage baseline.
 
 ## Execution and acceptance
 
@@ -100,7 +100,15 @@ The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specif
 4. Keep the mastery gate open until coverage and independent-agent evaluation are complete.
 
 
-## Latest confirmed execution record — run #325
+## Latest confirmed execution record — run #327
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #327](https://github.com/amrshah/activequery-labs/actions/runs/43645400008) |
+| Commit | `c9b740941c063ecb0813bda7ff4c3ca49e18b22d` |
+| Execution | 182 passed, 0 failed, 0 skipped; 91 authored tests across Chromium and Firefox |
+
+## Previous execution record — run #325
 
 | Field | Verified value |
 |---|---|
