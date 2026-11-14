@@ -46,6 +46,8 @@ The mastery label is withheld until every gate below has objective evidence. A l
 - [ ] A fresh agent can use AQJS selector, event, DOM and collection APIs correctly.
 - [ ] A fresh agent can identify unsupported/stub APIs and known hazards.
 - [ ] Answers cite the knowledgebase and point back to upstream source.
+- [ ] Fresh-agent evaluation scores at least 22/24 with zero critical errors.
+- [ ] Implementation exercise passes browser tests and source review.
 - [ ] Retrieval evaluation has documented prompts, expected answers and scoring.
 
 ## Gate E — Build-from-scratch proof
