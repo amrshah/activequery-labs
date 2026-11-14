@@ -1,7 +1,7 @@
 # AQCSS Layout, Spacing, Sizing and Flex Utilities
 
 Source: `ActiveQuery.css` SHA `c03546ecd1a41d26cbbfa8f1e31d38731f77cf62`.
-Evidence: declarations are source-confirmed; class behavior and layout composition need runtime verification.
+Evidence: declarations are source-confirmed; facet sizing, row-gap, flex base/modifiers, spacing aliases and alignment behavior have targeted Chromium/Firefox tests; broader layout composition remains pending.
 
 ## Spacing scale
 
