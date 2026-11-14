@@ -31,6 +31,13 @@ Status: first full browser execution failed, test assumptions were corrected, an
 | nestedDOM NodeList context | Flattened plain array | `tests/aqjs.spec.js` |
 | Element class mutation/query | Adds, checks and removes classes | `tests/aqjs.spec.js` |
 | Element event helper | Native event listener invoked | `tests/aqjs.spec.js` |
+| Document nestedDOM | Zero/one/many descendant results and no-match context | `tests/aqjs.spec.js` |
+| Array helpers | `getCount`, `has`, `getIndexs`, `then`, and both `setItem` branches | `tests/aqjs.spec.js` |
+| Element attributes/styles | Pair early-stop, attribute-name/remove helpers and inline style reads | `tests/aqjs.spec.js` |
+| Element content | HTML/text retrieval and substring modes; node-array `setContent` | `tests/aqjs.spec.js` |
+| NodeList bulk mutators | Attributes, inline styles and classes applied across collection | `tests/aqjs.spec.js` |
+| Element parent/name | Parent relationship and node name getters | `tests/aqjs.spec.js` |
+| Type predicates | Positive/negative checks plus known broken array-like paths | `tests/aqjs.spec.js` |
 
 ### AQCSS
 
@@ -59,7 +66,7 @@ Status: first full browser execution failed, test assumptions were corrected, an
 
 ## Current authored test inventory
 
-- `tests/aqjs.spec.js`: 37 targeted browser tests.
+- `tests/aqjs.spec.js`: 45 targeted browser tests.
 - `tests/aqcss.spec.js`: 17 targeted computed-style/browser tests.
 - Additional source-structure and minified-parity specs are present and should be counted/reviewed as part of the first CI execution.
 - The workflow is configured for both `push` and `pull_request` to `main`. Run #181 proves the current 61-test suite passed in both configured browser projects; future changes must continue to pass the workflow.
@@ -69,6 +76,6 @@ Status: first full browser execution failed, test assumptions were corrected, an
 | Date | Commit / run | Result |
 |---|---|---|
 | 2026-11-14 | Run #171, commit `77a78e44235dbbca6b07320074f4149d6131dd55` | Failed: 106 passed, 16 failed across 122 Chromium/Firefox cases. Failures traced to incorrect expectations/fixture issues in `defer`, native trim descriptor flags, `Array.setItem` thenable result serialization, Array `nestedDOM` support, mobile hide breakpoint, hover alpha support assertion, and zero-size tooltip fixture. No upstream source changes. |
-| 2026-11-15 | Run #181, commit `7bab25998e5fc80b17135249827d2f7adf2f3299` | **Success:** 122 passed, 0 failed, 0 skipped across Chromium 141.0.7390.37 and Firefox 142.0.1 on Ubuntu 24.04.5 / Node 22.23.4. [Workflow evidence](https://github.com/amrshah/activequery-labs/actions/runs/43634873143). |
+| 2026-11-15 | Run #195, commit `5666320ae68016d0df9265a32d9e00b11f7987e1` | **Success:** 138 passed, 0 failed, 0 skipped across Chromium 141.0.7390.37 and Firefox 142.0.1 on Ubuntu 24.04.5 / Node 22.23.4. [Workflow evidence](https://github.com/amrshah/activequery-labs/actions/runs/43635407735). |
 
 Update this table only after retrieving the actual workflow run, job logs and test summary. A successful workflow file commit is not a successful test run.
