@@ -659,12 +659,11 @@ test("NodeList bulk attribute, style and class mutators apply to each member", a
 test("Element parent and name getters return DOM relationships", async ({ page }) => {
   const result = await page.evaluate(() => {
     const node = document.querySelector("#single");
-    const rootChild = document.body;
     return {
       parentId: node.parent.id,
-      name: node.name,
-      htmlParentIsSelf: rootChild.parent === rootChild
+      parentIsNativeParent: node.parent === node.parentNode,
+      name: node.name
     };
   });
-  expect(result).toEqual({ parentId: "fixture", name: "DIV", htmlParentIsSelf: true });
+  expect(result).toEqual({ parentId: "fixture", parentIsNativeParent: true, name: "DIV" });
 });
