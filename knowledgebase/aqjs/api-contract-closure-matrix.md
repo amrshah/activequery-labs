@@ -81,7 +81,7 @@ Do not present these as recommended working APIs until separately cleared:
 - Element.siblings default path and NodeList siblings are defective.
 - NodeList content/read methods include no-op stubs.
 - Object.setValues/hasValues call a missing static predicate.
-- isArrayLike, isNodeList and related predicates have unresolved global/identifier hazards; `isNaS` is always true and must not be used as a negative string predicate.
+- isArrayLike, isNodeList and related predicates have unresolved global/identifier hazards; `isNaS` is always true and `isNaF` is a stringification heuristic with false positives/negatives, so neither is suitable for type validation.
 - sancha builds HTML strings from data and has undeclared identifiers; do not pass untrusted input.
 - getPlugin dynamically imports its argument; do not accept untrusted module specifiers.
 - watch observer callback and lifecycle/disconnect behavior need deeper review.
