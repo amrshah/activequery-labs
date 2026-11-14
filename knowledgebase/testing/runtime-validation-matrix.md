@@ -66,7 +66,7 @@ Legend:
 | Element | `then`, `fax`, `on` | Inspected | on tested; then/fax pending | Partial; pending run |
 | Element | `sancha` | Inspected; HTML injection and undeclared identifiers | Static success and data-mode ReferenceError | Test authored; pending run |
 | Element | `sift` | Inspected: truthy selector early return | Explicit no-handler test | Test authored; pending run |
-| Element | `watch` | Inspected; callback/observer lifecycle issues | No browser test | Pending authoring |
+| Element | `watch` | Inspected; callback `this` failure and missing observer return | Mutation test captures TypeError and missing user callback | Test authored; pending run |
 | NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | setValue, getStyles/getClasses and content no-op cases | Partial; pending run |
 | NodeList | no-op stubs | Inspected: getStyles/getClasses/getHtml/setText/etc. | Not exhaustively asserted | Pending authoring |
 | Document/Window | `on` | Inspected | Native custom event listeners | Test authored; pending run |
