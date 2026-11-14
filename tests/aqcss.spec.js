@@ -297,3 +297,46 @@ test("AQCSS tooltip text opens on hover but not keyboard focus", async ({ page }
   const hovered = await page.locator("#tooltip-test .text").evaluate(node => getComputedStyle(node).display);
   expect(hovered).toBe("inline-block");
 });
+
+
+test("AQCSS dropdown hover opens on pointer hover but click variant has no click-to-open behavior", async ({ page }) => {
+  await page.evaluate(() => {
+    const hover = document.createElement("div");
+    hover.id = "dropdown-hover";
+    hover.className = "aq-fleek--dropdown-hover";
+    hover.tabIndex = 0;
+    hover.style.cssText = "width:120px;height:30px";
+    const hoverContent = document.createElement("div");
+    hoverContent.id = "dropdown-hover-content";
+    hoverContent.className = "aq-fleek--dropdown-content";
+    hoverContent.textContent = "Hover menu";
+    hover.appendChild(hoverContent);
+    document.body.appendChild(hover);
+
+    const click = document.createElement("div");
+    click.id = "dropdown-click";
+    click.className = "aq-fleek--dropdown-click";
+    click.tabIndex = 0;
+    click.style.cssText = "width:120px;height:30px";
+    const clickContent = document.createElement("div");
+    clickContent.id = "dropdown-click-content";
+    clickContent.className = "aq-fleek--dropdown-content";
+    clickContent.textContent = "Click menu";
+    click.appendChild(clickContent);
+    document.body.appendChild(click);
+  });
+
+  await page.locator("#dropdown-hover").focus();
+  const focusDisplay = await page.locator("#dropdown-hover-content").evaluate(node => getComputedStyle(node).display);
+  await page.locator("#dropdown-hover").hover();
+  const hoverDisplay = await page.locator("#dropdown-hover-content").evaluate(node => getComputedStyle(node).display);
+
+  await page.locator("#dropdown-click").click();
+  const clickDisplay = await page.locator("#dropdown-click-content").evaluate(node => getComputedStyle(node).display);
+
+  expect({ focusDisplay, hoverDisplay, clickDisplay }).toEqual({
+    focusDisplay: "none",
+    hoverDisplay: "block",
+    clickDisplay: "none"
+  });
+});
