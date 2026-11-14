@@ -1,0 +1,48 @@
+name: ActiveQuery knowledgebase browser tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "knowledgebase/**"
+      - "tests/**"
+      - "vendor/**"
+      - "package.json"
+      - "playwright.config.js"
+      - "server.mjs"
+      - ".github/workflows/activequery-knowledgebase-tests.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "knowledgebase/**"
+      - "tests/**"
+      - "vendor/**"
+      - "package.json"
+      - "playwright.config.js"
+      - "server.mjs"
+      - ".github/workflows/activequery-knowledgebase-tests.yml"
+
+jobs:
+  browser-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install test dependencies
+        run: npm install
+      - name: Fetch pinned upstream framework sources
+        shell: bash
+        run: |
+          git clone https://github.com/ActiveQuery/CSS.git /tmp/aqcss
+          git -C /tmp/aqcss checkout c03546ecd1a41d26cbbfa8f1e31d38731f77cf62
+          git clone https://github.com/ActiveQuery/JS.git /tmp/aqjs
+          git -C /tmp/aqjs checkout b8ec9e5be8668d048eea3385cd9012dfddb69cf0
+          mkdir -p vendor
+          cp /tmp/aqcss/ActiveQuery.css vendor/ActiveQuery.css
+          cp /tmp/aqjs/ActiveQuery.js vendor/ActiveQuery.js
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox
+      - name: Run browser tests
+        run: npm test
