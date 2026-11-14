@@ -84,6 +84,16 @@ Do not present these as recommended working APIs until separately cleared:
 
 Use native DOM/JavaScript APIs when they provide a safer, clearer contract.
 
+## New source-review artifacts
+
+The current source-review pass adds four focused references:
+- [API signature and return contract reference](api-signature-reference.md) — receiver, signatures/defaults, return shapes and side effects.
+- [Element/NodeList edge-case audit](nodelist-edge-case-audit.md) — exact stubs, collection divergences and failure paths.
+- [Predicate truth and failure-path audit](predicate-truth-table.md) — source expressions and ambient-global hazards.
+- [Source/minified parity audit](source-minified-parity-audit.md) — inspected high-risk methods and the limits of current parity evidence.
+
+These are source-review improvements only. They do not close the pending runtime or semantic-parity criteria.
+
 ## References
 
 - [API inventory](api-inventory.md)
