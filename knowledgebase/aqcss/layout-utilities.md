@@ -17,7 +17,7 @@ The baseline margin and padding families use these values:
 
 The baseline family uses `aq--margin-*` and `aq--padding-*` selectors, often paired with `aq-m--*` companions. The responsive families use `aq-t--*`, `aq-d--*` and `aq-s--*` inside their respective media queries.
 
-Spacing names include all, top/bottom, left/right and individual side variants. Exact aliases matter: source findings identify left-side alias errors where the mobile/right class is used in a left declaration, and duplicated right-side selectors in responsive blocks.
+Spacing names include all, top/bottom, left/right and individual side variants. Exact aliases matter: in the baseline 1rem rules, `.aq-m--margin-left` and `.aq-m--padding-left` are missing because the left-side declarations mistakenly reuse `.aq-m--margin-right` and `.aq-m--padding-right`. Those right-side classes therefore apply both left and right spacing. Other size variants must be inspected independently.
 
 ## Facet sizing
 
