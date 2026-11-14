@@ -58,6 +58,7 @@
     "integration": "../knowledgebase/integration/README.md",
     "traceability": "../knowledgebase/source-traceability/index.md",
     "mastery_gate": "../knowledgebase/mastery-gate.md",
-    "status": "in_progress_not_mastered"
+    "status": "in_progress_not_mastered",
+    "browser_tests": "../knowledgebase/testing/browser-test-plan.md"
   }
 }
