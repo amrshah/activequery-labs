@@ -1,6 +1,6 @@
 # ActiveQuery Governance and Licensing Notes
 
-Sources inspected on 2026-11-14:
+Sources rechecked on 2026-11-15 against Governance main commit `ab369232ac801cfbf769d9838c07d4ea8846dfd5`:
 - [ActiveQuery/Governance README](https://github.com/ActiveQuery/Governance/blob/main/README.md)
 - [Ethical Source Policy](https://github.com/ActiveQuery/Governance/blob/main/ETHICAL_SOURCE_POLICY.md)
 - [Code of Conduct Policy](https://github.com/ActiveQuery/Governance/blob/main/CODE_OF_CONDUCT_POLICY.md)
@@ -19,7 +19,7 @@ The Ethical Source Policy describes seven principles: benefit the commons, open 
 
 The Code of Conduct defines expected respectful participation, unacceptable conduct, scope and enforcement.
 
-The DCO adapts Developer Certificate of Origin 1.1. The Contribution Policy requires a `Signed-off-by` statement in each commit message; it says the compliance team reviews each contribution and may reject commits without it. This is relevant when contributing upstream; the community Labs repository's own contribution process should be kept distinct. The policy also states ActiveQuery uses CalVer `YY.MINOR.MICRO`, so v25.6.0 denotes the 2025 release-year series.
+The DCO adapts Developer Certificate of Origin 1.1. The Contribution Policy requires a `Signed-off-by` statement in each commit message; it says the compliance team reviews each contribution and may reject commits without it. The DCO also states that the project and contribution are public and that the contribution record, including personal information submitted with the sign-off, is maintained indefinitely and may be redistributed consistently with the project/license. This is relevant when contributing upstream; the community Labs repository's own contribution process should be kept distinct. The policy also states ActiveQuery uses CalVer `YY.MINOR.MICRO`, so v25.6.0 denotes the 2025 release-year series.
 
 The Ethical Source Policy lists seven principles: benefit the commons, open development, welcoming/fair governance, accessibility, safety, privacy and support for maintainers/community. It says commercial users are expected to contribute back and support the community in tangible ways; treat this as a stated ethical/community expectation, distinct from the legal license grant.
 
@@ -28,10 +28,11 @@ OSL-3.0 section 4 also expressly excludes a license to the Licensor's names and 
 ## OSL-3.0 implications
 
 The inspected Governance LICENSE contains the Open Software License 3.0 text. The license includes:
-- source-code and derivative-work terms;
-- an external-deployment definition that treats network availability to others as distribution under section 1(c);
-- an obligation to retain attribution/copyright/license notices in derivative source;
-- a condition that distributed copies of the original work or derivative works be licensed under OSL-3.0.
+- source-code and derivative-work terms, including a requirement to provide machine-readable source with distributed copies (the licensor may satisfy its own obligation through a reasonably accessible repository);
+- an external-deployment definition covering use, distribution or communication where others may use the Original Work or Derivative Works, including applications made available over a network;
+- an express condition that any such External Deployment be treated as a distribution under section 1(c);
+- attribution rights requiring copyright, patent, trademark, licensing and attribution notices to be retained in derivative source, plus a prominent notice that the Original Work was modified;
+- OSL-3.0 licensing requirements for distributed copies of the Original Work or Derivative Works.
 
 This has practical implications when bundling, modifying, redistributing or deploying upstream AQCSS/AQJS as part of a public portal. Do not assume that putting site-authored code under MIT changes the upstream license, or that network use is automatically outside OSL terms.
 
