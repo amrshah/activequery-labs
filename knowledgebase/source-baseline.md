@@ -64,13 +64,13 @@ Completed:
 - Retrieved and pinned exact source/minified assets, blob SHAs, source sizes, versions and license files.
 - Built the 1,417-rule AQCSS selector/declaration catalog, 1,813-token class index and custom-property declaration/reference index; generated PostCSS AST catalogs in CI.
 - Inventoried the AQJS named export, constructor, static/instance methods and prototype extension targets.
-- Added 78 authored Playwright tests; latest run #292 passed 156 Chromium/Firefox browser cases. Added a Markdown link-integrity test for the knowledgebase and agent skills.
+- Added 79 authored Playwright tests; run #292 passed the then-current 78 tests (156 Chromium/Firefox cases). The additional `defer` callback-execution test awaits the next CI run. Added a Markdown link-integrity test for the knowledgebase and agent skills.
 - Documented 74 source findings, traceability anchors, governance/license context and third-party provenance findings.
 
 Outstanding:
 - Finish the AQCSS cascade/override map and exhaustive selector-family semantic review; structural selector/rule/token/property indexes now exist.
 - Finish AQJS per-method contracts and edge-case coverage; the public/prototype method inventory exists, but some signatures/branches remain untested.
-- Expand browser coverage beyond the current 78 authored tests / 156 passing Chromium+Firefox cases, especially touch/hybrid pointer behavior, additional viewport/selector-family matrices and remaining APIs.
+- Expand browser coverage beyond the current 79 authored tests (78 previously passed / 156 Chromium+Firefox cases; one new `defer` callback test awaits CI), especially touch/hybrid pointer behavior, additional viewport/selector-family matrices and remaining APIs.
 - Complete AQCSS third-party provenance attribution beyond first-pass exact matches.
 - Reconcile and expand existing agent skills/indexes to point to the verified knowledgebase.
 - Run retrieval-based acceptance tests with an independent fresh-agent workflow; not yet executed.
