@@ -21,7 +21,7 @@ Evidence: source-confirmed behavior; runtime status pending.
 | `toggleClasses` | Toggles one class | Toggles one class on every node | Similar intent |
 | `i` | Returns self | Returns indexed member if guard passes | Not equivalent |
 | `setChild` | Appends one node or array | No-op returning collection | Collection stub |
-| `siblings` | Returns next/previous/all sibling elements | Collection implementation contains suspect indexing and target references | Needs tests |
+| `siblings` | `next`/`prev` work; default/all-siblings branch references undeclared `target` and throws | NodeList implementation indexes the first Element again (`t[0]`), so `next`/default paths throw | Not equivalent; only Element next/prev are straightforward |
 | `setAdjacent` | Attempts insertion by alias, but guard blocks truthy arguments | No-op | Not currently usable as a normal setter |
 | `setHtml` | Attempts inner/outer HTML assignment, but guard blocks truthy input | No-op | Not currently usable as a normal setter |
 | `getHtml` | Returns HTML or substring boolean | No-op returning collection | Collection stub |
