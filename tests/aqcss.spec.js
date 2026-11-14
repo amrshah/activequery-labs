@@ -554,3 +554,143 @@ test("AQX-007 all-padding and left-padding utilities resolve all four longhands"
   });
   expect([result.top, result.right, result.bottom, result.left]).toEqual([result.root, result.root, result.root, result.root]);
 });
+
+
+test("AQX-008 fixed positioning remains fixed when combined with the top helper", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.className = "aq-affix--fixed aq-affix--top";
+    document.body.appendChild(node);
+    const style = getComputedStyle(node);
+    return { position: style.position, top: style.top };
+  });
+  expect(result).toEqual({ position: "fixed", top: "0px" });
+});
+
+test("AQX-009 sticky positioning retains its top inset while scrolling its container", async ({ page }) => {
+  const result = await page.evaluate(async () => {
+    const container = document.createElement("div");
+    container.style.cssText = "width:250px;height:100px;overflow:auto;position:relative";
+    const sticky = document.createElement("div");
+    sticky.className = "aq-affix--sticky aq-affix--top";
+    sticky.style.height = "20px";
+    const spacer = document.createElement("div");
+    spacer.style.height = "300px";
+    container.append(sticky, spacer);
+    document.body.appendChild(container);
+    const style = getComputedStyle(sticky);
+    const containerTop = container.getBoundingClientRect().top;
+    container.scrollTop = 80;
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    return {
+      position: style.position,
+      top: style.top,
+      scrollTop: container.scrollTop,
+      stickyTopAfterScroll: sticky.getBoundingClientRect().top,
+      containerTop
+    };
+  });
+  expect(result.position).toBe("sticky");
+  expect(result.top).toBe("0px");
+  expect(result.scrollTop).toBe(80);
+  expect(Math.abs(result.stickyTopAfterScroll - result.containerTop)).toBeLessThan(1);
+});
+
+test("AQX-010 flex column and center-top compose into the expected alignment", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.className = "aq-flexon aq-flexon--column aq-flexon--center-top";
+    document.body.appendChild(node);
+    const style = getComputedStyle(node);
+    return {
+      display: style.display,
+      direction: style.flexDirection,
+      alignItems: style.alignItems,
+      justifyContent: style.justifyContent
+    };
+  });
+  expect(result).toEqual({
+    display: "flex",
+    direction: "column",
+    alignItems: "flex-start",
+    justifyContent: "center"
+  });
+});
+
+test("AQX-011 hover swatch overrides the base swatch only while hovered", async ({ page }) => {
+  await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.id = "swatch-composition";
+    node.className = "aq-swatch--primary aq-swatch--accent-hover";
+    node.style.cssText = "width:100px;height:40px";
+    document.body.appendChild(node);
+  });
+  const before = await page.locator("#swatch-composition").evaluate(node => getComputedStyle(node).backgroundColor);
+  await page.locator("#swatch-composition").hover();
+  const during = await page.locator("#swatch-composition").evaluate(node => getComputedStyle(node).backgroundColor);
+  expect(before).toBeTruthy();
+  expect(during).toBeTruthy();
+  expect(during).not.toBe(before);
+});
+
+test("AQX-012 grayscale and invert utilities replace rather than compose the filter property", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.className = "aq-fleek--grayscale aq-fleek--invert";
+    document.body.appendChild(node);
+    return getComputedStyle(node).filter;
+  });
+  expect(result).toContain("invert");
+  expect(result).not.toContain("grayscale");
+});
+
+test("AQX-013 zero opacity preserves layout while hide removes layout participation", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const transparent = document.createElement("div");
+    transparent.className = "aq-fleek--opacity-max";
+    transparent.style.cssText = "width:40px;height:20px";
+    const hidden = document.createElement("div");
+    hidden.className = "hide";
+    hidden.style.cssText = "width:40px;height:20px";
+    document.body.append(transparent, hidden);
+    return {
+      opacity: getComputedStyle(transparent).opacity,
+      transparentDisplay: getComputedStyle(transparent).display,
+      transparentRectCount: transparent.getClientRects().length,
+      hiddenDisplay: getComputedStyle(hidden).display,
+      hiddenRectCount: hidden.getClientRects().length
+    };
+  });
+  expect(result).toEqual({
+    opacity: "0",
+    transparentDisplay: "block",
+    transparentRectCount: 1,
+    hiddenDisplay: "none",
+    hiddenRectCount: 0
+  });
+});
+
+test("AQX-014 wide-screen facet width on an image is capped by the global image max-width", async ({ page }) => {
+  await page.setViewportSize({ width: 800, height: 600 });
+  const result = await page.evaluate(async () => {
+    const container = document.createElement("div");
+    container.style.width = "300px";
+    const image = document.createElement("img");
+    image.className = "aq-facet--wide-screen";
+    image.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='50'%3E%3C/svg%3E";
+    container.appendChild(image);
+    document.body.appendChild(container);
+    await image.decode();
+    const style = getComputedStyle(image);
+    return {
+      maxWidth: style.maxWidth,
+      width: image.getBoundingClientRect().width,
+      height: image.getBoundingClientRect().height,
+      containerWidth: container.getBoundingClientRect().width
+    };
+  });
+  expect(result.maxWidth).toBe("100%");
+  expect(result.width).toBeCloseTo(result.containerWidth, 1);
+  expect(result.width).toBeLessThan(800);
+  expect(result.height).toBeCloseTo(150, 1);
+});
