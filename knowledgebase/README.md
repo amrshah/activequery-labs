@@ -30,7 +30,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 ## Knowledgebase map
 
 - `source-baseline.md` — pinned source identity, versions, hashes, licenses and research status.
-- `architecture/` — framework philosophy, architecture, initialization and execution model.
+- `architecture/` — framework philosophy, conceptual ecosystem map, governance, licensing, initialization and execution model.
 - `aqcss/` — complete selector catalogue, tokens, layout, typography, responsive rules, states and interaction behavior.
 - `aqjs/` — exports, constructor, static and instance APIs, prototype extensions, lifecycle, DOM operations, templating, observation and edge cases.
 - `integration/` — AQCSS/AQJS interaction, browser-native integration and usage patterns.
@@ -42,6 +42,8 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 
 ## Current high-value references
 
+- [Framework conceptual architecture map](architecture/framework-overview.md)
+- [Governance and licensing notes](architecture/governance-and-licensing.md)
 - [AQJS runtime model](architecture/aqjs-runtime-model.md)
 - [AQJS API inventory](aqjs/api-inventory.md)
 - [AQCSS selector families](aqcss/selector-families.md)
