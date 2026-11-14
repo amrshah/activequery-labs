@@ -33,4 +33,4 @@ This is stronger than a core smoke test but remains a representative sample, not
 
 The validation workflow checks out repository HEAD commits that contain the pinned files, then verifies each file's Git blob SHA before testing. The source and minified files are copied into the local test fixture only; upstream files remain untouched.
 
-Run #244 passed the current 74-test suite, including AQCSS PostCSS AST parity and the selected AQJS source/minified edge-case parity tests. [Workflow evidence](https://github.com/amrshah/activequery-labs/actions/runs/43637027434). Full API semantic equivalence remains unproven.
+Run #257 passed the current 75-test suite, including AQCSS PostCSS AST parity, exact AQJS AST inventory counts (35 class methods, 76 extension methods across 9 targets) and selected AQJS source/minified edge-case parity tests. [Workflow evidence](https://github.com/amrshah/activequery-labs/actions/runs/43637450617). Full API semantic equivalence remains unproven.
