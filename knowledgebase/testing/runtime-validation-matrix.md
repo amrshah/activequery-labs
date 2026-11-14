@@ -36,7 +36,7 @@ Legend:
 |---|---|---|---|
 | `isArray`, `isNaA`, `isArraySet`, `isNaAS`, `isObjectMap`, `isNaOM` | Inspected | Representative positive/negative checks | Partial; passed in run #313; truth table not exhaustive |
 | `isArrayLike`, `isNaAL` | Inspected: unqualified helper references | Explicit ReferenceError tests | Passed in run #313 |
-| `isString`, `isNaS` | Inspected: `isNaS` appears broken | Primitive/boxed string test | Passed in run #313 |
+| `isString`, `isNaS` | Inspected: `isNaS` expression is always true for primitive strings, boxed strings and non-strings | Primitive/boxed string test | Passed in run #313; exhaustive truth table remains pending |
 | `isObject`, `isNaO`, `isObjectLiteral` | Inspected; null throws before guard | Plain-object checks and null error test | Partial; passed in run #313; cross-realm and other edge cases remain |
 | `isNaM`, `isSet`, `isNaOL`, `isObjectLike` | Inspected; naming/undefined helper issues | Map, array and objectLike checks | Partial; selected cases passed in run #313; `isNaOL` and full input matrix remain |
 | `isFunction`, `isNaF`, `isClass`, `isNaC` | Inspected heuristic string checks | Named function and class checks | Partial; selected cases passed in run #313; negative predicates remain |
@@ -106,8 +106,8 @@ The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specif
 | Node / npm | Node 22.23.4 / npm 10.9.9 |
 | Playwright | `@playwright/test` 1.56.1 |
 | Browser binaries | Chromium 141.0.7390.37 (Playwright build v1194); Firefox 142.0.1 (build v1495) |
-| Execution | 156 passed, 0 failed, 0 skipped; 31.4 seconds; 2 workers |
+| Execution | 158 passed, 0 failed, 0 skipped; 31.4 seconds; 2 workers |
 | Source integrity | Pinned AQJS/AQCSS source and minified assets fetched and hash-verified before catalog generation and tests |
 | Artifact | Generated AQCSS/AQJS AST catalogs uploaded successfully by the workflow |
 
-The run validates the 78 authored tests in two browser projects. It does not prove complete framework mastery, exhaustive API coverage, accessibility, touch behavior, WebKit compatibility or the clean-room portal rebuild.
+The run validates the 79 authored tests in two browser projects. It does not prove complete framework mastery, exhaustive API coverage, accessibility, touch behavior, WebKit compatibility or the clean-room portal rebuild.
