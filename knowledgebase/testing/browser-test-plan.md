@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run #292 passed all 156 browser cases (78 authored tests × Chromium/Firefox). A 79th authored test now verifies that `defer` does not invoke its callback; it awaits CI. Coverage remains targeted rather than exhaustive.
+Status: run #313 passed all 158 browser cases (79 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -72,13 +72,13 @@ Status: run #292 passed all 156 browser cases (78 authored tests × Chromium/Fir
 - `tests/aqjs.spec.js`: 47 targeted browser tests.
 - `tests/aqcss.spec.js`: 21 targeted computed-style/browser tests.
 - Additional source-structure and minified-parity specs bring the total to 79 authored tests.
-- The workflow is configured for both `push` and `pull_request` to `main`. Run #292 proves the 78-test suite at that commit passed in both configured browser projects. The new 79th test awaits a subsequent run; future changes must continue to pass the workflow.
+- The workflow is configured for both `push` and `pull_request` to `main`. Run #313 proves all 79 authored tests passed in both configured browser projects; future changes must continue to pass the workflow.
 
 ## Execution record
 
 | Date | Commit / run | Result |
 |---|---|---|
 | 2026-11-14 | Run #171, commit `77a78e44235dbbca6b07320074f4149d6131dd55` | Failed: 106 passed, 16 failed across 122 Chromium/Firefox cases. Failures traced to incorrect expectations/fixture issues in `defer`, native trim descriptor flags, `Array.setItem` thenable result serialization, Array `nestedDOM` support, mobile hide breakpoint, hover alpha support assertion, and zero-size tooltip fixture. No upstream source changes. |
-| 2026-11-15 | Run #292, commit `d2d6067aae76f29eb3fbbf4864c77d8bc8df3cd5` | **Success:** 156 passed, 0 failed, 0 skipped across Chromium 141.0.7390.37 and Firefox 142.0.1 on Ubuntu 24.04.5 / Node 22.23.4. [Workflow evidence](https://github.com/amrshah/activequery-labs/actions/runs/43638562334). |
+| 2026-11-15 | Run #313, commit `0f1a71a2d9994ba286c51a26c038892c99806d55` | **Success:** 158 passed, 0 failed, 0 skipped across Chromium 141.0.7390.37 and Firefox 142.0.1 on Ubuntu 24.04.5 / Node 22.23.4. [Workflow evidence](https://github.com/amrshah/activequery-labs/actions/runs/43639357350). |
 
 Update this table only after retrieving the actual workflow run, job logs and test summary. A successful workflow file commit is not a successful test run.

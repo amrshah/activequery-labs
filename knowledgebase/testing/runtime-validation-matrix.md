@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-15.
-Run #171 completed with 106 passed and 16 failed. After correcting the tests and recording additional AQCSS media-query defects, run #292 completed successfully: **156 passed, 0 failed, 0 skipped** across Chromium and Firefox. Run #281 was an earlier successful execution of the same 78-test suite; #292 is the latest verified run. Run #292 validates the then-current 78-test suite. A 79th test now covers whether `defer` actually invokes its callback and awaits CI; broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run #171 completed with 106 passed and 16 failed. After correcting the tests and recording additional AQCSS media-query defects, run #313 completed successfully: **158 passed, 0 failed, 0 skipped** across Chromium and Firefox. The 79 authored tests are now runtime-verified in both configured browser projects. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.** **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -13,7 +13,7 @@ Legend:
 
 | API / behavior | Source review | Test coverage | Current status |
 |---|---|---|---|
-| Constructor default argument | Inspected: null triggers alias and Object/Element/NodeList prototype writes | Default and empty-string constructor tests | Passed in run #292 |
+| Constructor default argument | Inspected: null triggers alias and Object/Element/NodeList prototype writes | Default and empty-string constructor tests | Passed in run #313 |
 | Import-time prototype extensions | Inspected: native prototypes augmented; String.trim replaced; native writable/configurable descriptor flags are retained | Native trim identity/descriptor test | Passed in run #292 |
 | `DOM(selector)` | Inspected: null / Element / NodeList polymorphic result | Zero, one, many matches | Passed in run #292 |
 | `nestedDOM(selector)` Element | Inspected | Single descendant and no-match context | Passed in run #292 |
@@ -96,13 +96,13 @@ Legend:
 
 | Field | Verified value |
 |---|---|
-| Workflow | [ActiveQuery knowledgebase browser tests #292](https://github.com/amrshah/activequery-labs/actions/runs/43638562334) |
-| Commit | `d2d6067aae76f29eb3fbbf4864c77d8bc8df3cd5` |
+| Workflow | [ActiveQuery knowledgebase browser tests #313](https://github.com/amrshah/activequery-labs/actions/runs/43639357350) |
+| Commit | `0f1a71a2d9994ba286c51a26c038892c99806d55` |
 | Runner | Ubuntu 24.04.5 LTS (`ubuntu-24.04`) |
 | Node / npm | Node 22.23.4 / npm 10.9.9 |
 | Playwright | `@playwright/test` 1.56.1 |
 | Browser binaries | Chromium 141.0.7390.37 (Playwright build v1194); Firefox 142.0.1 (build v1495) |
-| Execution | 156 passed, 0 failed, 0 skipped; 27.3 seconds; 2 workers |
+| Execution | 156 passed, 0 failed, 0 skipped; 31.4 seconds; 2 workers |
 | Source integrity | Pinned AQJS/AQCSS source and minified assets fetched and hash-verified before catalog generation and tests |
 | Artifact | Generated AQCSS/AQJS AST catalogs uploaded successfully by the workflow |
 
