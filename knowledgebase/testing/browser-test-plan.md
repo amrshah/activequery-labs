@@ -83,7 +83,7 @@ The source-grounded but not-yet-implemented cross-family cases are listed in [AQ
 - `tests/aqcss.spec.js`: 40 targeted computed-style/browser tests.
 - `tests/minified-parity.spec.js`: 10 source/minified parity tests.
 - `tests/css-source-parse.spec.js`: 4 source/catalog tests; `tests/js-source-parse.spec.js`: 1 API inventory test; `tests/knowledgebase-integrity.spec.js`: 1 link-integrity test.
-- Total: 116 authored tests. The workflow is configured for both `push` and `pull_request` to `main`. Run #327 proves all 91 authored tests passed in both configured browser projects; future changes must continue to pass the workflow.
+- Total: 116 authored tests. The workflow is configured for both `push` and `pull_request` to `main`. Run #365 proves all 116 authored tests passed in both configured browser projects; future changes must continue to pass the workflow.
 
 ## Execution record
 
