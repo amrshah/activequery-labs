@@ -51,6 +51,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [TEA and ISTM conceptual notes](architecture/tea-istm-concepts.md)
 - [Governance and licensing notes](architecture/governance-and-licensing.md)
 - [Naming, versioning and repository conventions](architecture/conventions.md)
+- [AQCSS third-party provenance](architecture/third-party-provenance.md)
 - [AQJS runtime model](architecture/aqjs-runtime-model.md)
 - [AQJS API inventory](aqjs/api-inventory.md)
 - [AQJS prototype behavior matrix](aqjs/behavior-matrix.md)
