@@ -67,6 +67,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS full rule catalog](aqcss/rule-catalog.json) — 1,417 raw selector/declaration blocks with media context.
 - [AQCSS custom property index](aqcss/custom-property-index.json) — declaration occurrences for 46 declared custom-property names and 91 names across declarations/references.
 - [AQCSS tokens and responsive semantics](aqcss/tokens-and-responsive.md)
+- [AQCSS cascade and specificity](aqcss/cascade-and-specificity.md)
 - [AQCSS base styles and controls](aqcss/base-controls.md)
 - [AQCSS layout utilities](aqcss/layout-utilities.md)
 - [AQCSS theme and effects](aqcss/theme-effects.md)
