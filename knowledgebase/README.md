@@ -54,6 +54,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS third-party provenance](architecture/third-party-provenance.md)
 - [AQJS runtime model](architecture/aqjs-runtime-model.md)
 - [AQJS API inventory](aqjs/api-inventory.md)
+- [AQJS API contract closure matrix](aqjs/api-contract-closure-matrix.md) — remaining method contracts, edge-case truth tables, unsafe API classifications and method-level source/minified parity plan.
 - [AQJS prototype behavior matrix](aqjs/behavior-matrix.md)
 - [AQJS type predicates and guards](aqjs/type-predicates-and-guards.md)
 - [AQJS templating and observation](aqjs/templating-and-observation.md)
@@ -69,6 +70,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS tokens and responsive semantics](aqcss/tokens-and-responsive.md)
 - [AQCSS cascade and specificity](aqcss/cascade-and-specificity.md)
 - [AQCSS cross-family cascade and selector-conflict audit](aqcss/cross-family-cascade-audit.md) — concrete interactions between utility families, important declarations, shorthand/longhand rules, responsive overlap, global selectors and a focused conflict-test matrix.
+- [AQCSS implementation recipes](aqcss/implementation-recipes.md) — source-grounded composition patterns for responsive cards, flex, spacing, positioning, typography, themed panels and visibility, with evidence caveats.
 - [AQCSS media-query and responsive selector map](aqcss/media-query-and-selector-map.md) — exact media-query inventory, responsive token correspondence, duplicated selectors and verified runtime caveats.
 - [AQCSS spacing utility cascade map](aqcss/spacing-cascade-map.md) — margin/padding declarations, responsive cascade order, shorthand/longhand outcomes and the 1rem left/right selector defect.
 - [AQCSS facet sizing cascade map](aqcss/sizing-cascade-map.md) — width/height fractions, min/max constraints, viewport units, responsive precedence and the repeated `--third` width defect.
@@ -80,6 +82,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS layout utilities](aqcss/layout-utilities.md)
 - [AQCSS borders, swatches, background images and fleek effects](aqcss/theme-effects.md) — border/radius helpers, palette tokens and opacity, hover swatches, background-image presentation, filter/opacity effects, overlay/dropdown/blockquote behavior and cascade hazards.
 - [Source findings and verification queue](testing/source-findings.md)
+- [AQCSS focused composition test plan](testing/aqcss-composition-test-plan.md) — proposed cross-family and responsive computed-style tests, separated from existing run evidence.
 - [Browser validation plan and coverage](testing/browser-test-plan.md)
 - [Runtime validation matrix](testing/runtime-validation-matrix.md) — source coverage, authored tests, verified browser runs and remaining gaps.
 - [Source/minified distribution parity](testing/minified-parity.md)
