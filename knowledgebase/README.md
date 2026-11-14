@@ -44,6 +44,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 ## Current high-value references
 
 - [Framework conceptual architecture map](architecture/framework-overview.md)
+- [Principle vs implementation review](architecture/principle-implementation-review.md)
 - [TEA and ISTM conceptual notes](architecture/tea-istm-concepts.md)
 - [Governance and licensing notes](architecture/governance-and-licensing.md)
 - [Naming, versioning and repository conventions](architecture/conventions.md)
