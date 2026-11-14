@@ -85,7 +85,7 @@ The source invokes `ActiveQuery.extend` for these targets:
 | `toggleClasses` | `(name)` | Toggles one class |
 | `i` | no meaningful argument | Returns element itself |
 | `setChild` | `(elementOrArray)` | Appends one or multiple nodes |
-| `siblings` | `(direction)` | `next`, `prev`, or all siblings; default branch references `target` not locally declared |
+| `siblings` | `(direction)` | Element `next`/`prev` work; Element default branch references undeclared `target`; NodeList implementation double-indexes the first Element and throws for normal paths |
 | `setAdjacent` | `(position,element)` | Maps aliases to insertAdjacentElement positions, but the guard returns early when either normal argument is truthy; ordinary calls are skipped |
 | `setHtml` | `(html,outer=false)` | Intended to set innerHTML or outerHTML, but the guard returns early when HTML is truthy; normal non-empty HTML writes are skipped |
 | `getHtml` | `(needle,outer=false)` | Returns markup or substring-presence boolean |
@@ -100,7 +100,7 @@ The source invokes `ActiveQuery.extend` for these targets:
 
 ### NodeList methods and deliberate stubs
 
-The NodeList extension includes implementations for attributes, styles, classes, `i`, `siblings`, `setValue`, `on`, and `then`. Several methods are stubs that return `this` or undefined, including `getStyles`, `getClasses`, `setChild`, `setAdjacent`, `setHtml`, `getHtml`, `setContent`, `setText`, `getText`, `getValue`, and `fax`.
+The NodeList extension includes implementations for attributes, styles, classes, `i`, `siblings`, `setValue`, `on`, and `then`. Its `siblings` implementation is not a reliable equivalent of the Element version. The String extension also replaces the native `String.prototype.trim` with a non-writable/non-configurable implementation; see JS-033. Several methods are stubs that return `this` or undefined, including `getStyles`, `getClasses`, `setChild`, `setAdjacent`, `setHtml`, `getHtml`, `setContent`, `setText`, `getText`, `getValue`, and `fax`.
 
 Do not assume API parity between Element and NodeList.
 
