@@ -1,6 +1,6 @@
 # Fresh-Agent Knowledgebase Acceptance Evaluation
 
-Status: evaluation suite drafted and updated to current browser evidence; not yet executed by an independent/fresh agent. The browser suite currently validates 74 authored tests in Chromium and Firefox, but that does not substitute for this independent knowledgebase-only evaluation.
+Status: evaluation suite drafted and updated to current browser evidence; not yet executed by an independent/fresh agent. The browser suite currently validates 75 authored tests in Chromium and Firefox, but that does not substitute for this independent knowledgebase-only evaluation.
 
 Purpose: prove that an AI agent can implement and reason about ActiveQuery using the knowledgebase without repeatedly reopening upstream source.
 
@@ -47,7 +47,7 @@ Purpose: prove that an AI agent can implement and reason about ActiveQuery using
    - Reference: `architecture/aqjs-runtime-model.md`, `testing/source-findings.md`.
 
 8. **Are Element and NodeList methods interchangeable?**
-   - Expected: no. Identify no-op/stub methods and examples such as getStyles/getClasses/setHtml/setText on NodeList.
+   - Expected: no. Identify no-op/stub methods and exact return differences: NodeList `getStyles()` returns undefined, `getClasses()`/`getHtml()`/`setHtml()`/`setText()` return the collection itself, and several content/value methods are stubs.
    - Reference: `aqjs/behavior-matrix.md`.
 
 9. **Is `sift(selector)` a working filter helper?**
@@ -65,7 +65,7 @@ Purpose: prove that an AI agent can implement and reason about ActiveQuery using
     - Reference: `architecture/tea-istm-concepts.md`, `architecture/framework-overview.md`.
 
 12. **What are the main licensing and contribution constraints?**
-    - Expected: AQCSS/AQJS OSL-3.0; preserve notices; external deployment provision; no trademark grant; DCO Signed-off-by on each upstream commit; dependency compatibility review.
+    - Expected: AQCSS/AQJS OSL-3.0; preserve notices; external deployment provision; no trademark grant; DCO `Signed-off-by` on each upstream commit; the sign-off record is public and retained indefinitely; dependency compatibility review.
     - Reference: `architecture/governance-and-licensing.md`, `architecture/conventions.md`.
 
 ## Scoring rubric
