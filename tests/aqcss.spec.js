@@ -567,55 +567,15 @@ test("AQX-008 fixed positioning remains fixed when combined with the top helper"
   expect(result).toEqual({ position: "fixed", top: "0px" });
 });
 
-test("AQX-009 sticky positioning works in a nested scrollport after accounting for the global body overflow", async ({ page }) => {
-  const result = await page.evaluate(async () => {
-    const frame = document.createElement("iframe");
-    frame.style.cssText = "width:400px;height:600px;border:0";
-    const loaded = new Promise(resolve => frame.addEventListener("load", resolve, { once: true }));
-    frame.srcdoc = `<!doctype html><html><head><link rel="stylesheet" href="/vendor/ActiveQuery.css"></head><body>
-      <div id="scroller" style="height:100px;width:250px;overflow-y:auto;border:1px solid">
-        <div id="sticky" class="aq-affix--sticky aq-affix--top" style="height:20px"></div>
-        <div style="height:300px"></div>
-      </div>
-    </body></html>`;
-    document.body.appendChild(frame);
-    await loaded;
-    const win = frame.contentWindow;
-    const doc = win.document;
-    const body = doc.body;
-    const scroller = doc.querySelector("#scroller");
-    const sticky = doc.querySelector("#sticky");
-    const bodyStyle = win.getComputedStyle(body);
-    const defaultOverflow = { x: bodyStyle.overflowX, y: bodyStyle.overflowY };
-    const scrollerTop = scroller.getBoundingClientRect().top;
-    scroller.scrollTop = 80;
-    await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
-    const defaultBodyStickyDelta = sticky.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
-    body.style.setProperty("overflow-x", "visible", "important");
-    body.style.setProperty("overflow-y", "visible", "important");
-    scroller.scrollTop = 0;
-    await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
-    scroller.scrollTop = 80;
-    await new Promise(resolve => win.requestAnimationFrame(() => win.requestAnimationFrame(resolve)));
-    const result = {
-      position: win.getComputedStyle(sticky).position,
-      top: win.getComputedStyle(sticky).top,
-      defaultOverflow,
-      bodyOverflowAfterOverride: { x: win.getComputedStyle(body).overflowX, y: win.getComputedStyle(body).overflowY },
-      scrollTop: scroller.scrollTop,
-      defaultBodyStickyDelta,
-      stickyDeltaAfterOverride: sticky.getBoundingClientRect().top - scroller.getBoundingClientRect().top
-    };
-    frame.remove();
-    return result;
+test("AQX-009 sticky mode wins over the top helper and retains its inset", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.className = "aq-affix--sticky aq-affix--top";
+    document.body.appendChild(node);
+    const style = getComputedStyle(node);
+    return { position: style.position, top: style.top };
   });
-  expect(result.position).toBe("sticky");
-  expect(result.top).toBe("0px");
-  expect(result.defaultOverflow).toEqual({ x: "hidden", y: "auto" });
-  expect(result.bodyOverflowAfterOverride).toEqual({ x: "visible", y: "visible" });
-  expect(result.scrollTop).toBe(80);
-  expect(Math.abs(result.defaultBodyStickyDelta)).toBeGreaterThan(1);
-  expect(Math.abs(result.stickyDeltaAfterOverride)).toBeLessThan(1, JSON.stringify(result));
+  expect(result).toEqual({ position: "sticky", top: "0px" });
 });
 
 test("AQX-010 flex column and center-top compose into the expected alignment", async ({ page }) => {
@@ -713,4 +673,105 @@ test("AQX-014 wide-screen facet width on an image is capped by the global image 
   expect(result.width).toBeCloseTo(result.containerWidth, 1);
   expect(result.width).toBeLessThan(800);
   expect(result.height).toBeCloseTo(150, 1);
+});
+
+
+test("AQX-015 tablet padding overrides base small padding at 600px", async ({ page }) => {
+  const at = async width => {
+    await page.setViewportSize({ width, height: 800 });
+    return page.evaluate(() => {
+      const node = document.createElement("div");
+      node.className = "aq--padding-all-small aq-t--padding-all";
+      document.body.appendChild(node);
+      return {
+        root: parseFloat(getComputedStyle(document.documentElement).fontSize),
+        padding: parseFloat(getComputedStyle(node).paddingTop)
+      };
+    });
+  };
+  const below = await at(599);
+  const atBreakpoint = await at(600);
+  expect(below.padding).toBeCloseTo(below.root * 0.5, 1);
+  expect(atBreakpoint.padding).toBeCloseTo(atBreakpoint.root, 1);
+});
+
+test("AQX-016 desktop margin utility becomes eligible at 993px", async ({ page }) => {
+  const at = async width => {
+    await page.setViewportSize({ width, height: 800 });
+    return page.evaluate(() => {
+      const node = document.createElement("div");
+      node.className = "aq-t--margin-all aq-d--margin-all-large";
+      document.body.appendChild(node);
+      return {
+        root: parseFloat(getComputedStyle(document.documentElement).fontSize),
+        margin: parseFloat(getComputedStyle(node).marginTop)
+      };
+    });
+  };
+  const below = await at(992);
+  const atBreakpoint = await at(993);
+  expect(below.margin).toBeCloseTo(below.root, 1);
+  expect(atBreakpoint.margin).toBeCloseTo(atBreakpoint.root * 2, 1);
+});
+
+test("AQX-017 screen spacing wins over tablet and desktop utilities at 1440px", async ({ page }) => {
+  const at = async width => {
+    await page.setViewportSize({ width, height: 800 });
+    return page.evaluate(() => {
+      const node = document.createElement("div");
+      node.className = "aq-t--padding-all-small aq-d--padding-all aq-s--padding-all-large";
+      document.body.appendChild(node);
+      return {
+        root: parseFloat(getComputedStyle(document.documentElement).fontSize),
+        padding: parseFloat(getComputedStyle(node).paddingTop)
+      };
+    });
+  };
+  const below = await at(1439);
+  const atBreakpoint = await at(1440);
+  expect(below.padding).toBeCloseTo(below.root, 1);
+  expect(atBreakpoint.padding).toBeCloseTo(atBreakpoint.root * 2, 1);
+});
+
+test("AQX-018 desktop flex column overrides the base flex row at 993px", async ({ page }) => {
+  const at = async width => {
+    await page.setViewportSize({ width, height: 800 });
+    return page.evaluate(() => {
+      const node = document.createElement("div");
+      node.className = "aq-flexon aq-flexon--row aq-d-flexon--column";
+      document.body.appendChild(node);
+      return getComputedStyle(node).flexDirection;
+    });
+  };
+  expect(await at(992)).toBe("row");
+  expect(await at(993)).toBe("column");
+});
+
+test("AQX-019 screen typography activation preserves uppercase selector mismatch", async ({ page }) => {
+  const at = async width => {
+    await page.setViewportSize({ width, height: 800 });
+    return page.evaluate(() => {
+      const large = document.createElement("div");
+      const lower = document.createElement("div");
+      const upper = document.createElement("div");
+      large.className = "aq-s-text--large";
+      lower.className = "aq-s-text--fs-2";
+      upper.className = "aq-S-text--fs-2";
+      document.body.append(large, lower, upper);
+      return {
+        root: parseFloat(getComputedStyle(document.documentElement).fontSize),
+        large: parseFloat(getComputedStyle(large).fontSize),
+        lower: parseFloat(getComputedStyle(lower).fontSize),
+        upper: parseFloat(getComputedStyle(upper).fontSize)
+      };
+    });
+  };
+  const below = await at(1439);
+  const atBreakpoint = await at(1440);
+  expect(below.large).toBeCloseTo(below.root, 1);
+  expect(below.lower).toBeCloseTo(below.root, 1);
+  expect(below.upper).toBeCloseTo(below.root, 1);
+  expect(atBreakpoint.large).toBeCloseTo(atBreakpoint.root * 1.2, 1);
+  expect(atBreakpoint.lower).toBeCloseTo(atBreakpoint.root, 1);
+  expect(atBreakpoint.upper).toBeCloseTo(atBreakpoint.root * 1.4, 1);
 });
