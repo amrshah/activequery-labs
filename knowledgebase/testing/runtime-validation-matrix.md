@@ -13,84 +13,83 @@ Legend:
 
 | API / behavior | Source review | Test coverage | Current status |
 |---|---|---|---|
-| Constructor default argument | Inspected: null triggers alias and Object/Element/NodeList prototype writes | Default and empty-string constructor tests | Test authored; pending run |
-| Import-time prototype extensions | Inspected: native prototypes augmented; String.trim replaced; native writable/configurable descriptor flags are retained | Native trim identity/descriptor test | Passed in run #195 |
-| `DOM(selector)` | Inspected: null / Element / NodeList polymorphic result | Zero, one, many matches | Test authored; pending run |
-| `nestedDOM(selector)` Element | Inspected | Single descendant and no-match context | Test authored; pending run |
-| `nestedDOM(selector)` NodeList | Inspected | Flattened descendants | Test authored; pending run |
-| `nestedDOM(selector)` Array | Inspected: Array fails accepted-type guard and is returned unchanged | Explicit unchanged-array test | Passed in run #195 |
-| `nestedDOM(selector)` Document | Inspected | Zero/one/many and no-match context test | Passed in run #195 |
-| `nestedDOM(selector)` HTMLCollection | Inspected: returns unchanged | Explicit unchanged-result test | Test authored; pending run |
-| `extend(...args)` | Inspected; argument validation and custom-element branches mapped | Valid autonomous element and invalid no-hyphen name tests | Test authored; pending run |
-| `isEmpty` | Inspected: zero/false/null/empty string and recursive array semantics | Representative cases | Test authored; pending run |
+| Constructor default argument | Inspected: null triggers alias and Object/Element/NodeList prototype writes | Default and empty-string constructor tests | Passed in run #204 |
+| Import-time prototype extensions | Inspected: native prototypes augmented; String.trim replaced; native writable/configurable descriptor flags are retained | Native trim identity/descriptor test | Passed in run #204 |
+| `DOM(selector)` | Inspected: null / Element / NodeList polymorphic result | Zero, one, many matches | Passed in run #204 |
+| `nestedDOM(selector)` Element | Inspected | Single descendant and no-match context | Passed in run #204 |
+| `nestedDOM(selector)` NodeList | Inspected | Flattened descendants | Passed in run #204 |
+| `nestedDOM(selector)` Array | Inspected: Array fails accepted-type guard and is returned unchanged | Explicit unchanged-array test | Passed in run #204 |
+| `nestedDOM(selector)` Document | Inspected | Zero/one/many and no-match context test | Passed in run #204 |
+| `nestedDOM(selector)` HTMLCollection | Inspected: returns unchanged | Explicit unchanged-result test | Passed in run #204 |
+| `extend(...args)` | Inspected; argument validation and custom-element branches mapped | Valid autonomous element and invalid no-hyphen name tests | Passed in run #204 |
+| `isEmpty` | Inspected: zero/false/null/empty string and recursive array semantics | Representative cases | Passed in run #204 |
 | `exit` | Inspected as no-op returning this | No test | Pending authoring |
-| `keepOn` | Inspected: returns input only for empty length and non-debug | Empty/non-empty/debug cases | Test authored; pending run |
-| `defer` | Inspected: spreads input, pops delay, passes remaining array to setTimeout; array is string-coerced by browser timer API | Non-throwing timer-handle test | Passed in run #195 |
+| `keepOn` | Inspected: returns input only for empty length and non-debug | Empty/non-empty/debug cases | Passed in run #204 |
+| `defer` | Inspected: spreads input, pops delay, passes remaining array to setTimeout; array is string-coerced by browser timer API | Non-throwing timer-handle test | Passed in run #204 |
 | `getPlugin` | Inspected: dynamic import by string | No allowlist/security test | Pending authoring |
-| Lifecycle `on` | Inspected: fixed event names, no late replay | Late ready/init test | Test authored; pending run |
-| Constructor `initlog` | Inspected: no readyState check | Late callback test | Test authored; pending run |
+| Lifecycle `on` | Inspected: fixed event names, no late replay | Late ready/init test | Passed in run #204 |
+| Constructor `initlog` | Inspected: no readyState check | Late callback test | Passed in run #204 |
 
 ## AQJS type predicates
 
 | Method(s) | Source review | Test coverage | Current status |
 |---|---|---|---|
-| `isArray`, `isNaA`, `isArraySet`, `isNaAS`, `isObjectMap`, `isNaOM` | Inspected | No full truth table | Pending authoring |
-| `isArrayLike`, `isNaAL` | Inspected: unqualified helper references | Not yet tested | Pending authoring |
-| `isString`, `isNaS` | Inspected: `isNaS` appears broken | Primitive/boxed string test | Test authored; pending run |
-| `isObject`, `isNaO`, `isObjectLiteral` | Inspected; null throws before guard | Null test only | Partial; pending run |
-| `isNaM`, `isSet`, `isNaOL`, `isObjectLike` | Inspected; naming/undefined helper issues | Array/Map and objectLike error cases partial | Partial; pending run |
-| `isFunction`, `isNaF`, `isClass`, `isNaC` | Inspected heuristic string checks | No full truth table | Pending authoring |
-| `isNodeList`, `isNaNL` | Inspected: references undefined `x` | isNodeList error test | Test authored; pending run |
-| `isArgument`, `isJSON` | Inspected: type/regex behavior, not JSON parsing | null false-positive test | Partial; pending authoring |
+| `isArray`, `isNaA`, `isArraySet`, `isNaAS`, `isObjectMap`, `isNaOM` | Inspected | Representative positive/negative checks | Partial; passed in run #204; truth table not exhaustive |
+| `isArrayLike`, `isNaAL` | Inspected: unqualified helper references | Explicit ReferenceError tests | Passed in run #204 |
+| `isString`, `isNaS` | Inspected: `isNaS` appears broken | Primitive/boxed string test | Passed in run #204 |
+| `isObject`, `isNaO`, `isObjectLiteral` | Inspected; null throws before guard | Plain-object checks and null error test | Partial; passed in run #204; cross-realm and other edge cases remain |
+| `isNaM`, `isSet`, `isNaOL`, `isObjectLike` | Inspected; naming/undefined helper issues | Map, array and objectLike checks | Partial; selected cases passed in run #204; `isNaOL` and full input matrix remain |
+| `isFunction`, `isNaF`, `isClass`, `isNaC` | Inspected heuristic string checks | Named function and class checks | Partial; selected cases passed in run #204; negative predicates remain |
+| `isNodeList`, `isNaNL` | Inspected: references undefined `x` | Both positive and negative methods tested for ReferenceError | Passed in run #204 |
+| `isArgument`, `isJSON` | Inspected: type/regex behavior, not JSON parsing | Empty/null argument and arbitrary string JSON tests | Passed in run #204 |
 
 ## AQJS Array/Object/primitive extensions
 
 | Target | Methods | Source review | Test coverage | Current status |
 |---|---|---|---|---|
-| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified | i, getIndex, getCount, setSort, setItem, has, getIndexs, then | Partial; selected contracts passed in run #195; default getCount branch and remaining edge cases pending |
-| Object | `setValues`, `hasValues` | Missing static predicate call | Both error cases | Test authored; pending run |
-| Number | `trim` | Inspected | Primitive trim test | Test authored; pending run |
-| String | `trim` | Native override and Unicode mismatch identified | Descriptor and U+FEFF/U+200B comparisons | Test authored; pending run |
-| Function | `then` | Inspected | Callback test | Test authored; pending run |
+| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified | i, getIndex, getCount, setSort, both setItem branches, has, getIndexs, then | Partial; selected contracts passed in run #204; default getCount branch and remaining edge cases pending |
+| Object | `setValues`, `hasValues` | Missing static predicate call | Both error cases | Passed in run #204 |
+| Number | `trim` | Inspected | Primitive trim test | Passed in run #204 |
+| String | `trim` | Native override and Unicode mismatch identified | Descriptor and U+FEFF/U+200B comparisons | Passed in run #204 |
+| Function | `then` | Inspected | Callback test | Passed in run #204 |
 
 ## AQJS Element/NodeList/Document/Window
 
 | Target | Methods / behavior | Source review | Test coverage | Current status |
 |---|---|---|---|---|
-| Element | `parent`, `name` | Inspected | No getter edge tests | Pending authoring |
+| Element | `parent`, `name` | Inspected | Parent relationship and nodeName | Passed in run #204 |
 | Element | Attributes/styles | Inspected; falsy-value and simple parser limits | No complete test matrix | Pending authoring |
-| Element | Classes | Inspected | Basic set/get and event helper tests | Partial; pending run |
-| Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default tests | Partial; pending run |
-| Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | setAdjacent/setHtml only | Partial; pending run |
-| Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior | Not yet tested | Pending authoring |
-| Element | `then`, `fax`, `on` | Inspected | on tested; then/fax pending | Partial; pending run |
-| Element | `sancha` | Inspected; HTML injection and undeclared identifiers | Static success and data-mode ReferenceError | Test authored; pending run |
-| Element | `sift` | Inspected: truthy selector early return | Explicit no-handler test | Test authored; pending run |
-| Element | `watch` | Inspected; callback `this` failure and missing observer return | Mutation test captures TypeError and missing user callback | Test authored; pending run |
+| Element | Classes | Inspected | Basic set/get/remove plus NodeList bulk class mutators | Partial; selected contracts passed in run #204 |
+| Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default tests | Partial; sibling paths passed in run #204; `i` and `setChild` remain untested |
+| Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | Guarded setAdjacent/setHtml, getHtml modes, array setContent | Partial; selected contracts passed in run #204 |
+| Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior | setText, getText and getValue modes | Partial; selected contracts passed in run #204; Element setValue remains untested |
+| Element | `then`, `fax`, `on` | Inspected | on tested; then/fax pending | Partial; `on` passed in run #204; then/fax remain untested |
+| Element | `sancha` | Inspected; HTML injection and undeclared identifiers | Static success and data-mode ReferenceError | Passed in run #204 |
+| Element | `sift` | Inspected: truthy selector early return | Explicit no-handler test | Passed in run #204 |
+| Element | `watch` | Inspected; callback `this` failure and missing observer return | Mutation test captures TypeError and missing user callback | Passed in run #204 |
 | NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | Bulk attributes/styles/classes, setValue, getStyles/getClasses and content no-op cases | Partial; selected contracts passed in run #195 |
-| NodeList | no-op stubs | Inspected: getStyles/getClasses/getHtml/setText/etc. | Not exhaustively asserted | Pending authoring |
-| Document/Window | `on` | Inspected | Native custom event listeners | Test authored; pending run |
+| NodeList | no-op stubs | Inspected: getStyles/getClasses/getHtml/setText/etc. | Representative stubs and content no-op behavior | Partial; selected stubs passed in run #204; not exhaustive |
+| Document/Window | `on` | Inspected | Native custom event listeners | Passed in run #204 |
 
 ## AQCSS validation
 
 | Area | Source review | Test coverage | Current status |
 |---|---|---|---|
-| Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Test authored; pending run |
-| Source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Test authored; pending run |
+| Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #204 |
+| Source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #204 |
 | Breakpoints and responsive variants | Inspected: mobile-hide media query is malformed and ignored by Chromium/Firefox; tablet typography activates at 600px | 599/600/601 computed-style test; 599/600/993/1440 responsive utility test | Mobile/tablet behavior passed in run #195; broader breakpoint matrix remains incomplete |
-| Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Test authored; pending run |
-| Layout/flex/spacing | Multiple source defects documented | Facet and row-gap tests pending | Pending authoring |
-| Swatches and color functions | Token duplication and invalid rgb() usage documented | Base border token and hover alpha tests | Partial; pending run and more color coverage |
-| Controls/focus/tooltip/dropdown | Source inspected | Keyboard/touch/hover tests pending | Pending authoring |
+| Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Passed in run #204 |
+| Layout/flex/spacing | Multiple source defects documented | Facet, row-gap, flex base, spacing aliases and responsive alignment tests | Passed in run #204 |
+| Swatches and color functions | Token duplication and invalid rgb() usage documented | Base border token and hover alpha tests | Partial; selected cases passed in run #204; more theme/swatch coverage remains |
+| Controls/focus/tooltip/dropdown | Source inspected | Focus outline, hover-only tooltip, hover/focus/click dropdown tests | Partial; keyboard/pointer tests passed in run #204; touch behavior remains untested |
 | Reduced motion/dark mode | No built-in support found in pinned stylesheet | Absence/source assertions; app-level implementation deferred | Pending authoring |
 
 ## Execution and acceptance
 
-1. Re-run the corrected Playwright suite in Chromium and Firefox.
-2. Inspect any remaining failures without modifying upstream source or weakening source-grounded assertions.
-3. Add the remaining API and CSS tests above.
-4. Retain test logs, browser versions and generated AST catalog artifacts.
-5. Only then update this matrix with observed pass/fail results.
+1. Continue adding source-grounded tests for untested API branches, accessibility and compatibility.
+2. Inspect any failures without modifying upstream source or weakening source-grounded assertions.
+3. Retain test logs, browser versions and generated AST catalog artifacts for every accepted run.
+4. Keep the mastery gate open until coverage and independent-agent evaluation are complete.
 
 
 ## Confirmed execution record
