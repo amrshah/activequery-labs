@@ -1,15 +1,15 @@
 # AQJS API Contract Closure Matrix
 
 Source: ActiveQuery.js SHA b8ec9e5be8668d048eea3385cd9012dfddb69cf0.
-Status: planning matrix derived from the API inventory, behavior matrix and runtime validation matrix. This is not a claim that the tests below already exist or pass.
+Status: active closure matrix derived from the API inventory, behavior matrix and runtime validation matrix. Each row records remaining work; passed test evidence is identified explicitly.
 
 ## Objective
 
 Every public method should have its exact receiver and signature/defaults, accepted inputs, return type and receiver identity, mutation/global side effects, normal/empty/falsy/invalid-input behavior, errors and async behavior, and source/minified comparison where relevant. Do not repair upstream AQJS while documenting or testing it.
 
-## Newly authored coverage (pending run #321)
+## Newly authored coverage (passed in run #324)
 
-Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passed in run [#324](https://github.com/amrshah/activequery-labs/actions/runs/43644712359): Element `setValue`, `setChild`, `then` and `fax`; NodeList no-op stubs and `on` validation; and Array `getCount` default-operator delimiter/missing-property behavior. The initial test assumptions were corrected after source review; no upstream code was changed. A further source/minified behavior fixture is pending run #325.
+Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passed in run [#324](https://github.com/amrshah/activequery-labs/actions/runs/43644712359): Element `setValue`, `setChild`, `then` and `fax`; NodeList no-op stubs and `on` validation; and Array `getCount` default-operator delimiter/missing-property behavior. The initial test assumptions were corrected after source review; no upstream code was changed. A further source/minified behavior fixture was added in commit `5769645f9aa327c627ce58f8dda9a5b40934b8db` and is pending run #325.
 
 ## Priority 0 — unresolved API contracts
 
@@ -17,16 +17,16 @@ Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passe
 |---|---|---|---|
 | getPlugin(name) | allowed input, rejection path, import errors, security boundary | approved module, invalid type, rejected module, allowlist boundary | inspected only; no allowlist/security test |
 | Array.i | guard and index coercion | default, integer/string index, out-of-range, falsy | untested |
-| Array.getCount | default operator branch unclear | each operator, missing delimiter, no match, multiple matches | selected cases passed; default branch pending |
+| Array.getCount | full default-operator grammar and malformed input behavior | each operator, delimiter/no-delimiter, missing property, no match, multiple matches | delimiter, no-delimiter and missing-property cases passed in run #324; other operator shapes pending |
 | Array.then | Promise resolver assimilation | callback, missing callback, thenable resolution; isolate hang risk | callback tested; interoperability pending |
-| Element.setValue | falsy clearing and supported element types | input/select/textarea/checkbox; zero, false, empty string | untested |
-| Element.setChild | single/array append and invalid node handling | Element, fragment, array, empty array, invalid member | untested |
-| Element.then | callback and receiver/return semantics | callable, absent/non-function callback, returned value | untested |
-| Element.fax | FORM behavior incomplete | form vs non-form, controls, submit semantics; likely classify unsupported | untested |
-| NodeList.i | indexing and guard semantics | zero/one/multiple, invalid index, empty list | partial; exact contract pending |
-| NodeList.siblings | current behavior likely throws | next/prev/default with 0/1/multiple members | source review shows defect |
-| NodeList stubs | exact no-op return values and coverage | each stub with normal args; assert identity/no mutation/undefined | representative stubs only |
-| Document/Window.on | event validation and return value | valid/invalid event, missing callback, listener cleanup limits | basic custom events passed |
+| Element.setValue | falsy clearing and supported element types | input/select/textarea/checkbox; zero, false, empty string; generic Element | truthy/falsy input and generic Element property creation passed in run #324; full control-type matrix pending |
+| Element.setChild | single/array append and invalid node handling | Element, fragment, array, empty array, invalid member | single Element, array and empty array passed in run #324; fragment/invalid member pending |
+| Element.then | callback and receiver/return semantics | callable, absent/non-function callback, returned value | callback result and missing/non-function callback passed in run #324 |
+| Element.fax | FORM behavior incomplete | form vs non-form, controls, submit semantics; likely classify unsupported | FORM returns undefined and non-FORM returns receiver, passed in run #324; form behavior remains unsupported |
+| NodeList.i | indexing and guard semantics | zero/one/multiple, invalid index, empty list | index 0 and invalid string guard passed in run #313; out-of-range/empty collection pending |
+| NodeList.siblings | current behavior likely throws | next/prev/default with 0/1/multiple members | next/default TypeError reproduced in run #313; preserve as unsupported |
+| NodeList stubs | exact no-op return values and coverage | each stub with normal args; assert identity/no mutation/undefined | all identified no-op stubs invoked with representative arguments and passed in run #324; additional input variations pending |
+| NodeList.on | event validation and return value | valid/invalid event, empty and non-empty collections, callback invocation | valid/invalid arguments, empty collection identity and listener dispatch passed in run #324 |\n| Document/Window.on | event validation and return value | valid/invalid event, missing callback, listener cleanup limits | basic custom events passed in run #313 |
 | Lifecycle on | early/late registration and replay semantics | before/after DOMContentLoaded/load/pageshow; unknown event | late registration tested; broader timing pending |
 
 ## Priority 1 — predicate and value truth tables
@@ -96,7 +96,7 @@ The current source-review pass adds four focused references:
 - [Predicate truth and failure-path audit](predicate-truth-table.md) — source expressions and ambient-global hazards.
 - [Source/minified parity audit](source-minified-parity-audit.md) — inspected high-risk methods and the limits of current parity evidence.
 
-These are source-review improvements only. They do not close the pending runtime or semantic-parity criteria.
+These are source-review improvements. The six new contract tests passed in run #324, but they do not close the remaining runtime or semantic-parity criteria.
 
 ## References
 
