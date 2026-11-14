@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run #325 passed all 176 browser cases (88 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: run #327 passed all 182 browser cases (91 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -16,7 +16,7 @@ Status: run #325 passed all 176 browser cases (88 authored tests × Chromium/Fir
 ### Source/minified parity
 
 - PostCSS AST comparison checks all AQCSS source and minified rules, selectors, media context and declarations after syntax-preserving whitespace normalization.
-- Browser tests compare core AQJS selector/Element behavior and selected edge contracts across source and minified module builds, including Element `setValue`, `setChild`, `then`, NodeList event registration/empty-collection return and Array `getCount` default-operator behavior (run #325).
+- Browser tests compare core AQJS selector/Element behavior and selected edge contracts across source and minified module builds, including Element `setValue`, `setChild`, `then`, NodeList event registration/empty-collection return, Array `getCount` default-operator behavior, Array `then`, and Document/Window event helpers (runs #325 and #327).
 - CI verifies exact Git blob SHAs for both source and minified files before testing.
 
 ### AQJS
@@ -38,6 +38,8 @@ Status: run #325 passed all 176 browser cases (88 authored tests × Chromium/Fir
 | NodeList bulk mutators | Attributes, inline styles and classes applied across collection | `tests/aqjs.spec.js` |
 | Element parent/name | Parent relationship and node name getters | `tests/aqjs.spec.js` |
 | Type predicates | Positive/negative checks plus known broken array-like paths, `isNaS` always true and `isNaF` string/arrow false positives | `tests/aqjs.spec.js` |\n| Element value/child/then/fax | Truthy/falsy value writes, generic Element value-property creation, single/array child append, callback result and FORM/non-FORM return | `tests/aqjs.spec.js` |\n| NodeList stubs and events | Identified no-op stubs do not mutate; `on` validates arguments and returns an empty collection unchanged | `tests/aqjs.spec.js` |\n| Array getCount default branch | Delimiter/no-delimiter matching and missing-property TypeError | `tests/aqjs.spec.js` |
+| getPlugin rejection | Rejected dynamic import propagates TypeError; non-string fallback returns instance | `tests/aqjs.spec.js` |
+| Document/Window on guards | Invalid event/callback arguments return the original receiver | `tests/aqjs.spec.js` |
 
 ### AQCSS
 
@@ -64,8 +66,8 @@ The source-grounded but not-yet-implemented cross-family cases are listed in [AQ
 
 - Constructor alias/prototype mutation is covered for default null and explicit empty-string construction, but not all arbitrary aliases.
 - No tests yet for every AQJS method or every collection-specific edge case; the identified NodeList no-op stubs now have representative invocation/no-mutation assertions.
-- `sancha`, `sift` and `watch` have authored targeted tests and remain passing through run #325; broader behavioral branches remain untested.
-- Lifecycle late-registration and callback timing tests have authored coverage and remain passing through run #325; early registration and timing edge cases remain to be expanded.
+- `sancha`, `sift` and `watch` have authored targeted tests and remain passing through run #327; broader behavioral branches remain untested.
+- Lifecycle late-registration and callback timing tests have authored coverage and remain passing through run #327; early registration and timing edge cases remain to be expanded.
 - No exhaustive CSS selector catalogue coverage.
 - Base border-token and hover alpha computed-style tests have been authored; exhaustive swatch/theme coverage remains outstanding.
 - Basic focus-outline, disabled-descendant and hover-only tooltip tests remain passing through run #325; touch/hybrid device, zoom and comprehensive accessibility audits remain outstanding. Reduced-motion and short-landscape tests also passed, including a documented browser-specific CSSOM difference.
@@ -73,11 +75,11 @@ The source-grounded but not-yet-implemented cross-family cases are listed in [AQ
 
 ## Current authored test inventory
 
-- `tests/aqjs.spec.js`: 55 targeted browser tests.
+- `tests/aqjs.spec.js`: 57 targeted browser tests.
 - `tests/aqcss.spec.js`: 21 targeted computed-style/browser tests.
-- `tests/minified-parity.spec.js`: 6 source/minified parity tests.
+- `tests/minified-parity.spec.js`: 7 source/minified parity tests.
 - `tests/css-source-parse.spec.js`: 4 source/catalog tests; `tests/js-source-parse.spec.js`: 1 API inventory test; `tests/knowledgebase-integrity.spec.js`: 1 link-integrity test.
-- Total: 88 authored tests. The workflow is configured for both `push` and `pull_request` to `main`. Run #325 proves all 88 authored tests passed in both configured browser projects; future changes must continue to pass the workflow.
+- Total: 91 authored tests. The workflow is configured for both `push` and `pull_request` to `main`. Run #325 proves all 91 authored tests passed in both configured browser projects; future changes must continue to pass the workflow.
 
 ## Execution record
 
