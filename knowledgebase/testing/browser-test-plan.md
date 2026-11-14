@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: first full browser execution failed, test assumptions were corrected, and run #181 passed all 122 cases across Chromium and Firefox. Coverage remains targeted rather than exhaustive.
+Status: run #195 passed all 138 browser cases (69 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -69,7 +69,7 @@ Status: first full browser execution failed, test assumptions were corrected, an
 - `tests/aqjs.spec.js`: 45 targeted browser tests.
 - `tests/aqcss.spec.js`: 17 targeted computed-style/browser tests.
 - Additional source-structure and minified-parity specs are present and should be counted/reviewed as part of the first CI execution.
-- The workflow is configured for both `push` and `pull_request` to `main`. Run #181 proves the current 61-test suite passed in both configured browser projects; future changes must continue to pass the workflow.
+- The workflow is configured for both `push` and `pull_request` to `main`. Run #195 proves the current 69-test suite passed in both configured browser projects; future changes must continue to pass the workflow.
 
 ## Execution record
 
