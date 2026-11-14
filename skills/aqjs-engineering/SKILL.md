@@ -5,13 +5,14 @@ description: Use when integrating, implementing, testing or documenting ActiveQu
 
 # AQJS Engineering Skill
 
-## Source-first process
+## Knowledgebase-first process
 
-- Inspect the current `ActiveQuery/JS` source and README before implementation.
-- Verify exported names, constructor behavior, method signatures, return values, side effects and timing from source.
-- AQJS v25.6.0 source inspected for the portal exports a named `ActiveQuery` class. Do not assume a default export.
-- Test module loading in the target browser. Do not assume a raw GitHub URL is a valid ES module CDN endpoint.
-- Avoid optional prototype/global extensions unless the use case requires them and their side effects are documented.
+- Start with `knowledgebase/aqjs/` and `knowledgebase/architecture/aqjs-runtime-model.md`.
+- Check the pinned AQJS SHA in `knowledgebase/source-baseline.md`.
+- Use the API inventory for known signatures and behavior; do not reread the entire implementation for routine questions.
+- If a method is missing, ambiguous or marked suspicious, inspect its exact implementation and update the knowledgebase with source anchors.
+- Distinguish Element, NodeList and other prototype APIs. Do not assume parity.
+- Avoid optional global/prototype extensions unless the use case requires them and their side effects are documented.
 
 ## Safe examples
 
@@ -21,4 +22,4 @@ description: Use when integrating, implementing, testing or documenting ActiveQu
 - Record console errors, initialization timing and browser compatibility.
 - Update the source inventory whenever upstream changes.
 
-See `docs/RESEARCH-BASELINE.md` for the current inspected source baseline; re-verify before use.
+See `knowledgebase/testing/source-findings.md` for current suspected issues and `knowledgebase/mastery-gate.md` for the mastery criteria.
