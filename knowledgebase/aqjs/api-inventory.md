@@ -114,6 +114,10 @@ Do not assume API parity between Element and NodeList.
 - `sift(selector)` is attached to Element and binds `onkeyup` to filter matching descendants by text or a `sift` attribute. Its guard and behavior need tests; it sets the handler property rather than using addEventListener.
 - `watch(args)` is attached to Element and uses MutationObserver (or a bundled fallback). The callback calls `args.then()`; missing callback handling and observer lifecycle/disconnect behavior need tests. The fallback is substantial and must be examined separately.
 
+## Contract closure tracking
+
+The [AQJS API contract closure matrix](api-contract-closure-matrix.md) tracks remaining method-level contracts, edge-case tests, unsafe classifications and semantic source/minified parity work. Use it alongside this inventory; do not interpret structural AST parity as full behavioral equivalence.
+
 ## Critical API documentation rule
 
 This inventory intentionally records suspicious source behavior rather than smoothing it over. Before publishing a method as recommended, add:
