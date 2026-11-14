@@ -434,3 +434,118 @@ test("AQCSS input animation retains its transition under prefers-reduced-motion"
   expect(result.transitionDuration).toBe("0.4s");
   expect(result.transitionTiming).toBe("ease-in-out");
 });
+
+
+test("AQX-001 border reset wins over the base border utility", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.className = "aq-border aq-border--no";
+    document.body.appendChild(node);
+    const style = getComputedStyle(node);
+    return { width: style.borderTopWidth, style: style.borderTopStyle, color: style.borderTopColor };
+  });
+  expect(result.width).toBe("0px");
+  expect(result.style).toBe("none");
+  expect(result.color).toBeTruthy();
+});
+
+test("AQX-002 primary border swatch changes color without supplying border geometry", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.className = "aq-border aq-swatch-border--primary";
+    document.body.appendChild(node);
+    const style = getComputedStyle(node);
+    return { width: style.borderTopWidth, style: style.borderTopStyle, color: style.borderTopColor };
+  });
+  expect(result.width).toBe("1px");
+  expect(result.style).toBe("solid");
+  expect(result.color).not.toBe("rgba(0, 0, 0, 0)");
+});
+
+test("AQX-003 border color swatch cannot recreate a border after border reset", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.className = "aq-border aq-border--no aq-swatch-border--primary";
+    document.body.appendChild(node);
+    const style = getComputedStyle(node);
+    return { width: style.borderTopWidth, style: style.borderTopStyle };
+  });
+  expect(result.width).toBe("0px");
+  expect(result.style).toBe("none");
+});
+
+test("AQX-004 full facet plus width-auto overrides width but preserves full height", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const parent = document.createElement("div");
+    parent.style.cssText = "width:300px;height:120px";
+    const child = document.createElement("div");
+    child.className = "aq-facet--full aq-facet--w-auto";
+    child.style.display = "inline-block";
+    child.textContent = "short";
+    parent.appendChild(child);
+    document.body.appendChild(parent);
+    const style = getComputedStyle(child);
+    return {
+      width: parseFloat(style.width),
+      parentWidth: parseFloat(getComputedStyle(parent).width),
+      height: parseFloat(style.height),
+      parentHeight: parseFloat(getComputedStyle(parent).height)
+    };
+  });
+  expect(result.width).toBeLessThan(result.parentWidth);
+  expect(result.height).toBeCloseTo(result.parentHeight, 1);
+});
+
+test("AQX-005 full-screen facet plus width-auto overrides viewport width but keeps viewport height", async ({ page }) => {
+  await page.setViewportSize({ width: 800, height: 600 });
+  const result = await page.evaluate(() => {
+    const parent = document.createElement("div");
+    parent.style.cssText = "width:300px;height:120px";
+    const child = document.createElement("div");
+    child.className = "aq-facet--full-screen aq-facet--w-auto";
+    child.style.display = "inline-block";
+    child.textContent = "short";
+    parent.appendChild(child);
+    document.body.appendChild(parent);
+    const style = getComputedStyle(child);
+    return {
+      width: parseFloat(style.width),
+      parentWidth: parseFloat(getComputedStyle(parent).width),
+      height: parseFloat(style.height)
+    };
+  });
+  expect(result.width).toBeLessThan(result.parentWidth);
+  expect(result.height).toBe(600);
+});
+
+test("AQX-006 all-margin and left-margin utilities resolve all four longhands", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.className = "aq--margin-all aq--margin-left";
+    document.body.appendChild(node);
+    const style = getComputedStyle(node);
+    return {
+      top: style.marginTop,
+      right: style.marginRight,
+      bottom: style.marginBottom,
+      left: style.marginLeft
+    };
+  });
+  expect(result).toEqual({ top: "16px", right: "16px", bottom: "16px", left: "16px" });
+});
+
+test("AQX-007 all-padding and left-padding utilities resolve all four longhands", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.className = "aq--padding-all aq--padding-left";
+    document.body.appendChild(node);
+    const style = getComputedStyle(node);
+    return {
+      top: style.paddingTop,
+      right: style.paddingRight,
+      bottom: style.paddingBottom,
+      left: style.paddingLeft
+    };
+  });
+  expect(result).toEqual({ top: "16px", right: "16px", bottom: "16px", left: "16px" });
+});
