@@ -372,3 +372,126 @@ test("custom String.trim differs from native Unicode whitespace semantics", asyn
   expect(result.bomNative).toBe("value");
   expect(result.zeroWidthNative).toBe("\u200Bvalue\u200B");
 });
+
+test("Element getValue mode flag inverts found/missing results", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const input = document.createElement("input");
+    input.value = "abc";
+    return {
+      found: input.getValue("abc"),
+      missing: input.getValue("z"),
+      foundMode: input.getValue("abc", true),
+      missingMode: input.getValue("z", true),
+      noArgReturnsElement: input.getValue() === input
+    };
+  });
+  expect(result).toEqual({
+    found: true,
+    missing: false,
+    foundMode: false,
+    missingMode: true,
+    noArgReturnsElement: true
+  });
+});
+
+test("Element setText cannot clear text with an empty string", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.textContent = "original";
+    node.setText("");
+    return node.textContent;
+  });
+  expect(result).toBe("original");
+});
+
+test("NodeList getter and content helpers include no-op stubs", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const list = document.querySelectorAll(".target");
+    const before = [...list].map(node => node.textContent);
+    const styles = list.getStyles();
+    const classes = list.getClasses();
+    list.setText("changed");
+    list.setHtml("<b>changed</b>");
+    list.setContent(document.createElement("i"));
+    return {
+      stylesUndefined: styles === undefined,
+      classesSame: classes === list,
+      textUnchanged: [...list].map(node => node.textContent).every((value, i) => value === before[i])
+    };
+  });
+  expect(result).toEqual({ stylesUndefined: true, classesSame: true, textUnchanged: true });
+});
+
+test("NodeList setValue updates form controls in the collection", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const form = document.createElement("div");
+    form.innerHTML = '<input><input>';
+    const inputs = form.querySelectorAll("input");
+    inputs.setValue("batch");
+    const afterSet = [...inputs].map(input => input.value);
+    inputs.setValue("");
+    const afterClear = [...inputs].map(input => input.value);
+    return { afterSet, afterClear };
+  });
+  expect(result).toEqual({ afterSet: ["batch", "batch"], afterClear: ["", ""] });
+});
+
+test("Document and Window on helpers register native listeners", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    let documentCalls = 0;
+    let windowCalls = 0;
+    document.on("aq-custom-event", () => documentCalls++);
+    window.on("aq-custom-event", () => windowCalls++);
+    document.dispatchEvent(new Event("aq-custom-event"));
+    window.dispatchEvent(new Event("aq-custom-event"));
+    return { documentCalls, windowCalls };
+  });
+  expect(result).toEqual({ documentCalls: 1, windowCalls: 1 });
+});
+
+test("Function.then and Number.trim extensions execute", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const fn = () => true;
+    return {
+      then: fn.then(value => value === fn),
+      numberTrim: (123).trim()
+    };
+  });
+  expect(result).toEqual({ then: true, numberTrim: "123" });
+});
+
+test("keepOn returns only empty collections outside debug mode", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const instance = new window.AQ("");
+    const empty = [];
+    const nonEmpty = [1];
+    const emptyResult = instance.keepOn(empty);
+    const nonEmptyResult = instance.keepOn(nonEmpty);
+    window.debug = true;
+    const debugResult = instance.keepOn([]);
+    delete window.debug;
+    return {
+      emptySame: emptyResult === empty,
+      nonEmptyUndefined: nonEmptyResult === undefined,
+      debugUndefined: debugResult === undefined
+    };
+  });
+  expect(result).toEqual({ emptySame: true, nonEmptyUndefined: true, debugUndefined: true });
+});
+
+test("sancha static mode works but data mode throws in strict module code", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const root = document.createElement("ul");
+    root.sancha({ static: true, template: "<li>static</li>", swap: true });
+    const staticHtml = root.innerHTML;
+    root.innerHTML = "<li>{{name}}</li>";
+    let dataError = null;
+    try {
+      root.sancha({ data: [{ name: "Ada" }], swap: true });
+    } catch (error) {
+      dataError = error.name;
+    }
+    return { staticHtml, dataError };
+  });
+  expect(result).toEqual({ staticHtml: "<li>static</li>", dataError: "ReferenceError" });
+});
