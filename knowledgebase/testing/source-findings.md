@@ -74,6 +74,9 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 
 | JS-030 | `ActiveQuery.js:214-216` | `isObjectLiteral(a)` calls `Object.getOwnPropertyNames(a)` before checking `!!a`. | Passing null or undefined throws before the intended guard. | Test null, undefined, primitives, arrays, Date and cross-realm objects. |
 
+
+| JS-031 | `ActiveQuery.js:261-263` | The method named `isJSON` does not parse or validate JSON syntax; it only accepts a set of typeof values and can return true for null. The cited is-json v2.0.1 implementation is not present in the inspected source/minified files. | Method name and third-party notice can mislead users into treating it as a JSON validator. | Keep the notice; inspect full repo tree and request upstream clarification. Test strings, malformed JSON, null, numbers, arrays and plain objects. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
