@@ -37,9 +37,9 @@ The quarter/third/half/two-third/three-quarter shortcuts exist for width and hei
 
 ## Positioning / affix
 
-The `aq-affix` family uses absolute, relative, fixed and sticky positioning, with top/bottom/left/right edge variants and corner/center placement helpers. Center helpers use 50% positioning with translate transforms.
+The `aq-affix` family uses absolute, relative, fixed and sticky positioning, with top/bottom/left/right edge variants and corner/center placement helpers. Center helpers use 50% positioning with translate transforms. The baseline edge and center helpers set `position:absolute`; the explicit fixed/sticky mode helpers use `!important`, while relative is non-important. Sticky mode does not set an inset by itself, so pair it with a top/bottom helper when a sticky threshold is required. Center helpers write `transform` directly and do not compose with another transform.
 
-The responsive copies are `aq-t-affix`, `aq-d-affix` and `aq-s-affix`.
+The responsive copies are `aq-t-affix`, `aq-d-affix` and `aq-s-affix`, active at 600px, 993px and 1440px respectively. The affix family does not provide z-index or arbitrary inset utilities. Absolute positioning depends on the containing block; sticky behavior depends on the scroll container and inset; fixed positioning can be affected by transformed ancestors. See [the positioning / affix cascade map](positioning-cascade-map.md) for exact source lines, class-combination precedence and unverified runtime caveats.
 
 ## Flexon
 
