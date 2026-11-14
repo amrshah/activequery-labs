@@ -113,6 +113,10 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 
 | JS-044 | `ActiveQuery.js:1126-1143` | MutationObserver callback iterates mutations with an unbound `forEach(function(mutation){...})` and writes `this.watched` in strict module code. | The inner callback's `this` is undefined, causing TypeError before `args.then()`; the method also returns `observer.observe()` (undefined) rather than the observer. | Browser-test mutation, callback invocation, returned value and disconnect/lifecycle behavior. |
 
+
+| JS-045 | `ActiveQuery.js:119-124` | `extend("dom")` name regex permits names such as `foo` that do not contain the hyphen required by the browser custom-element specification. | AQJS passes the name check, then `customElements.define` throws SyntaxError. | Test valid hyphenated names and invalid names that pass AQ's regex. |
+| JS-046 | `ActiveQuery.js:119` | The same regex excludes digits, although digits are permitted in custom-element names after the first character. | Valid names containing digits may be rejected before browser registration. | Test spec-valid names containing digits and compare against AQ's regex. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
