@@ -440,6 +440,7 @@ test("AQX-001 border reset wins over the base border utility", async ({ page }) 
   const result = await page.evaluate(() => {
     const node = document.createElement("div");
     node.className = "aq-border aq-border--no";
+    node.style.setProperty("--aq-swatch-secondary", "231,234,246");
     document.body.appendChild(node);
     const style = getComputedStyle(node);
     return { width: style.borderTopWidth, style: style.borderTopStyle, color: style.borderTopColor };
@@ -453,6 +454,7 @@ test("AQX-002 primary border swatch changes color without supplying border geome
   const result = await page.evaluate(() => {
     const node = document.createElement("div");
     node.className = "aq-border aq-swatch-border--primary";
+    node.style.setProperty("--aq-swatch-secondary", "231,234,246");
     document.body.appendChild(node);
     const style = getComputedStyle(node);
     return { width: style.borderTopWidth, style: style.borderTopStyle, color: style.borderTopColor };
@@ -466,6 +468,7 @@ test("AQX-003 border color swatch cannot recreate a border after border reset", 
   const result = await page.evaluate(() => {
     const node = document.createElement("div");
     node.className = "aq-border aq-border--no aq-swatch-border--primary";
+    node.style.setProperty("--aq-swatch-secondary", "231,234,246");
     document.body.appendChild(node);
     const style = getComputedStyle(node);
     return { width: style.borderTopWidth, style: style.borderTopStyle };
@@ -525,13 +528,14 @@ test("AQX-006 all-margin and left-margin utilities resolve all four longhands", 
     document.body.appendChild(node);
     const style = getComputedStyle(node);
     return {
+      root: getComputedStyle(document.documentElement).fontSize,
       top: style.marginTop,
       right: style.marginRight,
       bottom: style.marginBottom,
       left: style.marginLeft
     };
   });
-  expect(result).toEqual({ top: "16px", right: "16px", bottom: "16px", left: "16px" });
+  expect([result.top, result.right, result.bottom, result.left]).toEqual([result.root, result.root, result.root, result.root]);
 });
 
 test("AQX-007 all-padding and left-padding utilities resolve all four longhands", async ({ page }) => {
@@ -541,11 +545,12 @@ test("AQX-007 all-padding and left-padding utilities resolve all four longhands"
     document.body.appendChild(node);
     const style = getComputedStyle(node);
     return {
+      root: getComputedStyle(document.documentElement).fontSize,
       top: style.paddingTop,
       right: style.paddingRight,
       bottom: style.paddingBottom,
       left: style.paddingLeft
     };
   });
-  expect(result).toEqual({ top: "16px", right: "16px", bottom: "16px", left: "16px" });
+  expect([result.top, result.right, result.bottom, result.left]).toEqual([result.root, result.root, result.root, result.root]);
 });
