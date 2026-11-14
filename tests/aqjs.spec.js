@@ -516,3 +516,28 @@ test("watch callback fails on undefined this and does not invoke the user callba
   expect(calls).toBe(0);
   expect(pageErrors).toContain("TypeError");
 });
+
+test("extend dom registers valid autonomous custom elements", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    class AqValidElement extends HTMLElement {}
+    const returned = window.AQ.extend("dom", "x-aq-valid", AqValidElement);
+    return {
+      registered: customElements.get("x-aq-valid") === AqValidElement,
+      returnsClass: returned === window.AQ
+    };
+  });
+  expect(result).toEqual({ registered: true, returnsClass: true });
+});
+
+test("extend dom accepts a name without a hyphen then browser registration rejects it", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    class AqInvalidElement extends HTMLElement {}
+    try {
+      window.AQ.extend("dom", "foo", AqInvalidElement);
+      return { threw: false, registered: Boolean(customElements.get("foo")) };
+    } catch (error) {
+      return { threw: true, error: error.name, registered: Boolean(customElements.get("foo")) };
+    }
+  });
+  expect(result).toEqual({ threw: true, error: "SyntaxError", registered: false });
+});
