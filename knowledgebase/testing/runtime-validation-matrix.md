@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-15.
-Run #171 completed with 106 passed and 16 failed. After correcting the tests and recording an additional AQCSS media-query defect, run #181 completed successfully: **122 passed, 0 failed, 0 skipped** across Chromium and Firefox. This validates the current authored suite only; broader viewport/API/accessibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run #171 completed with 106 passed and 16 failed. After correcting the tests and recording an additional AQCSS media-query defect, run #195 completed successfully: **138 passed, 0 failed, 0 skipped** across Chromium and Firefox. This validates the current 69-test authored suite only; broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -97,14 +97,14 @@ Legend:
 
 | Field | Verified value |
 |---|---|
-| Workflow | [ActiveQuery knowledgebase browser tests #181](https://github.com/amrshah/activequery-labs/actions/runs/43634873143) |
-| Commit | `7bab25998e5fc80b17135249827d2f7adf2f3299` |
+| Workflow | [ActiveQuery knowledgebase browser tests #195](https://github.com/amrshah/activequery-labs/actions/runs/43635407735) |
+| Commit | `5666320ae68016d0df9265a32d9e00b11f7987e1` |
 | Runner | Ubuntu 24.04.5 LTS (`ubuntu-24.04`) |
 | Node / npm | Node 22.23.4 / npm 10.9.9 |
 | Playwright | `@playwright/test` 1.56.1 |
 | Browser binaries | Chromium 141.0.7390.37 (Playwright build v1194); Firefox 142.0.1 (build v1495) |
-| Execution | 122 passed, 0 failed, 0 skipped; 23.6 seconds; 2 workers |
+| Execution | 138 passed, 0 failed, 0 skipped; 19.5 seconds; 2 workers |
 | Source integrity | Pinned AQJS/AQCSS source and minified assets fetched and hash-verified before catalog generation and tests |
 | Artifact | Generated AQCSS/AQJS AST catalogs uploaded successfully by the workflow |
 
-The run validates the 61 authored tests in two browser projects. It does not prove complete framework mastery, exhaustive API coverage, accessibility, touch behavior, WebKit compatibility or the clean-room portal rebuild.
+The run validates the 69 authored tests in two browser projects. It does not prove complete framework mastery, exhaustive API coverage, accessibility, touch behavior, WebKit compatibility or the clean-room portal rebuild.
