@@ -64,7 +64,7 @@ Completed:
 - Retrieved and pinned exact source/minified assets, blob SHAs, source sizes, versions and license files.
 - Built the 1,417-rule AQCSS selector/declaration catalog, 1,813-token class index and custom-property declaration/reference index; generated PostCSS AST catalogs in CI.
 - Inventoried the AQJS named export, constructor, static/instance methods and prototype extension targets.
-- Added 74 authored Playwright tests; run #244 passed 148 Chromium/Firefox browser cases.
+- Added 75 authored Playwright tests; run #257 passed 150 Chromium/Firefox browser cases. Added a Markdown link-integrity test for the knowledgebase and agent skills.
 - Documented 73 source findings, traceability anchors, governance/license context and third-party provenance findings.
 
 Outstanding:
