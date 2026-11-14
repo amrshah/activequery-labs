@@ -8,7 +8,7 @@ description: Use when researching, documenting, integrating or building with the
 ## Required workflow
 
 1. Read `knowledgebase/README.md` and the relevant reference page before searching source.
-2. Check `knowledgebase/source-baseline.md` to confirm that the reference matches the version in use.
+2. Check `knowledgebase/source-baseline.md` and `knowledgebase/source-freshness.md` to confirm the pinned source hashes and latest upstream `main` refs.
 3. Treat the knowledgebase as the primary engineering reference. Do not reread entire upstream source files for routine questions already answered there.
 4. Reopen upstream source only for documented gaps, version drift, discrepancies or new research.
 5. When new source facts are discovered, add them to the knowledgebase with exact source anchors and evidence status.
@@ -26,7 +26,7 @@ description: Use when researching, documenting, integrating or building with the
 
 ## Licensing guardrails
 
-AQCSS and AQJS source headers identify OSL-3.0 and contain copyright/third-party notices. Do not relicense, remove, or modify those notices. Verify the current upstream license file before copying or redistributing any upstream source. Third-party notices remain applicable.
+AQCSS and AQJS source headers identify OSL-3.0 and contain copyright/third-party notices. Do not relicense, remove, or modify those notices. OSL-3.0 has a broad External Deployment provision that treats network availability to others as distribution under section 1(c); do not assume a public portal that bundles these assets is outside the license. Preserve machine-readable source, copyright/license/attribution notices and modification notices where required. No trademark license is granted. Obtain legal review before deciding how the portal itself must be licensed or distributed. Upstream contributions also require DCO `Signed-off-by` on each commit; the sign-off record is public and retained indefinitely. Third-party notices remain applicable.
 
 ## Deliverables
 
