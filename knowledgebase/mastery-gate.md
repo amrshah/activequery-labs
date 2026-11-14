@@ -9,6 +9,7 @@ The mastery label is withheld until every gate below has objective evidence. A l
 - [ ] The framework philosophy is mapped separately from executable library behavior.
 - [ ] AQS, AQI, AQPE and AQKISS concepts have authoritative specifications or are explicitly marked conceptual/unverified.
 - [ ] Governance, DCO and OSL-3.0 implications are understood for the intended portal distribution model.
+- [ ] Upstream freshness and the last source-file commits are checked before each major adoption/rebuild milestone.
 
 - [ ] Every AQCSS selector rule inventoried from a CSS-aware parse.
 - [ ] Every unique class selector mapped to its complete rule block and source line(s).
