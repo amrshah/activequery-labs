@@ -120,6 +120,10 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 
 | CSS-026 | `ActiveQuery.css:521-522,548-549` | The 1rem `margin-left` and `padding-left` declarations mistakenly reuse the matching `*-right` selector in all four prefix families: `aq-m`, `aq-t`, `aq-d` and `aq-s`. | Each right-side class therefore applies both left and right spacing, while the corresponding left-side class has no default 1rem rule. | Test baseline aliases and inspect other responsive scales separately. |
 
+
+| CSS-027 | `ActiveQuery.css:728-746` | Main flex display selector list omits commas between several modifier selector lines. | A modifier such as `.aq-flexon--column` does not itself establish `display:flex`; use the base `.aq-flexon` class plus modifier. | Test modifier-only versus base+modifier computed display and flex direction. |
+| CSS-028 | `ActiveQuery.css:762-770` | Mobile alignment aliases are chained without commas, e.g. `.aq-m-flexon--middle.aq-flexon--center`. | `.aq-m-flexon--middle` alone does not match; use the working `.aq-m-flexon--center` alias or combine the exact classes. | Test mobile middle and center aliases independently. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
