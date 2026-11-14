@@ -66,6 +66,9 @@ These are navigational line ranges for the pinned revision. Recalculate them whe
 - Touch capability query: line 1785.
 - Mobile width hide query: line 1786.
 - Tablet width hide query: line 1787.
+- Desktop width hide query: line 1806.
+- Screen width hide query: line 1807.
+- Tablet width hide query: line 1787.
 - Short landscape query: line 1788.
 - Fine pointer/hover query: line 1805.
 
