@@ -86,6 +86,10 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | CSS-022 | `ActiveQuery.css:50,288,455` | Root `--aq-paragraph-size` is `1.2` without a unit, but it is consumed as a `font-size` value with a `1.2rem` fallback. Because the variable exists, the fallback is not used and the unitless nonzero value is invalid for `font-size`. | Paragraph and blockquote size rules may be discarded and inherit instead of applying the intended 1.2rem size. | Browser-test computed font size with the default token and with a valid rem override. |
 | CSS-023 | `ActiveQuery.css:1477-1478` | Large-screen typography selectors for fs-2 and fs-3 use uppercase `aq-S-text` while the surrounding family uses lowercase `aq-s-text`. | Lowercase class names will not match these case-different selectors in HTML. | Test `aq-s-text--fs-1` through `fs-5` at 1440px and verify the fs-2/fs-3 mismatch. |
 
+
+| JS-032 | `ActiveQuery.js:557-569,776-791` | Element `siblings()` default branch references undeclared `target`; NodeList `siblings()` indexes the first Element again via `t[0]`. | Element next/prev work, but default all-siblings throws; NodeList next/default paths throw. | Test Element next/prev/default and NodeList next/default separately. |
+| JS-033 | `ActiveQuery.js:885-939` | AQJS calls `ActiveQuery.extend("string", { trim: ... })`, redefining the existing native `String.prototype.trim`. The descriptor omits writable/configurable flags, so the replacement becomes non-writable and non-configurable. | Importing AQJS globally replaces a standard built-in method and makes later restoration/overrides impossible in the page realm. | Capture native trim before importing AQJS; compare function identity and descriptor flags in Chromium/Firefox. |
+
 ## Corrective policy
 
 This repository documents upstream behavior; it does not patch upstream source. A suspected defect should be recorded, reproduced, and reported upstream when appropriate. The Labs portal may demonstrate a safe workaround, but must label it as a workaround rather than claiming it is native framework behavior.
