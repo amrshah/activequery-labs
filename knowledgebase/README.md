@@ -72,6 +72,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - [AQCSS spacing utility cascade map](aqcss/spacing-cascade-map.md) — margin/padding declarations, responsive cascade order, shorthand/longhand outcomes and the 1rem left/right selector defect.
 - [AQCSS facet sizing cascade map](aqcss/sizing-cascade-map.md) — width/height fractions, min/max constraints, viewport units, responsive precedence and the repeated `--third` width defect.
 - [AQCSS flex utility cascade map](aqcss/flex-cascade-map.md) — display-selector defects, flow/alignment aliases, grow/shrink behavior, responsive precedence and invalid xlarge row-gap declarations.
+- [AQCSS positioning / affix cascade map](aqcss/positioning-cascade-map.md) — position modes, edge/corner/center helpers, important-vs-normal mode precedence, sticky inset requirements and responsive combinations.
 - [AQCSS base styles and controls](aqcss/base-controls.md)
 - [AQCSS layout utilities](aqcss/layout-utilities.md)
 - [AQCSS theme and effects](aqcss/theme-effects.md)
