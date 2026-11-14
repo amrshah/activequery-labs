@@ -27,6 +27,8 @@ The mastery label is withheld until every gate below has objective evidence. A l
 - [ ] AQCSS utility naming and responsive prefixes mapped from actual media rules, not assumptions.
 - [ ] Interactions between AQCSS selectors and AQJS methods documented where applicable.
 - [ ] Suspected defects reproduced or cleared through tests; no unexplained behavior is presented as guaranteed.
+- [ ] Public claims about AQI batching/delegation, local scope, AQPE context behavior and AQS continuity are traced to executable source/specification or explicitly scoped as conceptual/unimplemented.
+- [ ] Source and minified distributions are proven semantically equivalent across the documented API surface.
 
 ## Gate C — Runtime validation
 
