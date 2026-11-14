@@ -77,7 +77,7 @@ Legend:
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Test authored; pending run |
 | Source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Test authored; pending run |
-| Breakpoints and responsive variants | Inspected | 599/600/601 tablet/mobile overlap test | Partial; 992/993/1440 tests pending |
+| Breakpoints and responsive variants | Inspected: mobile-hide media query is malformed and ignored by Chromium/Firefox; tablet typography activates at 600px | 599/600/601 computed-style test | Corrected assertion; rerun pending; 992/993/1440 tests pending |
 | Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Test authored; pending run |
 | Layout/flex/spacing | Multiple source defects documented | Facet and row-gap tests pending | Pending authoring |
 | Swatches and color functions | Token duplication and invalid rgb() usage documented | Base border token and hover alpha tests | Partial; pending run and more color coverage |
