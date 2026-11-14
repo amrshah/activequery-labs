@@ -30,6 +30,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 ## Knowledgebase map
 
 - `source-baseline.md` — pinned source identity, versions, hashes, licenses and research status.
+- `source-freshness.md` — last observed upstream source commits and maintenance recency.
 - `architecture/` — framework philosophy, conceptual ecosystem map, governance, licensing, initialization and execution model.
 - `aqcss/` — complete selector catalogue, tokens, layout, typography, responsive rules, states and interaction behavior.
 - `aqjs/` — exports, constructor, static and instance APIs, prototype extensions, lifecycle, DOM operations, templating, observation and edge cases.
