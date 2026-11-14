@@ -33,3 +33,34 @@ test("known xlarge row-gap declaration does not resolve to 2px", async ({ page }
   const gap = await page.locator("#gap").evaluate(node => getComputedStyle(node).rowGap);
   expect(gap).not.toBe("2px");
 });
+
+test("paragraph size token defaults to invalid unitless font-size and inherits", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = "Paragraph token test";
+    document.body.appendChild(paragraph);
+    return {
+      root: parseFloat(getComputedStyle(document.documentElement).fontSize),
+      paragraph: parseFloat(getComputedStyle(paragraph).fontSize)
+    };
+  });
+  expect(Math.abs(result.paragraph - result.root)).toBeLessThan(0.2);
+});
+
+test("large-screen fs-2 and fs-3 lowercase classes miss uppercase selectors", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const result = await page.evaluate(() => {
+    const values = {};
+    for (const size of [1, 2, 3, 4, 5]) {
+      const node = document.createElement("div");
+      node.className = `aq-s-text--fs-${size}`;
+      document.body.appendChild(node);
+      values[size] = parseFloat(getComputedStyle(node).fontSize);
+    }
+    return values;
+  });
+  expect(result[1]).toBeGreaterThan(result[2]);
+  expect(result[2]).toBeCloseTo(result[3], 1);
+  expect(result[4]).toBeGreaterThan(result[2]);
+  expect(result[5]).toBeGreaterThan(result[2]);
+});
