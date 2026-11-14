@@ -76,3 +76,31 @@ test("AQJS source and minified builds expose equivalent core DOM behavior", asyn
 
   expect(minifiedResult).toEqual(sourceResult);
 });
+
+test("minified AQJS also overwrites native String.trim", async ({ page }) => {
+  await page.goto("/tests/fixture-min.html");
+  await page.waitForFunction(() => window.fixtureReady === true);
+  const result = await page.evaluate(() => {
+    const descriptor = Object.getOwnPropertyDescriptor(String.prototype, "trim");
+    return {
+      sameAsNative: String.prototype.trim === window.nativeStringTrim,
+      writable: descriptor.writable,
+      configurable: descriptor.configurable
+    };
+  });
+  expect(result).toEqual({ sameAsNative: false, writable: false, configurable: false });
+});
+
+test("minified AQJS default constructor triggers the same prototype mutation", async ({ page }) => {
+  await page.goto("/tests/fixture-min.html");
+  await page.waitForFunction(() => window.fixtureReady === true);
+  const result = await page.evaluate(() => {
+    new window.AQ();
+    return {
+      windowNull: Object.prototype.hasOwnProperty.call(window, "null"),
+      objectZero: Object.prototype.hasOwnProperty.call(Object.prototype, "0"),
+      objectZeroEnumerable: Object.prototype.propertyIsEnumerable("0")
+    };
+  });
+  expect(result).toEqual({ windowNull: true, objectZero: true, objectZeroEnumerable: true });
+});
