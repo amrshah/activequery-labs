@@ -1126,3 +1126,39 @@ test("NodeList index helper handles numeric strings, out-of-range and empty coll
     emptyReturnsSame: true
   });
 });
+
+
+test("Array.then Promise assimilation hazard is bounded inside a disposable worker", async ({ page }) => {
+  const result = await page.evaluate(async () => {
+    // This mirrors the pinned AQJS Array.then body: if (typeof a === "function") return a(this).
+    // Promise resolution recursively assimilates the same thenable Array; the worker is disposable.
+    const workerCode = `
+      Array.prototype.then = function (a) {
+        if (typeof a === "function") return a(this);
+      };
+      const value = [];
+      Promise.resolve(value).then(() => self.postMessage("resolved"));
+    `;
+    const url = URL.createObjectURL(new Blob([workerCode], { type: "text/javascript" }));
+    const started = performance.now();
+    const outcome = await new Promise(resolve => {
+      const worker = new Worker(url);
+      let settled = false;
+      let timer;
+      const finish = value => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        worker.terminate();
+        URL.revokeObjectURL(url);
+        resolve(value);
+      };
+      timer = setTimeout(() => finish("terminated"), 250);
+      worker.onmessage = () => finish("resolved");
+      worker.onerror = () => finish("error");
+    });
+    return { outcome, elapsed: performance.now() - started };
+  });
+  expect(result.outcome).toBe("terminated");
+  expect(result.elapsed).toBeLessThan(2000);
+});

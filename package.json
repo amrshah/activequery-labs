@@ -5,7 +5,8 @@
   "scripts": {
     "test": "playwright test",
     "catalog:aqcss": "node tools/build-aqcss-catalog.mjs",
-    "catalog:aqjs": "node tools/build-aqjs-catalog.mjs"
+    "catalog:aqjs": "node tools/build-aqjs-catalog.mjs",
+    "sources:fetch": "node tools/fetch-pinned-sources.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",
