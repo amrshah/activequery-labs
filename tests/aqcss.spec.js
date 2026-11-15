@@ -597,7 +597,7 @@ test("AQX-009 sticky mode remains pinned to the viewport during document scrolli
     const content = document.createElement("div");
     content.style.height = "1600px";
 
-    document.body.append(spacer, sticky, content);
+    document.body.prepend(spacer, sticky, content);
   });
 
   const initial = await page.locator("#aqx-009-scroll-sticky").evaluate(node => ({
