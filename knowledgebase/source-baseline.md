@@ -41,8 +41,8 @@ The public ActiveQuery framework overview describes a philosophy plus independen
 - Main stylesheet: 1,808 lines, approximately 118 KB.
 - It contains broad base/framework selectors as well as the `aq-` namespace.
 - A brace-aware lexical rule-prelude scan found 1,417 selector rule blocks and 1,813 unique class tokens, plus 26 unique declared custom-property names (71 unique names appear across declarations and var() references; 45 are reference-only). The earlier lexical count included 20 BEM selector modifiers and has been corrected against PostCSS AST. The lexical indexes are supplemented by a PostCSS AST catalog generated and checked in CI. The rule catalog preserves complete declaration blocks, media context and source lines; the class-token index maps 1,813 tokens to rule IDs/lines/selectors; the corrected custom-property index records 26 declared names and 71 names across declarations/references. Cascade and computed behavior still require browser-specific interpretation.
-- Source includes multiple media-query regions. A complete breakpoint and cascade map remains pending.
-- The CSS must be studied as a whole: variables, base resets, inherited W3CSS-derived behavior, AQ-specific utilities, responsive overrides, pseudo-classes and attribute selectors all matter.
+- The source contains 10 media-query occurrences (9 unique conditions). The source-mapping pass for media contexts, responsive token families, family-level declaration/cascade behavior and documented cross-family conflicts is complete for this pinned stylesheet. See `aqcss/media-query-and-selector-map.md`; browser validation of every possible combination is not implied.
+- The CSS includes global resets, base controls, AQ-specific utilities, responsive overrides, pseudo-classes and attribute selectors; family-specific maps and the cross-family audit are linked from the media-query map.
 
 ### AQJS
 
@@ -63,14 +63,13 @@ Completed:
 - Confirmed access to the upstream AQCSS, AQJS and Labs repositories.
 - Retrieved and pinned exact source/minified assets, blob SHAs, source sizes, versions and license files.
 - Built the 1,417-rule AQCSS selector/declaration catalog, 1,813-token class index and custom-property declaration/reference index; generated PostCSS AST catalogs in CI.
+- Completed the source-level AQCSS media-query, responsive-family, family cascade and cross-family conflict mapping for the pinned stylesheet.
 - Inventoried the AQJS named export, constructor, static/instance methods and prototype extension targets.
-- Added 79 authored Playwright tests; run #313 passed all 158 Chromium/Firefox browser cases. Added a Markdown link-integrity test for the knowledgebase and agent skills.
-- Documented 74 source findings, traceability anchors, governance/license context and third-party provenance findings.
+- Documented source findings, traceability anchors, governance/license context and third-party provenance findings.
 
 Outstanding:
-- Finish the AQCSS cascade/override map and exhaustive selector-family semantic review; structural selector/rule/token/property indexes now exist.
 - Finish AQJS per-method contracts and edge-case coverage; the public/prototype method inventory exists, but some signatures/branches remain untested.
-- Expand browser coverage beyond the current 79 authored tests / 158 passing Chromium+Firefox cases, especially touch/hybrid pointer behavior, additional viewport/selector-family matrices and remaining APIs.
+- Expand browser coverage, especially touch/hybrid pointer behavior, additional viewport/selector-family matrices and remaining APIs.
 - Complete AQCSS third-party provenance attribution beyond first-pass exact matches.
 - Reconcile and expand existing agent skills/indexes to point to the verified knowledgebase.
 - Run retrieval-based acceptance tests with an independent fresh-agent workflow; not yet executed.
