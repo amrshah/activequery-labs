@@ -14,7 +14,7 @@ The mastery label is withheld until every gate below has objective evidence. A l
 - [x] Every AQCSS selector rule is inventoried structurally; the PostCSS AST catalog is generated and validated in CI.
 - [x] Every unique class token is mapped to rule IDs, selectors and source lines; complete declarations are available in the rule catalog.
 - [x] Custom properties are indexed across declarations and `var()` references (26 declared names; 71 names across declarations/references).
-- [ ] All media queries and selector overrides mapped.
+- [x] All AQCSS media-query contexts, responsive token-prefix anomalies, family-level declaration/cascade behavior and documented cross-family selector conflicts are source-mapped for the pinned v25.6.0 stylesheet (see `aqcss/media-query-and-selector-map.md` and its linked family maps). This is source coverage, not exhaustive runtime testing of every class combination.
 - [x] AQJS export, constructor, static methods and prototype extension method families are inventoried.
 - [ ] Third-party/bundled code distinguished from AQ-authored code.
 - [x] Licensing and attribution constraints documented, including OSL-3.0 external deployment, third-party notices, trademark exclusions and DCO sign-off requirements.
