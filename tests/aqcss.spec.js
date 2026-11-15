@@ -776,25 +776,31 @@ test("AQX-019 screen typography activation preserves uppercase selector mismatch
   expect(atBreakpoint.upper).toBeCloseTo(atBreakpoint.root * 1.4, 1);
 });
 
-test("AQCSS primary fine pointer hides the no-touch helper, not the touch helper", async ({ page }) => {
+test("AQCSS pointer visibility helpers follow their exact combined media conditions", async ({ page }) => {
   const result = await page.evaluate(() => {
     const touch = document.createElement("div");
     touch.className = "aq-facet-hide-on-touch";
     const noTouch = document.createElement("div");
     noTouch.className = "aq-facet-hide-on-no-touch";
     document.body.append(touch, noTouch);
+
+    const touchCondition = matchMedia("(pointer: coarse) and (hover: none)").matches;
+    const noTouchCondition = matchMedia("(pointer: fine) and (hover: hover)").matches;
+
     return {
       coarse: matchMedia("(pointer: coarse)").matches,
+      fine: matchMedia("(pointer: fine)").matches,
       hoverNone: matchMedia("(hover: none)").matches,
+      hover: matchMedia("(hover: hover)").matches,
+      touchCondition,
+      noTouchCondition,
       touchDisplay: getComputedStyle(touch).display,
       noTouchDisplay: getComputedStyle(noTouch).display
     };
   });
 
-  expect(result.coarse).toBe(false);
-  expect(result.hoverNone).toBe(false);
-  expect(result.touchDisplay).not.toBe("none");
-  expect(result.noTouchDisplay).toBe("none");
+  expect(result.touchDisplay === "none").toBe(result.touchCondition);
+  expect(result.noTouchDisplay === "none").toBe(result.noTouchCondition);
 });
 
 test("AQCSS touch helper follows coarse primary pointer in Chromium mobile emulation", async ({ browser, browserName }) => {
