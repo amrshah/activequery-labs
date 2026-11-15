@@ -580,6 +580,12 @@ test("AQX-009 sticky mode wins over the top helper and retains its inset", async
 
 test("AQX-009 sticky mode remains pinned to the viewport during document scrolling", async ({ page }) => {
   await page.evaluate(() => {
+    document.documentElement.style.height = "auto";
+    document.documentElement.style.overflowY = "scroll";
+    document.body.style.height = "auto";
+    document.body.style.minHeight = "2400px";
+    document.body.style.overflowY = "visible";
+
     const spacer = document.createElement("div");
     spacer.style.height = "140px";
 
@@ -599,15 +605,15 @@ test("AQX-009 sticky mode remains pinned to the viewport during document scrolli
     top: node.getBoundingClientRect().top
   }));
 
-  await page.evaluate(() => window.scrollTo(0, 220));
-  await page.waitForFunction(() => window.scrollY >= 200);
+  await page.evaluate(() => document.scrollingElement.scrollTop = 220);
+  await page.waitForFunction(() => document.scrollingElement.scrollTop >= 200);
 
   const scrolled = await page.locator("#aqx-009-scroll-sticky").evaluate(node => ({
     top: node.getBoundingClientRect().top
   }));
 
-  await page.evaluate(() => window.scrollTo(0, 520));
-  await page.waitForFunction(() => window.scrollY >= 500);
+  await page.evaluate(() => document.scrollingElement.scrollTop = 520);
+  await page.waitForFunction(() => document.scrollingElement.scrollTop >= 500);
 
   const furtherScrolled = await page.locator("#aqx-009-scroll-sticky").evaluate(node => ({
     top: node.getBoundingClientRect().top
@@ -617,7 +623,7 @@ test("AQX-009 sticky mode remains pinned to the viewport during document scrolli
   expect(initial.top).toBeGreaterThan(0);
   expect(scrolled.top).toBeCloseTo(0, 0);
   expect(furtherScrolled.top).toBeCloseTo(0, 0);
-  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.evaluate(() => document.scrollingElement.scrollTop = 0);
 });
 
 test("AQX-010 flex column and center-top compose into the expected alignment", async ({ page }) => {
