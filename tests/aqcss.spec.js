@@ -775,3 +775,62 @@ test("AQX-019 screen typography activation preserves uppercase selector mismatch
   expect(atBreakpoint.lower).toBeCloseTo(atBreakpoint.root, 1);
   expect(atBreakpoint.upper).toBeCloseTo(atBreakpoint.root * 1.4, 1);
 });
+
+test("AQCSS primary fine pointer hides the no-touch helper, not the touch helper", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const touch = document.createElement("div");
+    touch.className = "aq-facet-hide-on-touch";
+    const noTouch = document.createElement("div");
+    noTouch.className = "aq-facet-hide-on-no-touch";
+    document.body.append(touch, noTouch);
+    return {
+      coarse: matchMedia("(pointer: coarse)").matches,
+      hoverNone: matchMedia("(hover: none)").matches,
+      touchDisplay: getComputedStyle(touch).display,
+      noTouchDisplay: getComputedStyle(noTouch).display
+    };
+  });
+
+  expect(result.coarse).toBe(false);
+  expect(result.hoverNone).toBe(false);
+  expect(result.touchDisplay).not.toBe("none");
+  expect(result.noTouchDisplay).toBe("none");
+});
+
+test("AQCSS touch helper follows coarse primary pointer in Chromium mobile emulation", async ({ browser, browserName }) => {
+  test.skip(browserName !== "chromium", "Playwright mobile device emulation is validated in Chromium; Firefox touch hardware is not emulated equivalently.");
+
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true
+  });
+
+  try {
+    const page = await context.newPage();
+    await page.goto("/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+
+    const result = await page.evaluate(() => {
+      const touch = document.createElement("div");
+      touch.className = "aq-facet-hide-on-touch";
+      const noTouch = document.createElement("div");
+      noTouch.className = "aq-facet-hide-on-no-touch";
+      document.body.append(touch, noTouch);
+      return {
+        coarse: matchMedia("(pointer: coarse)").matches,
+        hoverNone: matchMedia("(hover: none)").matches,
+        touchDisplay: getComputedStyle(touch).display,
+        noTouchDisplay: getComputedStyle(noTouch).display
+      };
+    });
+
+    expect(result.coarse).toBe(true);
+    expect(result.hoverNone).toBe(true);
+    expect(result.touchDisplay).toBe("none");
+    expect(result.noTouchDisplay).not.toBe("none");
+  } finally {
+    await context.close();
+  }
+});
+
