@@ -1,9 +1,9 @@
 # AQCSS Media-Query and Responsive Selector Map
 
 Source: ActiveQuery CSS v25.6.0, pinned Git blob SHA `c03546ecd1a41d26cbbfa8f1e31d38731f77cf62`.
-Snapshot: 2026-11-15.
+Snapshot: 2026-11-16.
 
-Status: the media-query inventory and first-pass responsive selector-prefix comparison are source-confirmed. Existing Chromium/Firefox observations are identified separately. This is not yet an exhaustive declaration-level cascade graph or a complete semantic equivalence map.
+Status: **source-mapping pass complete for the pinned AQCSS stylesheet.** The complete media-query inventory, responsive token-prefix comparison, family-level declaration/cascade maps and cross-family conflict audit are linked below. This is not a claim that every possible class combination has been browser-tested; runtime coverage remains a separate Gate C activity.
 
 ## Method and counting rules
 
@@ -12,6 +12,7 @@ Status: the media-query inventory and first-pass responsive selector-prefix comp
 - Responsive token comparisons use the catalogue's class tokens. For each breakpoint family, the `aq-t-`, `aq-d-` or lowercase `aq-s-` prefix was normalized to `aq-m-` and checked for an existing base-context token.
 - A token match proves only that a corresponding token spelling exists in the base context. It does not prove identical declarations, computed behavior, or semantic equivalence.
 - Exact selector duplication was checked by comparing full selector strings across all catalogue rule blocks and their enclosing media contexts.
+- Declaration behavior, importance, specificity and source-order interactions are documented in the family maps and cross-family audit. The maps identify concrete observed interactions; they are not an exhaustive combinatorial enumeration of every possible class list.
 
 ## Complete media-query inventory
 
@@ -95,7 +96,7 @@ The comparison below asks whether a responsive class token has a same-suffix `aq
 Additional large-screen observations:
 
 - The 1440px block contains five uppercase-`S` tokens rather than the expected lowercase-`s` prefix: `aq-S-text--h4`, `aq-S-text--h5`, `aq-S-text--h6`, `aq-S-text--fs-2` and `aq-S-text--fs-3` (lines 1465–1467 and 1477–1478).
-- These uppercase tokens are not members of the lowercase `aq-s-` family. The existing source notes already identify the font-size 2/3 case mismatch; the heading 4/5/6 variants share the same case anomaly.
+- These uppercase tokens are not members of the lowercase `aq-s-` family. The heading 4/5/6 and font-size 2/3 variants share this case anomaly.
 - `.aq-facet-hide-on-screen` at line 1807 is an additional non-prefixed selector in the 1440px media condition; it is not included in the 312-token lowercase family count.
 - The three unmatched lowercase `no-margin` spellings are not found as same-suffix `aq-m-` base tokens. Do not silently substitute the separate `margin-no` spelling.
 
@@ -116,19 +117,36 @@ The catalogue contains 1,417 rule blocks and 1,409 unique selector strings. Eigh
 
 For the six responsive right-side utility duplicates, the declarations combine through the normal cascade: despite the `--right` name, the resulting rule applies both left and right spacing. Preserve the source's exact behavior in documentation and tests; do not rename or repair upstream selectors here.
 
-This exact-string comparison does **not** mean there are no cascade interactions. Different selectors can target the same element and property, including responsive utility classes, base styles, pseudo-classes and global selectors. Those interactions still require selector/property/specificity analysis.
+This exact-string comparison does **not** mean there are no cascade interactions. Different selectors can target the same element and property, including responsive utility classes, base styles, pseudo-classes and global selectors. The concrete, source-traced interactions are documented in the family and cross-family references below.
 
-## Existing runtime evidence and remaining work
+## Declaration and cascade coverage index
 
-The current browser validation record ties the tested breakpoint and hide-helper observations to [workflow run #313](https://github.com/amrshah/activequery-labs/actions/runs/43639357350). It covers representative viewport boundaries and the tested hide-helper behavior in Chromium and Firefox. It does not prove all responsive selector families or pointer combinations behave identically.
+The following references collectively close the source-mapping pass for the pinned stylesheet. Use the family page for the exact selector/declaration behavior; use the cross-family audit for interactions between families.
 
-Still outstanding:
+| Coverage area | Canonical reference | Scope captured |
+|---|---|---|
+| Overall cascade, specificity and importance | [cascade-and-specificity.md](cascade-and-specificity.md) | Rule counts, importance, responsive contexts, custom-property hazards and cascade policy |
+| Margin and padding | [spacing-cascade-map.md](spacing-cascade-map.md) | Scale, aliases, responsive source order, shorthand/longhand behavior and known left/right selector defect |
+| Width, height and viewport sizing | [sizing-cascade-map.md](sizing-cascade-map.md) | Fractions, constraints, responsive precedence and third-width defect |
+| Flex display, flow, alignment and gaps | [flex-cascade-map.md](flex-cascade-map.md) | Base/responsive selector defects, important declarations, alignment and gap behavior |
+| Positioning and affix | [positioning-cascade-map.md](positioning-cascade-map.md) | Position modes, edge/corner helpers, importance, transforms and responsive copies |
+| Typography | [typography-cascade-map.md](typography-cascade-map.md) | Root tokens, headings, text helpers, responsive overrides and known defects |
+| Visibility and interaction states | [visibility-interaction-cascade-map.md](visibility-interaction-cascade-map.md) | Display/visibility, malformed hide ranges, pointer rules, hover/focus/disabled states |
+| Borders, swatches and effects | [theme-effects.md](theme-effects.md) | Border/radius, swatch, background image, filter, opacity and overlay rules |
+| Base styles and controls | [base-controls.md](base-controls.md) | Global resets, form controls, native elements, helper selectors and clearfix boundaries |
+| Cross-family conflicts | [cross-family-cascade-audit.md](cross-family-cascade-audit.md) | Property overlap, specificity/importance, responsive overlap, selector-match failures and authoring strategy |
 
-1. Build a declaration-level map of responsive selectors to the properties they set, including same-element combinations across cumulative min-width contexts.
-2. Compute and record specificity and `!important` interactions for overlapping base, responsive, pseudo-class and global selectors.
-3. Add focused runtime coverage for the identified token-prefix anomalies and touch/hybrid pointer contexts.
-4. Expand selector-family boundary checks at 992/993 and 1439/1440px beyond the existing representative tests.
-5. Keep Gate A's full media-query/selector-override criterion open until this broader cascade mapping is complete.
+The machine-readable [rule catalog](rule-catalog.json), [selector index](rule-selector-index.json) and [class-token index](class-token-index.json) retain the full structural inventory and source anchors. The maps above interpret the important declaration families; the indexes remain the fallback for an individual selector not discussed in prose.
+
+## Remaining work — runtime validation, not source mapping
+
+The source-mapping pass is complete against the pinned AQCSS v25.6.0 source. The following items belong to Gate C and must not be confused with missing source documentation:
+
+1. Add focused computed-style tests for the documented responsive token-prefix anomalies and cumulative cross-breakpoint combinations.
+2. Expand viewport boundary tests around 992/993 and 1439/1440px for representative selector families.
+3. Exercise coarse/fine pointer and hybrid-input contexts in browser/device emulation where supported.
+4. Keep the short-landscape Chromium/Firefox divergence explicit and test it if the portal relies on that behavior.
+5. Do not treat the source map as proof that every possible class combination is runtime-verified.
 
 ## Source anchors
 
