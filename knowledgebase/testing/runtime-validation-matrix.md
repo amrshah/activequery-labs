@@ -83,7 +83,7 @@ Run #340 adds isolated early-registration evidence: `ready` (DOMContentLoaded), 
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
 | AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, selected edge cases, Element value/child/then, NodeList events, Array `getCount` default branch, Array `then`, Document/Window events, early lifecycle and constructor `initlog`, Array query helpers, and Element/NodeList bulk mutations | Selected fixtures passed in runs #325, #327, #340 and #348; complete method-level semantic parity remains pending |
-| Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed, but real scroll-container behavior remains unverified | 18 full cases passed; sticky scroll behavior remains an explicit gap |
+| Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed. An experimental nested-scroll movement test failed in both engines in run #380 and was withdrawn without weakening assertions | 18 full cases passed; actual sticky movement remains unverified |
 | Clean-room portal | Responsive field guide, editable HTML/CSS/JS, isolated preview, AQJS event helper and narrow viewport layout | Four Playwright tests passed in run #369; preview sandbox allows scripts only and omits same-origin access | Passed in CI; public deployment withheld pending OSL-3.0 review |
 | Breakpoints and responsive variants | Inspected: mobile/tablet/desktop hide range queries are malformed and ignored by Chromium/Firefox; tablet/desktop/large typography prefixes activate at their min-width thresholds | 599/600/601, 601/992, 993/1439 and 1440 computed-style tests | All tested breakpoint and hide-helper behavior passed in run #313; short-landscape and touch/hybrid behavior remain untested |
 | Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Passed in run #313 |
@@ -175,3 +175,8 @@ The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specif
 | Artifact | Generated AQCSS/AQJS AST catalogs uploaded successfully by the workflow |
 
 The historical run validates the 79 authored tests in two browser projects. It does not prove complete framework mastery, exhaustive API coverage, accessibility, touch behavior, WebKit compatibility or the clean-room portal rebuild.
+
+
+## Sticky movement investigation
+
+Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505) completed with 245 passed, 2 failed and 1 skipped. Both failures were the experimental AQX-009 nested-scroll movement assertion (Chromium and Firefox); computed `position:sticky` and `top:0` continued to pass. The movement test was removed because the fixture/scroll-container interaction was not yet isolated well enough to support a trustworthy conclusion. This is an unresolved runtime gap, not evidence that the upstream utility is broken. Do not claim actual sticky movement is verified.

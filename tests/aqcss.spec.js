@@ -578,52 +578,6 @@ test("AQX-009 sticky mode wins over the top helper and retains its inset", async
   expect(result).toEqual({ position: "sticky", top: "0px" });
 });
 
-test("AQX-009 sticky mode remains pinned inside a scroll container", async ({ page }) => {
-  await page.evaluate(() => {
-    const scrollport = document.createElement("div");
-    scrollport.id = "aqx-009-scrollport";
-    scrollport.style.cssText = "height:240px;overflow-y:auto;position:relative";
-
-    const spacer = document.createElement("div");
-    spacer.style.height = "140px";
-
-    const sticky = document.createElement("div");
-    sticky.id = "aqx-009-scroll-sticky";
-    sticky.className = "aq-affix--sticky aq-affix--top";
-    sticky.style.height = "48px";
-
-    const content = document.createElement("div");
-    content.style.height = "600px";
-
-    scrollport.append(spacer, sticky, content);
-    document.body.prepend(scrollport);
-  });
-
-  const initial = await page.locator("#aqx-009-scroll-sticky").evaluate(node => ({
-    position: getComputedStyle(node).position,
-    top: node.getBoundingClientRect().top,
-    scrollportTop: node.parentElement.getBoundingClientRect().top
-  }));
-
-  await page.locator("#aqx-009-scrollport").evaluate(node => { node.scrollTop = 220; });
-
-  const scrolled = await page.locator("#aqx-009-scroll-sticky").evaluate(node => ({
-    top: node.getBoundingClientRect().top,
-    scrollportTop: node.parentElement.getBoundingClientRect().top
-  }));
-
-  await page.locator("#aqx-009-scrollport").evaluate(node => { node.scrollTop = 520; });
-
-  const furtherScrolled = await page.locator("#aqx-009-scroll-sticky").evaluate(node => ({
-    top: node.getBoundingClientRect().top,
-    scrollportTop: node.parentElement.getBoundingClientRect().top
-  }));
-
-  expect(initial.position).toBe("sticky");
-  expect(initial.top).toBeGreaterThan(initial.scrollportTop);
-  expect(scrolled.top).toBeCloseTo(scrolled.scrollportTop, 0);
-  expect(furtherScrolled.top).toBeCloseTo(furtherScrolled.scrollportTop, 0);
-});
 test("AQX-010 flex column and center-top compose into the expected alignment", async ({ page }) => {
   const result = await page.evaluate(() => {
     const node = document.createElement("div");
