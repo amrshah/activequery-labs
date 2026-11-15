@@ -578,13 +578,11 @@ test("AQX-009 sticky mode wins over the top helper and retains its inset", async
   expect(result).toEqual({ position: "sticky", top: "0px" });
 });
 
-test("AQX-009 sticky mode remains pinned to the viewport during document scrolling", async ({ page }) => {
+test("AQX-009 sticky mode remains pinned inside a scroll container", async ({ page }) => {
   await page.evaluate(() => {
-    document.documentElement.style.height = "auto";
-    document.documentElement.style.overflowY = "scroll";
-    document.body.style.height = "auto";
-    document.body.style.minHeight = "2400px";
-    document.body.style.overflowY = "visible";
+    const scrollport = document.createElement("div");
+    scrollport.id = "aqx-009-scrollport";
+    scrollport.style.cssText = "height:240px;overflow-y:auto;position:relative";
 
     const spacer = document.createElement("div");
     spacer.style.height = "140px";
@@ -595,37 +593,37 @@ test("AQX-009 sticky mode remains pinned to the viewport during document scrolli
     sticky.style.height = "48px";
 
     const content = document.createElement("div");
-    content.style.height = "1600px";
+    content.style.height = "600px";
 
-    document.body.prepend(spacer, sticky, content);
+    scrollport.append(spacer, sticky, content);
+    document.body.prepend(scrollport);
   });
 
   const initial = await page.locator("#aqx-009-scroll-sticky").evaluate(node => ({
     position: getComputedStyle(node).position,
-    top: node.getBoundingClientRect().top
+    top: node.getBoundingClientRect().top,
+    scrollportTop: node.parentElement.getBoundingClientRect().top
   }));
 
-  await page.evaluate(() => document.scrollingElement.scrollTop = 220);
-  await page.waitForFunction(() => document.scrollingElement.scrollTop >= 200);
+  await page.locator("#aqx-009-scrollport").evaluate(node => { node.scrollTop = 220; });
 
   const scrolled = await page.locator("#aqx-009-scroll-sticky").evaluate(node => ({
-    top: node.getBoundingClientRect().top
+    top: node.getBoundingClientRect().top,
+    scrollportTop: node.parentElement.getBoundingClientRect().top
   }));
 
-  await page.evaluate(() => document.scrollingElement.scrollTop = 520);
-  await page.waitForFunction(() => document.scrollingElement.scrollTop >= 500);
+  await page.locator("#aqx-009-scrollport").evaluate(node => { node.scrollTop = 520; });
 
   const furtherScrolled = await page.locator("#aqx-009-scroll-sticky").evaluate(node => ({
-    top: node.getBoundingClientRect().top
+    top: node.getBoundingClientRect().top,
+    scrollportTop: node.parentElement.getBoundingClientRect().top
   }));
 
   expect(initial.position).toBe("sticky");
-  expect(initial.top).toBeGreaterThan(0);
-  expect(scrolled.top).toBeCloseTo(0, 0);
-  expect(furtherScrolled.top).toBeCloseTo(0, 0);
-  await page.evaluate(() => document.scrollingElement.scrollTop = 0);
+  expect(initial.top).toBeGreaterThan(initial.scrollportTop);
+  expect(scrolled.top).toBeCloseTo(scrolled.scrollportTop, 0);
+  expect(furtherScrolled.top).toBeCloseTo(furtherScrolled.scrollportTop, 0);
 });
-
 test("AQX-010 flex column and center-top compose into the expected alignment", async ({ page }) => {
   const result = await page.evaluate(() => {
     const node = document.createElement("div");
