@@ -1,6 +1,6 @@
 # ActiveQuery Governance and Licensing Notes
 
-Sources rechecked on 2026-11-15 against Governance main commit `ab369232ac801cfbf769d9838c07d4ea8846dfd5`:
+Sources rechecked on 2026-11-16 against Governance main commit `ab369232ac801cfbf769d9838c07d4ea8846dfd5`:
 - [ActiveQuery/Governance README](https://github.com/ActiveQuery/Governance/blob/main/README.md)
 - [Ethical Source Policy](https://github.com/ActiveQuery/Governance/blob/main/ETHICAL_SOURCE_POLICY.md)
 - [Code of Conduct Policy](https://github.com/ActiveQuery/Governance/blob/main/CODE_OF_CONDUCT_POLICY.md)
@@ -27,7 +27,7 @@ OSL-3.0 section 4 also expressly excludes a license to the Licensor's names and 
 
 ## OSL-3.0 implications
 
-The inspected Governance LICENSE contains the Open Software License 3.0 text. The license includes:
+The inspected Governance LICENSE contains the Open Software License 3.0 text; the Governance default branch was rechecked on 2026-11-16 and remains at the same pinned commit. The license includes:
 - Section 3's source-availability obligation on the Licensor: the Licensor must provide a machine-readable copy of the Original Work's Source Code with each copy it distributes, and may satisfy that obligation through a reasonably accessible repository while it continues distributing the Original Work. Do not overstate this as a blanket downstream source-delivery clause for every derivative copy; Sections 1(c), 5, 6 and 9 govern the licensee's distribution/deployment obligations;
 - an external-deployment definition covering use, distribution or communication where others may use the Original Work or Derivative Works, including applications made available over a network;
 - an express condition that any such External Deployment be treated as a distribution under section 1(c);

@@ -68,3 +68,6 @@ Run [#397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840)
 
 
 Run [#399](https://github.com/amrshah/activequery-labs/actions/runs/43821478858) adds source/minified parity for Array.setItem's truthy no-op and both-falsy insertion, Element setText's empty-string no-op, setHtml's truthy-input no-op, getValue's default and inverted mode, and Element siblings next/prev/default ReferenceError behavior. This is selected behavior parity, not a complete method-by-method proof.
+
+
+Run [#405](https://github.com/amrshah/activequery-labs/actions/runs/43822976254) adds source/minified parity for getPlugin: approved fixture import, non-string fallback to the instance, and propagation of a rejected dynamic import. This does not validate untrusted module specifiers or create an allowlist; callers must enforce that security boundary.

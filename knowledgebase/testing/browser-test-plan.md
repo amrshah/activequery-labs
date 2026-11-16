@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run [#403](https://github.com/amrshah/activequery-labs/actions/runs/43822473172) passed 271 browser cases with one documented Firefox mobile-emulation skip (136 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: run [#405](https://github.com/amrshah/activequery-labs/actions/runs/43822976254) passed 273 browser cases with one documented Firefox mobile-emulation skip (137 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -127,3 +127,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #403
 
 [Workflow #403](https://github.com/amrshah/activequery-labs/actions/runs/43822473172) passed 271 browser cases, 0 failed, 1 skipped; 136 authored tests across Chromium and Firefox. It verifies the base mobile middle compound selector and independently working responsive middle aliases.
+
+
+## Latest execution — run #405
+
+[Workflow #405](https://github.com/amrshah/activequery-labs/actions/runs/43822976254) passed 273 browser cases, 0 failed, 1 skipped; 137 authored tests across Chromium and Firefox. It adds getPlugin import/fallback/rejection parity.
