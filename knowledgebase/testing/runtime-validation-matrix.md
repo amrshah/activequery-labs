@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-16.
-Run [#489](https://github.com/amrshah/activequery-labs/actions/runs/43852291933) is the latest verified PR-18 browser run against the merged source tree: **359 passed, 0 failed, 1 skipped** across Chromium and Firefox. The skip is the documented Firefox mobile-emulation case. It includes the merged `watch`, `sift`, `sancha`, `Element.setText`, portal assent-gate, theme, keyboard-tab and responsive-playground regression coverage. This run predates the new lifecycle-replay and expanded placeholder fixtures in the current closeout PR. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run [#491](https://github.com/amrshah/activequery-labs/actions/runs/43857523951) is the latest verified PR-19 browser run against the merged source tree: **363 passed, 0 failed, 1 skipped** across Chromium and Firefox. The skip is the documented Firefox mobile-emulation case. It includes the merged `watch`, `sift`, `sancha`, `Element.setText`, portal assent-gate, theme, keyboard-tab and responsive-playground regression coverage. This run includes the repeated lifecycle replay, Function.then invalid-callback, and expanded sancha placeholder/callback fixtures. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -9,11 +9,11 @@ Legend:
 - **Pending run** — test has not been observed passing in a real browser.
 - **Pending authoring** — additional test coverage is still required.
 
-## Recent AQJS contract coverage — verified through merged-branch run #480
+## Recent AQJS contract coverage — verified through merged-branch run #491
 
 Earlier focused runs established the base Element value/child/then/fax contracts, NodeList no-op stubs and event return behavior, Array query helpers, DocumentFragment and native form-control behavior, and selected source/minified parity. Subsequent merged PRs #12–#16 extended coverage for lifecycle and observer failures, the `sift()` selector guard, `sancha()` data interpolation/security, and Element text helpers.
 
-The latest merged-branch suite [#480](https://github.com/amrshah/activequery-labs/actions/runs/43845146200) reran the full browser suite and passed 351 tests with one documented skip. The focused `sancha()` security suite also passed in [#478](https://github.com/amrshah/activequery-labs/actions/runs/43844759071); Element text helper tests passed in [#477](https://github.com/amrshah/activequery-labs/actions/runs/43844618654). These results close the specific test cases described by those PRs, not every API contract or every source/minified behavior path.
+The full browser suite in [#491](https://github.com/amrshah/activequery-labs/actions/runs/43857523951) passed 363 tests with one documented skip. New source/minified cases cover repeated constructor `initlog` replay, invalid `Function.then` callbacks, and ordinary/dollar-prefixed `sancha()` placeholders with callback timing. Earlier focused `sancha()` security and Element text helper suites passed in #478 and #477. These results close only the named cases, not every API contract or every source/minified behavior path.
 
 ## AQJS core and lifecycle
 
@@ -83,7 +83,7 @@ The latest merged-branch suite [#480](https://github.com/amrshah/activequery-lab
 | Area | Source review | Test coverage | Current status |
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
-| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, getPlugin imports/rejections, Function/Element/NodeList then, defer, Element value/child/then/setContent/setText/setHtml/getValue/siblings, DocumentFragment, NodeList events/setValue, Array query helpers/sort/index/setItem, Object value-helper failures, predicate edge cases, Document/Window events, early lifecycle and constructor `initlog`, lifecycle event mapping, Element/NodeList bulk mutations, `watch`, `sift`, `sancha`, Element text helpers | Selected fixtures passed in runs #325, #327, #340, #348, #383, #392, #395, #397, #399, #405, #409, #413, #417, #477 and #478; full merged-branch suite passed in #480. Complete method-level semantic parity remains pending |
+| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, getPlugin imports/rejections, Function/Element/NodeList then, defer, Element value/child/then/setContent/setText/setHtml/getValue/siblings, DocumentFragment, NodeList events/setValue, Array query helpers/sort/index/setItem, Object value-helper failures, predicate edge cases, Document/Window events, early lifecycle and constructor `initlog`, lifecycle event mapping, Element/NodeList bulk mutations, `watch`, `sift`, `sancha`, Element text helpers | Selected fixtures passed in runs #325, #327, #340, #348, #383, #392, #395, #397, #399, #405, #409, #413, #417, #477, #478 and #491; full PR-19 suite passed in #491. Complete method-level semantic parity remains pending |
 | AQCSS flex selector cascade | Source-derived base/responsive selector defects, token spelling, alias composition and importance differences | Base vs responsive stretch CSSOM behavior, tablet/desktop/screen wrap-reverse mismatch, right-bottom vs important middle alignment, and mobile middle alias compound-selector behavior | Passed in Chromium and Firefox in runs #392, #394, #401 and #403 |
 | Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed. Run #392 additionally verifies base vs responsive flex stretch selectors through CSSOM and computed styles. An experimental nested-scroll movement test failed in both engines in run #380 and was withdrawn without weakening assertions | 18 AQX cases plus the focused flex selector test pass; actual sticky movement remains unverified |
 | Clean-room portal | Responsive field guide, editable HTML/CSS/JS, isolated preview, consent-gated pinned assets, AQJS event helper, theme and narrow viewport layout | Portal-specific browser tests passed in merged-branch run #480; Pages packaging validation and pinned-source/license checks passed in PR workflow #533 | Portal and artifact packaging validated in CI; post-merge Pages deployment and public-site smoke test remain to be confirmed |
@@ -106,7 +106,7 @@ The [AQCSS focused composition test plan](aqcss-composition-test-plan.md) specif
 4. Keep the mastery gate open until coverage and independent-agent evaluation are complete.
 
 
-## Latest confirmed execution record — run #369
+## Historical execution record — run #369
 
 | Field | Verified value |
 |---|---|
