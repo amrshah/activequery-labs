@@ -435,3 +435,38 @@ test("AQJS source and minified builds preserve Element fragment and form-control
     receiverIdentity: [true, true, true, true]
   });
 });
+
+
+test("AQJS source and minified builds preserve NodeList setValue control and empty-list contracts", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const root = document.createElement("div");
+      root.innerHTML = '<input><input type="checkbox"><select><option value="a">A</option></select><textarea></textarea><div></div>';
+      const list = root.querySelectorAll("input, select, textarea, div");
+      const setReturn = list.setValue("batch");
+      const assigned = [...list].map(node => "value" in node ? node.value : null);
+      list.setValue(false);
+      const cleared = [...list].map(node => "value" in node ? node.value : null);
+      const empty = root.querySelectorAll(".missing");
+      return {
+        setReturnsList: setReturn === list,
+        assigned,
+        cleared,
+        genericStillHasNoValue: !("value" in list[4]),
+        emptyReturnsSame: empty.setValue("ignored") === empty
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    setReturnsList: true,
+    assigned: ["batch", "batch", "batch", "batch", null],
+    cleared: ["", "", "", "", null],
+    genericStillHasNoValue: true,
+    emptyReturnsSame: true
+  });
+});

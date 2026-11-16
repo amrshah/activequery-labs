@@ -1243,3 +1243,31 @@ test("Element setValue follows native control semantics for text, checkbox, sele
     allReturnReceivers: [true, true, true, true]
   });
 });
+
+
+test("NodeList setValue updates native value controls, ignores generic elements and preserves empty collections", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const root = document.createElement("div");
+    root.innerHTML = '<input><input type="checkbox"><select><option value="a">A</option></select><textarea></textarea><div></div>';
+    const list = root.querySelectorAll("input, select, textarea, div");
+    const setReturn = list.setValue("batch");
+    const assigned = [...list].map(node => "value" in node ? node.value : null);
+    list.setValue(false);
+    const cleared = [...list].map(node => "value" in node ? node.value : null);
+    const empty = root.querySelectorAll(".missing");
+    return {
+      setReturnsList: setReturn === list,
+      assigned,
+      cleared,
+      genericStillHasNoValue: !("value" in list[4]),
+      emptyReturnsSame: empty.setValue("ignored") === empty
+    };
+  });
+  expect(result).toEqual({
+    setReturnsList: true,
+    assigned: ["batch", "batch", "batch", "batch", null],
+    cleared: ["", "", "", "", null],
+    genericStillHasNoValue: true,
+    emptyReturnsSame: true
+  });
+});

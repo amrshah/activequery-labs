@@ -840,3 +840,39 @@ test("AQCSS touch helper follows coarse primary pointer in Chromium mobile emula
   }
 });
 
+
+
+test("AQCSS flex base display, stretch-grow and mobile shrink aliases preserve documented selector defects", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const modifierOnly = document.createElement("div");
+    modifierOnly.className = "aq-flexon--column";
+    const baseAndModifier = document.createElement("div");
+    baseAndModifier.className = "aq-flexon aq-flexon--column";
+    const stretch = document.createElement("div");
+    stretch.className = "aq-flexon--stretch";
+    const mobileShrinkNo = document.createElement("div");
+    mobileShrinkNo.className = "aq-m-flexon--shrink-no";
+    const mobileNoShrink = document.createElement("div");
+    mobileNoShrink.className = "aq-m-flexon--no-shrink";
+    document.body.append(modifierOnly, baseAndModifier, stretch, mobileShrinkNo, mobileNoShrink);
+    const style = node => getComputedStyle(node);
+    return {
+      modifierOnlyDisplay: style(modifierOnly).display,
+      modifierOnlyFlow: style(modifierOnly).flexFlow,
+      baseAndModifierDisplay: style(baseAndModifier).display,
+      baseAndModifierFlow: style(baseAndModifier).flexFlow,
+      stretchGrow: style(stretch).flexGrow,
+      stretchAlignment: style(stretch).alignItems,
+      mobileShrinkNo: style(mobileShrinkNo).flexShrink,
+      mobileNoShrink: style(mobileNoShrink).flexShrink
+    };
+  });
+  expect(result.modifierOnlyDisplay).toBe("block");
+  expect(result.modifierOnlyFlow).toBe("column");
+  expect(result.baseAndModifierDisplay).toBe("flex");
+  expect(result.baseAndModifierFlow).toBe("column");
+  expect(result.stretchGrow).toBe("0");
+  expect(result.stretchAlignment).toBe("stretch");
+  expect(result.mobileShrinkNo).toBe("1");
+  expect(result.mobileNoShrink).toBe("0");
+});
