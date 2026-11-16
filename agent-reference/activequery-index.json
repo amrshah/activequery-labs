@@ -82,7 +82,7 @@
     "aqcss_ast_catalog_generator": "../tools/build-aqcss-catalog.mjs",
     "aqcss_full_rule_catalog": "../knowledgebase/aqcss/rule-catalog.json",
     "latest_browser_run": {
-      "url": "https://github.com/amrshah/activequery-labs/actions/runs/43859496522",
+      "url": "https://github.com/amrshah/activequery-labs/actions/runs/43860188409",
       "passed": 365,
       "failed": 0,
       "skipped": 1,
