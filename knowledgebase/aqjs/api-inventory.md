@@ -129,3 +129,9 @@ This inventory intentionally records suspicious source behavior rather than smoo
 4. single element vs collection tests where relevant;
 5. strict-mode/module tests for undeclared identifiers;
 6. browser support observations.
+
+## Recently verified edge cases
+
+The latest focused browser batch verifies that Array.then invokes its first function argument with the array receiver and returns that callback's result; missing or non-function callbacks return undefined. Do not use arrays as Promise resolutions: the method supplies the same array to the resolver, which invokes thenable assimilation recursively. This recursion hazard is inferred from the observed implementation plus the Promise resolution procedure; the test suite intentionally avoids executing a potentially unbounded microtask loop.
+
+Element.setAdjacent is a no-op for both valid truthy argument pairs (early return) and falsy pairs (switch performs no insertion). Element.sift returns immediately for truthy selectors without installing a handler. With an empty selector, it installs onkeyup; a non-empty input then reaches querySelectorAll with an empty selector and throws SyntaxError. Source/minified parity is covered by the associated fixture.
