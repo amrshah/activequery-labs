@@ -47,10 +47,16 @@ test.describe("clean-room portal", () => {
   });
 
   test("switches theme accessibly and remembers the selected theme", async ({ page }) => {
+    await page.emulateMedia({ colorScheme: "light" });
+    await page.evaluate(() => localStorage.removeItem("aq-labs-theme"));
+    await page.reload();
     const toggle = page.getByRole("button", { name: "Switch to dark theme" });
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    const lightBackground = await page.locator("body").evaluate((element) => getComputedStyle(element).backgroundColor);
     await toggle.click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    const darkBackground = await page.locator("body").evaluate((element) => getComputedStyle(element).backgroundColor);
+    expect(darkBackground).not.toBe(lightBackground);
     await expect(page.getByRole("button", { name: "Switch to light theme" })).toHaveAttribute("aria-pressed", "true");
     await page.reload();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
