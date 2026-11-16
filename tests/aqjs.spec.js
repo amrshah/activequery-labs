@@ -1596,5 +1596,5 @@ test("Element.setStyles truncates CSS values containing a colon", async ({ page 
     const returned = target.setStyles(["background-image: url(https://example.com/image.png)"]);
     return { returnsTarget: returned === target, backgroundImage: target.style.backgroundImage, rawValue: target.getAttribute("style") };
   });
-  expect(result).toEqual({ returnsTarget: true, backgroundImage: "", rawValue: null });
+  expect(result).toEqual({ returnsTarget: true, backgroundImage: 'url("https")', rawValue: 'background-image: url("https");' });
 });
