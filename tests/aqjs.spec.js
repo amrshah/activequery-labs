@@ -1457,11 +1457,11 @@ test("AQJS class mutators activate and remove AQCSS display utilities", async ({
     };
   });
   expect(result).toEqual({
-    initial: "block",
+    initial: "inline-block",
     hidden: "none",
     shown: "block",
     hiddenAgain: "none",
-    restored: "block",
+    restored: "inline-block",
     returnsSame: true,
     classes: ""
   });

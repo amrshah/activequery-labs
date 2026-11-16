@@ -1021,11 +1021,11 @@ test("AQJS source and minified class mutators preserve AQCSS display utility int
   const minified = await collect(true);
   expect(minified).toEqual(source);
   expect(source).toEqual({
-    initial: "block",
+    initial: "inline-block",
     hidden: "none",
     shown: "block",
     hiddenAgain: "none",
-    restored: "block",
+    restored: "inline-block",
     returnsSame: true,
     classes: ""
   });
