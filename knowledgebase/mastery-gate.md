@@ -13,7 +13,7 @@ The framework is not declared mastered until Gates A–D have objective, indepen
 - [x] AQJS exports, constructors, static methods and prototype extension families are inventoried.
 - [x] Third-party/bundled code is distinguished from AQ-authored code; bundled components and their MIT/ISC notices are listed in `governance/distribution-and-attribution-audit.md`.
 - [x] OSL-3.0 distribution conditions, external deployment, source availability, attribution, trademark exclusions, recipient assent and the upstream DCO distinction are documented.
-- [x] The portal pipeline stages exact pinned upstream source and license files into the Pages artifact and gates browser fetching behind assent. PR packaging validation passed in [workflow #533](https://github.com/amrshah/activequery-labs/actions/runs/43845146125).
+- [x] The portal pipeline stages exact pinned upstream source and license files into the Pages artifact and gates browser fetching behind assent. PR packaging validation passed in [workflow #544](https://github.com/amrshah/activequery-labs/actions/runs/43857523862).
 - [ ] Confirm post-merge Pages deployment and independently smoke-test the public portal.
 
 ## Gate B — Semantic understanding
@@ -23,7 +23,7 @@ The framework is not declared mastered until Gates A–D have objective, indepen
 - [x] Global/prototype mutation implications are source-mapped and tested, including constructor alias pollution and native String.trim replacement.
 - [x] AQCSS utility naming, responsive prefixes and representative cross-family cascade behavior are mapped to source and browser evidence.
 - [x] Selected suspected defects are reproduced and classified as unsafe/unsupported rather than presented as working APIs.
-- [ ] Complete remaining API contract gaps, including lifecycle timing/repeated construction, Function.then invalid-callback cases, remaining sancha placeholder variants, and lower-priority NodeList argument matrices.
+- [ ] Complete remaining API contract gaps, including lower-priority NodeList argument matrices, remaining malformed sancha placeholder cases, and broader method-level source/minified parity.
 - [ ] Prove source/minified semantic equivalence across the documented public API surface. Existing parity is substantial but selected, not exhaustive.
 
 ## Gate C — Runtime and accessibility validation
@@ -31,10 +31,11 @@ The framework is not declared mastered until Gates A–D have objective, indepen
 - [x] A reproducible Playwright harness runs in Chromium and Firefox against pinned source and minified assets.
 - [x] AQCSS AST/source validation and representative responsive computed-style tests pass.
 - [x] Representative API, collection, event, mutation, error and edge contracts are browser-tested.
-- [x] Latest full browser workflow on the merged portal branch, [#480](https://github.com/amrshah/activequery-labs/actions/runs/43845146200), passed **351 tests with 1 documented skip**.
+- [x] Latest full browser workflow after PR #19, [#506](https://github.com/amrshah/activequery-labs/actions/runs/43860188409), passed **365 tests with 1 documented skip**.
 - [x] Portal preview consent gating, pinned asset loading, theme persistence, keyboard editor-tab navigation, learning guides and narrow viewport behavior passed in the same browser workflow.
 - [ ] Comprehensive keyboard/focus/touch/pointer/reduced-motion coverage across the framework is incomplete; selected cases pass, but this is not a full accessibility audit.
-- [ ] Add broader assistive-technology checks and complete the remaining AQCSS composition matrix.
+- [x] AQCSS composition plan AQX-001–019 passed in Chromium and Firefox, including real sticky scroll-container behavior in run #506.
+- [ ] Add broader assistive-technology checks and comprehensive keyboard/focus/touch/pointer/reduced-motion coverage.
 
 ## Gate D — Knowledgebase usefulness to a fresh agent
 
@@ -53,7 +54,7 @@ The framework is not declared mastered until Gates A–D have objective, indepen
 - [x] AQCSS and AQJS guides, responsive component examples and side-by-side HTML/CSS/JS live playground are implemented.
 - [x] User code runs in an iframe with `sandbox="allow-scripts"` and no `allow-same-origin`.
 - [x] Accessible editor-tab keyboard navigation, theme switching/persistence, responsive layout and learning-guide navigation are browser-tested.
-- [x] Pinned upstream source and notice files are staged into the Pages artifact by CI; pull-request packaging validation passed in [workflow #533](https://github.com/amrshah/activequery-labs/actions/runs/43845146125).
+- [x] Pinned upstream source and notice files are staged into the Pages artifact by CI; pull-request packaging validation passed in [workflow #544](https://github.com/amrshah/activequery-labs/actions/runs/43857523862).
 - [ ] Confirm the post-merge Pages deployment and public-site smoke test.
 
 ## Next work order

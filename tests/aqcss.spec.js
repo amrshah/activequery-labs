@@ -1020,3 +1020,53 @@ test("AQCSS mobile middle alias requires its companion class while other context
     screenMiddle: "center"
   });
 });
+
+test("AQCSS sticky top remains pinned while its scroll container moves", async ({ page }) => {
+  await page.setViewportSize({ width: 1200, height: 800 });
+  const result = await page.evaluate(async () => {
+    const scroller = document.createElement("div");
+    scroller.style.cssText = "all: initial; display: block; position: relative; width: 300px; height: 120px; overflow-y: auto; margin-top: 20px;";
+
+    const spacer = document.createElement("div");
+    spacer.style.cssText = "all: initial; display: block; height: 80px;";
+
+    const sticky = document.createElement("div");
+    sticky.className = "aq-affix--sticky aq-affix--top";
+    sticky.style.cssText = "all: initial; display: block; height: 24px; top: 0;";
+
+    const content = document.createElement("div");
+    content.style.cssText = "all: initial; display: block; height: 1000px;";
+    scroller.append(spacer, sticky, content);
+    document.body.append(scroller);
+
+    const containerTop = scroller.getBoundingClientRect().top;
+    const initialOffset = sticky.getBoundingClientRect().top - containerTop;
+    const targetScroll = initialOffset + 40;
+    scroller.scrollTop = targetScroll;
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+    const stickyRect = sticky.getBoundingClientRect();
+    const scrollerRect = scroller.getBoundingClientRect();
+    return {
+      position: getComputedStyle(sticky).position,
+      top: getComputedStyle(sticky).top,
+      overflowY: getComputedStyle(scroller).overflowY,
+      initialOffset,
+      scrolledOffset: stickyRect.top - scrollerRect.top,
+      stickyTop: stickyRect.top,
+      scrollerTop: scrollerRect.top,
+      scrollTop: scroller.scrollTop,
+      targetScroll,
+      scrollHeight: scroller.scrollHeight,
+      clientHeight: scroller.clientHeight
+    };
+  });
+
+  console.log("AQX-009 sticky scroll diagnostics", JSON.stringify(result));
+  expect(result.position).toBe("sticky");
+  expect(result.top).toBe("0px");
+  expect(result.initialOffset).toBeGreaterThan(70);
+  expect(result.scrollHeight).toBeGreaterThan(result.targetScroll + result.clientHeight);
+  expect(result.scrollTop).toBe(result.targetScroll);
+  expect(Math.abs(result.scrolledOffset), JSON.stringify(result)).toBeLessThanOrEqual(1);
+});

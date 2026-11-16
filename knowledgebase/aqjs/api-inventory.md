@@ -80,7 +80,7 @@ The source invokes `ActiveQuery.extend` for these targets:
 | `setAttributes` | `(pairs)` | Iterates pairs as name/value pairs; stops when a value is falsy |
 | `setAttributeName` | `(names)` | Sets each attribute to empty string |
 | `removeAttributes` | `(names)` | Removes each named attribute |
-| `setStyles` | `(declarations)` | Parses each string by colon and assigns `this.style[property]` |
+| `setStyles` | `(declarations)` | For each declaration, removes only the first literal space, splits on every `:`, then assigns only `split[1]` to `this.style[split[0]]`; later colon-separated segments are discarded. A URL value such as `url(https://example.com/image.png)` is truncated to `url(https` before CSSOM normalization (observed as `url(\"https\")` in Chromium and Firefox); direct source/minified regression passed in merged-branch run #480. |
 | `getStyles` | `(properties)` | Returns array of truthy inline/computed style values; trailing true requests inline style |
 | `removeStyles` | `(properties)` | Calls `style.removeProperty` for each |
 | `setClasses` | `(names)` | Adds each class |
@@ -101,6 +101,13 @@ The source invokes `ActiveQuery.extend` for these targets:
 | `then` | `(callback)` | Calls callback with element |
 | `fax` | no parameters | Returns element when it is not a FORM; form behavior is incomplete in inspected body |
 | `on` | `(event,callback)` | Adds event listener when types are valid |
+
+## Recently verified edge contracts
+
+- `Array.then(callback)`: invokes only the first function argument with the Array as receiver and returns the callback result; missing/non-function callbacks return undefined. This makes every Array thenable. Promise resolver assimilation is a source-backed recursion hazard and is intentionally not executed because it may not terminate.
+- `Element.setAdjacent(position, element)`: ordinary truthy argument pairs return early without insertion; falsy pairs also perform no insertion. Source/minified parity is included in merged-branch browser run #480.
+- `Element.sift(selector)`: a truthy selector returns the receiver before installing `onkeyup`; an empty selector installs the handler, and invoking it with a non-empty value reaches `querySelectorAll("")` and throws `SyntaxError`. Source/minified parity is included in run #480.
+- `Element.setStyles(declarations)`: splitting on every colon truncates valid CSS values containing colons. A URL example was reproduced in Chromium and Firefox, with source/minified parity in run #480.
 
 ### NodeList methods and deliberate stubs
 

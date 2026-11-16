@@ -1,7 +1,7 @@
 # AQJS Templating, Filtering and Mutation Observation
 
 Source: `ActiveQuery.js` SHA `b8ec9e5be8668d048eea3385cd9012dfddb69cf0`.
-Status: source inspection and selected regression coverage are complete for the currently merged `watch()`, `sift()` and `sancha()` cases. PR #13 covers the observer callback failure and return contract; PR #12 covers the `sift()` truthy-selector early return; PR #16 covers `sancha()` static/data paths and raw-HTML interpolation. The merged-branch browser suite passed again in [run #480](https://github.com/amrshah/activequery-labs/actions/runs/43845146200). Broader placeholder, keyboard and security coverage remains open.
+Status: source inspection and selected regression coverage are complete for the currently merged `watch()`, `sift()` and `sancha()` cases. PR #13 covers the observer callback failure and return contract; PR #12 covers the `sift()` truthy-selector early return; PR #16 covers `sancha()` static/data paths and raw-HTML interpolation. The merged-branch browser suite passed in [run #480](https://github.com/amrshah/activequery-labs/actions/runs/43845146200), and the expanded placeholder/callback source-minified fixture passed in [run #491](https://github.com/amrshah/activequery-labs/actions/runs/43857523951). Malformed/missing-variable combinations and contextual escaping remain open; do not pass untrusted data.
 
 ## Element.sancha(args)
 
@@ -28,7 +28,7 @@ The method reads a template, finds placeholder-like expressions, iterates `args.
 - The no-data path inserts the literal text "No Data found".
 - The method mutates `args` by assigning fields such as `template`, `list`, `mapping` and `vap`.
 
-Static append/replacement, the data-mode strict-module identifier failure and source/minified parity were tested. PR #16 adds a separate browser test proving that markup supplied as a data value becomes live DOM rather than escaped text; the suite passed in [run #478](https://github.com/amrshah/activequery-labs/actions/runs/43844759071) and again in merged-branch run #480. The fixture defines the otherwise-undeclared loop globals only to reach the interpolation sink. Do not recommend `sancha` for untrusted or production data: contextual escaping is absent, identifier scope is fragile, `args.then` is not validated, and other placeholder combinations remain untested.
+Static append/replacement, the data-mode strict-module identifier failure and source/minified parity were tested. PR #16 proves markup supplied as a data value becomes live DOM rather than escaped text (#478/#480). Run #491 adds ordinary `{{name}}` and dollar-prefixed `{{$greeting}}` placeholder resolution, ambient `variables` lookup, per-row `variable` callback timing and one final `then` callback. The fixture defines undeclared `ii`/`i` and `variables` only to reach these paths. Do not recommend `sancha` for untrusted or production data: contextual escaping is absent, identifier scope is fragile, and `args.then` is not validated.
 
 ## Element.sift(selector)
 
