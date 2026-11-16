@@ -49,13 +49,13 @@ test.describe("framework-first component and page examples", () => {
   test("AQCSS responsive prefixes switch at the verified 600px and 993px thresholds", async ({ page }) => {
     await usePinnedFrameworkAssets(page);
     await page.setViewportSize({ width: 599, height: 900 });
-    await page.goto("/examples/saas-landing/");
+    await page.goto("/examples/saas-landing/index.html");
     const featureWidthAt599 = await page.locator(".feature").first().evaluate(el => el.getBoundingClientRect().width);
     await page.setViewportSize({ width: 600, height: 900 });
     const featureWidthAt600 = await page.locator(".feature").first().evaluate(el => el.getBoundingClientRect().width);
     expect(featureWidthAt600).toBeLessThan(featureWidthAt599 * 0.6);
 
-    await page.goto("/examples/analytics-dashboard/");
+    await page.goto("/examples/analytics-dashboard/index.html");
     await page.setViewportSize({ width: 992, height: 900 });
     const kpiWidthAt992 = await page.locator(".kpi").first().evaluate(el => el.getBoundingClientRect().width);
     await page.setViewportSize({ width: 993, height: 900 });
