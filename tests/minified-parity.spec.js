@@ -1209,5 +1209,5 @@ test("AQJS source and minified builds preserve Element.setStyles colon-truncatio
   const source = await collect("/");
   const minified = await collect("/tests/fixture-min.html");
   expect(minified).toEqual(source);
-  expect(source).toEqual({ returnsTarget: true, backgroundImage: "", rawValue: null });
+  expect(source).toEqual({ returnsTarget: true, backgroundImage: 'url("https")', rawValue: 'background-image: url("https");' });
 });
