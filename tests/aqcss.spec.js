@@ -986,3 +986,37 @@ test("AQCSS right-bottom alignment loses to important middle alignment in base a
     "aq-sConflict": "center"
   });
 });
+
+
+test("AQCSS mobile middle alias requires its companion class while other contexts work independently", async ({ page }) => {
+  await page.setViewportSize({ width: 1500, height: 900 });
+  const result = await page.evaluate(() => {
+    const observations = {};
+    const add = (key, classes) => {
+      const node = document.createElement("div");
+      node.className = classes;
+      node.style.display = "flex";
+      document.body.appendChild(node);
+      observations[key] = getComputedStyle(node).alignItems;
+    };
+
+    add("mobileMiddleAlone", "aq-m-flexon--middle");
+    add("mobileMiddleCompound", "aq-flexon aq-m-flexon--middle aq-flexon--center");
+    add("mobileCenterAlias", "aq-flexon aq-m-flexon--center");
+    add("baseMiddle", "aq-flexon aq-flexon--middle");
+    add("tabletMiddle", "aq-t-flexon aq-t-flexon--middle");
+    add("desktopMiddle", "aq-d-flexon aq-d-flexon--middle");
+    add("screenMiddle", "aq-s-flexon aq-s-flexon--middle");
+    return observations;
+  });
+
+  expect(result).toEqual({
+    mobileMiddleAlone: "normal",
+    mobileMiddleCompound: "center",
+    mobileCenterAlias: "center",
+    baseMiddle: "center",
+    tabletMiddle: "center",
+    desktopMiddle: "center",
+    screenMiddle: "center"
+  });
+});
