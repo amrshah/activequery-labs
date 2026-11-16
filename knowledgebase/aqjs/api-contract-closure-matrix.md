@@ -126,3 +126,13 @@ These are source-review improvements. The initial contract tests passed in runs 
 ## AQCSS/AQJS integration coverage
 
 A representative class bridge is now browser-tested: Element `setClasses(["hide"])` activates AQCSS `.hide` (`display:none!important`); adding `.show` wins by later source order at equal specificity/importance; removing `.show` reveals `.hide` again; removing `.hide` restores the AQCSS baseline display. The same behavior passed against AQJS source and minified builds in run #428. See `integration/aqcss-aqjs-display-bridge.md`.
+
+
+## Predicate contract batch — passed run #464
+
+[Run #464](https://github.com/amrshah/activequery-labs/actions/runs/43834593267) passed 331 browser executions with one documented skip across Chromium and Firefox. Three new source/minified parity fixtures now verify:
+- Ambient-global hazards in `isArrayLike`, `isObjectLike` and `isNodeList`, including behavior changes when the names those methods resolve as globals are injected.
+- `isEmpty` default sentinels, numeric/whitespace normalization, recursive arrays, exception exclusions and invalid exception-list return.
+- `isObjectLiteral` behavior for ordinary objects, class instances, Date, arrays, boxed primitives, functions, own-property exclusions, null and null-prototype objects.
+
+These cases are now runtime-verified for both distributions. This does not close the entire predicate truth table: cross-realm inputs, custom `toString` objects, and the full function/class predicate matrix remain open. The overall Gate B and source/minified parity criteria remain NOT PASSED.
