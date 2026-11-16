@@ -1030,3 +1030,39 @@ test("AQJS source and minified class mutators preserve AQCSS display utility int
     classes: ""
   });
 });
+
+
+test("AQJS source and minified builds preserve the Element.watch observer failure", async ({ page }) => {
+  const collect = async path => {
+    const pageErrors = [];
+    const onPageError = error => pageErrors.push(error.name);
+    page.on("pageerror", onPageError);
+    await page.goto(path);
+    await page.waitForFunction(() => window.fixtureReady === true);
+    const result = await page.evaluate(() => {
+      const target = document.createElement("div");
+      let callbackCount = 0;
+      const returnValue = target.watch({
+        children: true,
+        then: () => { callbackCount += 1; }
+      });
+      target.append(document.createElement("span"));
+      return {
+        returnsUndefined: returnValue === undefined,
+        callbackCount
+      };
+    });
+    await page.waitForTimeout(50);
+    page.off("pageerror", onPageError);
+    return { ...result, pageErrors };
+  };
+
+  const sourceResult = await collect("/");
+  const minifiedResult = await collect("/tests/fixture-min.html");
+  expect(minifiedResult).toEqual(sourceResult);
+  expect(sourceResult).toEqual({
+    returnsUndefined: true,
+    callbackCount: 0,
+    pageErrors: ["TypeError"]
+  });
+});
