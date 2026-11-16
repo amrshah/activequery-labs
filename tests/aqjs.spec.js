@@ -1162,3 +1162,84 @@ test("Array.then Promise assimilation hazard is bounded inside a disposable work
   expect(result.outcome).toBe("terminated");
   expect(result.elapsed).toBeLessThan(2000);
 });
+
+
+test("Element setChild consumes DocumentFragments and preserves partial append before invalid-node errors", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const host = document.createElement("div");
+    const fragment = document.createDocumentFragment();
+    const first = document.createElement("span");
+    const second = document.createElement("b");
+    first.textContent = "first";
+    second.textContent = "second";
+    fragment.append(first, second);
+    const fragmentReturn = host.setChild(fragment);
+
+    const partialHost = document.createElement("div");
+    const valid = document.createElement("i");
+    let error = null;
+    try {
+      partialHost.setChild([valid, "not-a-node"]);
+    } catch (caught) {
+      error = caught.name;
+    }
+
+    return {
+      fragmentReturnsHost: fragmentReturn === host,
+      fragmentEmptied: fragment.childNodes.length === 0,
+      fragmentChildren: [...host.children].map(node => node.tagName),
+      partialError: error,
+      validNodeWasAppended: partialHost.firstElementChild === valid
+    };
+  });
+  expect(result).toEqual({
+    fragmentReturnsHost: true,
+    fragmentEmptied: true,
+    fragmentChildren: ["SPAN", "B"],
+    partialError: "TypeError",
+    validNodeWasAppended: true
+  });
+});
+
+test("Element setValue follows native control semantics for text, checkbox, select and textarea", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const input = document.createElement("input");
+    input.type = "text";
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    const select = document.createElement("select");
+    select.innerHTML = '<option value="a">A</option><option value="b">B</option>';
+    const textarea = document.createElement("textarea");
+
+    input.setValue("hello");
+    checkbox.setValue("checked-value");
+    select.setValue("b");
+    textarea.setValue("memo");
+    const assigned = {
+      input: input.value,
+      checkbox: checkbox.value,
+      select: select.value,
+      textarea: textarea.value
+    };
+
+    input.setValue(0);
+    checkbox.setValue(false);
+    select.setValue("");
+    textarea.setValue(null);
+    return {
+      assigned,
+      cleared: [input.value, checkbox.value, select.value, textarea.value],
+      allReturnReceivers: [
+        input.setValue("again") === input,
+        checkbox.setValue("again") === checkbox,
+        select.setValue("a") === select,
+        textarea.setValue("again") === textarea
+      ]
+    };
+  });
+  expect(result).toEqual({
+    assigned: { input: "hello", checkbox: "checked-value", select: "b", textarea: "memo" },
+    cleared: ["", "", "", ""],
+    allReturnReceivers: [true, true, true, true]
+  });
+});
