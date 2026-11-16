@@ -1100,3 +1100,23 @@ test("AQJS source and minified builds preserve custom-element name-filter defect
     digitNameRejected: true
   });
 });
+
+
+test("AQJS source and minified builds preserve the Element.sift selector guard defect", async ({ page }) => {
+  const collect = async path => {
+    await page.goto(path);
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const target = document.createElement("input");
+      const returnValue = target.sift(".filter-item");
+      return {
+        returnsTarget: returnValue === target,
+        handlerInstalled: target.onkeyup !== null
+      };
+    });
+  };
+  const sourceResult = await collect("/");
+  const minifiedResult = await collect("/tests/fixture-min.html");
+  expect(minifiedResult).toEqual(sourceResult);
+  expect(sourceResult).toEqual({ returnsTarget: true, handlerInstalled: false });
+});
