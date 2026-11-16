@@ -313,3 +313,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `092bd90f626d9bddd06d87d445b9a2494c5429d8` |
 | Execution | 281 passed, 0 failed, 1 skipped; 141 authored tests across Chromium and Firefox |
 | New AQJS coverage | setText ignores empty string/0/false/null and returns its receiver; setHtml writes falsy values, returns the assigned value, converts null to empty innerHTML, and outerHTML assignment can remove the host; source/minified parity |
+
+
+## Latest confirmed execution record — run #416
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #416](https://github.com/amrshah/activequery-labs/actions/runs/43824307566) |
+| Commit | `1b43d160dde33e1b27bf63a920c0de481c1fdf85` |
+| Execution | 285 passed, 0 failed, 1 skipped; 143 authored tests across Chromium and Firefox |
+| New AQJS parity | Array.getCount unrecognised operator fallback (including `>`), no-match result and non-string substring TypeError |

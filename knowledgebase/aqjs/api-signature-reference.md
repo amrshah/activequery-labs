@@ -113,3 +113,8 @@ Run [#408](https://github.com/amrshah/activequery-labs/actions/runs/43823338803)
 ### Element text/HTML falsy branches verified across source/minified builds
 
 Run [#413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685) confirms `setText` ignores `""`, `0`, `false` and `null`, retaining existing text and returning the element. `setHtml` takes the opposite branch for falsy values: it assigns the value to `innerHTML` and returns the assigned value; `null` becomes empty markup. With the outerHTML flag, assigning an empty string removes the host element and returns the empty string.
+
+
+### Array.getCount fallback behavior verified across source/minified builds
+
+Run [#416](https://github.com/amrshah/activequery-labs/actions/runs/43824307566) confirms an unrecognised operator such as `>` enters the delimiter fallback branch rather than performing numeric comparison. The fallback counts exact first-token matches or string values containing the supplied search value; a no-match returns zero. The `*` substring branch throws `TypeError` when the target property is non-string and has no `.includes` method.
