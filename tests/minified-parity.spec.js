@@ -812,3 +812,34 @@ test("AQJS source and minified builds preserve Element setText and setHtml falsy
     outerHtml: { hostRemoved: true, returnValue: "" }
   });
 });
+
+
+test("AQJS source and minified builds preserve Array.getCount fallback operator behavior", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const values = [
+        { key: "beta:more" },
+        { key: "beta" },
+        { key: "betamax" },
+        { key: "alpha" }
+      ];
+      let nonStringError = null;
+      try { [{ key: 7 }].getCount("key", "*", "7"); } catch (error) { nonStringError = error.name; }
+      return {
+        greaterThanTokenFallback: values.getCount("key", ">", "beta"),
+        greaterThanNoMatch: values.getCount("key", ">", "gamma"),
+        nonStringSubstringError: nonStringError
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    greaterThanTokenFallback: 3,
+    greaterThanNoMatch: 0,
+    nonStringSubstringError: "TypeError"
+  });
+});

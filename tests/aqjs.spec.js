@@ -1367,3 +1367,27 @@ test("Element setText ignores falsy values while setHtml applies falsy values", 
     outerHtml: { hostRemoved: true, returnValue: "" }
   });
 });
+
+
+test("Array.getCount routes unrecognized operators through the delimiter fallback", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const values = [
+      { key: "beta:more" },
+      { key: "beta" },
+      { key: "betamax" },
+      { key: "alpha" }
+    ];
+    let nonStringError = null;
+    try { [{ key: 7 }].getCount("key", "*", "7"); } catch (error) { nonStringError = error.name; }
+    return {
+      greaterThanTokenFallback: values.getCount("key", ">", "beta"),
+      greaterThanNoMatch: values.getCount("key", ">", "gamma"),
+      nonStringSubstringError: nonStringError
+    };
+  });
+  expect(result).toEqual({
+    greaterThanTokenFallback: 3,
+    greaterThanNoMatch: 0,
+    nonStringSubstringError: "TypeError"
+  });
+});
