@@ -1,7 +1,7 @@
 # AQJS API Contract Closure Matrix
 
 Source: ActiveQuery.js SHA b8ec9e5be8668d048eea3385cd9012dfddb69cf0.
-Status: active closure matrix derived from the API inventory, behavior matrix and runtime validation matrix. Each row records remaining work; passed test evidence is identified explicitly.
+Status: active closure matrix derived from the API inventory, behavior matrix and runtime validation matrix. Latest full browser evidence: [run #491](https://github.com/amrshah/activequery-labs/actions/runs/43857523951), 363 passed and 1 documented skip. Each row records remaining work; passed test evidence is identified explicitly.
 
 ## Objective
 
@@ -35,13 +35,13 @@ Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passe
 | NodeList stubs | exact no-op return values and coverage | each stub with normal/odd args, populated and empty collections; assert identity/no mutation/undefined | all identified stubs were invoked with representative arguments in #324; populated/empty collection behavior and source/minified parity passed in #422; unusual argument matrix remains optional additional coverage |
 | NodeList.on | event validation and return value | valid/invalid event, empty and non-empty collections, callback invocation | valid/invalid arguments, empty collection identity and listener dispatch passed in run #324 |
 | Document/Window.on | event validation and return value | valid/invalid event, missing callback, listener cleanup limits | custom event dispatch passed in run #313; invalid event/callback receiver identity and source/minified parity passed in run #327 |
-| Lifecycle on | early/late registration and replay semantics | before/after DOMContentLoaded/load/pageshow; offline/online/close; unknown event | late registration no-replay, early `ready`/`init`/`run`, offline/online/close dispatch, unknown-event ignore and receiver identity passed in runs #313/#340/#347; offline/online/close mapping, unknown-event ignore and receiver identity also passed in source/minified parity in run #417; repeated construction and unusual timing remain pending |
+| Lifecycle on | early/late registration and replay semantics | before/after DOMContentLoaded/load/pageshow; offline/online/close; unknown event | late registration no-replay, early `ready`/`init`/`run`, offline/online/close dispatch, unknown-event ignore and receiver identity passed in runs #313/#340/#347; offline/online/close mapping and receiver identity passed in source/minified parity in #417; repeated construction and per-instance `initlog` replay on each complete `readystatechange` event passed in source/minified parity in #491. Other unusual event timing remains pending |
 | Element.setStyles | declaration parsing, colon handling, CSS value acceptance | property/value split, values containing colons, return identity, source/minified parity | `url(https://...)` is truncated to `url(\"https\")`; direct Chromium/Firefox regression and source/minified parity passed in merged-branch run #480. Do not claim the parser handles arbitrary valid CSS values. |
 | Element.watch | observer callback, return contract, lifecycle/disconnect | mutation with callback, missing/non-function callback, return value, source/minified parity, disconnect | Reproduction and source/minified parity tests merged in PR #13; the callback binding failure and observer return behavior are documented. The API exposes no disconnect handle. The merged regression suite passed again in browser workflow #480. |
 | Element.sift | selector guard and keyboard filtering | valid selector, empty selector, handler installation, keyboard event, source/minified parity | PR #12 added the valid-selector early-return regression and source/minified parity coverage; the behavior is reproduced and documented. Empty-selector and keyboard-event edge behavior remain open. The merged regression suite passed again in browser workflow #480. |
-| Element.sancha | static append/replace and data-template execution | static template, swap flag, data input, missing identifiers, escaping, source/minified parity | PR #16 CI (run #478) and the merged-branch browser workflow #480 passed source/minified tests for data interpolation. Markup supplied as a value becomes live DOM (not escaped text); strict-mode undeclared loop variables and global `variables` coupling are documented. Additional placeholder combinations remain open. |
+| Element.sancha | static append/replace and data-template execution | static template, swap flag, data input, missing identifiers, escaping, source/minified parity | PR #16 CI (#478) and merged-branch run #480 verified raw-HTML interpolation and strict-module identifier failure. Run #491 additionally passed source/minified data-placeholder coverage for ordinary `{{name}}` and dollar-prefixed `{{$greeting}}` values from the ambient `variables` object, per-row `variable` callback timing and the final `then` callback. Markup remains unescaped and unsafe for untrusted data; other malformed/missing-variable combinations remain open. |
 | ActiveQuery.extend("dom") | custom-element name validation | valid hyphenated name, no-hyphen invalid name, valid name containing digits, source/minified parity | Source/minified regression tests cover valid registration, browser SyntaxError for a no-hyphen name accepted by AQ's regex, and rejection of a spec-valid digit name; the cases passed in merged-branch browser run #480. |
-| Function.then | callback receiver and return value | callable, missing/non-function callback, receiver identity | selected Function/Element/NodeList then receiver/return behavior passed in source/minified parity in run #409; broader invalid-callback cases remain pending |
+| Function.then | callback receiver and return value | callable, missing/non-function callback, receiver identity | valid callback receiver/return behavior passed in #409; missing and non-function callback behavior passed in source/minified parity in #491 |
 
 ## Priority 1 — predicate and value truth tables
 
@@ -96,9 +96,9 @@ Do not present these as recommended working APIs until separately cleared:
 - NodeList content/read methods include no-op stubs.
 - Object.setValues/hasValues call a missing static predicate.
 - isArrayLike, isNodeList and related predicates have unresolved global/identifier hazards; `isNaS` is always true and `isNaF` is a stringification heuristic with false positives/negatives, so neither is suitable for type validation.
-- sancha static append/replace and data-mode ReferenceError have authored regression/parity tests (CI pending); escaping/security and remaining placeholder behavior are unresolved.
+- sancha static append/replace, data-mode strict-module failure, raw HTML insertion and selected ordinary/dollar-prefixed placeholder behavior have passed source/minified browser tests in #478/#480/#491; contextual escaping remains absent and malformed/missing-variable combinations remain unresolved.
 - getPlugin dynamically imports its argument; do not accept untrusted module specifiers.
-- `watch` observer callback failure is covered by authored reproduction/parity tests (CI pending); lifecycle/disconnect behavior remains unresolved.
+- `watch` observer callback failure and source/minified behavior are browser-verified in #480; the API exposes no observer handle or disconnect method, so lifecycle/disconnect control remains unavailable.
 
 Use native DOM/JavaScript APIs when they provide a safer, clearer contract.
 
