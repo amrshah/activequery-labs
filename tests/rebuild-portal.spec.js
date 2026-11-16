@@ -31,6 +31,21 @@ test.describe("clean-room portal", () => {
     await expect(page.locator("#preview-status")).toContainText("AQJS event helper ran");
   });
 
+  test("supports arrow and Home keyboard navigation across editor tabs", async ({ page }) => {
+    const htmlTab = page.getByRole("tab", { name: "HTML" });
+    const cssTab = page.getByRole("tab", { name: "CSS" });
+    const jsTab = page.getByRole("tab", { name: "JavaScript" });
+    await htmlTab.focus();
+    await page.keyboard.press("ArrowRight");
+    await expect(cssTab).toHaveAttribute("aria-selected", "true");
+    await expect(cssTab).toBeFocused();
+    await page.keyboard.press("ArrowRight");
+    await expect(jsTab).toHaveAttribute("aria-selected", "true");
+    await page.keyboard.press("Home");
+    await expect(htmlTab).toHaveAttribute("aria-selected", "true");
+    await expect(htmlTab).toBeFocused();
+  });
+
   test("switches theme accessibly and remembers the selected theme", async ({ page }) => {
     const toggle = page.getByRole("button", { name: "Switch to dark theme" });
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
