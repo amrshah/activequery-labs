@@ -371,3 +371,67 @@ test("AQJS source and minified builds preserve Element and NodeList bulk mutatio
     nodeListClasses: [true, true, true]
   });
 });
+
+
+test("AQJS source and minified builds preserve Element fragment and form-control mutation contracts", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const host = document.createElement("div");
+      const fragment = document.createDocumentFragment();
+      fragment.append(document.createElement("span"), document.createElement("b"));
+      const fragmentReturn = host.setChild(fragment);
+
+      const partialHost = document.createElement("div");
+      const valid = document.createElement("i");
+      let partialError = null;
+      try { partialHost.setChild([valid, "invalid"]); } catch (error) { partialError = error.name; }
+
+      const input = document.createElement("input");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      const select = document.createElement("select");
+      select.innerHTML = '<option value="a">A</option><option value="b">B</option>';
+      const textarea = document.createElement("textarea");
+      input.setValue("text");
+      checkbox.setValue("yes");
+      select.setValue("b");
+      textarea.setValue("notes");
+      const assigned = [input.value, checkbox.value, select.value, textarea.value];
+      input.setValue(0);
+      checkbox.setValue(false);
+      select.setValue("missing");
+      textarea.setValue(null);
+
+      return {
+        fragmentReturnSame: fragmentReturn === host,
+        fragmentChildren: [...host.children].map(node => node.tagName),
+        fragmentEmptied: fragment.childNodes.length === 0,
+        partialError,
+        partialAppend: partialHost.firstElementChild === valid,
+        assigned,
+        cleared: [input.value, checkbox.value, select.value, textarea.value],
+        receiverIdentity: [
+          input.setValue("again") === input,
+          checkbox.setValue("again") === checkbox,
+          select.setValue("a") === select,
+          textarea.setValue("again") === textarea
+        ]
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    fragmentReturnSame: true,
+    fragmentChildren: ["SPAN", "B"],
+    fragmentEmptied: true,
+    partialError: "TypeError",
+    partialAppend: true,
+    assigned: ["text", "yes", "b", "notes"],
+    cleared: ["", "", "", ""],
+    receiverIdentity: [true, true, true, true]
+  });
+});
