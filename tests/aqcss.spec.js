@@ -1066,6 +1066,7 @@ test("AQCSS sticky top remains pinned while its scroll container moves", async (
   expect(result.position).toBe("sticky");
   expect(result.top).toBe("0px");
   expect(result.initialOffset).toBeGreaterThan(70);
+  expect(result.scrollHeight).toBeGreaterThan(result.targetScroll + result.clientHeight);
   expect(result.scrollTop).toBe(result.targetScroll);
   expect(Math.abs(result.scrolledOffset), JSON.stringify(result)).toBeLessThanOrEqual(1);
 });
