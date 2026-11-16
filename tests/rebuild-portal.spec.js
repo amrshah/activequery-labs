@@ -9,10 +9,16 @@ test.describe("clean-room portal", () => {
     await expect(page).toHaveTitle(/ActiveQuery Labs — Field Guide/);
     await expect(page.getByRole("heading", { name: "Understand the rules. Build with evidence." })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Change the code. See the result." })).toBeVisible();
+    await expect(page.locator("#preview-status")).toContainText("Accept the OSL-3.0 terms");
+    await page.getByRole("checkbox", { name: /I have reviewed the OSL-3.0 terms/ }).check();
+    await page.getByRole("button", { name: "Accept OSL-3.0 and enable preview" }).click();
     await expect(page.locator("#preview-status")).toContainText("Preview updated", { timeout: 15000 });
   });
 
   test("runs user-editable source in a scripts-only sandbox and reacts to edits", async ({ page }) => {
+    await page.getByRole("checkbox", { name: /I have reviewed the OSL-3.0 terms/ }).check();
+    await page.getByRole("button", { name: "Accept OSL-3.0 and enable preview" }).click();
+    await expect(page.locator("#preview-status")).toContainText("Preview updated", { timeout: 15000 });
     const frame = page.locator("#live-preview");
     expect(await frame.getAttribute("sandbox")).toBe("allow-scripts");
     const initialVersion = Number(await frame.getAttribute("data-preview-version"));
@@ -26,9 +32,24 @@ test.describe("clean-room portal", () => {
   });
 
   test("executes the sample AQJS event helper inside the isolated preview", async ({ page }) => {
+    await page.getByRole("checkbox", { name: /I have reviewed the OSL-3.0 terms/ }).check();
+    await page.getByRole("button", { name: "Accept OSL-3.0 and enable preview" }).click();
     await expect(page.locator("#preview-status")).toContainText("Preview updated", { timeout: 15000 });
     await page.locator("#trigger-preview-event").click();
     await expect(page.locator("#preview-status")).toContainText("AQJS event helper ran");
+  });
+
+  test("does not request upstream framework assets before explicit OSL-3.0 assent", async ({ page }) => {
+    const assetRequests = [];
+    page.on("request", request => {
+      if (/\/vendor\/ActiveQuery\.(css|js)$/.test(request.url())) assetRequests.push(request.url());
+    });
+    await expect(page.locator("#preview-status")).toContainText("Accept the OSL-3.0 terms");
+    expect(assetRequests).toEqual([]);
+    await page.getByRole("checkbox", { name: /I have reviewed the OSL-3.0 terms/ }).check();
+    await page.getByRole("button", { name: "Accept OSL-3.0 and enable preview" }).click();
+    await expect(page.locator("#preview-status")).toContainText("Preview updated", { timeout: 15000 });
+    expect(assetRequests).toHaveLength(2);
   });
 
   test("supports arrow and Home keyboard navigation across editor tabs", async ({ page }) => {
