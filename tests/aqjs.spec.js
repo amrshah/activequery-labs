@@ -1488,3 +1488,30 @@ test("Element.watch observer callback throws before invoking the supplied callba
   expect(result).toEqual({ returnsUndefined: true, callbackCount: 0 });
   expect(pageErrors).toContain("TypeError");
 });
+
+
+test("AQJS custom-element name filter rejects valid digit names and lets invalid no-hyphen names reach the browser", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    class ValidElement extends HTMLElement {}
+    class DigitElement extends HTMLElement {}
+    class InvalidElement extends HTMLElement {}
+    window.AQ.extend("dom", "aq-labs-valid", ValidElement);
+    let invalidError = null;
+    try {
+      window.AQ.extend("dom", "aqlabs", InvalidElement);
+    } catch (error) {
+      invalidError = error.name;
+    }
+    window.AQ.extend("dom", "aq-labs2", DigitElement);
+    return {
+      validRegistered: customElements.get("aq-labs-valid") === ValidElement,
+      invalidNameError: invalidError,
+      digitNameRejected: customElements.get("aq-labs2") === undefined
+    };
+  });
+  expect(result).toEqual({
+    validRegistered: true,
+    invalidNameError: "SyntaxError",
+    digitNameRejected: true
+  });
+});
