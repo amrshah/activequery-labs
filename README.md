@@ -19,7 +19,7 @@ The goal is to make ActiveQuery easier to explore through practical, source-led 
 - **Live playground** — edit HTML, CSS and JavaScript with an isolated side-by-side preview and starter snippets.
 - **AI agent skills** — seven reusable source-first skills for framework research, AQCSS, AQJS, responsive design, components, documentation and integration.
 - **Source inspection tool** — dependency-free CLI for generating lexical selector and API-candidate inventories from local upstream files.
-- **Examples** — standalone full-page demonstrations of AQCSS responsive facets/flexon, spacing, typography and theme utilities, plus AQJS-driven interactions: operations and analytics dashboards, a SaaS landing page, a restaurant ordering PWA-style interface, and focused API experiments.
+- **Examples** — standalone full-page demonstrations of AQCSS responsive facets/flexon, spacing, typography and theme utilities, plus AQJS-driven interactions: operations and analytics dashboards, a responsive dashboard experiment, a SaaS landing page and a restaurant ordering PWA-style interface, all demonstrating AQCSS composition and selected AQJS interactions.
 
 ## AI agent resources
 
