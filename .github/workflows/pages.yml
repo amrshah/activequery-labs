@@ -43,6 +43,11 @@ jobs:
             examples/responsive-dashboard/index.html
             examples/responsive-dashboard/dashboard.css
             examples/responsive-dashboard/dashboard.js
+            rebuild/index.html
+            rebuild/assets/portal.css
+            rebuild/assets/portal.js
+            rebuild/guides/aqcss.html
+            rebuild/guides/aqjs.html
           )
           for file in "${required[@]}"; do
             test -s "$file" || { echo "Missing or empty: $file"; exit 1; }
@@ -51,13 +56,23 @@ jobs:
           node --check playground/playground.js
           node --check components/components.js
           node --check tools/aq-inspect.mjs
+          node --check rebuild/assets/portal.js
           echo "JavaScript syntax checks passed."
+      - name: Fetch and verify pinned upstream assets and license notices
+        run: node tools/fetch-pinned-sources.mjs
+      - name: Verify distributable framework sources are present
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in ActiveQuery.css ActiveQuery.js ActiveQuery.min.css ActiveQuery.min.js CSS-LICENSE.txt JS-LICENSE.txt; do
+            test -s "rebuild/vendor/$file" || { echo "Missing distributable source/notice: $file"; exit 1; }
+          done
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: rebuild
   deploy:
     environment:
       name: github-pages
