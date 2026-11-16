@@ -1,7 +1,7 @@
 # AQCSS Focused Composition Test Plan
 
 Source: AQCSS v25.6.0, pinned SHA c03546ecd1a41d26cbbfa8f1e31d38731f77cf62.
-Status: partially implemented and browser-validated. Latest PR-19 suite [#494](https://github.com/amrshah/activequery-labs/actions/runs/43857963894) passed 363 browser cases with one documented skip. Run [#365](https://github.com/amrshah/activequery-labs/actions/runs/43647892108) passed AQX-001–008 and AQX-010–019 in Chromium and Firefox; run [#392](https://github.com/amrshah/activequery-labs/actions/runs/43819572529) adds dedicated CSSOM/computed-style coverage for the base vs responsive flex stretch selectors; runs #394 and #401 verify responsive wrap-reverse spelling and right-bottom importance behavior; run #403 verifies the mobile middle compound selector and responsive aliases. AQX-009 real scroll-container behavior passed in Chromium and Firefox in [run #501](https://github.com/amrshah/activequery-labs/actions/runs/43859496522); the fixture asserts the element remains pinned after scrolling past its natural sticky threshold.
+Status: AQX-001–019 implemented and browser-validated in Chromium and Firefox. Latest full PR-19 suite [#501](https://github.com/amrshah/activequery-labs/actions/runs/43859496522) passed 365 browser cases with one documented skip. Run [#365](https://github.com/amrshah/activequery-labs/actions/runs/43647892108) passed AQX-001–008 and AQX-010–019 in Chromium and Firefox; run [#392](https://github.com/amrshah/activequery-labs/actions/runs/43819572529) adds dedicated CSSOM/computed-style coverage for the base vs responsive flex stretch selectors; runs #394 and #401 verify responsive wrap-reverse spelling and right-bottom importance behavior; run #403 verifies the mobile middle compound selector and responsive aliases. AQX-009 real scroll-container behavior passed in Chromium and Firefox in [run #501](https://github.com/amrshah/activequery-labs/actions/runs/43859496522); the fixture asserts the element remains pinned after scrolling past its natural sticky threshold.
 
 ## Existing coverage — avoid blind duplication
 
@@ -21,7 +21,7 @@ See [browser-test-plan.md](browser-test-plan.md) and [runtime-validation-matrix.
 | AQX-006 | aq--margin-all + aq--margin-left | all four computed margin sides |
 | AQX-007 | aq--padding-all + aq--padding-left | all four computed padding sides |
 | AQX-008 | aq-affix--fixed + aq-affix--top | position and top |
-| AQX-009 | aq-affix--sticky + aq-affix--top | position/top computed cascade plus real scroll-container movement; new fixture in PR #19 pending CI |
+| AQX-009 | aq-affix--sticky + aq-affix--top | position/top computed cascade plus real scroll-container movement; passed in Chromium and Firefox in run #501 |
 | AQX-010 | aq-flexon + aq-flexon--column + aq-flexon--center-top | display, flex-direction, align-items, justify-content |
 | AQX-011 | base swatch + hover swatch | background/color before and during hover |
 | AQX-012 | grayscale + invert | computed filter string; replacement rather than composition |
