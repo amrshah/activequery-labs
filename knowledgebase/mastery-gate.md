@@ -25,7 +25,7 @@ The mastery label is withheld until every gate below has objective evidence. A l
 - [x] AQJS methods that differ between Element, NodeList and other prototypes are explicitly compared in the behavior matrix.
 - [x] Global/prototype mutation implications are source-mapped and tested, including default constructor alias pollution and native String.trim replacement.
 - [x] AQCSS utility naming and responsive prefixes are mapped from actual media rules and browser tests, including the ineffective mobile-hide helper.
-- [ ] Interactions between AQCSS selectors and AQJS methods documented where applicable.
+- [x] Representative AQCSS/AQJS class interaction is documented and runtime-tested: AQJS class mutators activate AQCSS `.hide`/`.show` display utilities; broader attribute/state combinations remain outside this focused example (`integration/aqcss-aqjs-display-bridge.md`).
 - [ ] Suspected defects reproduced or cleared through tests; no unexplained behavior is presented as guaranteed.
 - [x] Public claims about AQI batching/delegation, local scope, AQPE context behavior and AQS continuity are traced to executable source/specification or explicitly scoped as conceptual/unimplemented.
 - [ ] Source and minified distributions are proven semantically equivalent across the documented API surface.

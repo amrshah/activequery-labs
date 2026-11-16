@@ -129,3 +129,8 @@ Run [#417](https://github.com/amrshah/activequery-labs/actions/runs/43824492132)
 ### NodeList stub behavior verified across source/minified builds
 
 Run [#422](https://github.com/amrshah/activequery-labs/actions/runs/43825270639) confirms that the identified no-op NodeList methods preserve populated and empty collection receivers and do not mutate the DOM. `getStyles()` returns `undefined`; `getClasses()` returns the same NodeList. These return values do not imply that the requested operations were performed.
+
+
+### AQCSS display utilities through AQJS class mutators
+
+`Element.setClasses([...])` and `removeClasses([...])` mutate the class attribute, allowing AQCSS class selectors to apply immediately. Run [#428](https://github.com/amrshah/activequery-labs/actions/runs/43826836114) confirms `.hide`/`.show` cascade behavior and receiver identity across source/minified AQJS. See `integration/aqcss-aqjs-display-bridge.md`.

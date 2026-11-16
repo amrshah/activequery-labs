@@ -187,3 +187,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #425
 
 [Workflow #425](https://github.com/amrshah/activequery-labs/actions/runs/43825926932) passed 293 browser cases, 0 failed, 1 skipped; 147 authored tests across Chromium and Firefox. The run adds AQJS isJSON predicate edge cases and source/minified parity.
+
+
+## Latest execution — run #428
+
+[Workflow #428](https://github.com/amrshah/activequery-labs/actions/runs/43826836114) passed 297 browser cases, 0 failed, 1 skipped; 149 authored tests across Chromium and Firefox. It includes AQCSS/AQJS dynamic class interaction coverage and source/minified parity.

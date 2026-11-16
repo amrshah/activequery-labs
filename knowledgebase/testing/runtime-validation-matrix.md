@@ -373,3 +373,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `076f1ef1a74f503117d8218d611d37465367009c` |
 | Execution | 293 passed, 0 failed, 1 skipped; 147 authored tests across Chromium and Firefox |
 | New AQJS evidence | `isJSON` is a type/regex predicate, not JSON parsing; empty arrays are false due to string coercion, non-empty arrays true; source/minified parity passed |
+
+
+## Latest confirmed execution record — run #428
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #428](https://github.com/amrshah/activequery-labs/actions/runs/43826836114) |
+| Commit | `25436b0700eca7c44fed483af78bf3bdf478e33c` |
+| Execution | 297 passed, 0 failed, 1 skipped; 149 authored tests across Chromium and Firefox |
+| New integration evidence | AQJS `setClasses`/`removeClasses` activates AQCSS `.hide`/`.show`; source/minified behavior agrees. Bare `div` baseline is inline-block; `.show` forces block; `.hide` forces none. |

@@ -117,3 +117,8 @@ These are source-review improvements. The initial contract tests passed in runs 
 - [Source findings](../testing/source-findings.md)
 - [Runtime validation matrix](../testing/runtime-validation-matrix.md)
 - [Mastery gate](../mastery-gate.md)
+
+
+## AQCSS/AQJS integration coverage
+
+A representative class bridge is now browser-tested: Element `setClasses(["hide"])` activates AQCSS `.hide` (`display:none!important`); adding `.show` wins by later source order at equal specificity/importance; removing `.show` reveals `.hide` again; removing `.hide` restores the AQCSS baseline display. The same behavior passed against AQJS source and minified builds in run #428. See `integration/aqcss-aqjs-display-bridge.md`.

@@ -34,7 +34,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - `architecture/` — framework philosophy, conceptual ecosystem map, governance, licensing, initialization and execution model.
 - `aqcss/` — complete selector catalogue, tokens, layout, typography, responsive rules, states and interaction behavior.
 - `aqjs/` — exports, constructor, static and instance APIs, prototype extensions, lifecycle, DOM operations, templating, observation and edge cases.
-- `integration/` — AQCSS/AQJS interaction, browser-native integration and usage patterns.
+- `integration/` — AQCSS/AQJS interaction, browser-native integration and usage patterns; see [display utility bridge](integration/aqcss-aqjs-display-bridge.md).
 - `cookbook/` — tested recipes and implementation patterns.
 - `testing/` — reproducible test cases, compatibility, edge cases and known limitations; 144 authored browser tests currently pass in Chromium and Firefox (287 passing browser cases and one documented Firefox mobile-emulation skip in [run #418](https://github.com/amrshah/activequery-labs/actions/runs/43824577065)); run #313 remains the historical 79-test baseline.
 - `agent-reference/` — fast capability index, task-to-reference routing and concise agent instructions.
