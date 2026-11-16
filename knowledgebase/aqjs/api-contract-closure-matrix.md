@@ -136,3 +136,13 @@ A representative class bridge is now browser-tested: Element `setClasses(["hide"
 - `isObjectLiteral` behavior for ordinary objects, class instances, Date, arrays, boxed primitives, functions, own-property exclusions, null and null-prototype objects.
 
 These cases are now runtime-verified for both distributions. This does not close the entire predicate truth table: cross-realm inputs, custom `toString` objects, and the full function/class predicate matrix remain open. The overall Gate B and source/minified parity criteria remain NOT PASSED.
+
+## Additional edge-contract evidence (run pending)
+
+A focused follow-up batch adds browser tests for three previously open behaviors:
+
+- **Array.then:** direct invocation calls only the first function argument with the array receiver and returns that callback's result; missing/non-function first arguments return undefined. The dangerous Promise resolver-assimilation case is deliberately not executed: the implementation passes the same array to the Promise resolver, and the ECMAScript thenable-resolution procedure would attempt to assimilate that array again. This is a source-backed recursion hazard, not a claimed runtime hang measurement.
+- **Element.setAdjacent:** valid truthy argument pairs return the receiver before insertion; falsy pairs fall through to a switch that performs no insertion. Both cases preserve the DOM.
+- **Element.sift:** a truthy selector returns the receiver before installing a key handler. An empty selector installs onkeyup; typing a non-empty value causes document.querySelectorAll with an empty selector to throw SyntaxError.
+
+The new assertions compare source and minified builds. CI result will be recorded after the workflow completes.
