@@ -1566,3 +1566,25 @@ test("Element.sancha static rendering works while data rendering hits an undecla
     dataOutput: ""
   });
 });
+
+
+test("Element.getValue Boolean mode inverts match-at-zero and missing-value outcomes", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const target = document.createElement("input");
+    target.value = "needle";
+    return {
+      substringModeAtZero: target.getValue("nee", false),
+      booleanModeAtZero: target.getValue("nee", true),
+      booleanModeAfterZero: target.getValue("edl", true),
+      booleanModeMissing: target.getValue("absent", true),
+      noArgumentReturnsTarget: target.getValue() === target
+    };
+  });
+  expect(result).toEqual({
+    substringModeAtZero: true,
+    booleanModeAtZero: false,
+    booleanModeAfterZero: true,
+    booleanModeMissing: true,
+    noArgumentReturnsTarget: true
+  });
+});
