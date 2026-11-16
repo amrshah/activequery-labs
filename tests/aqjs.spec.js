@@ -1598,3 +1598,81 @@ test("Element.setStyles truncates CSS values containing a colon", async ({ page 
   });
   expect(result).toEqual({ returnsTarget: true, backgroundImage: 'url("https")', rawValue: 'background-image: url("https");' });
 });
+
+test("Array.then passes the receiver to one callback and returns its result", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const values = [1, 2];
+    let calls = 0;
+    let receivedSame = false;
+    const returned = values.then(value => {
+      calls++;
+      receivedSame = value === values;
+      return "callback-result";
+    });
+    return {
+      calls,
+      receivedSame,
+      returned,
+      missingCallback: values.then(),
+      nonFunctionCallback: values.then("not a function")
+    };
+  });
+  expect(result).toEqual({
+    calls: 1,
+    receivedSame: true,
+    returned: "callback-result",
+    missingCallback: undefined,
+    nonFunctionCallback: undefined
+  });
+});
+
+test("Element.setAdjacent is a no-op for valid and falsy argument pairs", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const parent = document.createElement("div");
+    const existing = document.createElement("span");
+    const candidate = document.createElement("b");
+    parent.appendChild(existing);
+    const validReturn = parent.setAdjacent("before", candidate);
+    const falsyReturn = parent.setAdjacent("", null);
+    return {
+      validReturnsReceiver: validReturn === parent,
+      falsyReturnsReceiver: falsyReturn === parent,
+      childCount: parent.children.length,
+      existingPreserved: parent.firstElementChild === existing,
+      candidateNotInserted: candidate.parentNode === null
+    };
+  });
+  expect(result).toEqual({
+    validReturnsReceiver: true,
+    falsyReturnsReceiver: true,
+    childCount: 1,
+    existingPreserved: true,
+    candidateNotInserted: true
+  });
+});
+
+test("Element.sift truthy selector guard skips setup and empty selector throws on keyup", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const valid = document.createElement("input");
+    const validReturn = valid.sift(".target");
+    const empty = document.createElement("input");
+    empty.value = "needle";
+    const emptyReturn = empty.sift("");
+    let keyupError = null;
+    try { empty.onkeyup(); } catch (error) { keyupError = error.name; }
+    return {
+      validReturnsReceiver: validReturn === valid,
+      validHandler: valid.onkeyup,
+      emptyReturnsReceiver: emptyReturn === empty,
+      emptyHandlerInstalled: typeof empty.onkeyup === "function",
+      keyupError
+    };
+  });
+  expect(result).toEqual({
+    validReturnsReceiver: true,
+    validHandler: null,
+    emptyReturnsReceiver: true,
+    emptyHandlerInstalled: true,
+    keyupError: "SyntaxError"
+  });
+});
