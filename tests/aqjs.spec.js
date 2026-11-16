@@ -1466,3 +1466,25 @@ test("AQJS class mutators activate and remove AQCSS display utilities", async ({
     classes: ""
   });
 });
+
+
+test("Element.watch observer callback throws before invoking the supplied callback", async ({ page }) => {
+  const pageErrors = [];
+  page.on("pageerror", error => pageErrors.push(error.name));
+  const result = await page.evaluate(() => {
+    const target = document.createElement("div");
+    let callbackCount = 0;
+    const returnValue = target.watch({
+      children: true,
+      then: () => { callbackCount += 1; }
+    });
+    target.append(document.createElement("span"));
+    return {
+      returnsUndefined: returnValue === undefined,
+      callbackCount
+    };
+  });
+  await page.waitForTimeout(50);
+  expect(result).toEqual({ returnsUndefined: true, callbackCount: 0 });
+  expect(pageErrors).toContain("TypeError");
+});
