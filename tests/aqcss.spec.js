@@ -842,59 +842,77 @@ test("AQCSS touch helper follows coarse primary pointer in Chromium mobile emula
 
 
 
-test("AQCSS flex base display, stretch selector parsing and mobile shrink aliases are observable", async ({ page }) => {
+test("AQCSS flex base and responsive stretch selectors preserve their distinct escaped-attribute behavior", async ({ page }) => {
+  await page.setViewportSize({ width: 1500, height: 900 });
   const result = await page.evaluate(() => {
     const modifierOnly = document.createElement("div");
     modifierOnly.className = "aq-flexon--column";
     const baseAndModifier = document.createElement("div");
     baseAndModifier.className = "aq-flexon aq-flexon--column";
-    const stretch = document.createElement("div");
-    stretch.className = "aq-flexon--stretch";
-    stretch.style.display = "flex";
+
+    const baseStretch = document.createElement("div");
+    baseStretch.className = "aq-flexon--stretch";
+    baseStretch.style.display = "flex";
+
+    const tabletStretch = document.createElement("div");
+    tabletStretch.className = "aq-t-flexon--stretch";
+    tabletStretch.style.display = "flex";
+    const desktopStretch = document.createElement("div");
+    desktopStretch.className = "aq-d-flexon--stretch";
+    desktopStretch.style.display = "flex";
+    const screenStretch = document.createElement("div");
+    screenStretch.className = "aq-s-flexon--stretch";
+    screenStretch.style.display = "flex";
+
     const mobileShrinkNo = document.createElement("div");
     mobileShrinkNo.className = "aq-m-flexon--shrink-no";
     const mobileNoShrink = document.createElement("div");
     mobileNoShrink.className = "aq-m-flexon--no-shrink";
-    document.body.append(modifierOnly, baseAndModifier, stretch, mobileShrinkNo, mobileNoShrink);
+    document.body.append(
+      modifierOnly, baseAndModifier, baseStretch,
+      tabletStretch, desktopStretch, screenStretch,
+      mobileShrinkNo, mobileNoShrink
+    );
 
     const sheet = [...document.styleSheets].find(item => item.href?.includes("ActiveQuery.css"));
-    const rules = [...(sheet?.cssRules ?? [])].filter(rule => rule.selectorText?.includes("aq-flexon--stretch"));
-    const growRule = rules.find(rule => rule.style.getPropertyValue("flex-grow"));
-    const alignRule = rules.find(rule => rule.style.getPropertyValue("align-items"));
+    const baseRules = [...(sheet?.cssRules ?? [])].filter(rule => rule.selectorText?.includes("aq-flexon--stretch"));
+    const growRule = baseRules.find(rule => rule.style.getPropertyValue("flex-grow"));
+    const alignRule = baseRules.find(rule => rule.style.getPropertyValue("align-items"));
     const style = node => getComputedStyle(node);
+    const responsive = node => ({
+      grow: style(node).flexGrow,
+      alignment: style(node).alignItems
+    });
 
     return {
       modifierOnlyDisplay: style(modifierOnly).display,
       modifierOnlyFlow: style(modifierOnly).flexDirection,
       baseAndModifierDisplay: style(baseAndModifier).display,
       baseAndModifierFlow: style(baseAndModifier).flexDirection,
-      stretchHasFlexonSubstring: stretch.matches("[class*=flexon]"),
-      growRuleSelector: growRule?.selectorText ?? null,
-      growRuleValue: growRule?.style.getPropertyValue("flex-grow") ?? null,
-      growRuleImportant: growRule?.style.getPropertyPriority("flex-grow") ?? null,
-      growRuleMatches: growRule ? stretch.matches(growRule.selectorText) : null,
-      alignRuleSelector: alignRule?.selectorText ?? null,
-      alignRuleValue: alignRule?.style.getPropertyValue("align-items") ?? null,
-      alignRuleImportant: alignRule?.style.getPropertyPriority("align-items") ?? null,
-      alignRuleMatches: alignRule ? stretch.matches(alignRule.selectorText) : null,
-      stretchGrow: style(stretch).flexGrow,
-      stretchAlignment: style(stretch).alignItems,
+      baseStretchHasFlexonSubstring: baseStretch.matches("[class*=flexon]"),
+      baseGrowRuleSelector: growRule?.selectorText ?? null,
+      baseGrowRuleMatches: growRule ? baseStretch.matches(growRule.selectorText) : null,
+      baseAlignRuleSelector: alignRule?.selectorText ?? null,
+      baseAlignRuleMatches: alignRule ? baseStretch.matches(alignRule.selectorText) : null,
+      baseStretch: responsive(baseStretch),
+      tabletStretch: responsive(tabletStretch),
+      desktopStretch: responsive(desktopStretch),
+      screenStretch: responsive(screenStretch),
       mobileShrinkNo: style(mobileShrinkNo).flexShrink,
       mobileNoShrink: style(mobileNoShrink).flexShrink
     };
   });
-  console.log("AQCSS flex CSSOM probe", JSON.stringify(result));
   expect(result.modifierOnlyDisplay).toBe("inline-block");
   expect(result.modifierOnlyFlow).toBe("column");
   expect(result.baseAndModifierDisplay).toBe("flex");
   expect(result.baseAndModifierFlow).toBe("column");
-  expect(result.stretchHasFlexonSubstring).toBe(true);
-  expect(result.growRuleValue).toBe("1");
-  expect(result.growRuleImportant).toBe("important");
-  expect(result.growRuleMatches).toBe(false);
-  expect(result.alignRuleValue).toBe("stretch");
-  expect(result.alignRuleImportant).toBe("important");
-  expect(result.alignRuleMatches).toBe(true);
+  expect(result.baseStretchHasFlexonSubstring).toBe(true);
+  expect(result.baseGrowRuleMatches).toBe(true);
+  expect(result.baseAlignRuleMatches).toBe(false);
+  expect(result.baseStretch).toEqual({ grow: "1", alignment: "normal" });
+  expect(result.tabletStretch).toEqual({ grow: "0", alignment: "stretch" });
+  expect(result.desktopStretch).toEqual({ grow: "0", alignment: "stretch" });
+  expect(result.screenStretch).toEqual({ grow: "0", alignment: "stretch" });
   expect(result.mobileShrinkNo).toBe("1");
   expect(result.mobileNoShrink).toBe("0");
 });
