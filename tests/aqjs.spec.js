@@ -1588,3 +1588,13 @@ test("Element.getValue Boolean mode inverts match-at-zero and missing-value outc
     noArgumentReturnsTarget: true
   });
 });
+
+
+test("Element.setStyles truncates CSS values containing a colon", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const target = document.createElement("div");
+    const returned = target.setStyles(["background-image: url(https://example.com/image.png)"]);
+    return { returnsTarget: returned === target, backgroundImage: target.style.backgroundImage, rawValue: target.getAttribute("style") };
+  });
+  expect(result).toEqual({ returnsTarget: true, backgroundImage: "", rawValue: null });
+});
