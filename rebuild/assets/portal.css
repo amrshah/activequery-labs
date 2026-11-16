@@ -31,6 +31,9 @@ button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px sol
 .brand-name small { display: block; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .18em; margin-top: -3px; }
 .primary-nav { display: flex; align-items: center; gap: 30px; color: #536176; font-size: 13px; font-weight: 650; }
 .primary-nav a:hover, .footer-inner > a:last-child:hover { color: var(--teal-dark); }
+.header-actions { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+.theme-toggle { min-height: 38px; padding: 0 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); color: var(--ink); font-size: 11px; font-weight: 800; cursor: pointer; }
+.theme-toggle:hover { border-color: var(--teal-dark); }
 .header-cta { padding: 10px 15px; border: 1px solid var(--line); border-radius: 9px; font-size: 13px; font-weight: 750; background: #fff; }
 .header-cta span { color: var(--teal-dark); margin-left: 5px; }
 .hero { background: radial-gradient(circle at 76% 18%, rgba(32,198,180,.16), transparent 28%), linear-gradient(125deg, #101b2c 0%, #14243b 58%, #1a3044 100%); color: #fff; padding: 88px 0 92px; overflow: hidden; }
@@ -172,4 +175,53 @@ kbd { padding: 2px 5px; border: 1px solid #d6dee8; border-radius: 4px; backgroun
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+
+/* User-selectable portal theme. The isolated playground remains independently styled. */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #e5edf7;
+  --muted: #a5b3c5;
+  --line: #304157;
+  --paper: #18263a;
+  --canvas: #0e1726;
+  --navy: #091321;
+  --navy-soft: #14243a;
+  --teal: #42d7c8;
+  --teal-dark: #65dfd2;
+  --shadow: 0 18px 50px rgba(0, 0, 0, .28);
+}
+[data-theme="dark"] body { background: var(--canvas); color: var(--ink); }
+[data-theme="dark"] .site-header { background: rgba(14, 23, 38, .94); border-color: #26374c; }
+[data-theme="dark"] .primary-nav { color: #b4c1d1; }
+[data-theme="dark"] .header-cta { background: #17263a; border-color: #3a4c63; color: #e5edf7; }
+[data-theme="dark"] .principle-card,
+[data-theme="dark"] .reference-card,
+[data-theme="dark"] .notice-card,
+[data-theme="dark"] .editor-panel,
+[data-theme="dark"] .preview-panel { background: var(--paper); border-color: var(--line); }
+[data-theme="dark"] .principle-card p,
+[data-theme="dark"] .reference-card p,
+[data-theme="dark"] .notice-card > p { color: #a9b7c8; }
+[data-theme="dark"] .playground-section { background: #111d2e; border-color: #26384e; }
+[data-theme="dark"] .panel-heading,
+[data-theme="dark"] .preview-heading { background: #1c2b40; border-color: var(--line); }
+[data-theme="dark"] .editor-tabs { background: #142238; border-color: var(--line); }
+[data-theme="dark"] .editor-tabs button { color: #aab8c9; }
+[data-theme="dark"] .editor-tabs button[aria-selected="true"] { background: #1c2b40; border-color: var(--line); color: #f0f5fb; }
+[data-theme="dark"] .editor-label,
+[data-theme="dark"] .editor-footer,
+[data-theme="dark"] .preview-footer,
+[data-theme="dark"] .playground-footnote,
+[data-theme="dark"] .editor-hint { color: #a4b2c4; }
+[data-theme="dark"] kbd { background: #24364d; border-color: #40536b; color: #e2eaf4; }
+[data-theme="dark"] .source-editor { border-color: #40536b; }
+[data-theme="dark"] .notice-card { background: #18263a; }
+[data-theme="dark"] .site-footer { background: #080f1a; }
+[data-theme="dark"] .footer-inner { color: #b9c6d5; }
+[data-theme="dark"] .theme-toggle { background: #1c2b40; border-color: #40536b; color: #e5edf7; }
+@media (max-width: 720px) {
+  .header-actions { margin-left: auto; }
+  .header-cta { margin-left: 0; }
 }
