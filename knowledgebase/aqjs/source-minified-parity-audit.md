@@ -62,3 +62,6 @@ This is a focused manual comparison, not a complete method-by-method semantic eq
 - Mastery Gate B parity criterion remains unchecked.
 
 References: [API inventory](api-inventory.md), [contract closure matrix](api-contract-closure-matrix.md), [runtime validation matrix](../testing/runtime-validation-matrix.md), [mastery gate](../mastery-gate.md).
+
+
+Run [#397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840) adds source/minified parity for Array.setSort's strict-module ReferenceError, Array.i's TypeError from the missing ActiveQuery.isNaN static method, Object.setValues/hasValues TypeErrors, and selected isNaS/isNaF predicate outputs. This closes parity for these specific failure contracts, not all Array/Object/predicate inputs.

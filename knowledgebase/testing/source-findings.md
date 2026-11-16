@@ -25,7 +25,7 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | ID | Source location | Observation | Risk / question | Required validation |
 |---|---|---|---|---|
 | JS-001 | `ActiveQuery.js:246,249` | `isNodeList(a)` and `isNaNL(a)` use `x.toString()` rather than the parameter `a`. | Likely ReferenceError or accidental dependence on a global `x`. | Test with and without a global x binding. |
-| JS-002 | `ActiveQuery.js:393-394` | Array `setSort` comparator assigns `aVal` and `bVal` without declarations. | Potential global leakage or strict/module ReferenceError. | Execute under ES module strict semantics and test sort correctness. |
+| JS-002 | `ActiveQuery.js:393-394` | Array `setSort` comparator assigns `aVal` and `bVal` without declarations. | Strict/module ReferenceError; sloppy execution may leak globals. | Strict-module failure reproduced; source/minified parity passed in run #397. Sorting correctness remains unsupported. |
 | JS-003 | `ActiveQuery.js:410` | Array `setItem(a,b)` returns early when either argument is truthy, only reaching splice when both are falsy. | Likely reversed guard or unintended contract. | Test index/value combinations, including zero, empty string, null and ordinary values. |
 | JS-004 | `ActiveQuery.js:567` | Element `siblings()` default branch references `target.parentNode`, but local variable is named `t`. | Likely ReferenceError unless a global target exists. | Test default sibling path in isolated page. |
 | JS-005 | `ActiveQuery.js:785` | NodeList `siblings()` default branch also references `target.parentNode`. | Same likely undeclared identifier issue; collection logic also requires inspection. | Test empty, one-element and multi-element NodeLists. |

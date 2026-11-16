@@ -34,7 +34,7 @@ Status: source-derived truth/failure analysis. Runtime coverage is partial; do n
 | `isArrayLike(a)`, `isNaAL(a)` | `isArray`, `isArraySet`, `isNodeList` | ReferenceError in clean module scope unless globals happen to exist | Explicit ReferenceError tests passed in run #313. |
 | `isObjectLike(a)`, `isNaOL(a)` | `isObject`, `isObjectMap()` | ReferenceError in clean scope; second call also omits `a` | Source review; runtime matrix says selected objectLike paths partial. |
 | `isNodeList(a)`, `isNaNL(a)` | `x.toString()` rather than `a.toString()` | ReferenceError unless a global `x` exists; with global x, result depends on x not argument | Explicit ReferenceError tests passed in run #313. |
-| Array `setSort` | `aVal`, `bVal` assigned without declarations | Strict/module execution may throw; sloppy script may leak globals | Needs isolated strict-mode parity test. |
+| Array `setSort` | `aVal`, `bVal` assigned without declarations | Strict/module execution throws ReferenceError; sloppy script may leak globals | Source/minified parity confirmed in run #397. |
 | Element `siblings()` default | `target` instead of local `t` | ReferenceError unless global target exists | Existing source finding; default path coverage should remain explicit. |
 | `sancha` data mode | `variables`, `ii`, `i` undeclared in paths | Global leakage or ReferenceError depending on path/execution mode | Existing test catches a data-mode ReferenceError; exact global-injection variants pending. |
 | `watch` callback | `this.watched` where callback this is not the Element | Callback may throw; observer callback calls `args.then()` without validation | Existing mutation test captures TypeError. |
@@ -71,3 +71,8 @@ Run in isolated ES-module browser pages without ambient globals:
 Do not use these methods as validators or authorization checks: `isArrayLike`, `isObjectLike`, `isNodeList`, `isNaNL`, `isSet`, `isArgument`, `isJSON`, `isFunction`, `isClass`, `isObjectLiteral`. Prefer native type checks and explicit schema validation.
 
 References: [type predicates and guards](type-predicates-and-guards.md), [API signature reference](api-signature-reference.md), [source findings](../testing/source-findings.md), [runtime validation matrix](../testing/runtime-validation-matrix.md).
+
+
+## Latest runtime/parity evidence
+
+Run [#397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840) confirms Array.setSort ReferenceError, Array.i TypeError from the missing ActiveQuery.isNaN static method, Object value-helper TypeErrors, and selected isNaS/isNaF outputs match between source and minified builds. The predicate truth table remains source-derived for untested inputs.

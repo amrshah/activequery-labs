@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-16.
-Run [#383](https://github.com/amrshah/activequery-labs/actions/runs/43817367901) is the latest completed browser run: **251 passed, 0 failed, 1 skipped** across Chromium and Firefox (126 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). Run #381 was the 123-test cleanup baseline; run #369 remains the earlier 120-test baseline. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run [#397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840) is the latest completed browser run: **265 passed, 0 failed, 1 skipped** across Chromium and Firefox (133 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). It adds source/minified parity for the known Array sort/index errors, Object value-helper failures and predicate edge cases. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -53,8 +53,8 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 
 | Target | Methods | Source review | Test coverage | Current status |
 |---|---|---|---|---|
-| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified; `then` makes Arrays thenable and can interfere with Promise-based consumers | i, getIndex, getCount default/operator branches, setSort, both setItem branches, has, getIndexs, then | Partial; delimiter, no-delimiter and missing-property default `getCount` cases passed in run #324; direct callback/missing/non-function callback behavior passed in run #327; Promise resolver assimilation remains pending and must be isolated safely |
-| Object | `setValues`, `hasValues` | Missing static predicate call | Both error cases | Passed in run #313 |
+| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified; `then` makes Arrays thenable and can interfere with Promise-based consumers | i, getIndex, getCount default/operator branches, setSort, both setItem branches, has, getIndexs, then | Partial; selected contracts passed in runs #324 and #327; Array.i TypeError and Array.setSort strict-module ReferenceError now have source/minified parity in run #397; Promise resolver assimilation remains isolated and bounded, while broader operator/edge coverage remains pending |
+| Object | `setValues`, `hasValues` | Missing static predicate call | Both error cases and source/minified parity | Both TypeError cases passed in run #313; source/minified parity passed in run #397 |
 | Number | `trim` | Inspected | Primitive trim test | Passed in run #313 |
 | String | `trim` | Native override and Unicode mismatch identified | Descriptor and U+FEFF/U+200B comparisons | Passed in run #313 |
 | Function | `then` | Inspected | Callback test | Passed in run #313 |
@@ -83,7 +83,7 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 | Area | Source review | Test coverage | Current status |
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
-| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, selected edge cases, Element value/child/then/setContent, DocumentFragment, NodeList events/setValue, Array query helpers and `then`, Document/Window events, early lifecycle and constructor `initlog`, Element/NodeList bulk mutations | Selected fixtures passed in runs #325, #327, #340, #348, #383, #392 and #395; complete method-level semantic parity remains pending |
+| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, selected edge cases, Element value/child/then/setContent, DocumentFragment, NodeList events/setValue, Array query helpers, sort/index failure paths and `then`, Object value-helper failures, predicate edge cases, Document/Window events, early lifecycle and constructor `initlog`, Element/NodeList bulk mutations | Selected fixtures passed in runs #325, #327, #340, #348, #383, #392, #395 and #397; complete method-level semantic parity remains pending |
 | Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed. Run #392 additionally verifies base vs responsive flex stretch selectors through CSSOM and computed styles. An experimental nested-scroll movement test failed in both engines in run #380 and was withdrawn without weakening assertions | 18 AQX cases plus the focused flex selector test pass; actual sticky movement remains unverified |
 | Clean-room portal | Responsive field guide, editable HTML/CSS/JS, isolated preview, AQJS event helper and narrow viewport layout | Four Playwright tests passed in run #369; preview sandbox allows scripts only and omits same-origin access | Passed in CI; public deployment withheld pending OSL-3.0 review |
 | Breakpoints and responsive variants | Inspected: mobile/tablet/desktop hide range queries are malformed and ignored by Chromium/Firefox; tablet/desktop/large typography prefixes activate at their min-width thresholds | 599/600/601, 601/992, 993/1439 and 1440 computed-style tests | All tested breakpoint and hide-helper behavior passed in run #313; short-landscape and touch/hybrid behavior remain untested |
@@ -212,3 +212,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `a811ee9d4b9e7621859f1284f4c36b911199e6a6` |
 | Execution | 263 passed, 0 failed, 1 skipped; 132 authored tests across Chromium and Firefox |
 | New AQJS coverage | Element setContent single Node, Array, empty Array, DocumentFragment, invalid string and partial-append failure behavior; source/minified parity |
+
+
+## Latest confirmed execution record — run #397
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840) |
+| Commit | `b2aae452e21f4f34e2351ffacb26d95f36d90f74` |
+| Execution | 265 passed, 0 failed, 1 skipped; 133 authored tests across Chromium and Firefox |
+| New parity coverage | Array.setSort ReferenceError, Array.i TypeError, Object.setValues/hasValues TypeErrors, isNaS/isNaF outputs matched between source and minified builds |
