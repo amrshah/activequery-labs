@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-16.
-Run [#408](https://github.com/amrshah/activequery-labs/actions/runs/43823338803) is the latest completed browser run: **275 passed, 0 failed, 1 skipped** across Chromium and Firefox (138 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). It adds source/minified parity for Array.getIndex's equals-branch assignment defect and Array.setItem's truthy-index/value no-op behavior. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run [#409](https://github.com/amrshah/activequery-labs/actions/runs/43823498069) is the latest completed browser run: **277 passed, 0 failed, 1 skipped** across Chromium and Firefox (138 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). It adds source/minified parity for Function, Element and NodeList then helpers and defer behavior. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -83,7 +83,7 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 | Area | Source review | Test coverage | Current status |
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
-| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, getPlugin imports/rejections, Element value/child/then/setContent/setText/setHtml/getValue/siblings, DocumentFragment, NodeList events/setValue, Array query helpers/sort/index/setItem, Object value-helper failures, predicate edge cases, Document/Window events, early lifecycle and constructor `initlog`, Element/NodeList bulk mutations | Selected fixtures passed in runs #325, #327, #340, #348, #383, #392, #395, #397, #399 and #405; complete method-level semantic parity remains pending |
+| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, getPlugin imports/rejections, Function/Element/NodeList then, defer, Element value/child/then/setContent/setText/setHtml/getValue/siblings, DocumentFragment, NodeList events/setValue, Array query helpers/sort/index/setItem, Object value-helper failures, predicate edge cases, Document/Window events, early lifecycle and constructor `initlog`, Element/NodeList bulk mutations | Selected fixtures passed in runs #325, #327, #340, #348, #383, #392, #395, #397, #399, #405 and #409; complete method-level semantic parity remains pending |
 | AQCSS flex selector cascade | Source-derived base/responsive selector defects, token spelling, alias composition and importance differences | Base vs responsive stretch CSSOM behavior, tablet/desktop/screen wrap-reverse mismatch, right-bottom vs important middle alignment, and mobile middle alias compound-selector behavior | Passed in Chromium and Firefox in runs #392, #394, #401 and #403 |
 | Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed. Run #392 additionally verifies base vs responsive flex stretch selectors through CSSOM and computed styles. An experimental nested-scroll movement test failed in both engines in run #380 and was withdrawn without weakening assertions | 18 AQX cases plus the focused flex selector test pass; actual sticky movement remains unverified |
 | Clean-room portal | Responsive field guide, editable HTML/CSS/JS, isolated preview, AQJS event helper and narrow viewport layout | Four Playwright tests passed in run #369; preview sandbox allows scripts only and omits same-origin access | Passed in CI; public deployment withheld pending OSL-3.0 review |
@@ -283,3 +283,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `cd84e63b7604427e75c66567bac02af0b654d5ef` |
 | Execution | 275 passed, 0 failed, 1 skipped; 138 authored tests across Chromium and Firefox |
 | New AQJS parity | Array.getIndex equals-branch assignment behavior and Array.setItem truthy index/value no-op behavior match between source and minified builds |
+
+
+## Latest confirmed execution record — run #409
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #409](https://github.com/amrshah/activequery-labs/actions/runs/43823498069) |
+| Commit | `a09839f7576b1db7d724f76792a80f6aed80d359` |
+| Execution | 277 passed, 0 failed, 1 skipped; 138 authored tests across Chromium and Firefox |
+| New parity coverage | Function/Element/NodeList then receiver/return contracts and defer timer/callback-array behavior |

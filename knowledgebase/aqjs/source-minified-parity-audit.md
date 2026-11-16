@@ -71,3 +71,6 @@ Run [#399](https://github.com/amrshah/activequery-labs/actions/runs/43821478858)
 
 
 Run [#405](https://github.com/amrshah/activequery-labs/actions/runs/43822976254) adds source/minified parity for getPlugin: approved fixture import, non-string fallback to the instance, and propagation of a rejected dynamic import. This does not validate untrusted module specifiers or create an allowlist; callers must enforce that security boundary.
+
+
+Run [#409](https://github.com/amrshah/activequery-labs/actions/runs/43823498069) adds source/minified parity for Function, Element and NodeList then callback receiver/return contracts and defer timer/callback-array behavior. This is selected parity evidence; unusual callback inputs and lifecycle replay remain pending.

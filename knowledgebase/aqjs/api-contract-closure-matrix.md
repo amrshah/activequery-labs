@@ -36,6 +36,7 @@ Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passe
 | NodeList.on | event validation and return value | valid/invalid event, empty and non-empty collections, callback invocation | valid/invalid arguments, empty collection identity and listener dispatch passed in run #324 |
 | Document/Window.on | event validation and return value | valid/invalid event, missing callback, listener cleanup limits | custom event dispatch passed in run #313; invalid event/callback receiver identity and source/minified parity passed in run #327 |
 | Lifecycle on | early/late registration and replay semantics | before/after DOMContentLoaded/load/pageshow; offline/online/close; unknown event | late registration no-replay, early `ready`/`init`/`run`, offline/online/close dispatch, unknown-event ignore and receiver identity passed in runs #313/#340/#347; repeated construction and unusual timing remain pending |
+| Function.then | callback receiver and return value | callable, missing/non-function callback, receiver identity | selected Function/Element/NodeList then receiver/return behavior passed in source/minified parity in run #409; broader invalid-callback cases remain pending |
 
 ## Priority 1 — predicate and value truth tables
 
