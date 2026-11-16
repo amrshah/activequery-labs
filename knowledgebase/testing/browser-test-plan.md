@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: latest merged-branch browser run [#480](https://github.com/amrshah/activequery-labs/actions/runs/43845146200) passed **351 tests with 1 documented skip**. Pages pull-request packaging validation [#533](https://github.com/amrshah/activequery-labs/actions/runs/43845146125) also passed required-file checks, pinned source/license hash verification, distributable asset checks and artifact upload; deployment was skipped for the PR event. Coverage remains targeted rather than exhaustive.
+Status: latest PR-19 browser run [#491](https://github.com/amrshah/activequery-labs/actions/runs/43857523951) passed **363 tests with 1 documented skip**. Pages packaging validation [#544](https://github.com/amrshah/activequery-labs/actions/runs/43857523862) passed required-file checks, pinned source/license hash verification, distributable asset checks and artifact upload; deployment was skipped for the PR event. Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -19,7 +19,7 @@ Status: latest merged-branch browser run [#480](https://github.com/amrshah/activ
 - Browser tests compare core AQJS selector/Element behavior and selected edge contracts across source and minified module builds, including Element `setValue`, `setChild`, `then`, NodeList event registration/empty-collection return, Array `getCount` default-operator behavior, Array `then`, Document/Window event helpers, early lifecycle hooks and constructor `initlog` timing, Array query helper parity, Element/NodeList bulk mutation parity, Element fragment/form-control contracts, NodeList multi-control setValue parity, Element setContent replacement/failure parity, Array/Object/predicate failure parity, and Array.setItem / Element setText, setHtml, getValue and siblings parity, plus base/responsive flex importance cascade and mobile-middle alias composition (runs #325, #327, #340, #348, #383, #392, #395, #397, #399, #401 and #403).
 - CI verifies exact Git blob SHAs for both source and minified files before testing.
 - Recent AQJS regression coverage merged in PRs #12–#16 includes lifecycle/watch and sift findings, Element text-helper contracts, and `sancha()` raw-HTML interpolation/security behavior. The dedicated `sancha()` suite passed in run [#478](https://github.com/amrshah/activequery-labs/actions/runs/43844759071); the merged-branch full suite passed again in run #480.
-- The portal consent gate, pre-consent network silence, post-consent asset requests, theme persistence, keyboard editor-tab navigation, learning-guide navigation and narrow viewport behavior passed in run #480.
+- The portal consent gate, pre-consent network silence, post-consent asset requests, theme persistence, keyboard editor-tab navigation, learning-guide navigation and narrow viewport behavior passed in run #491.
 
 ### AQJS
 
@@ -89,7 +89,7 @@ Counts below are taken from the Chromium test listing in verified workflow run #
 - `tests/rebuild-portal.spec.js`: 4 clean-room portal tests (render, sandbox/live edit, AQJS event bridge, narrow layout).
 - `tests/minified-parity.spec.js`: 24 source/minified parity tests.
 - `tests/css-source-parse.spec.js`: 4 source/catalog tests; `tests/js-source-parse.spec.js`: 1 API inventory test; `tests/knowledgebase-integrity.spec.js`: 1 link-integrity test.
-- Total: 149 authored test cases. Run #429 executed 298 browser-project cases across Chromium and Firefox: 297 passed and one documented Firefox mobile-emulation case was skipped. The workflow is configured for both `push` and `pull_request` to `main`; future changes must continue to pass it.
+- Latest complete execution: run #491 executed 364 browser-project cases across Chromium and Firefox: **363 passed, 0 failed, 1 documented Firefox mobile-emulation skip**. The repository's historical authored-test count is not treated as current; use the workflow output as the authoritative execution count. The workflow is configured for both `push` and `pull_request` to `main`.
 
 ## Execution record
 
