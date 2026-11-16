@@ -1049,18 +1049,26 @@ test("AQCSS sticky top remains pinned while its scroll container moves", async (
     scroller.scrollTop = 120;
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
+    const stickyRect = sticky.getBoundingClientRect();
+    const scrollerRect = scroller.getBoundingClientRect();
     return {
       position: getComputedStyle(sticky).position,
       top: getComputedStyle(sticky).top,
+      overflowY: getComputedStyle(scroller).overflowY,
       initialOffset,
-      scrolledOffset: sticky.getBoundingClientRect().top - scroller.getBoundingClientRect().top,
-      scrollTop: scroller.scrollTop
+      scrolledOffset: stickyRect.top - scrollerRect.top,
+      stickyTop: stickyRect.top,
+      scrollerTop: scrollerRect.top,
+      scrollTop: scroller.scrollTop,
+      scrollHeight: scroller.scrollHeight,
+      clientHeight: scroller.clientHeight
     };
   });
 
+  console.log("AQX-009 sticky scroll diagnostics", JSON.stringify(result));
   expect(result.position).toBe("sticky");
   expect(result.top).toBe("0px");
   expect(result.initialOffset).toBeGreaterThan(70);
   expect(result.scrollTop).toBe(120);
-  expect(Math.abs(result.scrolledOffset)).toBeLessThanOrEqual(1);
+  expect(Math.abs(result.scrolledOffset), JSON.stringify(result)).toBeLessThanOrEqual(1);
 });
