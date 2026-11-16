@@ -1,5 +1,29 @@
 const $ = (selector) => document.querySelector(selector);
 
+const themeToggle = $("#theme-toggle");
+function applyTheme(theme) {
+  const dark = theme === "dark";
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  themeToggle.setAttribute("aria-pressed", String(dark));
+  themeToggle.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+  themeToggle.textContent = dark ? "Light mode" : "Dark mode";
+}
+let preferredTheme = "light";
+try {
+  const savedTheme = localStorage.getItem("aq-labs-theme");
+  preferredTheme = savedTheme === "light" || savedTheme === "dark"
+    ? savedTheme
+    : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+} catch {
+  preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+applyTheme(preferredTheme);
+themeToggle.addEventListener("click", () => {
+  const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  applyTheme(nextTheme);
+  try { localStorage.setItem("aq-labs-theme", nextTheme); } catch { /* Theme still works for this page session. */ }
+});
+
 const initialExample = {
   html: `<section class="demo-wrap">
   <div class="demo-intro">
