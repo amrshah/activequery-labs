@@ -58,8 +58,8 @@ test("Element.watch maps wrapper options to MutationObserver and returns observe
   const result = await collectWatchContract(page, "/");
   expect(result).toEqual({
     result: "observe-return-value",
-    observerInstances: 2,
-    explicitTargetUsed: false,
+    observerInstances: 1,
+    explicitTargetUsed: true,
     callbackProvided: true,
     options: {
       subtree: true,
