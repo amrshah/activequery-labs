@@ -953,3 +953,36 @@ test("AQCSS responsive flex display and flow selectors retain the row-wrap-rever
     });
   }
 });
+
+
+test("AQCSS right-bottom alignment loses to important middle alignment in base and responsive families", async ({ page }) => {
+  await page.setViewportSize({ width: 1500, height: 900 });
+  const result = await page.evaluate(() => {
+    const observations = {};
+    const add = (key, classes) => {
+      const node = document.createElement("div");
+      node.className = classes;
+      document.body.appendChild(node);
+      observations[key] = getComputedStyle(node).alignItems;
+    };
+
+    add("baseRightBottom", "aq-flexon aq-flexon--right-bottom");
+    add("baseConflict", "aq-flexon aq-flexon--middle aq-flexon--right-bottom");
+    for (const prefix of ["aq-t", "aq-d", "aq-s"]) {
+      add(`${prefix}RightBottom`, `${prefix}-flexon ${prefix}-flexon--right-bottom`);
+      add(`${prefix}Conflict`, `${prefix}-flexon ${prefix}-flexon--middle ${prefix}-flexon--right-bottom`);
+    }
+    return observations;
+  });
+
+  expect(result).toEqual({
+    baseRightBottom: "flex-end",
+    baseConflict: "center",
+    "aq-tRightBottom": "flex-end",
+    "aq-tConflict": "center",
+    "aq-dRightBottom": "flex-end",
+    "aq-dConflict": "center",
+    "aq-sRightBottom": "flex-end",
+    "aq-sConflict": "center"
+  });
+});
