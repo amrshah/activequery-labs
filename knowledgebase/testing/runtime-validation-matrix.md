@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-16.
-Run [#491](https://github.com/amrshah/activequery-labs/actions/runs/43857523951) is the latest verified PR-19 browser run against the merged source tree: **363 passed, 0 failed, 1 skipped** across Chromium and Firefox. The skip is the documented Firefox mobile-emulation case. It includes the merged `watch`, `sift`, `sancha`, `Element.setText`, portal assent-gate, theme, keyboard-tab and responsive-playground regression coverage. This run includes the repeated lifecycle replay, Function.then invalid-callback, and expanded sancha placeholder/callback fixtures. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run [#494](https://github.com/amrshah/activequery-labs/actions/runs/43857963894) is the latest verified PR-19 browser run: **363 passed, 0 failed, 1 skipped** across Chromium and Firefox. The skip is the documented Firefox mobile-emulation case. It includes the merged `watch`, `sift`, `sancha`, `Element.setText`, portal assent-gate, theme, keyboard-tab and responsive-playground regression coverage. This run includes the repeated lifecycle replay, Function.then invalid-callback, and expanded sancha placeholder/callback fixtures. The new AQX-009 real sticky-scroll fixture was authored after this run and is awaiting the next CI execution. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -85,7 +85,7 @@ The full browser suite in [#491](https://github.com/amrshah/activequery-labs/act
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
 | AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, getPlugin imports/rejections, Function/Element/NodeList then, defer, Element value/child/then/setContent/setText/setHtml/getValue/siblings, DocumentFragment, NodeList events/setValue, Array query helpers/sort/index/setItem, Object value-helper failures, predicate edge cases, Document/Window events, early lifecycle and constructor `initlog`, lifecycle event mapping, Element/NodeList bulk mutations, `watch`, `sift`, `sancha`, Element text helpers | Selected fixtures passed in runs #325, #327, #340, #348, #383, #392, #395, #397, #399, #405, #409, #413, #417, #477, #478 and #491; full PR-19 suite passed in #491. Complete method-level semantic parity remains pending |
 | AQCSS flex selector cascade | Source-derived base/responsive selector defects, token spelling, alias composition and importance differences | Base vs responsive stretch CSSOM behavior, tablet/desktop/screen wrap-reverse mismatch, right-bottom vs important middle alignment, and mobile middle alias compound-selector behavior | Passed in Chromium and Firefox in runs #392, #394, #401 and #403 |
-| Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed. Run #392 additionally verifies base vs responsive flex stretch selectors through CSSOM and computed styles. An experimental nested-scroll movement test failed in both engines in run #380 and was withdrawn without weakening assertions | 18 AQX cases plus the focused flex selector test pass; actual sticky movement remains unverified |
+| Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed. Run #392 additionally verifies base vs responsive flex stretch selectors through CSSOM and computed styles. An experimental nested-scroll movement test failed in both engines in run #380 and was withdrawn without weakening assertions | 18 AQX cases plus the focused flex selector test pass; the AQX-009 real-scroll fixture is authored in PR #19 and awaits CI |
 | Clean-room portal | Responsive field guide, editable HTML/CSS/JS, isolated preview, consent-gated pinned assets, AQJS event helper, theme and narrow viewport layout | Portal-specific browser tests passed in merged-branch run #480; Pages packaging validation and pinned-source/license checks passed in PR workflow #533 | Portal and artifact packaging validated in CI; post-merge Pages deployment and public-site smoke test remain to be confirmed |
 | Breakpoints and responsive variants | Inspected: mobile/tablet/desktop hide range queries are malformed and ignored by Chromium/Firefox; tablet/desktop/large typography prefixes activate at their min-width thresholds | 599/600/601, 601/992, 993/1439 and 1440 computed-style tests | All tested breakpoint and hide-helper behavior passed in run #313; short-landscape and touch/hybrid behavior remain untested |
 | Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Passed in run #313 |
@@ -184,7 +184,7 @@ The historical run validates the 79 authored tests in two browser projects. It d
 Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505) completed with 245 passed, 2 failed and 1 skipped. Both failures were the experimental AQX-009 nested-scroll movement assertion (Chromium and Firefox); computed `position:sticky` and `top:0` continued to pass. The movement test was removed because the fixture/scroll-container interaction was not yet isolated well enough to support a trustworthy conclusion. This is an unresolved runtime gap, not evidence that the upstream utility is broken. Do not claim actual sticky movement is verified.
 
 
-## Latest confirmed execution record — run #383
+## Historical execution record — run #383
 
 | Field | Verified value |
 |---|---|
@@ -194,7 +194,7 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | New AQJS coverage | Element DocumentFragment/partial-append behavior; text input, checkbox `.value`, select and textarea `setValue`; source/minified parity for both |
 
 
-## Latest confirmed execution record — run #392
+## Historical execution record — run #392
 
 | Field | Verified value |
 |---|---|
@@ -205,7 +205,7 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | New AQJS evidence | NodeList setValue across input, checkbox .value, select and textarea; generic-element exclusion and empty-collection receiver identity; source/minified parity |
 
 
-## Latest confirmed execution record — run #395
+## Historical execution record — run #395
 
 | Field | Verified value |
 |---|---|
@@ -215,7 +215,7 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | New AQJS coverage | Element setContent single Node, Array, empty Array, DocumentFragment, invalid string and partial-append failure behavior; source/minified parity |
 
 
-## Latest confirmed execution record — run #397
+## Historical execution record — run #397
 
 | Field | Verified value |
 |---|---|
@@ -225,7 +225,7 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | New parity coverage | Array.setSort ReferenceError, Array.i TypeError, Object.setValues/hasValues TypeErrors, isNaS/isNaF outputs matched between source and minified builds |
 
 
-## Latest confirmed execution record — run #399
+## Historical execution record — run #399
 
 | Field | Verified value |
 |---|---|
@@ -235,7 +235,7 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | New parity coverage | Array.setItem truthy/falsy branches; Element setText empty-string behavior, setHtml truthy no-op, getValue modes, and siblings next/prev/default error behavior |
 
 
-## Latest confirmed execution record — run #401
+## Historical execution record — run #401
 
 | Field | Verified value |
 |---|---|
@@ -245,7 +245,7 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | New AQCSS evidence | Right-bottom alignment applies alone but loses to the important middle alignment in base, tablet, desktop and screen families |
 
 
-## Latest confirmed execution record — run #403
+## Historical execution record — run #403
 
 | Field | Verified value |
 |---|---|
@@ -255,7 +255,7 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | New AQCSS evidence | Base mobile middle alias compound-selector requirement vs independently working base/mobile-center and tablet/desktop/screen-middle aliases |
 
 
-## Latest confirmed execution record — run #405
+## Historical execution record — run #405
 
 | Field | Verified value |
 |---|---|
@@ -285,7 +285,7 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | New AQJS parity | Array.getIndex equals-branch assignment behavior and Array.setItem truthy index/value no-op behavior match between source and minified builds |
 
 
-## Latest confirmed execution record — run #409
+## Historical execution record — run #409
 
 | Field | Verified value |
 |---|---|
@@ -295,7 +295,7 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | New parity coverage | Function/Element/NodeList then receiver/return contracts and defer timer/callback-array behavior |
 
 
-## Latest confirmed execution record — run #413
+## Historical execution record — run #413
 
 | Field | Verified value |
 |---|---|
@@ -315,7 +315,7 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | New AQJS coverage | setText ignores empty string/0/false/null and returns its receiver; setHtml writes falsy values, returns the assigned value, converts null to empty innerHTML, and outerHTML assignment can remove the host; source/minified parity |
 
 
-## Latest confirmed execution record — run #416
+## Historical execution record — run #416
 
 | Field | Verified value |
 |---|---|
@@ -325,7 +325,7 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | New AQJS parity | Array.getCount unrecognised operator fallback (including `>`), no-match result and non-string substring TypeError |
 
 
-## Latest confirmed execution record — run #417
+## Historical execution record — run #417
 
 | Field | Verified value |
 |---|---|
