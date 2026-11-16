@@ -988,3 +988,45 @@ test("AQJS source and minified builds preserve the non-validating isJSON predica
     functionValue: false
   });
 });
+
+
+test("AQJS source and minified class mutators preserve AQCSS display utility interaction", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const node = document.createElement("div");
+      document.body.append(node);
+      const initial = getComputedStyle(node).display;
+      const hideReturn = node.setClasses(["hide"]);
+      const hidden = getComputedStyle(node).display;
+      const showReturn = node.setClasses(["show"]);
+      const shown = getComputedStyle(node).display;
+      const removeShowReturn = node.removeClasses(["show"]);
+      const hiddenAgain = getComputedStyle(node).display;
+      const removeHideReturn = node.removeClasses(["hide"]);
+      const restored = getComputedStyle(node).display;
+      return {
+        initial,
+        hidden,
+        shown,
+        hiddenAgain,
+        restored,
+        returnsSame: [hideReturn, showReturn, removeShowReturn, removeHideReturn].every(value => value === node),
+        classes: node.className
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    initial: "block",
+    hidden: "none",
+    shown: "block",
+    hiddenAgain: "none",
+    restored: "block",
+    returnsSame: true,
+    classes: ""
+  });
+});

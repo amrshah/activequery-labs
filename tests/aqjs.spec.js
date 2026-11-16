@@ -1430,3 +1430,39 @@ test("AQJS isJSON predicate accepts broad typeof categories without parsing JSON
     functionValue: false
   });
 });
+
+
+test("AQJS class mutators activate and remove AQCSS display utilities", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const node = document.createElement("div");
+    node.id = "aqcss-aqjs-display-bridge";
+    document.body.append(node);
+    const initial = getComputedStyle(node).display;
+    const hideReturn = node.setClasses(["hide"]);
+    const hidden = getComputedStyle(node).display;
+    const showReturn = node.setClasses(["show"]);
+    const shown = getComputedStyle(node).display;
+    const removeShowReturn = node.removeClasses(["show"]);
+    const hiddenAgain = getComputedStyle(node).display;
+    const removeHideReturn = node.removeClasses(["hide"]);
+    const restored = getComputedStyle(node).display;
+    return {
+      initial,
+      hidden,
+      shown,
+      hiddenAgain,
+      restored,
+      returnsSame: [hideReturn, showReturn, removeShowReturn, removeHideReturn].every(value => value === node),
+      classes: node.className
+    };
+  });
+  expect(result).toEqual({
+    initial: "block",
+    hidden: "none",
+    shown: "block",
+    hiddenAgain: "none",
+    restored: "block",
+    returnsSame: true,
+    classes: ""
+  });
+});
