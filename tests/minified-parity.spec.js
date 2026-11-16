@@ -1194,3 +1194,20 @@ test("AQJS source and minified builds preserve Element.getValue Boolean-mode out
     noArgumentReturnsTarget: true
   });
 });
+
+
+test("AQJS source and minified builds preserve Element.setStyles colon-truncation behavior", async ({ page }) => {
+  const collect = async path => {
+    await page.goto(path);
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const target = document.createElement("div");
+      const returned = target.setStyles(["background-image: url(https://example.com/image.png)"]);
+      return { returnsTarget: returned === target, backgroundImage: target.style.backgroundImage, rawValue: target.getAttribute("style") };
+    });
+  };
+  const source = await collect("/");
+  const minified = await collect("/tests/fixture-min.html");
+  expect(minified).toEqual(source);
+  expect(source).toEqual({ returnsTarget: true, backgroundImage: "", rawValue: null });
+});
