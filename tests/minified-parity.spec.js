@@ -695,3 +695,28 @@ test("AQJS source and minified builds preserve getPlugin import, fallback and re
     rejectedError: "TypeError"
   });
 });
+
+
+test("AQJS source and minified builds preserve Array.getIndex and setItem edge behavior", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const values = [{ id: 1 }, { id: 2 }];
+      const index = values.getIndex("id", "=", 99);
+      const list = [1, 2];
+      const returned = list.setItem(1, 3);
+      return {
+        getIndex: { index, ids: values.map(item => item.id) },
+        setItem: { values: [...list], returnedSame: returned === list }
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    getIndex: { index: 0, ids: [99, 2] },
+    setItem: { values: [1, 2], returnedSame: true }
+  });
+});
