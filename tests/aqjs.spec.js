@@ -1271,3 +1271,55 @@ test("NodeList setValue updates native value controls, ignores generic elements 
     emptyReturnsSame: true
   });
 });
+
+
+test("Element setContent clears before appending Nodes, arrays and fragments, including failure paths", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const singleHost = document.createElement("div");
+    singleHost.innerHTML = "<em>old</em>";
+    const single = document.createElement("span");
+    const singleReturn = singleHost.setContent(single);
+
+    const arrayHost = document.createElement("div");
+    arrayHost.innerHTML = "<em>old</em>";
+    const arrayReturn = arrayHost.setContent([document.createElement("i"), document.createElement("b")]);
+
+    const emptyHost = document.createElement("div");
+    emptyHost.innerHTML = "<em>old</em>";
+    const emptyReturn = emptyHost.setContent([]);
+
+    const fragmentHost = document.createElement("div");
+    fragmentHost.innerHTML = "<em>old</em>";
+    const fragment = document.createDocumentFragment();
+    fragment.append(document.createElement("u"), document.createElement("strong"));
+    const fragmentReturn = fragmentHost.setContent(fragment);
+
+    const partialHost = document.createElement("div");
+    partialHost.innerHTML = "<em>old</em>";
+    const valid = document.createElement("small");
+    let partialError = null;
+    try { partialHost.setContent([valid, "invalid"]); } catch (error) { partialError = error.name; }
+
+    const stringHost = document.createElement("div");
+    stringHost.innerHTML = "<em>old</em>";
+    let stringError = null;
+    try { stringHost.setContent("plain text"); } catch (error) { stringError = error.name; }
+
+    return {
+      single: { returnsHost: singleReturn === singleHost, tags: [...singleHost.children].map(node => node.tagName) },
+      array: { returnsHost: arrayReturn === arrayHost, tags: [...arrayHost.children].map(node => node.tagName) },
+      emptyArray: { returnsHost: emptyReturn === emptyHost, childCount: emptyHost.childElementCount },
+      fragment: { returnsHost: fragmentReturn === fragmentHost, emptied: fragment.childNodes.length === 0, tags: [...fragmentHost.children].map(node => node.tagName) },
+      partial: { error: partialError, tags: [...partialHost.children].map(node => node.tagName) },
+      string: { error: stringError, html: stringHost.innerHTML }
+    };
+  });
+  expect(result).toEqual({
+    single: { returnsHost: true, tags: ["SPAN"] },
+    array: { returnsHost: true, tags: ["I", "B"] },
+    emptyArray: { returnsHost: true, childCount: 0 },
+    fragment: { returnsHost: true, emptied: true, tags: ["U", "STRONG"] },
+    partial: { error: "TypeError", tags: ["SMALL"] },
+    string: { error: "TypeError", html: "" }
+  });
+});
