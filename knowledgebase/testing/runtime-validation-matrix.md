@@ -353,3 +353,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `d2c3faad2ebf516618a6dde9405d5e0c495dab3c` |
 | Execution | 287 passed, 0 failed, 1 skipped; 144 authored tests across Chromium and Firefox |
 | Included new AQJS evidence | Array.getCount fallback cases from #416; lifecycle event mapping and receiver identity from #417 |
+
+
+## Latest confirmed execution record — run #422
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #422](https://github.com/amrshah/activequery-labs/actions/runs/43825270639) |
+| Commit | `d75ddbfba3ff15ae1edb0df66dbec93fc60fe6e5` |
+| Execution | 289 passed, 0 failed, 1 skipped; 145 authored tests across Chromium and Firefox |
+| New AQJS parity | NodeList no-op stubs on empty and populated collections: same-collection return values, no mutation, getStyles undefined, getClasses returns receiver |

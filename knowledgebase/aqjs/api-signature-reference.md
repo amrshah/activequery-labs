@@ -123,3 +123,8 @@ Run [#416](https://github.com/amrshah/activequery-labs/actions/runs/43824307566)
 ### Lifecycle event mapping verified across source/minified builds
 
 Run [#417](https://github.com/amrshah/activequery-labs/actions/runs/43824492132) confirms instance lifecycle mapping for `offline`, `online` and `close`, ignores unknown event names, and preserves receiver identity across AQJS source and minified distributions. Repeated construction and unusual timing remain open.
+
+
+### NodeList stub behavior verified across source/minified builds
+
+Run [#422](https://github.com/amrshah/activequery-labs/actions/runs/43825270639) confirms that the identified no-op NodeList methods preserve populated and empty collection receivers and do not mutate the DOM. `getStyles()` returns `undefined`; `getClasses()` returns the same NodeList. These return values do not imply that the requested operations were performed.

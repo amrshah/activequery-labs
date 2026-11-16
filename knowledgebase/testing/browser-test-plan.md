@@ -177,3 +177,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #420
 
 [Workflow #420](https://github.com/amrshah/activequery-labs/actions/runs/43824816097) passed 287 browser cases, 0 failed, 1 skipped; 144 authored tests across Chromium and Firefox. The run validates the knowledgebase update for Array.getCount and lifecycle parity.
+
+
+## Latest execution — run #422
+
+[Workflow #422](https://github.com/amrshah/activequery-labs/actions/runs/43825270639) passed 289 browser cases, 0 failed, 1 skipped; 145 authored tests across Chromium and Firefox. The run adds NodeList stub source/minified parity for empty and populated collections.
