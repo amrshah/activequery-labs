@@ -1,11 +1,11 @@
 # AQCSS Focused Composition Test Plan
 
 Source: AQCSS v25.6.0, pinned SHA c03546ecd1a41d26cbbfa8f1e31d38731f77cf62.
-Status: partially implemented and browser-validated. Run [#365](https://github.com/amrshah/activequery-labs/actions/runs/43647892108) passed AQX-001–008 and AQX-010–019 in Chromium and Firefox; run [#392](https://github.com/amrshah/activequery-labs/actions/runs/43819572529) adds dedicated CSSOM/computed-style coverage for the base vs responsive flex stretch selectors. AQX-009 currently verifies computed `position:sticky` and `top:0` cascade only; its real scroll-container behavior remains unverified and is not counted as fully accepted.
+Status: partially implemented and browser-validated. Run [#365](https://github.com/amrshah/activequery-labs/actions/runs/43647892108) passed AQX-001–008 and AQX-010–019 in Chromium and Firefox; run [#392](https://github.com/amrshah/activequery-labs/actions/runs/43819572529) adds dedicated CSSOM/computed-style coverage for the base vs responsive flex stretch selectors; runs #394 and #401 verify responsive wrap-reverse spelling and right-bottom importance behavior. AQX-009 currently verifies computed `position:sticky` and `top:0` cascade only; its real scroll-container behavior remains unverified and is not counted as fully accepted.
 
 ## Existing coverage — avoid blind duplication
 
-The current suite documents tests for base border token and hover relative-color alpha, facet sizing and third-width anomaly, base flex behavior and selected aliases, the escaped base flex stretch selectors versus unescaped responsive selectors, responsive row-wrap-reverse token mismatch, invalid xlarge row gap, spacing aliases, responsive breakpoints and malformed hide helpers, focus outline, disabled descendants, tooltip/dropdown hover behavior, reduced motion and short-landscape CSSOM divergence.
+The current suite documents tests for base border token and hover relative-color alpha, facet sizing and third-width anomaly, base flex behavior and selected aliases, the escaped base flex stretch selectors versus unescaped responsive selectors, responsive row-wrap-reverse token mismatch, right-bottom vs middle importance cascade, invalid xlarge row gap, spacing aliases, responsive breakpoints and malformed hide helpers, focus outline, disabled descendants, tooltip/dropdown hover behavior, reduced motion and short-landscape CSSOM divergence.
 
 See [browser-test-plan.md](browser-test-plan.md) and [runtime-validation-matrix.md](runtime-validation-matrix.md). Isolated family tests do not prove all cross-family combinations.
 
