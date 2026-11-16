@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-16.
-Run [#480](https://github.com/amrshah/activequery-labs/actions/runs/43845146200) is the latest verified merged-branch browser run: **351 passed, 0 failed, 1 skipped** across Chromium and Firefox. The skip is the documented Firefox mobile-emulation case. It includes the merged `watch`, `sift`, `sancha`, `Element.setText`, portal assent-gate, theme, keyboard-tab and responsive-playground regression coverage. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run [#489](https://github.com/amrshah/activequery-labs/actions/runs/43852291933) is the latest verified PR-18 browser run against the merged source tree: **359 passed, 0 failed, 1 skipped** across Chromium and Firefox. The skip is the documented Firefox mobile-emulation case. It includes the merged `watch`, `sift`, `sancha`, `Element.setText`, portal assent-gate, theme, keyboard-tab and responsive-playground regression coverage. This run predates the new lifecycle-replay and expanded placeholder fixtures in the current closeout PR. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
