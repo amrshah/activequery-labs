@@ -31,7 +31,7 @@ The framework is not declared mastered until Gates A–D have objective, indepen
 - [x] A reproducible Playwright harness runs in Chromium and Firefox against pinned source and minified assets.
 - [x] AQCSS AST/source validation and representative responsive computed-style tests pass.
 - [x] Representative API, collection, event, mutation, error and edge contracts are browser-tested.
-- [x] Latest full browser workflow after PR #18, [#491](https://github.com/amrshah/activequery-labs/actions/runs/43857523951), passed **363 tests with 1 documented skip**.
+- [x] Latest full browser workflow after PR #19, [#494](https://github.com/amrshah/activequery-labs/actions/runs/43857963894), passed **363 tests with 1 documented skip**.
 - [x] Portal preview consent gating, pinned asset loading, theme persistence, keyboard editor-tab navigation, learning guides and narrow viewport behavior passed in the same browser workflow.
 - [ ] Comprehensive keyboard/focus/touch/pointer/reduced-motion coverage across the framework is incomplete; selected cases pass, but this is not a full accessibility audit.
 - [ ] Add broader assistive-technology checks and complete the remaining AQCSS composition matrix.
