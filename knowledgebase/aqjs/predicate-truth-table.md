@@ -80,7 +80,7 @@ Run [#397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840)
 
 ## Expanded runtime and source/minified parity fixtures
 
-Three additional Playwright parity fixtures have been authored; their CI result is pending:
+Three additional Playwright parity fixtures passed in [run #464](https://github.com/amrshah/activequery-labs/actions/runs/43834593267): 331 browser executions passed, with one documented skip, across Chromium and Firefox.
 
 1. **Ambient-global hazards:** confirms that `isArrayLike`, `isObjectLike` and `isNodeList` throw ReferenceError in a clean module environment, but can change behavior when unrelated globals named `isArray`, `isObject`, `isObjectMap` or `x` are introduced. The `isNodeList(a)` result is controlled by global `x`, not by its argument.
 2. **`isEmpty` contract:** covers all default sentinels (`null`, `"0"`, `"0.0"`, `false`, `undefined`, empty string), numeric and whitespace normalization, nested-array recursion, empty/non-empty arrays, exceptions and invalid exception-list input.
