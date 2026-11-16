@@ -1528,3 +1528,41 @@ test("Element.sift ignores a normal selector and installs no keyup handler", asy
   });
   expect(result).toEqual({ returnsTarget: true, handlerInstalled: false });
 });
+
+
+test("Element.sancha static rendering works while data rendering hits an undeclared identifier", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const appendHost = document.createElement("div");
+    appendHost.innerHTML = "<i>existing</i>";
+    const appendReturn = appendHost.sancha({ static: true, template: "<b>appended</b>" });
+
+    const swapHost = document.createElement("div");
+    swapHost.innerHTML = "<i>replaced</i>";
+    const swapReturn = swapHost.sancha({ static: true, swap: true, template: "<strong>swapped</strong>" });
+
+    const dataHost = document.createElement("div");
+    let dataError = null;
+    try {
+      dataHost.sancha({ data: [{ name: "Ada" }], template: "<p>{{name}}</p>" });
+    } catch (error) {
+      dataError = error.name;
+    }
+
+    return {
+      appendReturnsHost: appendReturn === appendHost,
+      appended: appendHost.innerHTML,
+      swapReturnsHost: swapReturn === swapHost,
+      swapped: swapHost.innerHTML,
+      dataError,
+      dataOutput: dataHost.innerHTML
+    };
+  });
+  expect(result).toEqual({
+    appendReturnsHost: true,
+    appended: "<i>existing</i><b>appended</b>",
+    swapReturnsHost: true,
+    swapped: "<strong>swapped</strong>",
+    dataError: "ReferenceError",
+    dataOutput: ""
+  });
+});
