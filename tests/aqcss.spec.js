@@ -872,7 +872,8 @@ test("AQCSS flex base display, stretch-grow and mobile shrink aliases preserve d
   expect(result.modifierOnlyFlow).toBe("column");
   expect(result.baseAndModifierDisplay).toBe("flex");
   expect(result.baseAndModifierFlow).toBe("column");
-  // Firefox currently computes flex-grow:1 for this token; Chromium is checked separately against the pinned selector behavior.\n  expect(result.stretchGrow).toBe(browserName === "firefox" ? "1" : "0");
+  // Firefox currently computes flex-grow:1 for this token; Chromium is checked separately against the pinned selector behavior.
+  expect(result.stretchGrow).toBe(browserName === "firefox" ? "1" : "0");
   expect(result.stretchAlignment).toBe("stretch");
   expect(result.mobileShrinkNo).toBe("1");
   expect(result.mobileNoShrink).toBe("0");
