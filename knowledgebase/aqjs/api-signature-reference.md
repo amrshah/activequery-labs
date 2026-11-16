@@ -79,7 +79,7 @@ All methods are installed through `ActiveQuery.extend('array', ...)`.
 | `i` | `i(a = '')` | Indexed member or same NodeList | Uses global `isNaN`; empty NodeList guard returns same collection. |
 | `setChild`, `setAdjacent`, `setHtml`, `getHtml`, `setContent`, `setText`, `getText`, `getValue`, `fax` | no effective arguments | Same NodeList for most stubs | No-op stubs; do not infer bulk equivalents. |
 | `siblings` | `siblings(a)` | Intended next sibling or Array | Indexes first Element again as `t[0]`; normal non-empty NodeList path is defective. |
-| `setValue` | `setValue(a)` | Same NodeList | Sets/clears value on each member supporting it; empty collection returns itself. |
+| `setValue` | `setValue(a)` | Same NodeList | Sets/clears value on each member with a value property; generic elements without value are ignored; empty collection returns itself. Input, checkbox .value, select, textarea, falsy clearing and empty-list identity passed in Chromium/Firefox, with source/minified parity in run #392. This does not toggle checkbox .checked. |
 | `then` | `then(a)` | Callback result if callable; otherwise undefined | Callback receives NodeList. |
 | `on` | `on(a, b)` | Same NodeList for valid inputs; undefined on invalid/empty guard path | Adds listener to each member. Unlike Element.on, invalid inputs can return undefined. |
 

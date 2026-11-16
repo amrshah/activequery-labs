@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run #369 passed all 240 browser cases (120 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: run [#392](https://github.com/amrshah/activequery-labs/actions/runs/43819572529) passed 257 browser cases with one documented Firefox mobile-emulation skip (129 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -16,7 +16,7 @@ Status: run #369 passed all 240 browser cases (120 authored tests × Chromium/Fi
 ### Source/minified parity
 
 - PostCSS AST comparison checks all AQCSS source and minified rules, selectors, media context and declarations after syntax-preserving whitespace normalization.
-- Browser tests compare core AQJS selector/Element behavior and selected edge contracts across source and minified module builds, including Element `setValue`, `setChild`, `then`, NodeList event registration/empty-collection return, Array `getCount` default-operator behavior, Array `then`, Document/Window event helpers, early lifecycle hooks and constructor `initlog` timing, Array query helper parity, and Element/NodeList bulk mutation parity (runs #325, #327, #340 and #348).
+- Browser tests compare core AQJS selector/Element behavior and selected edge contracts across source and minified module builds, including Element `setValue`, `setChild`, `then`, NodeList event registration/empty-collection return, Array `getCount` default-operator behavior, Array `then`, Document/Window event helpers, early lifecycle hooks and constructor `initlog` timing, Array query helper parity, Element/NodeList bulk mutation parity, Element fragment/form-control contracts, and NodeList multi-control setValue parity (runs #325, #327, #340, #348, #383 and #392).
 - CI verifies exact Git blob SHAs for both source and minified files before testing.
 
 ### AQJS
@@ -97,3 +97,8 @@ The source-grounded but not-yet-implemented cross-family cases are listed in [AQ
 | 2026-11-15 | Run #325, commit `5769645f9aa327c627ce58f8dda9a5b40934b8db` | **Success:** 176 passed, 0 failed, 0 skipped; 88 tests × 2 browsers. [Workflow evidence](https://github.com/amrshah/activequery-labs/actions/runs/43644825180). |
 
 Update this table only after retrieving the actual workflow run, job logs and test summary. A successful workflow file commit is not a successful test run.
+
+
+## Latest execution — run #392
+
+[Workflow #392](https://github.com/amrshah/activequery-labs/actions/runs/43819572529) passed 257 browser cases, 0 failed, 1 skipped; 129 authored tests across Chromium and Firefox. The one skip is the documented Firefox mobile hardware-emulation case. The run includes the CSSOM-level AQCSS flex selector distinction and NodeList setValue source/minified parity.

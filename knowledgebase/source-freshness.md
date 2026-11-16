@@ -1,6 +1,6 @@
 # Upstream Freshness and Version Status
 
-Snapshot checked: 2026-11-15 (GitHub API recheck of all three upstream `main` refs).
+Snapshot checked: 2026-11-16 (GitHub API recheck of all three upstream `main` refs).
 
 ## Published versions
 

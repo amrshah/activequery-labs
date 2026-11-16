@@ -100,17 +100,56 @@ The base `shrink-no` rule at line 791 has a related alias issue:
 
 The `aq-m-flexon--shrink-no` spelling is compound with `.aq-flexon--no-shrink`; the unprefixed `.aq-flexon--no-shrink` spelling is not independently listed. `.aq-m-flexon--no-shrink` is independently listed. Responsive shrink-no selectors at lines 1122, 1446 and 1770 use comma-separated spellings.
 
-## Stretch / grow selector impossibility
+## Stretch / grow selector defects — base differs from responsive families
 
-The base rules at lines 786 and 788, and responsive equivalents at 1117/1119, 1441/1443 and 1765/1767, combine a flexon modifier class with:
+The source uses two different selector spellings in the base block and the responsive blocks. The distinction is material: the backslash before the asterisk in the base selector escapes the asterisk; it does **not** express the substring operator.
 
-```css
-:not([class*=flexon])
-```
+### Base / mobile-companion selectors
 
-The modifier class itself contains the substring `flexon` (for example `.aq-flexon--stretch`, `.aq-m-flexon--stretch` or `.aq-t-flexon--stretch`). An element carrying that class necessarily has a class attribute containing `flexon`, so it cannot satisfy `:not([class*=flexon])`.
+At lines 786–789, the source contains:
 
-Therefore the intended `flex-grow` declarations for `--stretch`, `--stretch-no` and `--no-stretch` cannot match elements carrying those utility classes. The companion selectors `[class*=flexon]:is(...)` do match and set `align-items:stretch` or `align-items:normal`. Do not describe these tokens as working flex-grow controls.
+~~~css
+:not([class\*=flexon]):is(.aq-flexon--stretch,.aq-m-flexon--stretch) {flex-grow:1!important;}
+[class\*=flexon]:is(.aq-flexon--stretch,.aq-m-flexon--stretch) {align-items:stretch!important;}
+:not([class\*=flexon]):is(.aq-flexon--stretch-no,.aq-m-flexon--stretch-no,.aq-flexon--no-stretch,.aq-m-flexon--no-stretch) {flex-grow:var(--aq-flexon--grow-by,1)!important;}
+[class\*=flexon]:is(.aq-flexon--stretch-no,.aq-m-flexon--stretch-no,.aq-flexon--no-stretch,.aq-m-flexon--no-stretch) {align-items:normal!important;}
+~~~
+
+In [class\*=flexon], the escaped asterisk is part of the attribute name (class*), followed by an ordinary equality matcher. It is **not** [class*=flexon], the substring matcher on the class attribute.
+
+Consequences for base tokens:
+- :not([class\*=flexon]) matches ordinary elements because they do not have a class* attribute equal to flexon. The base stretch grow rule therefore matches and sets flex-grow:1!important; the stretch-no / no-stretch grow rule also matches and uses the configured value or its default of 1.
+- [class\*=flexon] looks for the separate class* attribute and does not match an ordinary element whose class attribute contains aq-flexon--stretch. The base alignment rule therefore does not apply; computed align-items remains its default unless application CSS sets it.
+- The same escaped-selector defect is present in both base declarations for stretch-no / no-stretch: their alignment normal rule does not match.
+
+This replaces the earlier interpretation that the base :not([class*=flexon]) selector was impossible to satisfy. That interpretation was incorrect because it overlooked the escaped asterisk in the pinned source.
+
+### Tablet, desktop and screen selectors
+
+The responsive blocks at lines 1117–1120, 1441–1444 and 1765–1768 use an **unescaped** asterisk:
+
+~~~css
+:not([class*=flexon]).aq-t-flexon--stretch {flex-grow:1!important;}
+[class*=flexon].aq-t-flexon--stretch {align-items:stretch!important;}
+~~~
+
+The desktop and screen families repeat the same pattern with aq-d- and aq-s- prefixes.
+
+Here [class*=flexon] is the actual substring matcher. Since each responsive utility class itself contains flexon:
+- the :not([class*=flexon]) grow selector does not match the element carrying the responsive utility;
+- the positive [class*=flexon] alignment selector does match;
+- responsive stretch therefore does not set flex-grow, but does set align-items:stretch;
+- responsive stretch-no / no-stretch likewise do not set flex-grow, but their companion alignment rule sets align-items:normal.
+
+### Runtime evidence
+
+The focused CSSOM/computed-style test passed in Chromium and Firefox in run #392. It confirms:
+- base .aq-flexon--stretch: the escaped grow selector matches, the escaped alignment selector does not, computed flex-grow is 1, and computed align-items is normal;
+- tablet, desktop and screen stretch classes: computed flex-grow is 0 and align-items is stretch at a 1500px viewport;
+- base modifier-only column does not establish flex display, while .aq-flexon plus the column modifier does;
+- the malformed mobile shrink-no alias does not match independently, while mobile no-shrink does.
+
+The test verifies the browser's parsed stylesheet and computed values, not merely the source text.
 
 ## Alignment cascade and axis behavior
 

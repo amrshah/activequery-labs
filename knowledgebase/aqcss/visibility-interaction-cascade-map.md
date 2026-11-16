@@ -1,9 +1,9 @@
 # AQCSS Visibility, Display and Interaction-State Cascade Map
 
 Source: `ActiveQuery.css` v25.6.0, pinned Git blob SHA `c03546ecd1a41d26cbbfa8f1e31d38731f77cf62`.
-Snapshot: 2026-11-15.
+Snapshot: 2026-11-16.
 
-Status: selector declarations and media-query structure are source-confirmed. Existing Chromium/Firefox observations are identified separately. This page consolidates display/visibility utilities, pointer helpers, and the stylesheet's hover/focus/disabled behavior; it is not a complete accessibility audit or an exhaustive cascade graph.
+Status: selector declarations and media-query structure are source-confirmed. Existing Chromium/Firefox observations are identified separately. This page consolidates display/visibility utilities, pointer helpers, and the stylesheet's hover/focus/disabled behavior; it is not a complete accessibility audit or an exhaustive cascade graph. Pointer capability media behavior has selected Chromium/Firefox coverage and Chromium mobile emulation coverage (run #376); the latest full suite is run #392.
 
 ## 1. Display and visibility are not interchangeable
 

@@ -9,7 +9,7 @@ The mastery label is withheld until every gate below has objective evidence. A l
 - [x] The framework philosophy is mapped separately from executable library behavior (`architecture/framework-overview.md`, `architecture/principle-implementation-review.md`).
 - [x] AQS, AQI, AQPE and AQKISS concepts are explicitly marked conceptual/unverified where authoritative executable specifications were not found.
 - [ ] Governance, DCO and OSL-3.0 implications are understood for the intended portal distribution model.
-- [ ] Upstream freshness and the last source-file commits are checked before each major adoption/rebuild milestone.
+- [x] Upstream freshness and the last source-file commits were rechecked on 2026-11-16; AQCSS, AQJS and Governance default branches still point to the pinned revisions (source-freshness.md).
 
 - [x] Every AQCSS selector rule is inventoried structurally; the PostCSS AST catalog is generated and validated in CI.
 - [x] Every unique class token is mapped to rule IDs, selectors and source lines; complete declarations are available in the rule catalog.
@@ -32,9 +32,9 @@ The mastery label is withheld until every gate below has objective evidence. A l
 
 ## Gate C — Runtime validation
 
-- [x] Minimal reproducible AQJS test harness runs in at least two modern browser engines; latest verified run [#383](https://github.com/amrshah/activequery-labs/actions/runs/43817367901) passed 251 browser cases, with 1 documented Firefox mobile-emulation skip across 126 authored tests.
+- [x] Minimal reproducible AQJS test harness runs in at least two modern browser engines; latest verified run [#392](https://github.com/amrshah/activequery-labs/actions/runs/43819572529) passed 257 browser cases, with 1 documented Firefox mobile-emulation skip across 129 authored tests.
 - [x] AQCSS computed-style tests run at representative narrow, medium and wide viewports (599/600/601, 993 and 1440 CSS px); wider selector-family coverage remains incomplete.
-- [ ] Keyboard, focus, touch/pointer and reduced-motion behavior checked where relevant. Pointer media-query behavior has selected Chromium/Firefox coverage; touch emulation is Chromium-only.
+- [ ] Keyboard, focus, touch/pointer and reduced-motion behavior checked where relevant. Selected focus/tooltip keyboard, pointer media-query, reduced-motion and Chromium mobile-emulation tests pass; comprehensive keyboard navigation and assistive-technology coverage remain open.
 - [x] Representative selector/API examples have passing expected-result tests in Chromium and Firefox.
 - [x] Representative error paths, empty results, invalid input, multiple matches and collection behavior have passing tests.
 - [x] Runtime pass claims are tied to retained GitHub Actions logs and generated catalog artifacts.

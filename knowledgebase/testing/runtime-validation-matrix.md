@@ -83,7 +83,7 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
 | AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, selected edge cases, Element value/child/then, NodeList events, Array `getCount` default branch, Array `then`, Document/Window events, early lifecycle and constructor `initlog`, Array query helpers, and Element/NodeList bulk mutations | Selected fixtures passed in runs #325, #327, #340 and #348; complete method-level semantic parity remains pending |
-| Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed. An experimental nested-scroll movement test failed in both engines in run #380 and was withdrawn without weakening assertions | 18 full cases passed; actual sticky movement remains unverified |
+| Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed. Run #392 additionally verifies base vs responsive flex stretch selectors through CSSOM and computed styles. An experimental nested-scroll movement test failed in both engines in run #380 and was withdrawn without weakening assertions | 18 AQX cases plus the focused flex selector test pass; actual sticky movement remains unverified |
 | Clean-room portal | Responsive field guide, editable HTML/CSS/JS, isolated preview, AQJS event helper and narrow viewport layout | Four Playwright tests passed in run #369; preview sandbox allows scripts only and omits same-origin access | Passed in CI; public deployment withheld pending OSL-3.0 review |
 | Breakpoints and responsive variants | Inspected: mobile/tablet/desktop hide range queries are malformed and ignored by Chromium/Firefox; tablet/desktop/large typography prefixes activate at their min-width thresholds | 599/600/601, 601/992, 993/1439 and 1440 computed-style tests | All tested breakpoint and hide-helper behavior passed in run #313; short-landscape and touch/hybrid behavior remain untested |
 | Typography and unit tokens | Multiple source defects documented | Paragraph and large-screen case mismatch tests | Passed in run #313 |
@@ -190,3 +190,14 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `f5789517a030fc6d0da78186b18fa7637807a4e4` |
 | Execution | 251 passed, 0 failed, 1 skipped; 126 authored tests across Chromium and Firefox |
 | New AQJS coverage | Element DocumentFragment/partial-append behavior; text input, checkbox `.value`, select and textarea `setValue`; source/minified parity for both |
+
+
+## Latest confirmed execution record — run #392
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #392](https://github.com/amrshah/activequery-labs/actions/runs/43819572529) |
+| Commit | `baf5ca668a177c041d028efc9f4b982d62804ed1` |
+| Execution | 257 passed, 0 failed, 1 skipped; 129 authored tests across Chromium and Firefox |
+| New AQCSS evidence | CSSOM confirms base flex stretch selectors contain an escaped asterisk and behave differently from the unescaped responsive selectors; runtime computed-style checks passed in both engines |
+| New AQJS evidence | NodeList setValue across input, checkbox .value, select and textarea; generic-element exclusion and empty-collection receiver identity; source/minified parity |
