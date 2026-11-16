@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run [#401](https://github.com/amrshah/activequery-labs/actions/runs/43822000014) passed 269 browser cases with one documented Firefox mobile-emulation skip (135 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: run [#403](https://github.com/amrshah/activequery-labs/actions/runs/43822473172) passed 271 browser cases with one documented Firefox mobile-emulation skip (136 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -16,7 +16,7 @@ Status: run [#401](https://github.com/amrshah/activequery-labs/actions/runs/4382
 ### Source/minified parity
 
 - PostCSS AST comparison checks all AQCSS source and minified rules, selectors, media context and declarations after syntax-preserving whitespace normalization.
-- Browser tests compare core AQJS selector/Element behavior and selected edge contracts across source and minified module builds, including Element `setValue`, `setChild`, `then`, NodeList event registration/empty-collection return, Array `getCount` default-operator behavior, Array `then`, Document/Window event helpers, early lifecycle hooks and constructor `initlog` timing, Array query helper parity, Element/NodeList bulk mutation parity, Element fragment/form-control contracts, NodeList multi-control setValue parity, Element setContent replacement/failure parity, Array/Object/predicate failure parity, and Array.setItem / Element setText, setHtml, getValue and siblings parity, plus base/responsive flex importance cascade (runs #325, #327, #340, #348, #383, #392, #395, #397, #399 and #401).
+- Browser tests compare core AQJS selector/Element behavior and selected edge contracts across source and minified module builds, including Element `setValue`, `setChild`, `then`, NodeList event registration/empty-collection return, Array `getCount` default-operator behavior, Array `then`, Document/Window event helpers, early lifecycle hooks and constructor `initlog` timing, Array query helper parity, Element/NodeList bulk mutation parity, Element fragment/form-control contracts, NodeList multi-control setValue parity, Element setContent replacement/failure parity, Array/Object/predicate failure parity, and Array.setItem / Element setText, setHtml, getValue and siblings parity, plus base/responsive flex importance cascade and mobile-middle alias composition (runs #325, #327, #340, #348, #383, #392, #395, #397, #399, #401 and #403).
 - CI verifies exact Git blob SHAs for both source and minified files before testing.
 
 ### AQJS
@@ -122,3 +122,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #401
 
 [Workflow #401](https://github.com/amrshah/activequery-labs/actions/runs/43822000014) passed 269 browser cases, 0 failed, 1 skipped; 135 authored tests across Chromium and Firefox. It adds right-bottom vs middle importance cascade coverage across all AQCSS flex contexts.
+
+
+## Latest execution — run #403
+
+[Workflow #403](https://github.com/amrshah/activequery-labs/actions/runs/43822473172) passed 271 browser cases, 0 failed, 1 skipped; 136 authored tests across Chromium and Firefox. It verifies the base mobile middle compound selector and independently working responsive middle aliases.

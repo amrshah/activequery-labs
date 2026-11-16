@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-16.
-Run [#401](https://github.com/amrshah/activequery-labs/actions/runs/43822000014) is the latest completed browser run: **269 passed, 0 failed, 1 skipped** across Chromium and Firefox (135 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). It includes base/responsive flex selector behavior, responsive wrap-reverse token mismatches and right-bottom importance cascade checks, alongside the AQJS contract and parity coverage. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run [#403](https://github.com/amrshah/activequery-labs/actions/runs/43822473172) is the latest completed browser run: **271 passed, 0 failed, 1 skipped** across Chromium and Firefox (136 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). It includes mobile/base flex middle alias composition checks in addition to the CSSOM, wrap-token and alignment-importance flex tests, and the expanded AQJS source/minified contract suite. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -84,7 +84,7 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
 | AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, Element value/child/then/setContent/setText/setHtml/getValue/siblings, DocumentFragment, NodeList events/setValue, Array query helpers/sort/index/setItem, Object value-helper failures, predicate edge cases, Document/Window events, early lifecycle and constructor `initlog`, Element/NodeList bulk mutations | Selected fixtures passed in runs #325, #327, #340, #348, #383, #392, #395, #397 and #399; complete method-level semantic parity remains pending |
-| AQCSS flex selector cascade | Source-derived base/responsive selector defects, token spelling and importance differences | Base vs responsive stretch CSSOM behavior, tablet/desktop/screen wrap-reverse mismatch, and right-bottom vs important middle alignment | Passed in Chromium and Firefox in runs #392, #394 and #401 |
+| AQCSS flex selector cascade | Source-derived base/responsive selector defects, token spelling, alias composition and importance differences | Base vs responsive stretch CSSOM behavior, tablet/desktop/screen wrap-reverse mismatch, right-bottom vs important middle alignment, and mobile middle alias compound-selector behavior | Passed in Chromium and Firefox in runs #392, #394, #401 and #403 |
 | Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed. Run #392 additionally verifies base vs responsive flex stretch selectors through CSSOM and computed styles. An experimental nested-scroll movement test failed in both engines in run #380 and was withdrawn without weakening assertions | 18 AQX cases plus the focused flex selector test pass; actual sticky movement remains unverified |
 | Clean-room portal | Responsive field guide, editable HTML/CSS/JS, isolated preview, AQJS event helper and narrow viewport layout | Four Playwright tests passed in run #369; preview sandbox allows scripts only and omits same-origin access | Passed in CI; public deployment withheld pending OSL-3.0 review |
 | Breakpoints and responsive variants | Inspected: mobile/tablet/desktop hide range queries are malformed and ignored by Chromium/Firefox; tablet/desktop/large typography prefixes activate at their min-width thresholds | 599/600/601, 601/992, 993/1439 and 1440 computed-style tests | All tested breakpoint and hide-helper behavior passed in run #313; short-landscape and touch/hybrid behavior remain untested |
@@ -243,3 +243,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `4c130c3069117ffb2d2bf3066e08d5425d33bea4` |
 | Execution | 269 passed, 0 failed, 1 skipped; 135 authored tests across Chromium and Firefox |
 | New AQCSS evidence | Right-bottom alignment applies alone but loses to the important middle alignment in base, tablet, desktop and screen families |
+
+
+## Latest confirmed execution record — run #403
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #403](https://github.com/amrshah/activequery-labs/actions/runs/43822473172) |
+| Commit | `30f998b2c303e8ca1351d72ac0c65e4f9fc51558` |
+| Execution | 271 passed, 0 failed, 1 skipped; 136 authored tests across Chromium and Firefox |
+| New AQCSS evidence | Base mobile middle alias compound-selector requirement vs independently working base/mobile-center and tablet/desktop/screen-middle aliases |
