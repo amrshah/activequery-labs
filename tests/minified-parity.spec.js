@@ -1066,3 +1066,37 @@ test("AQJS source and minified builds preserve the Element.watch observer failur
     pageErrors: ["TypeError"]
   });
 });
+
+
+test("AQJS source and minified builds preserve custom-element name-filter defects", async ({ page }) => {
+  const collect = async path => {
+    await page.goto(path);
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      class ValidElement extends HTMLElement {}
+      class DigitElement extends HTMLElement {}
+      class InvalidElement extends HTMLElement {}
+      window.AQ.extend("dom", "aq-labs-valid", ValidElement);
+      let invalidError = null;
+      try {
+        window.AQ.extend("dom", "aqlabs", InvalidElement);
+      } catch (error) {
+        invalidError = error.name;
+      }
+      window.AQ.extend("dom", "aq-labs2", DigitElement);
+      return {
+        validRegistered: customElements.get("aq-labs-valid") === ValidElement,
+        invalidNameError: invalidError,
+        digitNameRejected: customElements.get("aq-labs2") === undefined
+      };
+    });
+  };
+  const sourceResult = await collect("/");
+  const minifiedResult = await collect("/tests/fixture-min.html");
+  expect(minifiedResult).toEqual(sourceResult);
+  expect(sourceResult).toEqual({
+    validRegistered: true,
+    invalidNameError: "SyntaxError",
+    digitNameRejected: true
+  });
+});
