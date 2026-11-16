@@ -1025,22 +1025,17 @@ test("AQCSS sticky top remains pinned while its scroll container moves", async (
   await page.setViewportSize({ width: 1200, height: 800 });
   const result = await page.evaluate(async () => {
     const scroller = document.createElement("div");
-    Object.assign(scroller.style, {
-      width: "300px",
-      height: "120px",
-      overflowY: "auto",
-      marginTop: "20px"
-    });
+    scroller.style.cssText = "all: initial; display: block; position: relative; width: 300px; height: 120px; overflow-y: auto; margin-top: 20px;";
 
     const spacer = document.createElement("div");
-    spacer.style.height = "80px";
+    spacer.style.cssText = "all: initial; display: block; height: 80px;";
 
     const sticky = document.createElement("div");
     sticky.className = "aq-affix--sticky aq-affix--top";
-    sticky.style.height = "24px";
+    sticky.style.cssText = "all: initial; display: block; height: 24px; top: 0;";
 
     const content = document.createElement("div");
-    content.style.height = "1000px";
+    content.style.cssText = "all: initial; display: block; height: 1000px;";
     scroller.append(spacer, sticky, content);
     document.body.append(scroller);
 
