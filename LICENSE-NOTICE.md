@@ -12,7 +12,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ## Upstream and third-party materials
 
-This repository links to ActiveQuery projects but does not currently redistribute their source files. Upstream repositories and their bundled dependencies retain their own licenses, copyright notices and attribution requirements. The AQCSS and AQJS README files have described OSL-3.0 licensing; verify the current license files and any third-party notices directly in each upstream repository before reuse.
+The tracked repository does not commit upstream framework source files. The browser-test workflow fetches pinned AQCSS/AQJS source, minified files and license files into ignored working directories for validation. The GitHub Pages workflow does not currently stage those vendor assets; the clean-room playground therefore must not be assumed to work on Pages until a deliberate asset pipeline is added. Any future public hosting of framework assets requires review of the OSL-3.0 external-deployment conditions and preservation of upstream and third-party notices. See [the distribution and attribution audit](knowledgebase/governance/distribution-and-attribution-audit.md).
 
 - https://github.com/ActiveQuery/CSS
 - https://github.com/ActiveQuery/JS
