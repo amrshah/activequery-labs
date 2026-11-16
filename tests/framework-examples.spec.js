@@ -5,6 +5,7 @@ const jsUrl = "https://cdn.jsdelivr.net/gh/ActiveQuery/JS@adb1b19770ca68840dc2f9
 
 async function usePinnedFrameworkAssets(page) {
   await page.route(cssUrl, route => route.fulfill({ path: "vendor/ActiveQuery.css", contentType: "text/css" }));
+  await page.route("https://raw.githubusercontent.com/ActiveQuery/CSS/main/ActiveQuery.css", route => route.fulfill({ path: "vendor/ActiveQuery.css", contentType: "text/css" }));
   await page.route(jsUrl, route => route.fulfill({ path: "vendor/ActiveQuery.js", contentType: "text/javascript", headers: { "access-control-allow-origin": "*" } }));
 }
 
@@ -60,6 +61,30 @@ test.describe("framework-first component and page examples", () => {
     await page.setViewportSize({ width: 993, height: 900 });
     const kpiWidthAt993 = await page.locator(".kpi").first().evaluate(el => el.getBoundingClientRect().width);
     expect(kpiWidthAt993).toBeLessThan(kpiWidthAt992 * 0.7);
+  });
+
+  test("AQJS mobile navigation toggles the AQCSS operations sidebar", async ({ page }) => {
+    await usePinnedFrameworkAssets(page);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/examples/operations-dashboard/");
+    const sidebar = page.locator("#main-sidebar");
+    const menu = page.getByRole("button", { name: "Open menu" });
+    await expect(sidebar).toBeHidden();
+    await menu.click();
+    await expect(sidebar).toBeVisible();
+    await expect(menu).toHaveAttribute("aria-expanded", "true");
+    await menu.click();
+    await expect(sidebar).toBeHidden();
+    await expect(menu).toHaveAttribute("aria-expanded", "false");
+  });
+
+  test("AQCSS responsive dashboard uses facets and AQJS updates viewport dimensions", async ({ page }) => {
+    await usePinnedFrameworkAssets(page);
+    await page.goto("/examples/responsive-dashboard/");
+    await expect(page.locator(".dashboard-grid")).toHaveCSS("display", "flex");
+    await expect(page.locator("#viewport-label")).toContainText("Viewport:");
+    await page.setViewportSize({ width: 768, height: 900 });
+    await expect(page.locator("#viewport-label")).toContainText("768 × 900px");
   });
 
   test("AQJS powers tabs, validation, toast and dialog behavior in the component gallery", async ({ page }) => {
