@@ -1,5 +1,29 @@
 const $ = (selector) => document.querySelector(selector);
 
+const themeToggle = $("#theme-toggle");
+function applyTheme(theme) {
+  const dark = theme === "dark";
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  themeToggle.setAttribute("aria-pressed", String(dark));
+  themeToggle.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+  themeToggle.textContent = dark ? "Light mode" : "Dark mode";
+}
+let preferredTheme = "light";
+try {
+  const savedTheme = localStorage.getItem("aq-labs-theme");
+  preferredTheme = savedTheme === "light" || savedTheme === "dark"
+    ? savedTheme
+    : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+} catch {
+  preferredTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+applyTheme(preferredTheme);
+themeToggle.addEventListener("click", () => {
+  const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  applyTheme(nextTheme);
+  try { localStorage.setItem("aq-labs-theme", nextTheme); } catch { /* Theme still works for this page session. */ }
+});
+
 const initialExample = {
   html: `<section class="demo-wrap">
   <div class="demo-intro">
@@ -73,7 +97,7 @@ function saveActiveEditor() {
   example[activeTab] = editor.value;
 }
 
-function selectTab(tab) {
+function selectTab(tab, focusEditor = true) {
   saveActiveEditor();
   activeTab = tab;
   editor.value = example[tab];
@@ -84,7 +108,8 @@ function selectTab(tab) {
     button.setAttribute("aria-selected", String(selected));
     button.tabIndex = selected ? 0 : -1;
   }
-  editor.focus();
+  if (focusEditor) editor.focus();
+  else tabButtons.find((button) => button.dataset.editorTab === tab)?.focus();
 }
 
 async function loadPinnedAssets() {
@@ -192,7 +217,19 @@ function schedulePreview() {
 }
 
 for (const button of tabButtons) {
+  button.tabIndex = button.getAttribute("aria-selected") === "true" ? 0 : -1;
   button.addEventListener("click", () => selectTab(button.dataset.editorTab));
+  button.addEventListener("keydown", (event) => {
+    const currentIndex = tabButtons.indexOf(button);
+    let nextIndex = currentIndex;
+    if (event.key === "ArrowRight") nextIndex = (currentIndex + 1) % tabButtons.length;
+    else if (event.key === "ArrowLeft") nextIndex = (currentIndex - 1 + tabButtons.length) % tabButtons.length;
+    else if (event.key === "Home") nextIndex = 0;
+    else if (event.key === "End") nextIndex = tabButtons.length - 1;
+    else return;
+    event.preventDefault();
+    selectTab(tabButtons[nextIndex].dataset.editorTab, false);
+  });
 }
 
 editor.addEventListener("input", schedulePreview);
