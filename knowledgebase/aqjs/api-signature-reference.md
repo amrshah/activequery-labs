@@ -134,3 +134,8 @@ Run [#422](https://github.com/amrshah/activequery-labs/actions/runs/43825270639)
 ### AQCSS display utilities through AQJS class mutators
 
 `Element.setClasses([...])` and `removeClasses([...])` mutate the class attribute, allowing AQCSS class selectors to apply immediately. Run [#428](https://github.com/amrshah/activequery-labs/actions/runs/43826836114) confirms `.hide`/`.show` cascade behavior and receiver identity across source/minified AQJS. See `integration/aqcss-aqjs-display-bridge.md`.
+
+
+### AQCSS display utilities through AQJS class mutators
+
+`Element.setClasses([...])` and `removeClasses([...])` mutate the class attribute, allowing AQCSS class selectors to apply immediately. Run [#428](https://github.com/amrshah/activequery-labs/actions/runs/43826836114) confirms `.hide`/`.show` cascade behavior and receiver identity across source/minified AQJS. See `integration/aqcss-aqjs-display-bridge.md`.

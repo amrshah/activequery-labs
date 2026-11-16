@@ -383,3 +383,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `25436b0700eca7c44fed483af78bf3bdf478e33c` |
 | Execution | 297 passed, 0 failed, 1 skipped; 149 authored tests across Chromium and Firefox |
 | New integration evidence | AQJS `setClasses`/`removeClasses` activates AQCSS `.hide`/`.show`; source/minified behavior agrees. Bare `div` baseline is inline-block; `.show` forces block; `.hide` forces none. |
+
+
+## Latest confirmed execution record — run #429
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #429](https://github.com/amrshah/activequery-labs/actions/runs/43827183631) |
+| Commit | `6b0040f0dd559e3f9589a117dfa3cb216473ae1d` |
+| Execution | 297 passed, 0 failed, 1 skipped; 149 authored tests across Chromium and Firefox |
+| Integration evidence | AQJS class mutators activate AQCSS `.hide`/`.show`; source/minified parity passed in #428 and the documentation snapshot passed in #429 |

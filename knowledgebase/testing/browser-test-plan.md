@@ -192,3 +192,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #428
 
 [Workflow #428](https://github.com/amrshah/activequery-labs/actions/runs/43826836114) passed 297 browser cases, 0 failed, 1 skipped; 149 authored tests across Chromium and Firefox. It includes AQCSS/AQJS dynamic class interaction coverage and source/minified parity.
+
+
+## Latest execution — run #429
+
+[Workflow #429](https://github.com/amrshah/activequery-labs/actions/runs/43827183631) passed 297 browser cases, 0 failed, 1 skipped; 149 authored tests across Chromium and Firefox. The run validates the new AQCSS/AQJS integration knowledgebase entry.

@@ -43,3 +43,8 @@ The direct and source/minified parity tests passed in [browser workflow #428](ht
 ## Evidence boundaries
 
 The tested display bridge is one end-to-end example, not exhaustive integration proof. Keep the broader AQCSS cascade maps and AQJS method contract matrix as the authority for individual selector and API behavior.
+
+
+## Last validated
+
+The integration behavior described here was included in the latest knowledgebase-validation run [#429](https://github.com/amrshah/activequery-labs/actions/runs/43827183631), which passed 297 browser cases with one documented Firefox mobile-emulation skip.
