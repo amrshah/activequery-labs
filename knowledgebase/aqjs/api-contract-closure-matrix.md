@@ -1,7 +1,7 @@
 # AQJS API Contract Closure Matrix
 
 Source: ActiveQuery.js SHA b8ec9e5be8668d048eea3385cd9012dfddb69cf0.
-Status: active closure matrix derived from the API inventory, behavior matrix and runtime validation matrix. Latest full browser evidence: [run #491](https://github.com/amrshah/activequery-labs/actions/runs/43857523951), 363 passed and 1 documented skip. Each row records remaining work; passed test evidence is identified explicitly.
+Status: active closure matrix derived from the API inventory, behavior matrix and runtime validation matrix. Latest full browser evidence: [run #501](https://github.com/amrshah/activequery-labs/actions/runs/43859496522), 365 passed and 1 documented skip. Each row records remaining work; passed test evidence is identified explicitly.
 
 ## Objective
 
