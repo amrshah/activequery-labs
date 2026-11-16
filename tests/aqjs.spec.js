@@ -1351,19 +1351,19 @@ test("Element setText ignores falsy values while setHtml applies falsy values", 
 
     return {
       text: { content: textNode.textContent, returnsHost: textReturns },
-      emptyHtml: { html: emptyHtml.innerHTML, returnsHost: emptyReturn === emptyHtml },
-      zeroHtml: { html: zeroHtml.innerHTML, returnsHost: zeroReturn === zeroHtml },
-      falseHtml: { html: falseHtml.innerHTML, returnsHost: falseReturn === falseHtml },
-      nullHtml: { html: nullHtml.innerHTML, returnsHost: nullReturn === nullHtml },
+      emptyHtml: { html: emptyHtml.innerHTML, returnValue: emptyReturn },
+      zeroHtml: { html: zeroHtml.innerHTML, returnValue: zeroReturn },
+      falseHtml: { html: falseHtml.innerHTML, returnValue: falseReturn },
+      nullHtml: { html: nullHtml.innerHTML, returnValue: nullReturn },
       outerHtml: { hostRemoved: !outerHost.isConnected, returnValue: outerReturn }
     };
   });
   expect(result).toEqual({
     text: { content: "keep", returnsHost: true },
-    emptyHtml: { html: "", returnsHost: true },
-    zeroHtml: { html: "0", returnsHost: true },
-    falseHtml: { html: "false", returnsHost: true },
-    nullHtml: { html: "null", returnsHost: true },
+    emptyHtml: { html: "", returnValue: "" },
+    zeroHtml: { html: "0", returnValue: 0 },
+    falseHtml: { html: "false", returnValue: false },
+    nullHtml: { html: "", returnValue: null },
     outerHtml: { hostRemoved: true, returnValue: "" }
   });
 });
