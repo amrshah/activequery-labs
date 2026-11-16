@@ -12,6 +12,9 @@ on:
       - "playwright.config.js"
       - "server.mjs"
       - "rebuild/**"
+      - "components/**"
+      - "examples/**"
+      - "README.md"
       - ".github/workflows/activequery-knowledgebase-tests.yml"
   pull_request:
     branches: [main]
