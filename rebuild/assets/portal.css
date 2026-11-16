@@ -225,3 +225,15 @@ kbd { padding: 2px 5px; border: 1px solid #d6dee8; border-radius: 4px; backgroun
   .header-actions { margin-left: auto; }
   .header-cta { margin-left: 0; }
 }
+
+
+.license-assent { grid-column: 1 / -1; padding: 22px; border: 1px solid var(--line); border-radius: 12px; background: var(--canvas); }
+.license-assent h3 { margin: 0 0 8px; font-size: 16px; }
+.license-assent > p { color: var(--muted); font-size: 12px; line-height: 1.7; }
+.license-files { display: flex; flex-wrap: wrap; gap: 10px 18px; margin: 14px 0; }
+.license-files a { color: var(--teal-dark); font-size: 11px; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+.license-check { display: flex; align-items: flex-start; gap: 10px; margin: 16px 0 12px; font-size: 12px; font-weight: 650; }
+.license-check input { flex: 0 0 auto; width: 17px; height: 17px; margin: 1px 0 0; accent-color: var(--teal-dark); }
+#accept-license:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+#license-consent-status { margin: 10px 0 0; }
+[data-theme="dark"] .license-assent { background: #111d2e; border-color: var(--line); }
