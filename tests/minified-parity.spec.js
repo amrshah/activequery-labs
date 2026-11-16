@@ -761,3 +761,54 @@ test("AQJS source and minified builds preserve Function, Element and NodeList th
     deferCalls: 0
   });
 });
+
+
+test("AQJS source and minified builds preserve Element setText and setHtml falsy branches", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const textNode = document.createElement("div");
+      textNode.textContent = "keep";
+      const textReturns = [textNode.setText(""), textNode.setText(0), textNode.setText(false), textNode.setText(null)].every(value => value === textNode);
+
+      const emptyHtml = document.createElement("div");
+      emptyHtml.innerHTML = "<em>old</em>";
+      const emptyReturn = emptyHtml.setHtml("");
+
+      const zeroHtml = document.createElement("div");
+      const zeroReturn = zeroHtml.setHtml(0);
+
+      const falseHtml = document.createElement("div");
+      const falseReturn = falseHtml.setHtml(false);
+
+      const nullHtml = document.createElement("div");
+      const nullReturn = nullHtml.setHtml(null);
+
+      const outerHost = document.createElement("div");
+      outerHost.innerHTML = "<span>remove host</span>";
+      document.body.append(outerHost);
+      const outerReturn = outerHost.setHtml("", true);
+
+      return {
+        text: { content: textNode.textContent, returnsHost: textReturns },
+        emptyHtml: { html: emptyHtml.innerHTML, returnsHost: emptyReturn === emptyHtml },
+        zeroHtml: { html: zeroHtml.innerHTML, returnsHost: zeroReturn === zeroHtml },
+        falseHtml: { html: falseHtml.innerHTML, returnsHost: falseReturn === falseHtml },
+        nullHtml: { html: nullHtml.innerHTML, returnsHost: nullReturn === nullHtml },
+        outerHtml: { hostRemoved: !outerHost.isConnected, returnValue: outerReturn }
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    text: { content: "keep", returnsHost: true },
+    emptyHtml: { html: "", returnsHost: true },
+    zeroHtml: { html: "0", returnsHost: true },
+    falseHtml: { html: "false", returnsHost: true },
+    nullHtml: { html: "null", returnsHost: true },
+    outerHtml: { hostRemoved: true, returnValue: "" }
+  });
+});

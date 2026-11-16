@@ -1323,3 +1323,47 @@ test("Element setContent clears before appending Nodes, arrays and fragments, in
     string: { error: "TypeError", html: "" }
   });
 });
+
+
+test("Element setText ignores falsy values while setHtml applies falsy values", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const textNode = document.createElement("div");
+    textNode.textContent = "keep";
+    const textReturns = [textNode.setText(""), textNode.setText(0), textNode.setText(false), textNode.setText(null)].every(value => value === textNode);
+
+    const emptyHtml = document.createElement("div");
+    emptyHtml.innerHTML = "<em>old</em>";
+    const emptyReturn = emptyHtml.setHtml("");
+
+    const zeroHtml = document.createElement("div");
+    const zeroReturn = zeroHtml.setHtml(0);
+
+    const falseHtml = document.createElement("div");
+    const falseReturn = falseHtml.setHtml(false);
+
+    const nullHtml = document.createElement("div");
+    const nullReturn = nullHtml.setHtml(null);
+
+    const outerHost = document.createElement("div");
+    outerHost.innerHTML = "<span>remove host</span>";
+    document.body.append(outerHost);
+    const outerReturn = outerHost.setHtml("", true);
+
+    return {
+      text: { content: textNode.textContent, returnsHost: textReturns },
+      emptyHtml: { html: emptyHtml.innerHTML, returnsHost: emptyReturn === emptyHtml },
+      zeroHtml: { html: zeroHtml.innerHTML, returnsHost: zeroReturn === zeroHtml },
+      falseHtml: { html: falseHtml.innerHTML, returnsHost: falseReturn === falseHtml },
+      nullHtml: { html: nullHtml.innerHTML, returnsHost: nullReturn === nullHtml },
+      outerHtml: { hostRemoved: !outerHost.isConnected, returnValue: outerReturn }
+    };
+  });
+  expect(result).toEqual({
+    text: { content: "keep", returnsHost: true },
+    emptyHtml: { html: "", returnsHost: true },
+    zeroHtml: { html: "0", returnsHost: true },
+    falseHtml: { html: "false", returnsHost: true },
+    nullHtml: { html: "null", returnsHost: true },
+    outerHtml: { hostRemoved: true, returnValue: "" }
+  });
+});
