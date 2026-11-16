@@ -32,7 +32,7 @@ The mastery label is withheld until every gate below has objective evidence. A l
 
 ## Gate C — Runtime validation
 
-- [x] Minimal reproducible AQJS test harness runs in at least two modern browser engines; the latest clean baseline is [run #376](https://github.com/amrshah/activequery-labs/actions/runs/43758572476) (245 passed, 1 skipped; includes pointer-capability coverage).
+- [x] Minimal reproducible AQJS test harness runs in at least two modern browser engines; latest verified run [#383](https://github.com/amrshah/activequery-labs/actions/runs/43817367901) passed 251 browser cases, with 1 documented Firefox mobile-emulation skip across 126 authored tests.
 - [x] AQCSS computed-style tests run at representative narrow, medium and wide viewports (599/600/601, 993 and 1440 CSS px); wider selector-family coverage remains incomplete.
 - [ ] Keyboard, focus, touch/pointer and reduced-motion behavior checked where relevant. Pointer media-query behavior has selected Chromium/Firefox coverage; touch emulation is Chromium-only.
 - [x] Representative selector/API examples have passing expected-result tests in Chromium and Firefox.

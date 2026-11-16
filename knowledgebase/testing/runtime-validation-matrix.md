@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
-Status snapshot: 2026-11-15.
-Run #171 completed with 106 passed and 16 failed. After run #313, additional test coverage was added. The latest completed browser run #369 passed: **240 passed, 0 failed, 0 skipped** across Chromium and Firefox (120 authored tests in two browser projects). Run #365 remains the previous 116-test baseline; run #313 remains the historical 79-test baseline. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Status snapshot: 2026-11-16.
+Run [#383](https://github.com/amrshah/activequery-labs/actions/runs/43817367901) is the latest completed browser run: **251 passed, 0 failed, 1 skipped** across Chromium and Firefox (126 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). Run #381 was the 123-test cleanup baseline; run #369 remains the earlier 120-test baseline. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -9,11 +9,11 @@ Legend:
 - **Pending run** — test has not been observed passing in a real browser.
 - **Pending authoring** — additional test coverage is still required.
 
-## Latest AQJS contract coverage — verified through run #348
+## Latest AQJS contract coverage — verified through run #383
 
 Six additional tests were added for Element `setValue`, `setChild`, `then`/`fax`; NodeList no-op stubs and `on`; and Array `getCount` default-operator edge cases. The first execution exposed incorrect expectations in the tests, not framework regressions. Source review and subsequent passing browser assertions established: `isNaF` matches arrow-function source and strings containing `function`; `Element.setValue` writes an empty `value` property even on a generic Element when the supplied value is falsy or the Element lacks a native value property; and `NodeList.on` returns the same empty collection when called with valid arguments. Workflow [#325](https://github.com/amrshah/activequery-labs/actions/runs/43644825180) passed all 174 browser cases. A further source/minified fixture is authored in commit `5769645f9aa327c627ce58f8dda9a5b40934b8db` and awaits workflow #325.
 
-Run #340 adds isolated early-registration evidence: `ready` (DOMContentLoaded), `init` (load), and `run` (pageshow) each fired once; the constructor's `readystatechange=complete` handler invoked the queued `initlog` callback once. The same timing fixture passed against source and minified builds. Run #339's parity fixture initially failed from a test-harness variable-name typo (`path` versus `modulePath`); the harness was corrected and run #340 passed. This was not an upstream behavior failure. Run #347 added coverage for `offline`, `online`, and `close` event mappings, unknown lifecycle event names, and NodeList index numeric-string/out-of-range/empty-collection behavior. Run #348 added source/minified parity fixtures for Array query helpers and Element/NodeList bulk DOM mutations; all 194 browser cases passed.
+Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, Element `setValue` native form-control behavior (text input, checkbox `.value`, select and textarea), and a source/minified parity fixture for those contracts. The tests passed in Chromium and Firefox; the full run passed 251 browser cases with one documented Firefox mobile-emulation skip. Run #340 adds isolated early-registration evidence: `ready` (DOMContentLoaded), `init` (load), and `run` (pageshow) each fired once; the constructor's `readystatechange=complete` handler invoked the queued `initlog` callback once. The same timing fixture passed against source and minified builds. Run #339's parity fixture initially failed from a test-harness variable-name typo (`path` versus `modulePath`); the harness was corrected and run #340 passed. This was not an upstream behavior failure. Run #347 added coverage for `offline`, `online`, and `close` event mappings, unknown lifecycle event names, and NodeList index numeric-string/out-of-range/empty-collection behavior. Run #348 added source/minified parity fixtures for Array query helpers and Element/NodeList bulk DOM mutations; all 194 browser cases passed.
 
 ## AQJS core and lifecycle
 
@@ -66,7 +66,7 @@ Run #340 adds isolated early-registration evidence: `ready` (DOMContentLoaded), 
 | Element | `parent`, `name` | Inspected | Parent relationship and nodeName | Passed in run #313 |
 | Element | Attributes/styles | Inspected; falsy-value and simple parser limits | Pair early-stop, attribute names/removal, inline style parsing/readback | Partial; selected contracts passed in run #313 |
 | Element | Classes | Inspected | Basic set/get/remove plus NodeList bulk class mutators | Partial; selected contracts passed in run #313 |
-| Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default and setChild single/array/empty cases | Partial; setChild cases passed in run #324; `i` remains untested |
+| Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default; setChild single/array/empty, DocumentFragment and invalid member after a valid member | Partial; setChild contracts passed in runs #324 and #383, including source/minified parity; `i` remains untested |
 | Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | Guarded setAdjacent/setHtml, getHtml modes, array setContent | Partial; selected contracts passed in run #313 |
 | Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior; setValue assigns empty string on falsy input and on generic Elements | setText, getText, getValue modes, setValue truthy/falsy/generic Element | Selected contracts passed in run #324; broader control-type matrix remains pending |
 | Element | `then`, `fax`, `on` | Inspected | callback result, absent callback, FORM/non-FORM fax, event listener | Selected contracts passed in run #324; form semantics remain unsupported/incomplete |
@@ -180,3 +180,13 @@ The historical run validates the 79 authored tests in two browser projects. It d
 ## Sticky movement investigation
 
 Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505) completed with 245 passed, 2 failed and 1 skipped. Both failures were the experimental AQX-009 nested-scroll movement assertion (Chromium and Firefox); computed `position:sticky` and `top:0` continued to pass. The movement test was removed because the fixture/scroll-container interaction was not yet isolated well enough to support a trustworthy conclusion. This is an unresolved runtime gap, not evidence that the upstream utility is broken. Do not claim actual sticky movement is verified.
+
+
+## Latest confirmed execution record — run #383
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #383](https://github.com/amrshah/activequery-labs/actions/runs/43817367901) |
+| Commit | `f5789517a030fc6d0da78186b18fa7637807a4e4` |
+| Execution | 251 passed, 0 failed, 1 skipped; 126 authored tests across Chromium and Firefox |
+| New AQJS coverage | Element DocumentFragment/partial-append behavior; text input, checkbox `.value`, select and textarea `setValue`; source/minified parity for both |

@@ -19,8 +19,8 @@ Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passe
 | Array.i | guard and index coercion | default, integer/string index, out-of-range, falsy | a direct call reproduces `ReferenceError` because `ActiveQuery.isNaN` is undefined; tested in the existing browser suite, but normal indexing remains unavailable |
 | Array.getCount | full default-operator grammar and malformed input behavior | each operator, delimiter/no-delimiter, missing property, no match, multiple matches | delimiter, no-delimiter and missing-property cases passed in run #324; other operator shapes pending |
 | Array.then | Promise resolver assimilation | callback, missing callback, non-function callback, thenable resolution; isolate hang risk | direct callback result, missing/non-function callback and source/minified parity passed in run #327; Promise resolver assimilation remains untested because the self-thenable can hang resolution |
-| Element.setValue | falsy clearing and supported element types | input/select/textarea/checkbox; zero, false, empty string; generic Element | truthy/falsy input and generic Element property creation passed in run #324; full control-type matrix pending |
-| Element.setChild | single/array append and invalid node handling | Element, fragment, array, empty array, invalid member | single Element, array and empty array passed in run #324; fragment/invalid member pending |
+| Element.setValue | falsy clearing and supported element types | text input, checkbox value property, select, textarea; truthy assignment, falsy clearing, generic Element | Basic truthy/falsy and generic Element behavior passed in run #324; text/checkbox/select/textarea matrix passed in Chromium and Firefox in run #383; source/minified parity passed in run #383. This verifies the `.value` property, not checkbox checked-state semantics. |
+| Element.setChild | single/array append and invalid node handling | Element, DocumentFragment, array, empty array, invalid member after valid member | single Element, array and empty array passed in run #324; DocumentFragment consumption, receiver identity, and partial append before native TypeError passed in Chromium/Firefox and source/minified parity in run #383 |
 | Element.then | callback and receiver/return semantics | callable, absent/non-function callback, returned value | callback result and missing/non-function callback passed in run #324 |
 | Element.fax | FORM behavior incomplete | form vs non-form, controls, submit semantics; likely classify unsupported | FORM returns undefined and non-FORM returns receiver, passed in run #324; form behavior remains unsupported |
 | NodeList.i | indexing and guard semantics | zero/one/multiple, numeric-string, invalid index, out-of-range, empty list | index 0, invalid string, numeric-string index, out-of-range undefined and empty-list receiver identity passed in runs #313/#347 |
@@ -51,7 +51,7 @@ Expected outcomes must be traced to source and checked at runtime. For broken pr
 - Attributes: empty/falsy values, early-stop behavior, missing names, removal of absent attributes.
 - Styles: kebab-case vs camelCase, values with additional colons, invalid CSS values, inline/computed readback.
 - Classes: multiple names, whitespace, duplicates and empty strings.
-- Content: text vs HTML, empty string, null, Element vs array, detached nodes and destructive replacement.
+- Content: text vs HTML, empty string, null, Element vs array, detached nodes and destructive replacement. `setContent` has selected array-replacement coverage; broader invalid-member and empty/falsy matrix remains pending.
 - Value: input/select/textarea, checkbox/radio, zero/false/empty, getter modes.
 - Events: callback context, event object, duplicate listeners, invalid callback and missing removal helper.
 - Siblings: preserve known failure paths; test only to confirm unsupported/defective behavior.
@@ -97,7 +97,7 @@ The current source-review pass adds four focused references:
 - [Predicate truth and failure-path audit](predicate-truth-table.md) — source expressions and ambient-global hazards.
 - [Source/minified parity audit](source-minified-parity-audit.md) — inspected high-risk methods and the limits of current parity evidence.
 
-These are source-review improvements. The six new contract tests passed in run #324 and selected source/minified fixtures passed in runs #325 and #327. They do not close the remaining runtime or full semantic-parity criteria.
+These are source-review improvements. The initial contract tests passed in runs #324–#348; the expanded Element DocumentFragment and form-control contracts passed in Chromium and Firefox in run [#383](https://github.com/amrshah/activequery-labs/actions/runs/43817367901), including source/minified parity. This is selected-method parity, not full semantic parity or closure of the remaining runtime criteria.
 
 ## References
 
