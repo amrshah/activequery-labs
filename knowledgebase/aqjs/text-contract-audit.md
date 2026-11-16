@@ -15,4 +15,4 @@ Use native `textContent = ""` when the requirement is to clear content. Do not u
 
 ## Validation
 
-A Playwright fixture checks truthy writes, falsy no-op behavior, receiver identity, whole-text retrieval, substring match and missing substring. It compares the pinned source and minified builds. Record the CI run here after completion.
+The Playwright fixture checks truthy writes, falsy no-op behavior, receiver identity, whole-text retrieval, substring match and missing substring. It compares the pinned source and minified builds. CI run [#476](https://github.com/amrshah/activequery-labs/actions/runs/43844107916) passed 353 browser cases with one documented Firefox mobile-emulation skip.
