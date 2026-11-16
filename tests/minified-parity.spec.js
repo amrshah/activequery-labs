@@ -942,3 +942,47 @@ test("AQJS source and minified builds preserve NodeList stub behavior for empty 
     }
   });
 });
+
+
+test("AQJS source and minified builds preserve the non-validating isJSON predicate", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const instance = new window.AQ("");
+      return {
+        arbitraryText: instance.isJSON("not valid JSON"),
+        jsonLookingText: instance.isJSON("{broken: json}"),
+        nullText: instance.isJSON("null"),
+        number: instance.isJSON(123),
+        nan: instance.isJSON(Number.NaN),
+        boolean: instance.isJSON(true),
+        nullValue: instance.isJSON(null),
+        array: instance.isJSON([]),
+        object: instance.isJSON({}),
+        emptyString: instance.isJSON(""),
+        whitespace: instance.isJSON("   "),
+        undefinedValue: instance.isJSON(undefined),
+        functionValue: instance.isJSON(function named() {})
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    arbitraryText: true,
+    jsonLookingText: true,
+    nullText: true,
+    number: true,
+    nan: true,
+    boolean: true,
+    nullValue: true,
+    array: true,
+    object: true,
+    emptyString: false,
+    whitespace: false,
+    undefinedValue: false,
+    functionValue: false
+  });
+});

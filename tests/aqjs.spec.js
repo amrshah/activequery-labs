@@ -1391,3 +1391,40 @@ test("Array.getCount routes unrecognized operators through the delimiter fallbac
     nonStringSubstringError: "TypeError"
   });
 });
+
+
+test("AQJS isJSON predicate accepts broad typeof categories without parsing JSON", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const instance = new window.AQ("");
+    return {
+      arbitraryText: instance.isJSON("not valid JSON"),
+      jsonLookingText: instance.isJSON("{broken: json}"),
+      nullText: instance.isJSON("null"),
+      number: instance.isJSON(123),
+      nan: instance.isJSON(Number.NaN),
+      boolean: instance.isJSON(true),
+      nullValue: instance.isJSON(null),
+      array: instance.isJSON([]),
+      object: instance.isJSON({}),
+      emptyString: instance.isJSON(""),
+      whitespace: instance.isJSON("   "),
+      undefinedValue: instance.isJSON(undefined),
+      functionValue: instance.isJSON(function named() {})
+    };
+  });
+  expect(result).toEqual({
+    arbitraryText: true,
+    jsonLookingText: true,
+    nullText: true,
+    number: true,
+    nan: true,
+    boolean: true,
+    nullValue: true,
+    array: true,
+    object: true,
+    emptyString: false,
+    whitespace: false,
+    undefinedValue: false,
+    functionValue: false
+  });
+});
