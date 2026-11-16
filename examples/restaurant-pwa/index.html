@@ -17,8 +17,9 @@ const checkout = $("#checkout");
 
 function bindRemoveActions() {
   const removeButtons = aq.DOM(".cart-line button");
-  if (!removeButtons || !removeButtons.length) return;
-  removeButtons.forEach((button) => button.on("click", () => {
+  if (!removeButtons) return;
+  const buttons = removeButtons instanceof Element ? [removeButtons] : Array.from(removeButtons);
+  buttons.forEach((button) => button.on("click", () => {
     cart.delete(button.dataset.item);
     renderCart();
   }));
