@@ -13,7 +13,7 @@ test.describe("framework-first component and page examples", () => {
   test("AQCSS facet and flexon utilities own the SaaS hero and feature layout", async ({ page }) => {
     await usePinnedFrameworkAssets(page);
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/examples/saas-landing/");
+    await page.goto("/examples/saas-landing/index.html");
     await expect(page.locator(".hero")).toHaveCSS("display", "flex");
     const mobile = await page.evaluate(() => {
       const copy = document.querySelector(".hero-copy").getBoundingClientRect();
@@ -36,7 +36,7 @@ test.describe("framework-first component and page examples", () => {
   test("AQCSS flexon and facet utilities compose responsive analytics dashboard columns", async ({ page }) => {
     await usePinnedFrameworkAssets(page);
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/examples/analytics-dashboard/");
+    await page.goto("/examples/analytics-dashboard/index.html");
     await expect(page.locator(".app")).toHaveCSS("display", "flex");
     const mobileWidth = await page.locator(".kpi").first().evaluate(el => el.getBoundingClientRect().width);
     await page.setViewportSize({ width: 1200, height: 900 });
@@ -66,7 +66,7 @@ test.describe("framework-first component and page examples", () => {
   test("AQJS mobile navigation toggles the AQCSS operations sidebar", async ({ page }) => {
     await usePinnedFrameworkAssets(page);
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto("/examples/operations-dashboard/");
+    await page.goto("/examples/operations-dashboard/index.html");
     const sidebar = page.locator("#main-sidebar");
     const menu = page.getByRole("button", { name: "Open menu" });
     await expect(sidebar).toBeHidden();
@@ -80,7 +80,7 @@ test.describe("framework-first component and page examples", () => {
 
   test("AQCSS responsive dashboard uses facets and AQJS updates viewport dimensions", async ({ page }) => {
     await usePinnedFrameworkAssets(page);
-    await page.goto("/examples/responsive-dashboard/");
+    await page.goto("/examples/responsive-dashboard/index.html");
     await expect(page.locator(".dashboard-grid")).toHaveCSS("display", "flex");
     await expect(page.locator("#viewport-label")).toContainText("Viewport:");
     await page.setViewportSize({ width: 768, height: 900 });
@@ -89,7 +89,7 @@ test.describe("framework-first component and page examples", () => {
 
   test("AQJS powers tabs, validation, toast and dialog behavior in the component gallery", async ({ page }) => {
     await usePinnedFrameworkAssets(page);
-    await page.goto("/components/");
+    await page.goto("/components/index.html");
     const tab = page.locator("#tab-b");
     await tab.click();
     await expect(tab).toHaveAttribute("aria-selected", "true");
@@ -113,7 +113,7 @@ test.describe("framework-first component and page examples", () => {
 
   test("AQJS DOM, on, setContent, setChild and class helpers power the restaurant basket", async ({ page }) => {
     await usePinnedFrameworkAssets(page);
-    await page.goto("/examples/restaurant-pwa/");
+    await page.goto("/examples/restaurant-pwa/index.html");
     await page.getByRole("button", { name: "Add roasted garden bowl" }).click();
     await expect(page.locator("#cart-count")).toHaveText("(1)");
     await expect(page.locator("#total")).toHaveText("$12.50");
