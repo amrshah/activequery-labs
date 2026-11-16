@@ -5,7 +5,7 @@ const jsUrl = "https://cdn.jsdelivr.net/gh/ActiveQuery/JS@adb1b19770ca68840dc2f9
 
 async function usePinnedFrameworkAssets(page) {
   await page.route(cssUrl, route => route.fulfill({ path: "vendor/ActiveQuery.css", contentType: "text/css" }));
-  await page.route(jsUrl, route => route.fulfill({ path: "vendor/ActiveQuery.js", contentType: "text/javascript" }));
+  await page.route(jsUrl, route => route.fulfill({ path: "vendor/ActiveQuery.js", contentType: "text/javascript", headers: { "access-control-allow-origin": "*" } }));
 }
 
 test.describe("framework-first component and page examples", () => {
