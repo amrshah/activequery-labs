@@ -138,12 +138,6 @@ A representative class bridge is now browser-tested: Element `setClasses(["hide"
 
 These cases are now runtime-verified for both distributions. This does not close the entire predicate truth table: cross-realm inputs, custom `toString` objects, and the full function/class predicate matrix remain open. The overall Gate B and source/minified parity criteria remain NOT PASSED.
 
-## Additional edge-contract evidence (run pending)
+## Verified edge-contract evidence — merged-branch run #480
 
-A focused follow-up batch adds browser tests for three previously open behaviors:
-
-- **Array.then:** direct invocation calls only the first function argument with the array receiver and returns that callback's result; missing/non-function first arguments return undefined. The dangerous Promise resolver-assimilation case is deliberately not executed: the implementation passes the same array to the Promise resolver, and the ECMAScript thenable-resolution procedure would attempt to assimilate that array again. This is a source-backed recursion hazard, not a claimed runtime hang measurement.
-- **Element.setAdjacent:** valid truthy argument pairs return the receiver before insertion; falsy pairs fall through to a switch that performs no insertion. Both cases preserve the DOM.
-- **Element.sift:** a truthy selector returns the receiver before installing a key handler. An empty selector installs onkeyup; typing a non-empty value causes document.querySelectorAll with an empty selector to throw SyntaxError.
-
-The new assertions compare source and minified builds. CI result will be recorded after the workflow completes.
+The source/minified fixture for Array.then, Element.setAdjacent and Element.sift passed in merged-branch run [#480](https://github.com/amrshah/activequery-labs/actions/runs/43845146200), in Chromium and Firefox. It establishes direct callback/receiver behavior and the missing/non-function callback no-op for Array.then; the no-op insertion behavior of setAdjacent; and the truthy-selector early return plus empty-selector keyup SyntaxError for sift. Promise resolver assimilation remains deliberately unexecuted because the Array thenable can recursively re-enter resolution; that risk is source-backed, not a claimed runtime hang measurement.
