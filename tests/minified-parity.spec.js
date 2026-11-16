@@ -729,6 +729,8 @@ test("AQJS source and minified builds preserve Function, Element and NodeList th
     return page.evaluate(async () => {
       const fn = function marker() {};
       const functionThen = fn.then(value => value === fn ? "function-ok" : "wrong-receiver");
+      const functionThenMissing = fn.then() === undefined;
+      const functionThenInvalid = fn.then("not-a-callback") === undefined;
 
       const element = document.createElement("div");
       const elementThen = element.then(value => value === element ? "element-ok" : "wrong-receiver");
@@ -743,6 +745,8 @@ test("AQJS source and minified builds preserve Function, Element and NodeList th
 
       return {
         functionThen,
+        functionThenMissing,
+        functionThenInvalid,
         elementThen,
         listThen,
         timerType: typeof timer,
@@ -755,6 +759,8 @@ test("AQJS source and minified builds preserve Function, Element and NodeList th
   expect(minified).toEqual(source);
   expect(source).toEqual({
     functionThen: "function-ok",
+    functionThenMissing: true,
+    functionThenInvalid: true,
     elementThen: "element-ok",
     listThen: "list-ok",
     timerType: "number",
@@ -1451,4 +1457,49 @@ test("AQJS source and minified builds repeat initlog callbacks on every complete
   expect(minified).toEqual(source);
   expect(source.afterFirstEvent).toEqual({ first: 1, second: 1, late: 0 });
   expect(source.afterSecondEvent).toEqual({ first: 2, second: 2, late: 1 });
+});
+
+test("AQJS source and minified builds preserve sancha data placeholders and callback timing", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      // The upstream implementation references undeclared ii, i and variables.
+      // Define them only in this isolated fixture so the interpolation path is reachable.
+      window.ii = 0;
+      window.i = 0;
+      window.variables = { greeting: "Hello" };
+      const host = document.createElement("div");
+      let variableCalls = 0;
+      let thenCalls = 0;
+      let callbackReceiver = false;
+      const returned = host.sancha({
+        data: [{ name: "Ada" }, { name: "Lin" }],
+        template: "<p>{{name}}</p><em>{{$greeting}}</em>",
+        variable: (receiver, data, template) => {
+          variableCalls++;
+          callbackReceiver = receiver === host && data.length === 2 && template.includes("{{name}}");
+        },
+        then: () => { thenCalls++; }
+      });
+      return {
+        returnsHost: returned === host,
+        html: host.innerHTML,
+        variableCalls,
+        callbackReceiver,
+        thenCalls
+      };
+    });
+  };
+
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    returnsHost: true,
+    html: "<p>Ada</p><em>Hello</em><p>Lin</p><em>Hello</em>",
+    variableCalls: 2,
+    callbackReceiver: true,
+    thenCalls: 1
+  });
 });
