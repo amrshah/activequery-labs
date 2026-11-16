@@ -1,7 +1,7 @@
 # AQJS Templating, Filtering and Mutation Observation
 
 Source: `ActiveQuery.js` SHA `b8ec9e5be8668d048eea3385cd9012dfddb69cf0`.
-Status: source inspection complete at a high level; targeted `watch()`, `sift()` and custom-element name-validation regression/parity tests have been authored, with CI verification pending. `sancha` and broader keyboard/security tests remain open.
+Status: source inspection complete at a high level; targeted `watch()`, `sift()`, `sancha()` and custom-element name-validation regression/parity tests have been authored, with CI verification pending. `sancha` and broader keyboard/security tests remain open.
 
 ## Element.sancha(args)
 
@@ -28,7 +28,7 @@ The method reads a template, finds placeholder-like expressions, iterates `args.
 - The no-data path inserts the literal text "No Data found".
 - The method mutates `args` by assigning fields such as `template`, `list`, `mapping` and `vap`.
 
-Do not recommend `sancha` for untrusted or production data until escaping, identifier scope, callback validation and edge cases are verified.
+Regression tests have been authored for static append, static replacement and the data-mode ReferenceError, with a source/minified comparison; CI verification is pending. Do not recommend `sancha` for untrusted or production data until escaping, identifier scope, callback validation and edge cases are verified.
 
 ## Element.sift(selector)
 
