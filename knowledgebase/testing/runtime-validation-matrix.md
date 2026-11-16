@@ -263,3 +263,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `c8c29bf55d67ee5a345f068074cfddc5f404aca6` |
 | Execution | 273 passed, 0 failed, 1 skipped; 137 authored tests across Chromium and Firefox |
 | New parity coverage | getPlugin approved fixture import, non-string fallback and rejected dynamic import behavior |
+
+
+## Latest confirmed execution record — run #397
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840) |
+| Commit | `b2aae452e21f4f34e2351ffacb26d95f36d90f74` |
+| Execution | 265 passed, 0 failed, 1 skipped; 133 authored tests across Chromium and Firefox |
+| New AQJS parity | Array.setSort ReferenceError, Array.i TypeError, Object.setValues/hasValues TypeErrors and selected isNaS/isNaF predicate outcomes match between source and minified builds |

@@ -132,3 +132,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #405
 
 [Workflow #405](https://github.com/amrshah/activequery-labs/actions/runs/43822976254) passed 273 browser cases, 0 failed, 1 skipped; 137 authored tests across Chromium and Firefox. It adds getPlugin import/fallback/rejection parity.
+
+
+## Latest execution — run #397
+
+[Workflow #397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840) passed 265 browser cases, 0 failed, 1 skipped; 133 authored tests across Chromium and Firefox. The run adds selected AQJS source/minified defect-parity checks for Array.setSort, Array.i, Object.setValues/hasValues and type predicates.

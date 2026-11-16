@@ -98,3 +98,8 @@ All methods are installed through `ActiveQuery.extend('array', ...)`.
 A source-observed return shape is not a recommendation. Methods marked defective, stubbed, unsafe or pending remain excluded from recommended usage until runtime tests and source/minified comparison close the relevant contract.
 
 References: [API inventory](api-inventory.md), [behavior matrix](behavior-matrix.md), [contract closure matrix](api-contract-closure-matrix.md), [type predicates and guards](type-predicates-and-guards.md), [runtime validation matrix](../testing/runtime-validation-matrix.md).
+
+
+### Defect behavior verified across source/minified builds
+
+Run [#397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840) confirms matching outcomes for `Array.setSort` (ReferenceError in strict module code), `Array.i` (TypeError from missing `ActiveQuery.isNaN`), `Object.setValues` / `hasValues` (TypeError), and selected `isNaS` / `isNaF` predicate cases. This documents existing behavior; it does not imply these APIs are correct or recommended.

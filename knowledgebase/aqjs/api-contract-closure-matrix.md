@@ -104,7 +104,7 @@ The current source-review pass adds four focused references:
 - [Predicate truth and failure-path audit](predicate-truth-table.md) — source expressions and ambient-global hazards.
 - [Source/minified parity audit](source-minified-parity-audit.md) — inspected high-risk methods and the limits of current parity evidence.
 
-These are source-review improvements. The initial contract tests passed in runs #324–#348; expanded Element DocumentFragment/form-control contracts passed in #383, NodeList multi-control setValue parity passed in #392, and Element setContent replacement/failure contracts passed in #395. These are selected-method checks, not full semantic parity or closure of the remaining runtime criteria.
+These are source-review improvements. The initial contract tests passed in runs #324–#348; expanded Element DocumentFragment/form-control contracts passed in #383, NodeList multi-control setValue parity passed in #392, and Element setContent replacement/failure contracts passed in #395. Run [#397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840) additionally verifies source/minified parity for Array.setSort, Array.i, Object.setValues/hasValues and selected type predicate outcomes. These are selected-method checks, not full semantic parity or closure of the remaining runtime criteria.
 
 ## References
 
