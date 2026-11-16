@@ -103,3 +103,8 @@ References: [API inventory](api-inventory.md), [behavior matrix](behavior-matrix
 ### Defect behavior verified across source/minified builds
 
 Run [#397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840) confirms matching outcomes for `Array.setSort` (ReferenceError in strict module code), `Array.i` (TypeError from missing `ActiveQuery.isNaN`), `Object.setValues` / `hasValues` (TypeError), and selected `isNaS` / `isNaF` predicate cases. This documents existing behavior; it does not imply these APIs are correct or recommended.
+
+
+### Array helper edge cases verified across source/minified builds
+
+Run [#408](https://github.com/amrshah/activequery-labs/actions/runs/43823338803) confirms matching behavior for `Array.getIndex` with the `=` operator (the implementation assigns the tested property and returns index 0) and `Array.setItem` with ordinary truthy index/value arguments (the array remains unchanged and the receiver is returned). These are recorded as observed implementation defects, not desired API behavior.

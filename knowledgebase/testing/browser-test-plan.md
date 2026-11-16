@@ -137,3 +137,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #397
 
 [Workflow #397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840) passed 265 browser cases, 0 failed, 1 skipped; 133 authored tests across Chromium and Firefox. The run adds selected AQJS source/minified defect-parity checks for Array.setSort, Array.i, Object.setValues/hasValues and type predicates.
+
+
+## Latest execution — run #408
+
+[Workflow #408](https://github.com/amrshah/activequery-labs/actions/runs/43823338803) passed 275 browser cases, 0 failed, 1 skipped; 138 authored tests across Chromium and Firefox. The run adds Array.getIndex and Array.setItem source/minified edge-behavior parity.

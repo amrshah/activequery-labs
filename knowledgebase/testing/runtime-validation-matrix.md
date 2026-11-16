@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-16.
-Run [#405](https://github.com/amrshah/activequery-labs/actions/runs/43822976254) is the latest completed browser run: **273 passed, 0 failed, 1 skipped** across Chromium and Firefox (137 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). It adds source/minified parity for getPlugin's approved fixture import, non-string fallback and rejected import propagation. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run [#408](https://github.com/amrshah/activequery-labs/actions/runs/43823338803) is the latest completed browser run: **275 passed, 0 failed, 1 skipped** across Chromium and Firefox (138 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). It adds source/minified parity for Array.getIndex's equals-branch assignment defect and Array.setItem's truthy-index/value no-op behavior. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -273,3 +273,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `b2aae452e21f4f34e2351ffacb26d95f36d90f74` |
 | Execution | 265 passed, 0 failed, 1 skipped; 133 authored tests across Chromium and Firefox |
 | New AQJS parity | Array.setSort ReferenceError, Array.i TypeError, Object.setValues/hasValues TypeErrors and selected isNaS/isNaF predicate outcomes match between source and minified builds |
+
+
+## Latest confirmed execution record — run #408
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #408](https://github.com/amrshah/activequery-labs/actions/runs/43823338803) |
+| Commit | `cd84e63b7604427e75c66567bac02af0b654d5ef` |
+| Execution | 275 passed, 0 failed, 1 skipped; 138 authored tests across Chromium and Firefox |
+| New AQJS parity | Array.getIndex equals-branch assignment behavior and Array.setItem truthy index/value no-op behavior match between source and minified builds |
