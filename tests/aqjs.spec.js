@@ -1515,3 +1515,16 @@ test("AQJS custom-element name filter rejects valid digit names and lets invalid
     digitNameRejected: true
   });
 });
+
+
+test("Element.sift ignores a normal selector and installs no keyup handler", async ({ page }) => {
+  const result = await page.evaluate(() => {
+    const target = document.createElement("input");
+    const returnValue = target.sift(".filter-item");
+    return {
+      returnsTarget: returnValue === target,
+      handlerInstalled: target.onkeyup !== null
+    };
+  });
+  expect(result).toEqual({ returnsTarget: true, handlerInstalled: false });
+});
