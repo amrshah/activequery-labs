@@ -1165,3 +1165,32 @@ test("AQJS source and minified builds preserve sancha static and data-mode behav
     dataOutput: ""
   });
 });
+
+
+test("AQJS source and minified builds preserve Element.getValue Boolean-mode outcomes", async ({ page }) => {
+  const collect = async path => {
+    await page.goto(path);
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const target = document.createElement("input");
+      target.value = "needle";
+      return {
+        substringModeAtZero: target.getValue("nee", false),
+        booleanModeAtZero: target.getValue("nee", true),
+        booleanModeAfterZero: target.getValue("edl", true),
+        booleanModeMissing: target.getValue("absent", true),
+        noArgumentReturnsTarget: target.getValue() === target
+      };
+    });
+  };
+  const source = await collect("/");
+  const minified = await collect("/tests/fixture-min.html");
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    substringModeAtZero: true,
+    booleanModeAtZero: false,
+    booleanModeAfterZero: true,
+    booleanModeMissing: true,
+    noArgumentReturnsTarget: true
+  });
+});
