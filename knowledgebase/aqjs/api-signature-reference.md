@@ -45,7 +45,7 @@ All methods are installed through `ActiveQuery.extend('array', ...)`.
 | `setAttributes` | `setAttributes(a)` | Same Element | Consumes alternating name/value pairs; stops at first falsy value. |
 | `setAttributeName` | `setAttributeName(a)` | Same Element | Sets each listed attribute to empty string. |
 | `removeAttributes` | `removeAttributes(a)` | Same Element | Removes each listed attribute. |
-| `setStyles` | `setStyles(a)` | Same Element | Splits each declaration at colon and assigns first property/value pieces. |
+| `setStyles` | `setStyles(a)` | Same Element | Splits each declaration at every colon and uses only the first property/value pieces; URL/data values containing colons are truncated. Direct regression and source/minified parity tests authored in commits `d748706` / `01b4b0c` (CI pending). |
 | `getStyles` | `getStyles(a)` | Array of truthy style values, or same Element if no argument | Last array member equal to true selects inline styles; otherwise computed styles. Missing/empty values are omitted, so result positions are not keyed. |
 | `removeStyles` | `removeStyles(a)` | Same Element | Calls `style.removeProperty` for each supplied name. |
 | `setClasses` | `setClasses(a)` | Same Element | Adds each supplied token. |
