@@ -51,26 +51,27 @@ The Ethical Source Policy separately expresses an expectation that commercial us
 
 ## Current repository and deployment facts
 
-- `tools/fetch-pinned-sources.mjs` fetches pinned AQCSS/AQJS files **and their license files**, verifies blob hashes, and stages them in both `vendor/` and `rebuild/vendor/`.
-- `.gitignore` excludes both vendor directories. The fetched framework files are generated working assets, not committed repository files.
-- The browser-test workflow runs the source-fetch script before tests, so the clean-room playground can load the pinned files in CI.
-- The GitHub Pages workflow currently uploads the repository root but does **not** run the source-fetch script. Consequently, the new `rebuild/` playground's local/CI asset staging does not imply those framework files are present on the public Pages artifact. Do not describe the deployed playground as fully functional until this is addressed and validated.
-- If a future Pages workflow stages and serves the framework files, that is the point to complete the external-deployment, source-availability, attribution, notice and assent review before publishing.
+- `tools/fetch-pinned-sources.mjs` fetches the pinned AQCSS/AQJS source files, minified files and their license/notice files; it verifies the expected Git blob hashes before staging them.
+- The generated `vendor/` and `rebuild/vendor/` directories are gitignored. CI generates the assets from the pinned upstream repositories; the upstream files are not edited or committed as Labs-authored code.
+- The browser-test workflow fetches the pinned assets before running tests.
+- The GitHub Pages workflow now uploads `rebuild/` as the artifact root, runs the pinned-source fetch, and fails validation unless the four framework source/distribution files and both license files exist in `rebuild/vendor/`.
+- The clean-room portal links to the exact source and license files and gates browser-side framework asset loading behind an affirmative OSL-3.0 assent action. The iframe remains sandboxed with `allow-scripts` only and does not enable `allow-same-origin`.
+- Pages pull-request validation for commit `3121f351a756c71c0203a71512e6ddad44fbdf52` completed successfully in workflow [#533](https://github.com/amrshah/activequery-labs/actions/runs/43845146125): required-file validation, pinned-source hash verification, distributable-file checks, Pages setup and artifact upload all passed. The deploy job was correctly skipped for the pull-request event.
+- Browser validation for the same revision completed in workflow [#480](https://github.com/amrshah/activequery-labs/actions/runs/43845146200): 351 passed, 1 documented skip.
+- These workflow results prove PR packaging and browser validation. They do not, by themselves, prove that the post-merge Pages deployment completed or that the public site has been independently smoke-tested. Record that separately after checking the deployment environment.
 
-## Deployment decision checklist
+## Deployment implementation checklist
 
-Before publicly enabling framework assets in the portal:
+- [x] CI fetches the exact pinned machine-readable AQCSS/AQJS source files and corresponding license/third-party notice files.
+- [x] CI verifies pinned blob hashes and fails if distributable source or notice files are missing.
+- [x] The Pages artifact root is `rebuild/`, and the Pages workflow uploads the staged source and notice files with the portal.
+- [x] The affirmative OSL-3.0 assent control is implemented and browser-tested before framework assets are fetched.
+- [x] Original upstream framework files remain separately identifiable and unmodified; any future modification must add a prominent modification notice and publish the corresponding modified source under OSL-3.0.
+- [x] The portal links the exact pinned source and license files and retains the independent-project/no-endorsement statement.
+- [x] The site-authored MIT notice is scoped to original Labs material and does not purport to relicense upstream or third-party materials.
+- [x] Third-party MIT/ISC notices are retained in the corresponding upstream license files.
+- [ ] Confirm the post-merge GitHub Pages deployment succeeded and smoke-test the public root and preview asset loading.
+- [ ] Recheck upstream license, governance and source revisions before each material public framework-asset release.
+- [ ] If the derivative-work boundary or a material change to the distribution model is disputed, consider qualified legal advice; separate counsel approval is not itself a condition stated by OSL-3.0.
 
-- [ ] Confirm the deployed artifact includes the exact pinned machine-readable source files and corresponding license/third-party notices.
-- [ ] Confirm the affirmative OSL-3.0 assent step is visible, accessible and runs before the browser fetches framework assets.
-- [ ] Keep original framework files separately identifiable and unmodified; if a future release modifies them, add a prominent modification notice and publish the corresponding modified source under OSL-3.0.
-- [ ] For any material change to the distribution model or if the derivative-work boundary is disputed, consider qualified legal advice; separate legal counsel approval is not itself a condition stated by OSL-3.0.
-- [ ] Keep AQCSS/AQJS source and minified assets separately identifiable; retain original notices and link the exact pinned source and license files.
-- [ ] Provide convenient machine-readable source and modification documentation if required by the final legal interpretation.
-- [ ] Preserve third-party MIT/ISC notices for all redistributed bundled code.
-- [ ] Keep the site-authored MIT license clearly scoped to original Labs material; do not imply it relicenses upstream or third-party materials.
-- [ ] Keep the independent-project/no-endorsement statement and avoid unlicensed use of upstream marks.
-- [ ] Determine and implement an appropriate recipient-assent mechanism if required.
-- [ ] Recheck upstream license, governance and source revisions before each public framework-asset release.
-
-**Current implementation direction:** publish the clean-room portal with pinned, unmodified framework source and matching license files in the same artifact; do not fetch those assets in the browser until the user affirmatively accepts OSL-3.0. Keep the upstream source repositories and pinned commit identities linked. Recheck this checklist whenever the asset set or distribution architecture changes.
+**Current implementation direction:** the engineering release path is implemented and its pull-request packaging/browser validation passed. The remaining release verification is to confirm the post-merge Pages deployment and test the actual public site. OSL-3.0 grants distribution and external-deployment rights subject to its conditions; this audit does not treat separate upstream permission or mandatory lawyer signoff as a prerequisite.

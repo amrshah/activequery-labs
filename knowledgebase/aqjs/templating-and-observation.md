@@ -1,7 +1,7 @@
 # AQJS Templating, Filtering and Mutation Observation
 
 Source: `ActiveQuery.js` SHA `b8ec9e5be8668d048eea3385cd9012dfddb69cf0`.
-Status: source inspection complete at a high level; targeted `watch()`, `sift()`, `sancha()` and custom-element name-validation regression/parity tests have been authored, with CI verification pending. `sancha` and broader keyboard/security tests remain open.
+Status: source inspection and selected regression coverage are complete for the currently merged `watch()`, `sift()` and `sancha()` cases. PR #13 covers the observer callback failure and return contract; PR #12 covers the `sift()` truthy-selector early return; PR #16 covers `sancha()` static/data paths and raw-HTML interpolation. The merged-branch browser suite passed again in [run #480](https://github.com/amrshah/activequery-labs/actions/runs/43845146200). Broader placeholder, keyboard and security coverage remains open.
 
 ## Element.sancha(args)
 
@@ -28,7 +28,7 @@ The method reads a template, finds placeholder-like expressions, iterates `args.
 - The no-data path inserts the literal text "No Data found".
 - The method mutates `args` by assigning fields such as `template`, `list`, `mapping` and `vap`.
 
-Regression tests have been authored for static append, static replacement and the data-mode ReferenceError, with a source/minified comparison; CI verification is pending. Do not recommend `sancha` for untrusted or production data until escaping, identifier scope, callback validation and edge cases are verified.
+Static append/replacement, the data-mode strict-module identifier failure and source/minified parity were tested. PR #16 adds a separate browser test proving that markup supplied as a data value becomes live DOM rather than escaped text; the suite passed in [run #478](https://github.com/amrshah/activequery-labs/actions/runs/43844759071) and again in merged-branch run #480. The fixture defines the otherwise-undeclared loop globals only to reach the interpolation sink. Do not recommend `sancha` for untrusted or production data: contextual escaping is absent, identifier scope is fragile, `args.then` is not validated, and other placeholder combinations remain untested.
 
 ## Element.sift(selector)
 
@@ -56,7 +56,7 @@ The source adds `watch` to Element.prototype and uses MutationObserver. It:
 - The callback invokes `args.then()` without validating it exists or is callable.
 - The shown method returns the result of `observer.observe`, which is normally undefined, not the observer instance.
 - The method does not expose a clear disconnect handle in the shown API.
-- The callback uses `this` inside a normal function passed to `mutations.forEach`. In strict module code the inner callback's `this` is undefined, so `this.watched = ...` throws TypeError before `args.then()` is called. A Playwright regression test now reproduces this expected failure and checks that the supplied callback is never reached; a paired source/minified fixture checks the same observation in both distributions. The new tests are authored but not yet CI-verified.
+- The callback uses `this` inside a normal function passed to `mutations.forEach`. In strict module code the inner callback's `this` is undefined, so `this.watched = ...` throws TypeError before `args.then()` is called. PR #13 adds a regression test for this failure and a paired source/minified fixture; the merged-branch browser suite passed again in run #480.
 - The fallback implementation is large and must be examined separately.
 - The fallback guard reads `MutationObserver` as a bare identifier before assigning `window.MutationObserver`; if the global is absent, the check itself may throw.
 

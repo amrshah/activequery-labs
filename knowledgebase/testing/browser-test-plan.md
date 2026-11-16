@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run [#418](https://github.com/amrshah/activequery-labs/actions/runs/43824577065) passed 287 browser cases with one documented Firefox mobile-emulation skip (144 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: latest merged-branch browser run [#480](https://github.com/amrshah/activequery-labs/actions/runs/43845146200) passed **351 tests with 1 documented skip**. Pages pull-request packaging validation [#533](https://github.com/amrshah/activequery-labs/actions/runs/43845146125) also passed required-file checks, pinned source/license hash verification, distributable asset checks and artifact upload; deployment was skipped for the PR event. Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -18,6 +18,8 @@ Status: run [#418](https://github.com/amrshah/activequery-labs/actions/runs/4382
 - PostCSS AST comparison checks all AQCSS source and minified rules, selectors, media context and declarations after syntax-preserving whitespace normalization.
 - Browser tests compare core AQJS selector/Element behavior and selected edge contracts across source and minified module builds, including Element `setValue`, `setChild`, `then`, NodeList event registration/empty-collection return, Array `getCount` default-operator behavior, Array `then`, Document/Window event helpers, early lifecycle hooks and constructor `initlog` timing, Array query helper parity, Element/NodeList bulk mutation parity, Element fragment/form-control contracts, NodeList multi-control setValue parity, Element setContent replacement/failure parity, Array/Object/predicate failure parity, and Array.setItem / Element setText, setHtml, getValue and siblings parity, plus base/responsive flex importance cascade and mobile-middle alias composition (runs #325, #327, #340, #348, #383, #392, #395, #397, #399, #401 and #403).
 - CI verifies exact Git blob SHAs for both source and minified files before testing.
+- Recent AQJS regression coverage merged in PRs #12–#16 includes lifecycle/watch and sift findings, Element text-helper contracts, and `sancha()` raw-HTML interpolation/security behavior. The dedicated `sancha()` suite passed in run [#478](https://github.com/amrshah/activequery-labs/actions/runs/43844759071); the merged-branch full suite passed again in run #480.
+- The portal consent gate, pre-consent network silence, post-consent asset requests, theme persistence, keyboard editor-tab navigation, learning-guide navigation and narrow viewport behavior passed in run #480.
 
 ### AQJS
 
