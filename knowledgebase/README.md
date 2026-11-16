@@ -37,7 +37,7 @@ Do not conflate upstream framework capabilities with browser-native APIs, third-
 - `aqjs/` — exports, constructor, static and instance APIs, prototype extensions, lifecycle, DOM operations, templating, observation and edge cases.
 - `integration/` — AQCSS/AQJS interaction, browser-native integration and usage patterns; see [display utility bridge](integration/aqcss-aqjs-display-bridge.md).
 - `cookbook/` — tested recipes and implementation patterns.
-- `testing/` — reproducible test cases, compatibility, edge cases and known limitations; latest PR-19 browser run [#491](https://github.com/amrshah/activequery-labs/actions/runs/43857523951) passed 363 browser executions across Chromium and Firefox with one documented Firefox mobile-emulation skip; the authored-test count is not asserted because the suite has grown beyond the old 149-test snapshot.
+- `testing/` — reproducible test cases, compatibility, edge cases and known limitations; latest PR-19 browser run [#501](https://github.com/amrshah/activequery-labs/actions/runs/43859496522) passed 365 browser executions across Chromium and Firefox with one documented Firefox mobile-emulation skip; the authored-test count is not asserted because the suite has grown beyond the old 149-test snapshot.
 - `agent-reference/` — fast capability index, task-to-reference routing and concise agent instructions.
 - [Task routing guide](agent-reference/task-routing.md) — selects the smallest relevant reference for each agent task.
 - `source-traceability/` — symbol/selector-to-source map and verification records.
