@@ -529,3 +529,52 @@ test("AQJS source and minified builds preserve Element setContent replacement an
     string: { error: "TypeError", html: "" }
   });
 });
+
+
+test("AQJS source and minified builds preserve known Array, Object and predicate failure contracts", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const values = [{ score: 2 }, { score: 1 }];
+      let sortError = null;
+      try { values.setSort("score"); } catch (error) { sortError = error.name; }
+
+      let indexError = null;
+      try { [10, 20].i(0); } catch (error) { indexError = error.name; }
+
+      const object = { existing: 1 };
+      let setValuesError = null;
+      let hasValuesError = null;
+      try { object.setValues("newKey", 2); } catch (error) { setValuesError = error.name; }
+      try { object.hasValues("existing"); } catch (error) { hasValuesError = error.name; }
+
+      const instance = new window.AQ("");
+      return {
+        sortError,
+        indexError,
+        objectUnchanged: object.newKey === undefined,
+        setValuesError,
+        hasValuesError,
+        isNaS: instance.isNaS("value"),
+        isNaFNamedFunction: instance.isNaF(function named() {}),
+        isNaFArrow: instance.isNaF(() => true),
+        isNaFString: instance.isNaF("not a function")
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    sortError: "ReferenceError",
+    indexError: "TypeError",
+    objectUnchanged: true,
+    setValuesError: "TypeError",
+    hasValuesError: "TypeError",
+    isNaS: true,
+    isNaFNamedFunction: false,
+    isNaFArrow: false,
+    isNaFString: false
+  });
+});
