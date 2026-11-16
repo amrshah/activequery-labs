@@ -89,7 +89,7 @@ Counts below are taken from the Chromium test listing in verified workflow run #
 - `tests/rebuild-portal.spec.js`: 4 clean-room portal tests (render, sandbox/live edit, AQJS event bridge, narrow layout).
 - `tests/minified-parity.spec.js`: 24 source/minified parity tests.
 - `tests/css-source-parse.spec.js`: 4 source/catalog tests; `tests/js-source-parse.spec.js`: 1 API inventory test; `tests/knowledgebase-integrity.spec.js`: 1 link-integrity test.
-- Latest complete execution: run #494 executed 364 browser-project cases across Chromium and Firefox: **363 passed, 0 failed, 1 documented Firefox mobile-emulation skip**. The repository's historical authored-test count is not treated as current; use the workflow output as the authoritative execution count. The workflow is configured for both `push` and `pull_request` to `main`.
+- Latest complete execution: run #506 executed 366 browser-project cases across Chromium and Firefox: **365 passed, 0 failed, 1 documented Firefox mobile-emulation skip**. The repository's historical authored-test count is not treated as current; use the workflow output as the authoritative execution count. The workflow is configured for both `push` and `pull_request` to `main`.
 
 ## Execution record
 
