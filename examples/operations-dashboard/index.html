@@ -24,8 +24,16 @@ body{overflow-x:hidden}*{box-sizing:border-box;min-width:0}button,input,select{f
 @media(max-width:1100px){.sidebar{width:210px;flex-basis:210px}}
 @media(max-width:760px){.dashboard{flex-direction:column}.sidebar{display:none!important}.sidebar.is-open{display:flex!important;position:fixed;z-index:30;top:64px;bottom:0;left:0;width:min(85vw,280px);overflow:auto;box-shadow:0 18px 50px #0005}.menu-button{display:inline-block}.topbar{height:64px;padding:0 16px}.search{width:min(190px,42vw)}.content{padding:20px 16px;gap:18px}.page-heading{align-items:flex-start;flex-direction:column}.heading-actions{width:100%}.heading-actions .control{flex:1}.period{flex:1 1 100%!important}.kpi-grid{gap:10px}.kpi{padding:14px;gap:10px}.panel{padding:16px}.panel-head{flex-direction:column}}
 @media(max-width:430px){.crumb{display:none}.topbar-actions{gap:7px}.search{width:min(48vw,170px)}.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi-value{font-size:1.35rem}.kpi-foot{font-size:.63rem}.spark{display:none}.heading-actions{display:grid;grid-template-columns:1fr 1fr}.heading-actions .period{grid-column:1/-1}.activity{grid-template-columns:32px minmax(0,1fr)}.activity time{grid-column:2}}
-</style></head>
-<body><div class="dashboard aq-flexon">
+</style><style>
+.aq-labs-nav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:9px max(16px,calc((100vw - 1160px)/2));background:#0b1020;color:#edf3ff;font:12px/1.4 system-ui,sans-serif;position:relative;z-index:50;border-bottom:1px solid #26334b}
+.aq-labs-nav strong{font-weight:750;letter-spacing:-.02em;white-space:nowrap}
+.aq-labs-nav-links{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.aq-labs-nav a{color:#8af2d6;text-decoration:none;font-weight:700}
+.aq-labs-nav a:hover{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:520px){.aq-labs-nav{align-items:flex-start;flex-direction:column;gap:6px}.aq-labs-nav-links{gap:14px}}
+</style>
+</head>
+<body><nav class="aq-labs-nav" aria-label="ActiveQuery Labs navigation"><strong>ActiveQuery Labs <span aria-hidden="true">/</span> Example</strong><div class="aq-labs-nav-links"><a href="../../">Labs home</a><a href="../../components/">Components</a><a href="../">All examples</a><a href="../../playground/">Playground</a><a href="../../docs/aqcss/">AQCSS</a><a href="../../docs/aqjs/">AQJS</a></div></nav><div class="dashboard aq-flexon">
 <aside class="sidebar aq-flexon aq-flexon--column aq-flexon--row-gap-large" id="main-sidebar" aria-label="Main navigation"><div class="brand"><span class="brand-mark">N</span> northstar</div><div class="workspace"><div class="workspace-avatar">AC</div><div class="workspace-copy"><b>Acme Commerce</b><small>Enterprise workspace</small></div><span>⌄</span></div>
 <nav class="nav-group"><div class="nav-label">Workspace</div><a class="nav-link active" href="#">▦ &nbsp; Overview</a><a class="nav-link" href="#">▤ &nbsp; Analytics</a><a class="nav-link" href="#">◫ &nbsp; Orders <span style="margin-left:auto">12</span></a><a class="nav-link" href="#">♙ &nbsp; Customers</a><a class="nav-link" href="#">◇ &nbsp; Products</a></nav>
 <nav class="nav-group"><div class="nav-label">Management</div><a class="nav-link" href="#">▥ &nbsp; Reports</a><a class="nav-link" href="#">⚙ &nbsp; Integrations</a><a class="nav-link" href="#">☷ &nbsp; Settings</a></nav>
