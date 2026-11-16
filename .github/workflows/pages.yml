@@ -69,6 +69,45 @@ jobs:
           for file in ActiveQuery.css ActiveQuery.js ActiveQuery.min.css ActiveQuery.min.js CSS-LICENSE.txt JS-LICENSE.txt; do
             test -s "rebuild/vendor/$file" || { echo "Missing distributable source/notice: $file"; exit 1; }
           done
+      - name: Assemble complete Pages site
+        shell: bash
+        run: |
+          set -euo pipefail
+          # The portal shell lives in rebuild/. The actual component gallery,
+          # example gallery, guides, playground and shared site assets live at
+          # the repository root; publish them together as one coherent site.
+          mkdir -p rebuild/assets
+          cp assets/site.css assets/site.js rebuild/assets/
+          cp -R components examples docs playground rebuild/
+
+          # Validate the deployable artifact, not just the source tree.
+          required_deploy=(
+            rebuild/index.html
+            rebuild/assets/portal.css
+            rebuild/assets/portal.js
+            rebuild/assets/site.css
+            rebuild/assets/site.js
+            rebuild/components/index.html
+            rebuild/components/components.css
+            rebuild/components/components.js
+            rebuild/examples/index.html
+            rebuild/examples/operations-dashboard/index.html
+            rebuild/examples/analytics-dashboard/index.html
+            rebuild/examples/saas-landing/index.html
+            rebuild/examples/restaurant-pwa/index.html
+            rebuild/examples/responsive-dashboard/index.html
+            rebuild/examples/aqcss-utility-tour/index.html
+            rebuild/examples/aqjs-dom-helper/index.html
+            rebuild/docs/aqcss/index.html
+            rebuild/docs/aqjs/index.html
+            rebuild/docs/ecosystem/index.html
+            rebuild/playground/index.html
+          )
+          for file in "${required_deploy[@]}"; do
+            test -s "$file" || { echo "Missing from Pages artifact: $file"; exit 1; }
+          done
+          echo "Validated ${#required_deploy[@]} deployed-site files."
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact
