@@ -162,3 +162,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #416
 
 [Workflow #416](https://github.com/amrshah/activequery-labs/actions/runs/43824307566) passed 285 browser cases, 0 failed, 1 skipped; 143 authored tests across Chromium and Firefox. The run adds Array.getCount fallback operator and failure-path source/minified parity.
+
+
+## Latest execution — run #417
+
+[Workflow #417](https://github.com/amrshah/activequery-labs/actions/runs/43824492132) passed 287 browser cases, 0 failed, 1 skipped; 143 authored tests across Chromium and Firefox. It adds lifecycle event mapping source/minified parity.

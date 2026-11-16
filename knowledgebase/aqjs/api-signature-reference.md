@@ -18,7 +18,7 @@ This reference records source-observed signatures and return shapes. It is not a
 | Instance `defer` | `defer(a)` | Native timer handle | Copies iterable, pops last member as seconds, multiplies by 1000, passes remaining Array as `setTimeout` callback argument. Browser coercion does not turn its members into an invoked callback. |
 | Instance `getPlugin` | `async getPlugin(n)` | Promise resolving to imported module namespace for string input; otherwise resolves to instance | Uses dynamic `import(n)`; import rejection propagates. Do not accept untrusted module specifiers. |
 | Instance predicates | `isX(a)` / `isNaX(a)` | Mostly Boolean, but several throw or are semantically misleading | Exact predicate list and failure conditions are in type-predicates-and-guards.md. |
-| Instance lifecycle `on` | `on(a = null, b = null)` | Always returns AQ instance | Registers only six fixed names; unknown names are ignored; no listener-removal API is returned. |
+| Instance lifecycle `on` | `on(a = null, b = null)` | Always returns AQ instance | Registers only six fixed names; unknown names are ignored; no listener-removal API is returned. Offline/online/close mapping, unknown-event ignore and receiver identity passed in source/minified parity in run #417. |
 
 ## Array.prototype extensions
 

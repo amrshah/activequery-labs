@@ -77,3 +77,6 @@ Run [#409](https://github.com/amrshah/activequery-labs/actions/runs/43823498069)
 
 
 Run [#413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685) adds source/minified parity for Element setText falsy inputs and setHtml falsy innerHTML assignments (empty string, zero, false, null), assignment return values, and outerHTML host removal. This closes the selected falsy branch set; other HTML-sink security and serialization cases remain outside this fixture.
+
+
+Run [#417](https://github.com/amrshah/activequery-labs/actions/runs/43824492132) adds source/minified parity for instance lifecycle offline/online/close event mapping, ignored unknown names, and the invariant that all registration calls return the same ActiveQuery instance.
