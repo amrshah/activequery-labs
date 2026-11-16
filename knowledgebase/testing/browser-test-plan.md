@@ -152,3 +152,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #413
 
 [Workflow #413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685) passed 281 browser cases, 0 failed, 1 skipped; 141 authored tests across Chromium and Firefox. It adds source/minified parity for Element setText falsy values and setHtml falsy innerHTML/outerHTML assignment results.
+
+
+## Latest execution — run #413
+
+[Workflow #413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685) passed 281 browser cases, 0 failed, 1 skipped; 141 authored tests across Chromium and Firefox. The run adds Element setText/setHtml falsy branch and outerHTML assignment-return source/minified parity.

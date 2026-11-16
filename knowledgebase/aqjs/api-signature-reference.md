@@ -108,3 +108,8 @@ Run [#397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840)
 ### Array helper edge cases verified across source/minified builds
 
 Run [#408](https://github.com/amrshah/activequery-labs/actions/runs/43823338803) confirms matching behavior for `Array.getIndex` with the `=` operator (the implementation assigns the tested property and returns index 0) and `Array.setItem` with ordinary truthy index/value arguments (the array remains unchanged and the receiver is returned). These are recorded as observed implementation defects, not desired API behavior.
+
+
+### Element text/HTML falsy branches verified across source/minified builds
+
+Run [#413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685) confirms `setText` ignores `""`, `0`, `false` and `null`, retaining existing text and returning the element. `setHtml` takes the opposite branch for falsy values: it assigns the value to `innerHTML` and returns the assigned value; `null` becomes empty markup. With the outerHTML flag, assigning an empty string removes the host element and returns the empty string.

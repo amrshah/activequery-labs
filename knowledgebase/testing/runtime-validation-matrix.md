@@ -67,9 +67,9 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 | Element | Attributes/styles | Inspected; falsy-value and simple parser limits | Pair early-stop, attribute names/removal, inline style parsing/readback | Partial; selected contracts passed in run #313 |
 | Element | Classes | Inspected | Basic set/get/remove plus NodeList bulk class mutators | Partial; selected contracts passed in run #313 |
 | Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default; setChild single/array/empty, DocumentFragment and invalid member after a valid member | Partial; setChild contracts passed in runs #324 and #383, including source/minified parity; `i` remains untested |
-| Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | Guarded setAdjacent/setHtml, getHtml modes, array setContent | Partial; selected contracts passed in run #313 |
+| Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | Guarded setAdjacent/setHtml, getHtml modes, array setContent | setHtml truthy no-op, falsy innerHTML assignment, assigned-value return semantics and outerHTML host removal passed in source/minified parity in runs #399 and #413; remaining getHtml/setAdjacent modes still need broader matrix |
 | Element | `setContent` | Inspected: always clears innerHTML, appends Node/Array; empty Array clears; invalid values throw after clearing | Single Node, array, empty array, DocumentFragment, invalid array member and invalid string | All listed replacement/failure cases passed in Chromium/Firefox and source/minified parity in run #395 |\n| Element | `setHtml` | Inspected: truthy input ignored; falsy branch assigns inner/outer HTML and returns assignment result | Truthy input ignored, empty/zero/false/null innerHTML values, outerHTML host removal and return value | All listed cases passed in source/minified parity in runs #399 and #413 |\n| Element | `siblings` | Inspected: next/prev supported; default references undeclared target | next, prev and default error path | All three cases passed in source/minified parity in run #399 |
-| Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior; setValue assigns empty string on falsy input and on generic Elements | setText empty-string no-op; getValue default/mode/no-arg; setValue truthy/falsy/generic Element and native control matrix | Selected contracts passed in runs #324, #383 and #399; source/minified parity for setText/getValue passed in #399; broader getValue input matrix remains pending |
+| Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior; setValue assigns empty string on falsy input and on generic Elements | setText empty/zero/false/null no-op; getValue default/mode/no-arg; setValue truthy/falsy/generic Element and native control matrix | setText falsy no-op and receiver identity passed in source/minified parity in run #413; selected getValue/setValue contracts passed in runs #324, #383 and #399; broader getValue input matrix remains pending |
 | Element | `then`, `fax`, `on` | Inspected | callback result, absent callback, FORM/non-FORM fax, event listener | Selected contracts passed in run #324; form semantics remain unsupported/incomplete |
 | Element | `sancha` | Inspected; HTML injection and undeclared identifiers | Static success and data-mode ReferenceError | Passed in run #313 |
 | Element | `sift` | Inspected: truthy selector early return | Explicit no-handler test | Passed in run #313 |
@@ -303,3 +303,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `092bd90f626d9bddd06d87d445b9a2494c5429d8` |
 | Execution | 281 passed, 0 failed, 1 skipped; 141 authored tests across Chromium and Firefox |
 | New AQJS evidence | setText falsy no-op and setHtml falsy innerHTML/outerHTML assignment return behavior matched between source and minified builds |
+
+
+## Latest confirmed execution record — run #413
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685) |
+| Commit | `092bd90f626d9bddd06d87d445b9a2494c5429d8` |
+| Execution | 281 passed, 0 failed, 1 skipped; 141 authored tests across Chromium and Firefox |
+| New AQJS coverage | setText ignores empty string/0/false/null and returns its receiver; setHtml writes falsy values, returns the assigned value, converts null to empty innerHTML, and outerHTML assignment can remove the host; source/minified parity |
