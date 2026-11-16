@@ -31,6 +31,17 @@ test.describe("clean-room portal", () => {
     await expect(page.locator("#preview-status")).toContainText("AQJS event helper ran");
   });
 
+  test("switches theme accessibly and remembers the selected theme", async ({ page }) => {
+    const toggle = page.getByRole("button", { name: "Switch to dark theme" });
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    await toggle.click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    await expect(page.getByRole("button", { name: "Switch to light theme" })).toHaveAttribute("aria-pressed", "true");
+    await page.reload();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    await expect(page.getByRole("button", { name: "Switch to light theme" })).toBeVisible();
+  });
+
   test("stacks editor and preview panels on narrow viewports", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     const editor = await page.locator(".editor-panel").boundingBox();
