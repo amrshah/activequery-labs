@@ -343,3 +343,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `8f4ed6fabe616c51fe630de020871e57b211ba47` |
 | Execution | 287 passed, 0 failed, 1 skipped; 144 authored tests across Chromium and Firefox |
 | New lifecycle evidence | AQJS instance lifecycle event mapping (`offline`, `online`, `close`, unknown-event ignore) and receiver identity passed in source/minified parity in #417; #418 validates the updated knowledgebase snapshot |
+
+
+## Latest confirmed execution record — run #420
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #420](https://github.com/amrshah/activequery-labs/actions/runs/43824816097) |
+| Commit | `d2c3faad2ebf516618a6dde9405d5e0c495dab3c` |
+| Execution | 287 passed, 0 failed, 1 skipped; 144 authored tests across Chromium and Firefox |
+| Included new AQJS evidence | Array.getCount fallback cases from #416; lifecycle event mapping and receiver identity from #417 |

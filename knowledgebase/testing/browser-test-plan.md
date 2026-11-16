@@ -172,3 +172,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #418
 
 [Workflow #418](https://github.com/amrshah/activequery-labs/actions/runs/43824577065) passed 287 browser cases, 0 failed, 1 skipped; 144 authored tests across Chromium and Firefox. The run validates the current knowledgebase after the AQJS lifecycle event-mapping parity addition in #417.
+
+
+## Latest execution — run #420
+
+[Workflow #420](https://github.com/amrshah/activequery-labs/actions/runs/43824816097) passed 287 browser cases, 0 failed, 1 skipped; 144 authored tests across Chromium and Firefox. The run validates the knowledgebase update for Array.getCount and lifecycle parity.
