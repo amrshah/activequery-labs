@@ -1211,3 +1211,152 @@ test("AQJS source and minified builds preserve Element.setStyles colon-truncatio
   expect(minified).toEqual(source);
   expect(source).toEqual({ returnsTarget: true, backgroundImage: 'url("https")', rawValue: 'background-image: url("https");' });
 });
+
+
+test("AQJS source and minified builds preserve ambient-global predicate hazards", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const instance = new window.AQ("");
+      const capture = fn => {
+        try { return { value: fn() }; }
+        catch (error) { return { error: error.name }; }
+      };
+      const cleanArrayLike = capture(() => instance.isArrayLike([1]));
+      const cleanObjectLike = capture(() => instance.isObjectLike({ value: 1 }));
+      const cleanNodeList = capture(() => instance.isNodeList(document.querySelectorAll(".target")));
+
+      window.isArray = () => true;
+      window.isArraySet = () => false;
+      window.isNodeList = () => false;
+      const injectedArrayLike = capture(() => instance.isArrayLike({ value: 1 }));
+
+      window.isObject = () => true;
+      window.isObjectMap = () => false;
+      const injectedObjectLike = capture(() => instance.isObjectLike({ value: 1 }));
+
+      window.x = { toString: () => "[object NodeList]" };
+      const nodeListFromGlobal = capture(() => instance.isNodeList({ not: "a node list" }));
+      window.x = { toString: () => "[object Object]" };
+      const nonNodeListFromGlobal = capture(() => instance.isNodeList(document.querySelectorAll(".target")));
+
+      return {
+        cleanArrayLike,
+        cleanObjectLike,
+        cleanNodeList,
+        injectedArrayLike,
+        injectedObjectLike,
+        nodeListFromGlobal,
+        nonNodeListFromGlobal
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    cleanArrayLike: { error: "ReferenceError" },
+    cleanObjectLike: { error: "ReferenceError" },
+    cleanNodeList: { error: "ReferenceError" },
+    injectedArrayLike: { value: true },
+    injectedObjectLike: { value: true },
+    nodeListFromGlobal: { value: true },
+    nonNodeListFromGlobal: { value: false }
+  });
+});
+
+
+test("AQJS source and minified builds preserve isEmpty sentinel, recursion and exception contracts", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const instance = new window.AQ("");
+      return {
+        nullValue: instance.isEmpty(null),
+        zeroString: instance.isEmpty("0"),
+        decimalZeroString: instance.isEmpty("0.0"),
+        falseValue: instance.isEmpty(false),
+        undefinedValue: instance.isEmpty(undefined),
+        emptyString: instance.isEmpty(""),
+        numericZero: instance.isEmpty(0),
+        paddedZero: instance.isEmpty(" 0 "),
+        whitespace: instance.isEmpty("  "),
+        emptyArray: instance.isEmpty([]),
+        nonEmptyArray: instance.isEmpty([1]),
+        nestedNull: instance.isEmpty([1, null]),
+        nullException: instance.isEmpty(null, [null]),
+        zeroException: instance.isEmpty(0, ["0"]),
+        invalidExceptions: instance.isEmpty(null, {}) === undefined
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    nullValue: true,
+    zeroString: true,
+    decimalZeroString: true,
+    falseValue: true,
+    undefinedValue: true,
+    emptyString: true,
+    numericZero: true,
+    paddedZero: true,
+    whitespace: true,
+    emptyArray: false,
+    nonEmptyArray: false,
+    nestedNull: true,
+    nullException: false,
+    zeroException: false,
+    invalidExceptions: true
+  });
+});
+
+
+test("AQJS source and minified builds preserve isObjectLiteral type and failure contracts", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const instance = new window.AQ("");
+      const capture = value => {
+        try { return instance.isObjectLiteral(value); }
+        catch (error) { return `throws:${error.name}`; }
+      };
+      class Example {}
+      return {
+        plainObject: capture({ value: 1 }),
+        classInstance: capture(new Example()),
+        date: capture(new Date(0)),
+        array: capture([1]),
+        numberBox: capture(new Number(1)),
+        stringBox: capture(new String("x")),
+        functionValue: capture(function named() {}),
+        ownLength: capture({ length: 1 }),
+        ownPrototype: capture({ prototype: 1 }),
+        ownStringify: capture({ stringify: 1 }),
+        nullValue: capture(null),
+        nullPrototypeObject: capture(Object.create(null))
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    plainObject: true,
+    classInstance: true,
+    date: true,
+    array: false,
+    numberBox: false,
+    stringBox: false,
+    functionValue: false,
+    ownLength: false,
+    ownPrototype: false,
+    ownStringify: false,
+    nullValue: "throws:TypeError",
+    nullPrototypeObject: "throws:TypeError"
+  });
+});
