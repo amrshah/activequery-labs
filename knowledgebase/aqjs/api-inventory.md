@@ -80,7 +80,7 @@ The source invokes `ActiveQuery.extend` for these targets:
 | `setAttributes` | `(pairs)` | Iterates pairs as name/value pairs; stops when a value is falsy |
 | `setAttributeName` | `(names)` | Sets each attribute to empty string |
 | `removeAttributes` | `(names)` | Removes each named attribute |
-| `setStyles` | `(declarations)` | Parses each string by colon and assigns `this.style[property]` |
+| `setStyles` | `(declarations)` | For each declaration, removes only the first literal space, splits on every `:`, then assigns only `split[1]` to `this.style[split[0]]`; later colon-separated segments are discarded. A URL value such as `url(https://example.com/image.png)` is truncated to `url(https` before CSSOM normalization (observed as `url("https")` in Chromium and Firefox). |
 | `getStyles` | `(properties)` | Returns array of truthy inline/computed style values; trailing true requests inline style |
 | `removeStyles` | `(properties)` | Calls `style.removeProperty` for each |
 | `setClasses` | `(names)` | Adds each class |
