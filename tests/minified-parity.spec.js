@@ -661,3 +661,37 @@ test("AQJS source and minified builds preserve Array.setItem and Element content
     siblings: { next: "second", prev: null, allError: "ReferenceError" }
   });
 });
+
+
+test("AQJS source and minified builds preserve getPlugin import, fallback and rejection behavior", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(async () => {
+      const instance = new window.AQ("");
+      const module = await instance.getPlugin("/tests/fixture-plugin.js");
+      const fallback = await instance.getPlugin(42);
+      let rejectedError = null;
+      try {
+        await instance.getPlugin("/tests/missing-plugin-for-parity.js");
+      } catch (error) {
+        rejectedError = error.name;
+      }
+      return {
+        fixtureValue: module.fixtureValue,
+        defaultValue: module.default,
+        fallbackReturnsInstance: fallback === instance,
+        rejectedError
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    fixtureValue: "aq-plugin-loaded",
+    defaultValue: "plugin-default",
+    fallbackReturnsInstance: true,
+    rejectedError: "TypeError"
+  });
+});
