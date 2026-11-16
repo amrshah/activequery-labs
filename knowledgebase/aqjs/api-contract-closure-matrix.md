@@ -37,6 +37,8 @@ Six additional Playwright tests were added in `tests/aqjs.spec.js` and all passe
 | Document/Window.on | event validation and return value | valid/invalid event, missing callback, listener cleanup limits | custom event dispatch passed in run #313; invalid event/callback receiver identity and source/minified parity passed in run #327 |
 | Lifecycle on | early/late registration and replay semantics | before/after DOMContentLoaded/load/pageshow; offline/online/close; unknown event | late registration no-replay, early `ready`/`init`/`run`, offline/online/close dispatch, unknown-event ignore and receiver identity passed in runs #313/#340/#347; offline/online/close mapping, unknown-event ignore and receiver identity also passed in source/minified parity in run #417; repeated construction and unusual timing remain pending |
 | Element.watch | observer callback, return contract, lifecycle/disconnect | mutation with callback, missing/non-function callback, return value, source/minified parity, disconnect | Source inspection predicts TypeError from unbound callback `this` before `args.then()`, and `watch()` returns `observer.observe()` (normally undefined). Reproduction and source/minified parity tests authored in commits `550235f` / `8a650a7`; CI pending. No disconnect handle is exposed. |
+| Element.sift | selector guard and keyboard filtering | valid selector, empty selector, handler installation, keyboard event, source/minified parity | Valid-selector guard returns the Element before assigning `onkeyup`; regression and parity tests authored in commits `2058b43` / `b6264ba`; CI pending. Empty-selector and keyboard behavior remain open. |
+| ActiveQuery.extend("dom") | custom-element name validation | valid hyphenated name, no-hyphen invalid name, valid name containing digits, source/minified parity | Authored tests cover valid registration, browser SyntaxError for a no-hyphen name accepted by AQ's regex, and rejection of a spec-valid digit name (commits `cf2c904` / `9012a87`); CI pending. |
 | Function.then | callback receiver and return value | callable, missing/non-function callback, receiver identity | selected Function/Element/NodeList then receiver/return behavior passed in source/minified parity in run #409; broader invalid-callback cases remain pending |
 
 ## Priority 1 — predicate and value truth tables
@@ -94,7 +96,7 @@ Do not present these as recommended working APIs until separately cleared:
 - isArrayLike, isNodeList and related predicates have unresolved global/identifier hazards; `isNaS` is always true and `isNaF` is a stringification heuristic with false positives/negatives, so neither is suitable for type validation.
 - sancha builds HTML strings from data and has undeclared identifiers; do not pass untrusted input.
 - getPlugin dynamically imports its argument; do not accept untrusted module specifiers.
-- watch observer callback and lifecycle/disconnect behavior need deeper review.
+- `watch` observer callback failure is covered by authored reproduction/parity tests (CI pending); lifecycle/disconnect behavior remains unresolved.
 
 Use native DOM/JavaScript APIs when they provide a safer, clearer contract.
 
