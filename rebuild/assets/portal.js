@@ -80,6 +80,7 @@ let activeTab = "html";
 let runtimeAssets = null;
 let frameReady = false;
 let frameworkLoadStarted = false;
+let licenseAccepted = false;
 let latestToken = 0;
 let debounceHandle = 0;
 
