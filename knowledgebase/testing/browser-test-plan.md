@@ -182,3 +182,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #422
 
 [Workflow #422](https://github.com/amrshah/activequery-labs/actions/runs/43825270639) passed 289 browser cases, 0 failed, 1 skipped; 145 authored tests across Chromium and Firefox. The run adds NodeList stub source/minified parity for empty and populated collections.
+
+
+## Latest execution — run #425
+
+[Workflow #425](https://github.com/amrshah/activequery-labs/actions/runs/43825926932) passed 293 browser cases, 0 failed, 1 skipped; 147 authored tests across Chromium and Firefox. The run adds AQJS isJSON predicate edge cases and source/minified parity.

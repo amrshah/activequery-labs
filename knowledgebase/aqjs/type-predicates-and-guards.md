@@ -32,7 +32,7 @@ Status: source-derived contracts; suspicious predicates require isolated runtime
 | `isNaNL(a)` | Negates same check and references x | Likely broken |
 | `isSet(a)` | True for a non-empty Array whose string form does not match empty/null/undefined | Despite its name, this is not a JavaScript Set check |
 | `isArgument(a)` | Rejects whitespace-only string and values whose string representation contains `undefined` | Not a general argument validator |
-| `isJSON(a)` | Accepts typeof number/object/array/string/boolean after simple empty/undefined check | Does not parse JSON; null may pass because typeof null is object |
+| `isJSON(a)` | Applies an empty/undefined regex to the value's string coercion, then accepts typeof number/object/array/string/boolean | Does not parse JSON. Invalid JSON strings, null, numbers, booleans, objects and non-empty arrays can pass; empty/whitespace strings, undefined, functions and empty arrays fail. Source/minified runtime truth table passed in run #425 |
 
 ## Empty-value semantics
 

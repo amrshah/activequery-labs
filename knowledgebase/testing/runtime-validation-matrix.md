@@ -47,7 +47,7 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 | `isNaM`, `isSet`, `isNaOL`, `isObjectLike` | Inspected; naming/undefined helper issues | Map, array and objectLike checks | Partial; selected cases passed in run #313; `isNaOL` and full input matrix remain |
 | `isFunction`, `isNaF`, `isClass`, `isNaC` | Inspected heuristic string checks; `isNaF` false-positive for strings containing `function` and arrow functions | Named function, class, arrow and string cases | Selected cases passed in run #324; exhaustive input matrix remains pending |
 | `isNodeList`, `isNaNL` | Inspected: references undefined `x` | Both positive and negative methods tested for ReferenceError | Passed in run #313 |
-| `isArgument`, `isJSON` | Inspected: type/regex behavior, not JSON parsing | Empty/null argument and arbitrary string JSON tests | Passed in run #313 |
+| `isArgument`, `isJSON` | Inspected: type/regex behavior, not JSON parsing; `isJSON([])` is false because array stringification yields an empty string, while non-empty arrays pass | Empty/whitespace/undefined, null, invalid JSON strings, numbers, booleans, empty/non-empty arrays, object and function | `isJSON` behavior and source/minified parity passed in #425; it is not a JSON validator |
 
 ## AQJS Array/Object/primitive extensions
 
@@ -363,3 +363,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `d75ddbfba3ff15ae1edb0df66dbec93fc60fe6e5` |
 | Execution | 289 passed, 0 failed, 1 skipped; 145 authored tests across Chromium and Firefox |
 | New AQJS parity | NodeList no-op stubs on empty and populated collections: same-collection return values, no mutation, getStyles undefined, getClasses returns receiver |
+
+
+## Latest confirmed execution record — run #425
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #425](https://github.com/amrshah/activequery-labs/actions/runs/43825926932) |
+| Commit | `076f1ef1a74f503117d8218d611d37465367009c` |
+| Execution | 293 passed, 0 failed, 1 skipped; 147 authored tests across Chromium and Firefox |
+| New AQJS evidence | `isJSON` is a type/regex predicate, not JSON parsing; empty arrays are false due to string coercion, non-empty arrays true; source/minified parity passed |

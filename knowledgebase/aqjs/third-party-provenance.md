@@ -1,6 +1,6 @@
 # AQJS Third-Party Code Provenance
 
-Snapshot: 2026-11-14.
+Snapshot: 2026-11-16.
 The AQJS README and source header identify Array.sortBy v1.2.2 (MIT) and is-json v2.0.1 (ISC) as third-party components. Exact upstream sources were inspected.
 
 ## Array.sortBy v1.2.2
@@ -37,11 +37,13 @@ The upstream implementation:
 - includes a `strict` helper that attempts `JSON.parse`;
 - rejects null and numeric values in the normal path.
 
-The inspected AQJS `isJSON(a)` method does **not** match this implementation:
+The inspected AQJS `isJSON(a)` method is located at source line 257 and does **not** match this implementation:
 - it performs no `JSON.parse`;
 - it does not validate JSON syntax;
 - it accepts values by `typeof` pattern;
-- it returns true for `null` because `typeof null === "object"`.
+- it returns true for `null` because `typeof null === "object"`;
+- it returns false for an empty Array because `String([])` is empty and matches the initial empty-string regex, but returns true for a non-empty Array such as `[1]`;
+- these outcomes and selected scalar/object cases passed in Chromium/Firefox and source/minified parity in run [#425](https://github.com/amrshah/activequery-labs/actions/runs/43825926932).
 
 No `JSON.parse` call or recognizable is-json v2.0.1 implementation was found in the inspected `ActiveQuery.js` or `ActiveQuery.min.js` files.
 
