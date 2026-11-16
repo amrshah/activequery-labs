@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run [#409](https://github.com/amrshah/activequery-labs/actions/runs/43823498069) passed 277 browser cases with one documented Firefox mobile-emulation skip (138 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: run [#413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685) passed 281 browser cases with one documented Firefox mobile-emulation skip (141 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -147,3 +147,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #409
 
 [Workflow #409](https://github.com/amrshah/activequery-labs/actions/runs/43823498069) passed 277 browser cases, 0 failed, 1 skipped; 138 authored tests across Chromium and Firefox. It adds Function/Element/NodeList then and defer source/minified parity.
+
+
+## Latest execution — run #413
+
+[Workflow #413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685) passed 281 browser cases, 0 failed, 1 skipped; 141 authored tests across Chromium and Firefox. It adds source/minified parity for Element setText falsy values and setHtml falsy innerHTML/outerHTML assignment results.

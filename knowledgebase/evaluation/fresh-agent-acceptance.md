@@ -1,6 +1,6 @@
 # Fresh-Agent Knowledgebase Acceptance Evaluation
 
-Status: evaluation suite drafted and updated to current browser evidence; not yet executed by an independent/fresh agent. The latest browser suite has 138 authored tests with 277 passing browser cases and one documented Firefox mobile-emulation skip, verified in [run #409](https://github.com/amrshah/activequery-labs/actions/runs/43823498069). This does not substitute for the independent knowledgebase-only evaluation.
+Status: evaluation suite drafted and updated to current browser evidence; not yet executed by an independent/fresh agent. The latest browser suite has 141 authored tests with 281 passing browser cases and one documented Firefox mobile-emulation skip, verified in [run #413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685). This does not substitute for the independent knowledgebase-only evaluation.
 
 Purpose: prove that an AI agent can implement and reason about ActiveQuery using the knowledgebase without repeatedly reopening upstream source.
 

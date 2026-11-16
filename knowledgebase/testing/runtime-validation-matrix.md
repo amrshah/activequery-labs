@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-16.
-Run [#409](https://github.com/amrshah/activequery-labs/actions/runs/43823498069) is the latest completed browser run: **277 passed, 0 failed, 1 skipped** across Chromium and Firefox (138 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). It adds source/minified parity for Function, Element and NodeList then helpers and defer behavior. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run [#413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685) is the latest completed browser run: **281 passed, 0 failed, 1 skipped** across Chromium and Firefox (141 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). It closes source/minified coverage for Element setText/setHtml falsy branches, including assignment return values and outerHTML host removal. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -68,7 +68,7 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 | Element | Classes | Inspected | Basic set/get/remove plus NodeList bulk class mutators | Partial; selected contracts passed in run #313 |
 | Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default; setChild single/array/empty, DocumentFragment and invalid member after a valid member | Partial; setChild contracts passed in runs #324 and #383, including source/minified parity; `i` remains untested |
 | Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | Guarded setAdjacent/setHtml, getHtml modes, array setContent | Partial; selected contracts passed in run #313 |
-| Element | `setContent` | Inspected: always clears innerHTML, appends Node/Array; empty Array clears; invalid values throw after clearing | Single Node, array, empty array, DocumentFragment, invalid array member and invalid string | All listed replacement/failure cases passed in Chromium/Firefox and source/minified parity in run #395 |\n| Element | `setHtml` | Inspected: truthy input ignored; falsy branch assigns inner/outer HTML | Truthy input ignored; falsy and outerHTML branches | Truthy no-op and receiver identity passed in source/minified parity in run #399; falsy/outerHTML branches remain pending |\n| Element | `siblings` | Inspected: next/prev supported; default references undeclared target | next, prev and default error path | All three cases passed in source/minified parity in run #399 |
+| Element | `setContent` | Inspected: always clears innerHTML, appends Node/Array; empty Array clears; invalid values throw after clearing | Single Node, array, empty array, DocumentFragment, invalid array member and invalid string | All listed replacement/failure cases passed in Chromium/Firefox and source/minified parity in run #395 |\n| Element | `setHtml` | Inspected: truthy input ignored; falsy branch assigns inner/outer HTML and returns assignment result | Truthy input ignored, empty/zero/false/null innerHTML values, outerHTML host removal and return value | All listed cases passed in source/minified parity in runs #399 and #413 |\n| Element | `siblings` | Inspected: next/prev supported; default references undeclared target | next, prev and default error path | All three cases passed in source/minified parity in run #399 |
 | Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior; setValue assigns empty string on falsy input and on generic Elements | setText empty-string no-op; getValue default/mode/no-arg; setValue truthy/falsy/generic Element and native control matrix | Selected contracts passed in runs #324, #383 and #399; source/minified parity for setText/getValue passed in #399; broader getValue input matrix remains pending |
 | Element | `then`, `fax`, `on` | Inspected | callback result, absent callback, FORM/non-FORM fax, event listener | Selected contracts passed in run #324; form semantics remain unsupported/incomplete |
 | Element | `sancha` | Inspected; HTML injection and undeclared identifiers | Static success and data-mode ReferenceError | Passed in run #313 |
@@ -293,3 +293,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `a09839f7576b1db7d724f76792a80f6aed80d359` |
 | Execution | 277 passed, 0 failed, 1 skipped; 138 authored tests across Chromium and Firefox |
 | New parity coverage | Function/Element/NodeList then receiver/return contracts and defer timer/callback-array behavior |
+
+
+## Latest confirmed execution record — run #413
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685) |
+| Commit | `092bd90f626d9bddd06d87d445b9a2494c5429d8` |
+| Execution | 281 passed, 0 failed, 1 skipped; 141 authored tests across Chromium and Firefox |
+| New AQJS evidence | setText falsy no-op and setHtml falsy innerHTML/outerHTML assignment return behavior matched between source and minified builds |

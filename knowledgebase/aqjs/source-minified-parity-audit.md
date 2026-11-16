@@ -74,3 +74,6 @@ Run [#405](https://github.com/amrshah/activequery-labs/actions/runs/43822976254)
 
 
 Run [#409](https://github.com/amrshah/activequery-labs/actions/runs/43823498069) adds source/minified parity for Function, Element and NodeList then callback receiver/return contracts and defer timer/callback-array behavior. This is selected parity evidence; unusual callback inputs and lifecycle replay remain pending.
+
+
+Run [#413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685) adds source/minified parity for Element setText falsy inputs and setHtml falsy innerHTML assignments (empty string, zero, false, null), assignment return values, and outerHTML host removal. This closes the selected falsy branch set; other HTML-sink security and serialization cases remain outside this fixture.
