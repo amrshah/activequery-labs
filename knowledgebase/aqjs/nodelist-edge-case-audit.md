@@ -40,6 +40,10 @@ These return values are not evidence of successful work. A chaining-looking retu
 6. **Element getValue:** mode false is substring containment; mode true is `Boolean(indexOf)`, not a conventional value getter. It is false when match begins at offset zero and true when the needle is absent.
 7. **Element setHtml / setAdjacent:** ordinary truthy arguments return early. The HTML method's falsy path can write an empty/falsy value; it is not a usable normal setter.
 
+### Element.getValue Boolean-mode regression (authored; CI pending)
+
+The `b=true` branch returns `Boolean(this.value.indexOf(a))`, not a conventional contains result. For a value of `needle`, searching `nee` returns false (index zero), searching `edl` returns true (index greater than zero), and searching `absent` also returns true (index -1). The default `b=false` branch uses `indexOf(a) >= 0` and returns true for a prefix match. New direct and source/minified parity tests are authored in commits `12926ef` and `4723dfa`; do not count them as passing until CI evidence is available.
+
 ## Safer implementation guidance
 
 - Use native `querySelectorAll` and explicit loops for collection mutation.
