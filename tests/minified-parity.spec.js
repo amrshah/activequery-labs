@@ -876,3 +876,69 @@ test("AQJS source and minified builds preserve instance lifecycle event mapping 
     allReturnInstance: true
   });
 });
+
+
+test("AQJS source and minified builds preserve NodeList stub behavior for empty and populated collections", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const root = document.createElement("div");
+      root.innerHTML = "<span>one</span><span>two</span>";
+      const list = root.querySelectorAll("span");
+      const empty = root.querySelectorAll("em");
+      const before = [...list].map(node => node.outerHTML);
+      const child = document.createElement("i");
+
+      const invoke = collection => [
+        collection.setChild(child),
+        collection.setAdjacent("after", child),
+        collection.setHtml("<b>replace</b>"),
+        collection.getHtml("one"),
+        collection.setContent(child),
+        collection.setText("replace"),
+        collection.getText("one"),
+        collection.getValue("one"),
+        collection.fax()
+      ];
+
+      const populatedReturns = invoke(list);
+      const emptyReturns = invoke(empty);
+      return {
+        populated: {
+          allReturnSame: populatedReturns.every(value => value === list),
+          before,
+          after: [...list].map(node => node.outerHTML),
+          childNotInserted: !root.contains(child),
+          getStylesUndefined: list.getStyles() === undefined,
+          getClassesSame: list.getClasses() === list
+        },
+        empty: {
+          allReturnSame: emptyReturns.every(value => value === empty),
+          length: empty.length,
+          getStylesUndefined: empty.getStyles() === undefined,
+          getClassesSame: empty.getClasses() === empty
+        }
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    populated: {
+      allReturnSame: true,
+      before: ["<span>one</span>", "<span>two</span>"],
+      after: ["<span>one</span>", "<span>two</span>"],
+      childNotInserted: true,
+      getStylesUndefined: true,
+      getClassesSame: true
+    },
+    empty: {
+      allReturnSame: true,
+      length: 0,
+      getStylesUndefined: true,
+      getClassesSame: true
+    }
+  });
+});
