@@ -1,7 +1,7 @@
 # ActiveQuery Runtime Validation Matrix
 
 Status snapshot: 2026-11-16.
-Run [#397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840) is the latest completed browser run: **265 passed, 0 failed, 1 skipped** across Chromium and Firefox (133 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). It adds source/minified parity for the known Array sort/index errors, Object value-helper failures and predicate edge cases. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
+Run [#399](https://github.com/amrshah/activequery-labs/actions/runs/43821478858) is the latest completed browser run: **267 passed, 0 failed, 1 skipped** across Chromium and Firefox (134 authored tests in two browser projects; the one skip is Firefox's unsupported-equivalent mobile hardware emulation case). It adds source/minified parity for Array.setItem, Element.setText/setHtml/getValue/siblings, alongside the previously verified AQJS contract fixtures. Broader API, accessibility and compatibility coverage remains incomplete. **Gate C is partially satisfied, not passed in full.**
 
 Legend:
 - **Inspected** — source behavior reviewed.
@@ -53,7 +53,7 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 
 | Target | Methods | Source review | Test coverage | Current status |
 |---|---|---|---|---|
-| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified; `then` makes Arrays thenable and can interfere with Promise-based consumers | i, getIndex, getCount default/operator branches, setSort, both setItem branches, has, getIndexs, then | Partial; selected contracts passed in runs #324 and #327; Array.i TypeError and Array.setSort strict-module ReferenceError now have source/minified parity in run #397; Promise resolver assimilation remains isolated and bounded, while broader operator/edge coverage remains pending |
+| Array | `i`, `then`, `getIndex`, `getCount`, `setSort`, `setItem`, `has`, `getIndexs` | All inventoried; multiple defects identified; `then` makes Arrays thenable and can interfere with Promise-based consumers | i, getIndex, getCount default/operator branches, setSort, both setItem branches, has, getIndexs, then | Partial; selected contracts passed in runs #324 and #327; Array.i TypeError, Array.setSort strict-module ReferenceError and Array.setItem truthy/falsy branches have source/minified parity in runs #397/#399; Promise resolver assimilation remains isolated and bounded, while broader operator/edge coverage remains pending |
 | Object | `setValues`, `hasValues` | Missing static predicate call | Both error cases and source/minified parity | Both TypeError cases passed in run #313; source/minified parity passed in run #397 |
 | Number | `trim` | Inspected | Primitive trim test | Passed in run #313 |
 | String | `trim` | Native override and Unicode mismatch identified | Descriptor and U+FEFF/U+200B comparisons | Passed in run #313 |
@@ -68,8 +68,8 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 | Element | Classes | Inspected | Basic set/get/remove plus NodeList bulk class mutators | Partial; selected contracts passed in run #313 |
 | Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default; setChild single/array/empty, DocumentFragment and invalid member after a valid member | Partial; setChild contracts passed in runs #324 and #383, including source/minified parity; `i` remains untested |
 | Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | Guarded setAdjacent/setHtml, getHtml modes, array setContent | Partial; selected contracts passed in run #313 |
-| Element | `setContent` | Inspected: always clears innerHTML, appends Node/Array; empty Array clears; invalid values throw after clearing | Single Node, array, empty array, DocumentFragment, invalid array member and invalid string | All listed replacement/failure cases passed in Chromium/Firefox and source/minified parity in run #395 |
-| Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior; setValue assigns empty string on falsy input and on generic Elements | setText, getText, getValue modes, setValue truthy/falsy/generic Element | Selected contracts passed in run #324; broader control-type matrix remains pending |
+| Element | `setContent` | Inspected: always clears innerHTML, appends Node/Array; empty Array clears; invalid values throw after clearing | Single Node, array, empty array, DocumentFragment, invalid array member and invalid string | All listed replacement/failure cases passed in Chromium/Firefox and source/minified parity in run #395 |\n| Element | `setHtml` | Inspected: truthy input ignored; falsy branch assigns inner/outer HTML | Truthy input ignored; falsy and outerHTML branches | Truthy no-op and receiver identity passed in source/minified parity in run #399; falsy/outerHTML branches remain pending |\n| Element | `siblings` | Inspected: next/prev supported; default references undeclared target | next, prev and default error path | All three cases passed in source/minified parity in run #399 |
+| Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior; setValue assigns empty string on falsy input and on generic Elements | setText empty-string no-op; getValue default/mode/no-arg; setValue truthy/falsy/generic Element and native control matrix | Selected contracts passed in runs #324, #383 and #399; source/minified parity for setText/getValue passed in #399; broader getValue input matrix remains pending |
 | Element | `then`, `fax`, `on` | Inspected | callback result, absent callback, FORM/non-FORM fax, event listener | Selected contracts passed in run #324; form semantics remain unsupported/incomplete |
 | Element | `sancha` | Inspected; HTML injection and undeclared identifiers | Static success and data-mode ReferenceError | Passed in run #313 |
 | Element | `sift` | Inspected: truthy selector early return | Explicit no-handler test | Passed in run #313 |
@@ -83,7 +83,7 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 | Area | Source review | Test coverage | Current status |
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
-| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, selected edge cases, Element value/child/then/setContent, DocumentFragment, NodeList events/setValue, Array query helpers, sort/index failure paths and `then`, Object value-helper failures, predicate edge cases, Document/Window events, early lifecycle and constructor `initlog`, Element/NodeList bulk mutations | Selected fixtures passed in runs #325, #327, #340, #348, #383, #392, #395 and #397; complete method-level semantic parity remains pending |
+| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, Element value/child/then/setContent/setText/setHtml/getValue/siblings, DocumentFragment, NodeList events/setValue, Array query helpers/sort/index/setItem, Object value-helper failures, predicate edge cases, Document/Window events, early lifecycle and constructor `initlog`, Element/NodeList bulk mutations | Selected fixtures passed in runs #325, #327, #340, #348, #383, #392, #395, #397 and #399; complete method-level semantic parity remains pending |
 | Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed. Run #392 additionally verifies base vs responsive flex stretch selectors through CSSOM and computed styles. An experimental nested-scroll movement test failed in both engines in run #380 and was withdrawn without weakening assertions | 18 AQX cases plus the focused flex selector test pass; actual sticky movement remains unverified |
 | Clean-room portal | Responsive field guide, editable HTML/CSS/JS, isolated preview, AQJS event helper and narrow viewport layout | Four Playwright tests passed in run #369; preview sandbox allows scripts only and omits same-origin access | Passed in CI; public deployment withheld pending OSL-3.0 review |
 | Breakpoints and responsive variants | Inspected: mobile/tablet/desktop hide range queries are malformed and ignored by Chromium/Firefox; tablet/desktop/large typography prefixes activate at their min-width thresholds | 599/600/601, 601/992, 993/1439 and 1440 computed-style tests | All tested breakpoint and hide-helper behavior passed in run #313; short-landscape and touch/hybrid behavior remain untested |
@@ -222,3 +222,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Commit | `b2aae452e21f4f34e2351ffacb26d95f36d90f74` |
 | Execution | 265 passed, 0 failed, 1 skipped; 133 authored tests across Chromium and Firefox |
 | New parity coverage | Array.setSort ReferenceError, Array.i TypeError, Object.setValues/hasValues TypeErrors, isNaS/isNaF outputs matched between source and minified builds |
+
+
+## Latest confirmed execution record — run #399
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #399](https://github.com/amrshah/activequery-labs/actions/runs/43821478858) |
+| Commit | `09f15af9a051948f26a17824f9dd68a84271d167` |
+| Execution | 267 passed, 0 failed, 1 skipped; 134 authored tests across Chromium and Firefox |
+| New parity coverage | Array.setItem truthy/falsy branches; Element setText empty-string behavior, setHtml truthy no-op, getValue modes, and siblings next/prev/default error behavior |

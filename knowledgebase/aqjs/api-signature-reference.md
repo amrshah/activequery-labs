@@ -53,15 +53,15 @@ All methods are installed through `ActiveQuery.extend('array', ...)`.
 | `toggleClasses` | `toggleClasses(a)` | Same Element | Toggles one token. |
 | `i` | `i()` | Same Element | Identity helper. |
 | `setChild` | `setChild(a)` | Same Element | Appends one Node or each member of an Array; DocumentFragment children are moved into the receiver and the fragment is emptied. Native DOM exceptions propagate; an invalid member partway through an Array throws after earlier members have already been appended. DocumentFragment and partial-failure behavior passed in Chromium/Firefox and source/minified parity in run #383. |
-| `siblings` | `siblings(a)` | Next/previous Element for named direction; intended Array otherwise | Default branch references undeclared `target`; treat as defective. |
+| `siblings` | `siblings(a)` | Next/previous Element for named direction; intended Array otherwise | Next/prev and default ReferenceError passed in source/minified parity in run #399; default branch references undeclared `target`, so treat as defective. |
 | `setAdjacent` | `setAdjacent(a, b)` | Same Element | Normal truthy position/Element arguments hit early return; no insertion. |
-| `setHtml` | `setHtml(a, b = false)` | Same Element on truthy HTML; assignment result on falsy HTML | Truthy normal HTML input is ignored. Falsy path assigns innerHTML/outerHTML. Unsafe HTML sink. |
+| `setHtml` | `setHtml(a, b = false)` | Same Element on truthy HTML; assignment result on falsy HTML | Truthy normal HTML input is ignored; source/minified parity passed in run #399. Falsy path assigns innerHTML/outerHTML. Unsafe HTML sink; falsy and outerHTML branches remain pending. |
 | `getHtml` | `getHtml(a, b = false)` | Markup string, or Boolean substring test | Truthy needle tests inner/outer markup; no needle returns innerHTML. |
 | `setContent` | `setContent(a)` | Same Element | Always clears innerHTML first, then appends one Node or each Array member. An empty Array clears the host; a DocumentFragment is consumed; invalid strings/members throw native TypeError after clearing and may leave earlier array members appended. These replacement and partial-failure contracts passed in Chromium/Firefox with source/minified parity in run #395. |
-| `setText` | `setText(a)` | Same Element | Writes only for truthy input; cannot set empty string through this method. |
+| `setText` | `setText(a)` | Same Element | Writes only for truthy input; cannot set empty string through this method. Empty-string no-op and receiver identity passed in source/minified parity in run #399. |
 | `getText` | `getText(a)` | Text string, or Boolean substring test | Truthy needle returns containment Boolean. |
 | `setValue` | `setValue(a)` | Same Element | If element has a value property and input is truthy, assigns it; otherwise assigns empty string, including on elements without value property (creates/sets property). Text input, checkbox `.value`, select, textarea, falsy clearing and receiver identity passed in Chromium/Firefox; source/minified parity passed in run #383. This does not toggle checkbox `.checked`. |
-| `getValue` | `getValue(a, b = false)` | Same Element when no truthy needle; otherwise Boolean | Default tests substring; mode true returns `Boolean(indexOf)`, false at index 0 and true when absent. |
+| `getValue` | `getValue(a, b = false)` | Same Element when no truthy needle; otherwise Boolean | Default tests substring; mode true returns `Boolean(indexOf)`, false at index 0 and true when absent. Default/mode/no-argument cases passed in source/minified parity in run #399. |
 | `then` | `then(a)` | Callback result if callable; otherwise undefined | Callback receives Element. |
 | `fax` | `fax()` | Same Element when not FORM; undefined for FORM | Form path has no completed implementation. |
 | `on` | `on(a, b)` | Same Element | Adds native listener only when event is string and callback function; invalid inputs still return Element. |

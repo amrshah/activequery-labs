@@ -65,3 +65,6 @@ References: [API inventory](api-inventory.md), [contract closure matrix](api-con
 
 
 Run [#397](https://github.com/amrshah/activequery-labs/actions/runs/43820906840) adds source/minified parity for Array.setSort's strict-module ReferenceError, Array.i's TypeError from the missing ActiveQuery.isNaN static method, Object.setValues/hasValues TypeErrors, and selected isNaS/isNaF predicate outputs. This closes parity for these specific failure contracts, not all Array/Object/predicate inputs.
+
+
+Run [#399](https://github.com/amrshah/activequery-labs/actions/runs/43821478858) adds source/minified parity for Array.setItem's truthy no-op and both-falsy insertion, Element setText's empty-string no-op, setHtml's truthy-input no-op, getValue's default and inverted mode, and Element siblings next/prev/default ReferenceError behavior. This is selected behavior parity, not a complete method-by-method proof.
