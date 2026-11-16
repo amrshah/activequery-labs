@@ -92,7 +92,7 @@
       ],
       "as_of": "2026-11-16"
     },
-    "aqcss_composition_status": "AQX-001 through AQX-019 browser-verified; AQX-009 real sticky scroll passed in Chromium and Firefox in run #501",
+    "aqcss_composition_status": "AQX-001 through AQX-019 browser-verified; AQX-009 real sticky scroll passed in Chromium and Firefox in run #506",
     "fresh_agent_evaluation_status": "prepared_not_administered_independent_agent_required",
     "pages_release_status": "PR packaging validation passed; post-merge Pages deployment and public-site smoke test not yet confirmed"
   }
