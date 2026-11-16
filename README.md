@@ -15,11 +15,11 @@ The goal is to make ActiveQuery easier to explore through practical, source-led 
 - **AQCSS guide** — orientation, source links and a practical evaluation checklist.
 - **AQJS guide** — upstream overview and a learning/adoption path.
 - **Ecosystem guide** — navigation to upstream governance and terminology.
-- **Components** — working community-built patterns for actions, cards, tabs, forms, data tables, disclosure, alerts, toast notifications, dialogs and pagination, with accessible interaction examples.
+- **Components** — working AQCSS-composed patterns for actions, cards, tabs, forms, data tables, disclosure, alerts, toast notifications, dialogs and pagination; AQJS powers DOM selection, event binding and mutations in interactive examples.
 - **Live playground** — edit HTML, CSS and JavaScript with an isolated side-by-side preview and starter snippets.
 - **AI agent skills** — seven reusable source-first skills for framework research, AQCSS, AQJS, responsive design, components, documentation and integration.
 - **Source inspection tool** — dependency-free CLI for generating lexical selector and API-candidate inventories from local upstream files.
-- **Examples** — standalone full-page designs: operations and analytics dashboards, a SaaS landing page, a restaurant ordering PWA-style interface, plus focused AQCSS/AQJS experiments.
+- **Examples** — standalone full-page demonstrations of AQCSS responsive facets/flexon, spacing, typography and theme utilities, plus AQJS-driven interactions: operations and analytics dashboards, a SaaS landing page, a restaurant ordering PWA-style interface, and focused API experiments.
 
 ## AI agent resources
 
