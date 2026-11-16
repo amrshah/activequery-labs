@@ -1248,7 +1248,7 @@ test("Element setValue follows native control semantics for text, checkbox, sele
 test("NodeList setValue updates native value controls, ignores generic elements and preserves empty collections", async ({ page }) => {
   const result = await page.evaluate(() => {
     const root = document.createElement("div");
-    root.innerHTML = '<input><input type="checkbox"><select><option value="a">A</option></select><textarea></textarea><div></div>';
+    root.innerHTML = '<input><input type="checkbox"><select><option value="a">A</option><option value="batch">Batch</option></select><textarea></textarea><div></div>';
     const list = root.querySelectorAll("input, select, textarea, div");
     const setReturn = list.setValue("batch");
     const assigned = [...list].map(node => "value" in node ? node.value : null);

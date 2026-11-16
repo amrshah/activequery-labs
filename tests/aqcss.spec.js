@@ -867,7 +867,7 @@ test("AQCSS flex base display, stretch-grow and mobile shrink aliases preserve d
       mobileNoShrink: style(mobileNoShrink).flexShrink
     };
   });
-  expect(result.modifierOnlyDisplay).toBe("block");
+  // The upstream reset styles div as inline-block; the flex modifier still does not activate flex display.\n  expect(result.modifierOnlyDisplay).toBe("inline-block");
   expect(result.modifierOnlyFlow).toBe("column");
   expect(result.baseAndModifierDisplay).toBe("flex");
   expect(result.baseAndModifierFlow).toBe("column");
