@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: latest PR-19 browser run [#494](https://github.com/amrshah/activequery-labs/actions/runs/43857963894) passed **363 tests with 1 documented skip**. Pages packaging validation [#544](https://github.com/amrshah/activequery-labs/actions/runs/43857523862) passed required-file checks, pinned source/license hash verification, distributable asset checks and artifact upload; deployment was skipped for the PR event. Coverage remains targeted rather than exhaustive.
+Status: latest PR-19 browser run [#501](https://github.com/amrshah/activequery-labs/actions/runs/43859496522) passed **365 tests with 1 documented skip**. Pages packaging validation [#553](https://github.com/amrshah/activequery-labs/actions/runs/43859139449) passed required-file checks, pinned source/license hash verification, distributable asset checks and artifact upload; deployment was skipped for the PR event. Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -74,7 +74,7 @@ The source-grounded but not-yet-implemented cross-family cases are listed in [AQ
 - `sancha`, `sift` and `watch` have authored targeted tests and remain passing through run #327; broader behavioral branches remain untested.
 - Lifecycle late registration, early `ready`/`init`/`run`, constructor `initlog` completion, and `offline`/`online`/`close` mappings have authored coverage and pass through run #347; repeated construction and unusual lifecycle timing remain to be expanded.
 - The clean-room portal is validated in CI but is not publicly deployed; the Pages workflow is intentionally unchanged pending the OSL-3.0 distribution review.
-- AQCSS cross-family composition coverage includes 18 fully asserted AQX cases (001–008 and 010–019). A real scroll-container AQX-009 fixture is now authored in PR #19 and awaits CI; prior coverage verified computed sticky/top cascade only.
+- AQCSS cross-family composition coverage now includes all 19 fully asserted AQX cases (001–019). AQX-009 real scroll-container sticky movement passed in Chromium and Firefox in run #501.
 - No exhaustive CSS selector catalogue coverage.
 - Base border-token and hover alpha computed-style tests have been authored; exhaustive swatch/theme coverage remains outstanding.
 - Basic focus-outline, disabled-descendant and hover-only tooltip tests remain passing through run #327; touch/hybrid device, zoom and comprehensive accessibility audits remain outstanding. Reduced-motion and short-landscape tests also passed, including a documented browser-specific CSSOM difference.
