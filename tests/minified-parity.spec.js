@@ -1360,3 +1360,64 @@ test("AQJS source and minified builds preserve isObjectLiteral type and failure 
     nullPrototypeObject: "throws:TypeError"
   });
 });
+
+test("AQJS source and minified builds match thenable, adjacent and sift edge contracts", async ({ page }) => {
+  const collect = async path => {
+    await page.goto(path);
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const values = [1, 2];
+      let thenCalls = 0;
+      let thenReceiver = false;
+      const thenResult = values.then(value => {
+        thenCalls++;
+        thenReceiver = value === values;
+        return "callback-result";
+      });
+
+      const parent = document.createElement("div");
+      const existing = document.createElement("span");
+      const candidate = document.createElement("b");
+      parent.appendChild(existing);
+      const adjacentReturn = parent.setAdjacent("before", candidate);
+
+      const valid = document.createElement("input");
+      const validReturn = valid.sift(".target");
+      const empty = document.createElement("input");
+      empty.value = "needle";
+      const emptyReturn = empty.sift("");
+      let siftError = null;
+      try { empty.onkeyup(); } catch (error) { siftError = error.name; }
+
+      return {
+        thenCalls,
+        thenReceiver,
+        thenResult,
+        adjacentReturnSame: adjacentReturn === parent,
+        adjacentChildCount: parent.children.length,
+        adjacentCandidateDetached: candidate.parentNode === null,
+        validSiftReturnSame: validReturn === valid,
+        validSiftHandler: valid.onkeyup,
+        emptySiftReturnSame: emptyReturn === empty,
+        emptySiftHandlerInstalled: typeof empty.onkeyup === "function",
+        emptySiftError: siftError
+      };
+    });
+  };
+  const sourceResult = await collect("/");
+  const minifiedResult = await collect("/tests/fixture-min.html");
+  expect(minifiedResult).toEqual(sourceResult);
+  expect(sourceResult).toEqual({
+    thenCalls: 1,
+    thenReceiver: true,
+    thenResult: "callback-result",
+    adjacentReturnSame: true,
+    adjacentChildCount: 1,
+    adjacentCandidateDetached: true,
+    validSiftReturnSame: true,
+    validSiftHandler: null,
+    emptySiftReturnSame: true,
+    emptySiftHandlerInstalled: true,
+    emptySiftError: "SyntaxError"
+  });
+});
