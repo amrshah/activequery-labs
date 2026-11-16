@@ -916,3 +916,40 @@ test("AQCSS flex base and responsive stretch selectors preserve their distinct e
   expect(result.mobileShrinkNo).toBe("1");
   expect(result.mobileNoShrink).toBe("0");
 });
+
+
+test("AQCSS responsive flex display and flow selectors retain the row-wrap-reverse spelling mismatch", async ({ page }) => {
+  await page.setViewportSize({ width: 1500, height: 900 });
+  const result = await page.evaluate(() => {
+    const prefixes = ["aq-t", "aq-d", "aq-s"];
+    const observations = {};
+    for (const prefix of prefixes) {
+      const correctlySpelledFlow = document.createElement("div");
+      correctlySpelledFlow.className = `${prefix}-flexon--row-wrap-reverse`;
+      const misspelledDisplay = document.createElement("div");
+      misspelledDisplay.className = `${prefix}-flexon--row-warp-reverse`;
+      document.body.append(correctlySpelledFlow, misspelledDisplay);
+      const flowStyle = getComputedStyle(correctlySpelledFlow);
+      const displayStyle = getComputedStyle(misspelledDisplay);
+      observations[prefix] = {
+        correctDisplay: flowStyle.display,
+        correctDirection: flowStyle.flexDirection,
+        correctWrap: flowStyle.flexWrap,
+        typoDisplay: displayStyle.display,
+        typoDirection: displayStyle.flexDirection,
+        typoWrap: displayStyle.flexWrap
+      };
+    }
+    return observations;
+  });
+  for (const prefix of ["aq-t", "aq-d", "aq-s"]) {
+    expect(result[prefix]).toEqual({
+      correctDisplay: "inline-block",
+      correctDirection: "row",
+      correctWrap: "wrap-reverse",
+      typoDisplay: "flex",
+      typoDirection: "row",
+      typoWrap: "nowrap"
+    });
+  }
+});
