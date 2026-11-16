@@ -97,7 +97,7 @@ function saveActiveEditor() {
   example[activeTab] = editor.value;
 }
 
-function selectTab(tab) {
+function selectTab(tab, focusEditor = true) {
   saveActiveEditor();
   activeTab = tab;
   editor.value = example[tab];
@@ -108,7 +108,8 @@ function selectTab(tab) {
     button.setAttribute("aria-selected", String(selected));
     button.tabIndex = selected ? 0 : -1;
   }
-  editor.focus();
+  if (focusEditor) editor.focus();
+  else tabButtons.find((button) => button.dataset.editorTab === tab)?.focus();
 }
 
 async function loadPinnedAssets() {
@@ -216,7 +217,19 @@ function schedulePreview() {
 }
 
 for (const button of tabButtons) {
+  button.tabIndex = button.getAttribute("aria-selected") === "true" ? 0 : -1;
   button.addEventListener("click", () => selectTab(button.dataset.editorTab));
+  button.addEventListener("keydown", (event) => {
+    const currentIndex = tabButtons.indexOf(button);
+    let nextIndex = currentIndex;
+    if (event.key === "ArrowRight") nextIndex = (currentIndex + 1) % tabButtons.length;
+    else if (event.key === "ArrowLeft") nextIndex = (currentIndex - 1 + tabButtons.length) % tabButtons.length;
+    else if (event.key === "Home") nextIndex = 0;
+    else if (event.key === "End") nextIndex = tabButtons.length - 1;
+    else return;
+    event.preventDefault();
+    selectTab(tabButtons[nextIndex].dataset.editorTab, false);
+  });
 }
 
 editor.addEventListener("input", schedulePreview);
