@@ -31,6 +31,38 @@ test.describe("clean-room portal", () => {
     await expect(page.locator("#preview-status")).toContainText("AQJS event helper ran");
   });
 
+  test("supports arrow and Home keyboard navigation across editor tabs", async ({ page }) => {
+    const htmlTab = page.getByRole("tab", { name: "HTML" });
+    const cssTab = page.getByRole("tab", { name: "CSS" });
+    const jsTab = page.getByRole("tab", { name: "JavaScript" });
+    await htmlTab.focus();
+    await page.keyboard.press("ArrowRight");
+    await expect(cssTab).toHaveAttribute("aria-selected", "true");
+    await expect(cssTab).toBeFocused();
+    await page.keyboard.press("ArrowRight");
+    await expect(jsTab).toHaveAttribute("aria-selected", "true");
+    await page.keyboard.press("Home");
+    await expect(htmlTab).toHaveAttribute("aria-selected", "true");
+    await expect(htmlTab).toBeFocused();
+  });
+
+  test("switches theme accessibly and remembers the selected theme", async ({ page }) => {
+    await page.emulateMedia({ colorScheme: "light" });
+    await page.evaluate(() => localStorage.removeItem("aq-labs-theme"));
+    await page.reload();
+    const toggle = page.getByRole("button", { name: "Switch to dark theme" });
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+    const lightBackground = await page.locator("body").evaluate((element) => getComputedStyle(element).backgroundColor);
+    await toggle.click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    const darkBackground = await page.locator("body").evaluate((element) => getComputedStyle(element).backgroundColor);
+    expect(darkBackground).not.toBe(lightBackground);
+    await expect(page.getByRole("button", { name: "Switch to light theme" })).toHaveAttribute("aria-pressed", "true");
+    await page.reload();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    await expect(page.getByRole("button", { name: "Switch to light theme" })).toBeVisible();
+  });
+
   test("stacks editor and preview panels on narrow viewports", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     const editor = await page.locator(".editor-panel").boundingBox();
