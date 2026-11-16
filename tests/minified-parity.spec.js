@@ -1441,8 +1441,7 @@ test("AQJS source and minified builds repeat initlog callbacks on every complete
 
       return {
         afterFirstEvent,
-        afterSecondEvent: { ...calls },
-        listenerCount: document.querySelectorAll("script").length
+        afterSecondEvent: { ...calls }
       };
     });
   };
