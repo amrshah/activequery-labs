@@ -116,7 +116,7 @@ Snapshot: 2026-11-14. All entries below are source-observed anomalies or questio
 | JS-043 | `ActiveQuery.js:619-622` | Element `setText(a)` writes only when `a` is truthy. | Passing an empty string cannot clear existing text content. | Empty-string no-op passed in source/minified parity in run #399; zero, false and ordinary strings remain pending. |
 
 
-| JS-044 | `ActiveQuery.js:1126-1143` | MutationObserver callback iterates mutations with an unbound `forEach(function(mutation){...})` and writes `this.watched` in strict module code. | The inner callback's `this` is undefined, causing TypeError before `args.then()`; the method also returns `observer.observe()` (undefined) rather than the observer. | Browser-test mutation, callback invocation, returned value and disconnect/lifecycle behavior. |
+| JS-044 | `ActiveQuery.js:1126-1143` | MutationObserver callback iterates mutations with an unbound `forEach(function(mutation){...})` and writes `this.watched` in strict module code. | The inner callback's `this` is undefined, causing TypeError before `args.then()`; `watch()` returns `observer.observe()` (normally undefined), not the observer. | Added Playwright reproduction in `tests/aqjs.spec.js` and source/minified parity fixture in `tests/minified-parity.spec.js` (commits `550235f` / `8a650a7`); CI result pending. Disconnect/lifecycle remains unavailable through this API. |
 
 
 | JS-045 | `ActiveQuery.js:119-124` | `extend("dom")` name regex permits names such as `foo` that do not contain the hyphen required by the browser custom-element specification. | AQJS passes the name check, then `customElements.define` throws SyntaxError. | Test valid hyphenated names and invalid names that pass AQ's regex. |
