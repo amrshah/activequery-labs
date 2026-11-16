@@ -80,12 +80,14 @@ The source-grounded but not-yet-implemented cross-family cases are listed in [AQ
 
 ## Current authored test inventory
 
-- `tests/aqjs.spec.js`: 60 targeted browser tests.
-- `tests/aqcss.spec.js`: 40 targeted computed-style/browser tests.
+Counts below are taken from the Chromium test listing in verified workflow run #429, rather than inferred from source-file line counts:
+
+- `tests/aqjs.spec.js`: 69 targeted browser tests.
+- `tests/aqcss.spec.js`: 46 targeted computed-style/browser tests.
 - `tests/rebuild-portal.spec.js`: 4 clean-room portal tests (render, sandbox/live edit, AQJS event bridge, narrow layout).
-- `tests/minified-parity.spec.js`: 10 source/minified parity tests.
+- `tests/minified-parity.spec.js`: 24 source/minified parity tests.
 - `tests/css-source-parse.spec.js`: 4 source/catalog tests; `tests/js-source-parse.spec.js`: 1 API inventory test; `tests/knowledgebase-integrity.spec.js`: 1 link-integrity test.
-- Total: 120 authored tests. The workflow is configured for both `push` and `pull_request` to `main`. Run #369 proves all 120 authored tests passed in both configured browser projects; future changes must continue to pass the workflow.
+- Total: 149 authored test cases. Run #429 executed 298 browser-project cases across Chromium and Firefox: 297 passed and one documented Firefox mobile-emulation case was skipped. The workflow is configured for both `push` and `pull_request` to `main`; future changes must continue to pass it.
 
 ## Execution record
 
