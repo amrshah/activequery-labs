@@ -578,3 +578,86 @@ test("AQJS source and minified builds preserve known Array, Object and predicate
     isNaFString: false
   });
 });
+
+
+test("AQJS source and minified builds preserve Array.setItem and Element content/getter edge contracts", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const values = [1, 2];
+      const truthyReturn = values.setItem(1, 3);
+      const afterTruthy = [...values];
+      const falsyReturn = values.setItem(0, 0);
+      const afterFalsy = [...values];
+
+      const textNode = document.createElement("div");
+      textNode.textContent = "original";
+      const setTextReturn = textNode.setText("");
+      const textAfterEmpty = textNode.textContent;
+
+      const htmlNode = document.createElement("div");
+      htmlNode.innerHTML = "<b>original</b>";
+      const setHtmlReturn = htmlNode.setHtml("<em>replacement</em>");
+
+      const input = document.createElement("input");
+      input.value = "abc";
+
+      const siblings = document.createElement("div");
+      siblings.innerHTML = '<span id="first"></span><b id="second"></b>';
+      const first = siblings.firstElementChild;
+      let allSiblingsError = null;
+      try { first.siblings(); } catch (error) { allSiblingsError = error.name; }
+
+      return {
+        array: {
+          truthyReturnSame: truthyReturn === values,
+          afterTruthy,
+          falsyReturnSame: falsyReturn === values,
+          afterFalsy
+        },
+        text: {
+          returnSame: setTextReturn === textNode,
+          afterEmpty: textAfterEmpty
+        },
+        html: {
+          returnSame: setHtmlReturn === htmlNode,
+          afterTruthy: htmlNode.innerHTML
+        },
+        getValue: {
+          found: input.getValue("abc"),
+          missing: input.getValue("z"),
+          foundMode: input.getValue("abc", true),
+          missingMode: input.getValue("z", true),
+          noArgReturnsInput: input.getValue() === input
+        },
+        siblings: {
+          next: first.siblings("next")?.id,
+          prev: first.siblings("prev"),
+          allError: allSiblingsError
+        }
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    array: {
+      truthyReturnSame: true,
+      afterTruthy: [1, 2],
+      falsyReturnSame: true,
+      afterFalsy: [0, 1, 2]
+    },
+    text: { returnSame: true, afterEmpty: "original" },
+    html: { returnSame: true, afterTruthy: "<b>original</b>" },
+    getValue: {
+      found: true,
+      missing: false,
+      foundMode: false,
+      missingMode: true,
+      noArgReturnsInput: true
+    },
+    siblings: { next: "second", prev: null, allError: "ReferenceError" }
+  });
+});
