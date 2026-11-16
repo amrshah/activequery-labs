@@ -1,7 +1,7 @@
 # AQJS Templating, Filtering and Mutation Observation
 
 Source: `ActiveQuery.js` SHA `b8ec9e5be8668d048eea3385cd9012dfddb69cf0`.
-Status: source inspection complete at a high level; targeted `watch()` failure and source/minified parity tests have been authored, with CI verification pending. `sancha` and broader `sift` behavior/security tests remain open.
+Status: source inspection complete at a high level; targeted `watch()`, `sift()` and custom-element name-validation regression/parity tests have been authored, with CI verification pending. `sancha` and broader keyboard/security tests remain open.
 
 ## Element.sancha(args)
 
