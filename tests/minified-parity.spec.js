@@ -843,3 +843,36 @@ test("AQJS source and minified builds preserve Array.getCount fallback operator 
     nonStringSubstringError: "TypeError"
   });
 });
+
+
+test("AQJS source and minified builds preserve instance lifecycle event mapping and receiver identity", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const instance = new window.AQ("");
+      const calls = { offline: 0, online: 0, close: 0, unknown: 0 };
+      const returned = {
+        offline: instance.on("offline", () => calls.offline++),
+        online: instance.on("online", () => calls.online++),
+        close: instance.on("close", () => calls.close++),
+        unknown: instance.on("custom-event", () => calls.unknown++)
+      };
+      window.dispatchEvent(new Event("offline"));
+      window.dispatchEvent(new Event("online"));
+      window.dispatchEvent(new Event("beforeunload"));
+      window.dispatchEvent(new Event("custom-event"));
+      return {
+        calls,
+        allReturnInstance: Object.values(returned).every(value => value === instance)
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    calls: { offline: 1, online: 1, close: 1, unknown: 0 },
+    allReturnInstance: true
+  });
+});
