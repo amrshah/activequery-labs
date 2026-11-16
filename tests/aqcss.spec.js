@@ -1020,3 +1020,47 @@ test("AQCSS mobile middle alias requires its companion class while other context
     screenMiddle: "center"
   });
 });
+
+test("AQCSS sticky top remains pinned while its scroll container moves", async ({ page }) => {
+  await page.setViewportSize({ width: 1200, height: 800 });
+  const result = await page.evaluate(async () => {
+    const scroller = document.createElement("div");
+    Object.assign(scroller.style, {
+      width: "300px",
+      height: "120px",
+      overflowY: "auto",
+      marginTop: "20px"
+    });
+
+    const spacer = document.createElement("div");
+    spacer.style.height = "80px";
+
+    const sticky = document.createElement("div");
+    sticky.className = "aq-affix--sticky aq-affix--top";
+    sticky.style.height = "24px";
+
+    const content = document.createElement("div");
+    content.style.height = "300px";
+    scroller.append(spacer, sticky, content);
+    document.body.append(scroller);
+
+    const containerTop = scroller.getBoundingClientRect().top;
+    const initialOffset = sticky.getBoundingClientRect().top - containerTop;
+    scroller.scrollTop = 120;
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+
+    return {
+      position: getComputedStyle(sticky).position,
+      top: getComputedStyle(sticky).top,
+      initialOffset,
+      scrolledOffset: sticky.getBoundingClientRect().top - scroller.getBoundingClientRect().top,
+      scrollTop: scroller.scrollTop
+    };
+  });
+
+  expect(result.position).toBe("sticky");
+  expect(result.top).toBe("0px");
+  expect(result.initialOffset).toBeGreaterThan(70);
+  expect(result.scrollTop).toBe(120);
+  expect(Math.abs(result.scrolledOffset)).toBeLessThanOrEqual(1);
+});
