@@ -1,7 +1,7 @@
 # AQJS Templating, Filtering and Mutation Observation
 
 Source: `ActiveQuery.js` SHA `b8ec9e5be8668d048eea3385cd9012dfddb69cf0`.
-Status: source inspection complete at a high level; behavior and security tests pending.
+Status: source inspection complete at a high level; targeted `watch()` failure and source/minified parity tests have been authored, with CI verification pending. `sancha` and broader `sift` behavior/security tests remain open.
 
 ## Element.sancha(args)
 
@@ -56,7 +56,7 @@ The source adds `watch` to Element.prototype and uses MutationObserver. It:
 - The callback invokes `args.then()` without validating it exists or is callable.
 - The shown method returns the result of `observer.observe`, which is normally undefined, not the observer instance.
 - The method does not expose a clear disconnect handle in the shown API.
-- The callback uses `this` inside a normal function passed to `mutations.forEach`. In strict module code the inner callback's `this` is undefined, so `this.watched = ...` throws TypeError before `args.then()` is called.
+- The callback uses `this` inside a normal function passed to `mutations.forEach`. In strict module code the inner callback's `this` is undefined, so `this.watched = ...` throws TypeError before `args.then()` is called. A Playwright regression test now reproduces this expected failure and checks that the supplied callback is never reached; a paired source/minified fixture checks the same observation in both distributions. The new tests are authored but not yet CI-verified.
 - The fallback implementation is large and must be examined separately.
 - The fallback guard reads `MutationObserver` as a bare identifier before assigning `window.MutationObserver`; if the global is absent, the check itself may throw.
 
