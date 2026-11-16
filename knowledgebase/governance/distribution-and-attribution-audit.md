@@ -1,6 +1,6 @@
 # ActiveQuery Licensing, Provenance and Portal Distribution Audit
 
-**Review state: documented, not legally cleared for public framework-asset hosting.** This is an engineering compliance map, not legal advice or a binding interpretation of OSL-3.0.
+**Review state: engineering compliance requirements mapped; public asset release must satisfy the license conditions below.** OSL-3.0 grants public distribution and external-deployment rights subject to its conditions; this audit does not assume separate permission from upstream maintainers is required. This is an engineering compliance map, not legal advice or a binding interpretation of every portal component.
 
 ## Pinned upstream materials examined
 
@@ -26,7 +26,7 @@ The following is a plain-language issue map. It is not a legal opinion.
 3. **Section 3 — Source code.** A machine-readable copy of the preferred source form and modification documentation must accompany each distributed copy, or be made conveniently available through a repository while the licensor continues distribution.
 4. **Section 6 — Attribution.** Source code of derivative works must retain original copyright, patent and trademark notices, licensing notices and attribution text. A derivative must carry a prominent notice informing recipients that it has been modified.
 5. **Section 4 — Marks.** The license does not grant a right to use the licensor's or contributors' names or trademarks to endorse or promote a derived product without prior permission. Descriptive identification and endorsement are not the same thing; keep the portal's independent-project disclaimer and do not imply upstream sponsorship.
-6. **Section 9 — Acceptance.** The license requires reasonable efforts to obtain recipients' express assent when distributing copies of the original or derivative work. The appropriate mechanism for a public browser-based learning portal needs legal review.
+6. **Section 9 — Acceptance.** The license requires reasonable efforts to obtain recipients' express assent when distributing copies of the original or derivative work. Implement a clear, affirmative acceptance step before the playground fetches upstream assets, and link the exact license texts next to the control. This is a reasonable engineering measure for assent; whether a particular mechanism is legally sufficient in every jurisdiction is outside this engineering audit.
 
 The exact license text controls. These points identify deployment obligations to resolve; they do not conclude whether every part of the portal is a derivative work or how the license applies to a particular architecture.
 
@@ -61,8 +61,10 @@ The Ethical Source Policy separately expresses an expectation that commercial us
 
 Before publicly enabling framework assets in the portal:
 
-- [ ] Obtain legal review of OSL-3.0 Sections 1(c), 3, 4, 5, 6 and 9 for the exact static-site/browser-playground architecture.
-- [ ] Confirm whether serving unmodified upstream files, modified files, or generated examples changes the applicable obligations.
+- [ ] Confirm the deployed artifact includes the exact pinned machine-readable source files and corresponding license/third-party notices.
+- [ ] Confirm the affirmative OSL-3.0 assent step is visible, accessible and runs before the browser fetches framework assets.
+- [ ] Keep original framework files separately identifiable and unmodified; if a future release modifies them, add a prominent modification notice and publish the corresponding modified source under OSL-3.0.
+- [ ] For any material change to the distribution model or if the derivative-work boundary is disputed, consider qualified legal advice; separate legal counsel approval is not itself a condition stated by OSL-3.0.
 - [ ] Keep AQCSS/AQJS source and minified assets separately identifiable; retain original notices and link the exact pinned source and license files.
 - [ ] Provide convenient machine-readable source and modification documentation if required by the final legal interpretation.
 - [ ] Preserve third-party MIT/ISC notices for all redistributed bundled code.
@@ -71,4 +73,4 @@ Before publicly enabling framework assets in the portal:
 - [ ] Determine and implement an appropriate recipient-assent mechanism if required.
 - [ ] Recheck upstream license, governance and source revisions before each public framework-asset release.
 
-**Current decision:** continue clean-room portal design, documentation and tests. Keep public framework-asset deployment gated until the checklist has been reviewed and the Pages asset pipeline is deliberately designed.
+**Current implementation direction:** publish the clean-room portal with pinned, unmodified framework source and matching license files in the same artifact; do not fetch those assets in the browser until the user affirmatively accepts OSL-3.0. Keep the upstream source repositories and pinned commit identities linked. Recheck this checklist whenever the asset set or distribution architecture changes.
