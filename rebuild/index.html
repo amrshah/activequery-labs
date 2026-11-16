@@ -165,7 +165,22 @@
     <section class="notice-section" id="licensing">
       <div class="container notice-card">
         <div><p class="section-kicker">Independent project</p><h2>Clear provenance. No false affiliation.</h2></div>
-        <p>ActiveQuery Labs is an independent community project, not the official ActiveQuery website. Upstream CSS and JavaScript remain governed by their own licenses. This clean-room rebuild is a validation branch; public deployment is held pending the documented OSL-3.0 distribution review.</p>
+        <p>ActiveQuery Labs is an independent community project, not the official ActiveQuery website. The playground loads pinned upstream AQCSS and AQJS files under OSL-3.0. Review the license texts and source files below; framework assets are not relicensed under the site-authored MIT license.</p>
+        <div class="license-assent" aria-labelledby="license-assent-title">
+          <h3 id="license-assent-title">Review and accept the upstream license</h3>
+          <p>Before the browser downloads the framework assets, review the OSL-3.0 terms and the exact pinned source and notice files. This acceptance applies to using the upstream AQCSS/AQJS assets in this playground.</p>
+          <div class="license-files">
+            <a href="./vendor/CSS-LICENSE.txt" target="_blank" rel="noopener">AQCSS license / notices</a>
+            <a href="./vendor/JS-LICENSE.txt" target="_blank" rel="noopener">AQJS license / notices</a>
+            <a href="./vendor/ActiveQuery.css" target="_blank" rel="noopener">AQCSS source</a>
+            <a href="./vendor/ActiveQuery.js" target="_blank" rel="noopener">AQJS source</a>
+            <a href="./vendor/ActiveQuery.min.css" target="_blank" rel="noopener">AQCSS minified source</a>
+            <a href="./vendor/ActiveQuery.min.js" target="_blank" rel="noopener">AQJS minified source</a>
+          </div>
+          <label class="license-check"><input id="license-consent" type="checkbox"> I have reviewed the OSL-3.0 terms and agree to them for use of the upstream framework assets in this playground.</label>
+          <button class="button button-run" id="accept-license" type="button" disabled>Accept OSL-3.0 and enable preview</button>
+          <p id="license-consent-status" role="status" aria-live="polite">The playground is locked until you review and accept the upstream license terms.</p>
+        </div>
         <div class="notice-links">
           <a href="https://github.com/ActiveQuery/CSS">Upstream CSS ↗</a>
           <a href="https://github.com/ActiveQuery/JS">Upstream JS ↗</a>
