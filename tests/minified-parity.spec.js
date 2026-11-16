@@ -1421,3 +1421,35 @@ test("AQJS source and minified builds match thenable, adjacent and sift edge con
     emptySiftError: "SyntaxError"
   });
 });
+
+test("AQJS source and minified builds repeat initlog callbacks on every complete readystatechange event", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const first = new window.AQ("");
+      const second = new window.AQ("");
+      const calls = { first: 0, second: 0, late: 0 };
+      first.initlog.push(() => calls.first++);
+      second.initlog.push(() => calls.second++);
+
+      document.dispatchEvent(new Event("readystatechange"));
+      const afterFirstEvent = { ...calls };
+
+      first.initlog.push(() => calls.late++);
+      document.dispatchEvent(new Event("readystatechange"));
+
+      return {
+        afterFirstEvent,
+        afterSecondEvent: { ...calls },
+        listenerCount: document.querySelectorAll("script").length
+      };
+    });
+  };
+
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source.afterFirstEvent).toEqual({ first: 1, second: 1, late: 0 });
+  expect(source.afterSecondEvent).toEqual({ first: 2, second: 2, late: 1 });
+});
