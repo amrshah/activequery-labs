@@ -79,12 +79,18 @@ let example = { ...initialExample };
 let activeTab = "html";
 let runtimeAssets = null;
 let frameReady = false;
+let frameworkLoadStarted = false;
+let licenseAccepted = false;
 let latestToken = 0;
 let debounceHandle = 0;
 
 const editor = $("#source-editor");
 const preview = $("#live-preview");
 const previewStatus = $("#preview-status");
+const licenseCheckbox = $("#license-consent");
+const licenseAcceptButton = $("#accept-license");
+const licenseStatus = $("#license-consent-status");
+const licenseConsentKey = "aq-labs-osl-3.0-assent-v1";
 const editorStatus = $("#editor-status");
 const editorLabel = $("#editor-label");
 const tabButtons = [...document.querySelectorAll("[data-editor-tab]")];
@@ -276,11 +282,49 @@ window.addEventListener("message", (event) => {
 editor.value = example[activeTab];
 preview.srcdoc = createPreviewDocument();
 
-loadPinnedAssets()
-  .then((assets) => {
-    runtimeAssets = assets;
-    if (frameReady) renderPreview();
-  })
-  .catch((error) => {
-    setPreviewStatus(error.message);
-  });
+function startFrameworkPreview() {
+  if (frameworkLoadStarted) return;
+  frameworkLoadStarted = true;
+  setPreviewStatus("Loading the pinned AQCSS/AQJS assets…");
+  loadPinnedAssets()
+    .then((assets) => {
+      runtimeAssets = assets;
+      licenseStatus.textContent = "OSL-3.0 assent recorded in this browser. The pinned framework preview is enabled.";
+      if (frameReady) renderPreview();
+    })
+    .catch((error) => {
+      frameworkLoadStarted = false;
+      setPreviewStatus(error.message);
+      licenseStatus.textContent = "License assent is recorded, but the pinned framework assets could not be loaded.";
+    });
+}
+
+let priorConsent = null;
+try { priorConsent = localStorage.getItem(licenseConsentKey); } catch { /* Consent can still be recorded for this page session. */ }
+if (priorConsent === "accepted") {
+  licenseAccepted = true;
+  licenseCheckbox.checked = true;
+  licenseCheckbox.disabled = true;
+  licenseAcceptButton.disabled = true;
+  licenseAcceptButton.textContent = "Accepted · preview enabled";
+  licenseStatus.textContent = "OSL-3.0 assent was previously recorded in this browser.";
+  startFrameworkPreview();
+} else {
+  setPreviewStatus("Accept the OSL-3.0 terms in the licensing section to load framework assets.");
+  licenseStatus.textContent = "The playground is locked until you review and accept the upstream license terms.";
+}
+
+licenseCheckbox.addEventListener("change", () => {
+  licenseAcceptButton.disabled = !licenseCheckbox.checked;
+});
+
+licenseAcceptButton.addEventListener("click", () => {
+  if (!licenseCheckbox.checked || licenseAccepted) return;
+  licenseAccepted = true;
+  try { localStorage.setItem(licenseConsentKey, "accepted"); } catch { /* The acceptance remains active for this page session. */ }
+  licenseCheckbox.disabled = true;
+  licenseAcceptButton.disabled = true;
+  licenseAcceptButton.textContent = "Accepted · loading preview…";
+  licenseStatus.textContent = "OSL-3.0 assent recorded in this browser. Loading pinned framework assets…";
+  startFrameworkPreview();
+});
