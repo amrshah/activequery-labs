@@ -57,7 +57,7 @@ All methods are installed through `ActiveQuery.extend('array', ...)`.
 | `setAdjacent` | `setAdjacent(a, b)` | Same Element | Normal truthy position/Element arguments hit early return; no insertion. |
 | `setHtml` | `setHtml(a, b = false)` | Same Element on truthy HTML; assignment result on falsy HTML | Truthy normal HTML input is ignored. Falsy path assigns innerHTML/outerHTML. Unsafe HTML sink. |
 | `getHtml` | `getHtml(a, b = false)` | Markup string, or Boolean substring test | Truthy needle tests inner/outer markup; no needle returns innerHTML. |
-| `setContent` | `setContent(a)` | Same Element | Clears innerHTML then appends Node or Array members. |
+| `setContent` | `setContent(a)` | Same Element | Always clears innerHTML first, then appends one Node or each Array member. An empty Array clears the host; a DocumentFragment is consumed; invalid strings/members throw native TypeError after clearing and may leave earlier array members appended. These replacement and partial-failure contracts passed in Chromium/Firefox with source/minified parity in run #395. |
 | `setText` | `setText(a)` | Same Element | Writes only for truthy input; cannot set empty string through this method. |
 | `getText` | `getText(a)` | Text string, or Boolean substring test | Truthy needle returns containment Boolean. |
 | `setValue` | `setValue(a)` | Same Element | If element has a value property and input is truthy, assigns it; otherwise assigns empty string, including on elements without value property (creates/sets property). Text input, checkbox `.value`, select, textarea, falsy clearing and receiver identity passed in Chromium/Firefox; source/minified parity passed in run #383. This does not toggle checkbox `.checked`. |

@@ -68,12 +68,13 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 | Element | Classes | Inspected | Basic set/get/remove plus NodeList bulk class mutators | Partial; selected contracts passed in run #313 |
 | Element | `i`, `setChild`, `siblings` | Inspected; sibling default bug | sibling next/prev/default; setChild single/array/empty, DocumentFragment and invalid member after a valid member | Partial; setChild contracts passed in runs #324 and #383, including source/minified parity; `i` remains untested |
 | Element | `setAdjacent`, `setHtml`, `getHtml`, `setContent` | Inspected; guards and DOM insertion semantics | Guarded setAdjacent/setHtml, getHtml modes, array setContent | Partial; selected contracts passed in run #313 |
+| Element | `setContent` | Inspected: always clears innerHTML, appends Node/Array; empty Array clears; invalid values throw after clearing | Single Node, array, empty array, DocumentFragment, invalid array member and invalid string | All listed replacement/failure cases passed in Chromium/Firefox and source/minified parity in run #395 |
 | Element | `setText`, `getText`, `setValue`, `getValue` | Inspected; falsy and inverted mode behavior; setValue assigns empty string on falsy input and on generic Elements | setText, getText, getValue modes, setValue truthy/falsy/generic Element | Selected contracts passed in run #324; broader control-type matrix remains pending |
 | Element | `then`, `fax`, `on` | Inspected | callback result, absent callback, FORM/non-FORM fax, event listener | Selected contracts passed in run #324; form semantics remain unsupported/incomplete |
 | Element | `sancha` | Inspected; HTML injection and undeclared identifiers | Static success and data-mode ReferenceError | Passed in run #313 |
 | Element | `sift` | Inspected: truthy selector early return | Explicit no-handler test | Passed in run #313 |
 | Element | `watch` | Inspected; callback `this` failure and missing observer return | Mutation test captures TypeError and missing user callback | Passed in run #313 |
-| NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | Bulk attributes/styles/classes, setValue, stubs and valid/invalid/empty-list `on` | Selected contracts passed in run #324; broader collection edge cases remain pending |
+| NodeList | attributes/styles/classes/value/on | Inspected; some working loops, some stubs | Bulk attributes/styles/classes, setValue across input/checkbox/select/textarea, generic-element exclusion, empty collection, stubs and valid/invalid/empty-list `on` | Selected contracts passed in runs #324 and #392; broader collection edge cases remain pending |
 | NodeList | no-op stubs | Inspected: getStyles/getClasses/getHtml/setText/etc. | All identified no-op stubs invoked with representative arguments; no mutation and return shape asserted | Identified stub set passed in run #324; broader argument combinations remain pending |
 | Document/Window | `on` | Inspected | Native custom event listeners; invalid event/callback arguments and receiver identity | Valid event dispatch passed in run #313; invalid-argument receiver identity passed in run #327 |
 
@@ -82,7 +83,7 @@ Run #383 adds Element `setChild` DocumentFragment and partial-failure behavior, 
 | Area | Source review | Test coverage | Current status |
 |---|---|---|---|
 | Rule and selector inventory | Brace-aware index committed; PostCSS AST generator committed | AST generation and source hash assertions | Passed in run #313 |
-| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, selected edge cases, Element value/child/then, NodeList events, Array `getCount` default branch, Array `then`, Document/Window events, early lifecycle and constructor `initlog`, Array query helpers, and Element/NodeList bulk mutations | Selected fixtures passed in runs #325, #327, #340 and #348; complete method-level semantic parity remains pending |
+| AQCSS source/minified parity | Lexical comparison indicates parity | PostCSS AST comparison | Passed in run #313 |\n| AQJS source/minified behavior parity | AST structure parity plus selected runtime behavior fixtures | Core DOM, selected edge cases, Element value/child/then/setContent, DocumentFragment, NodeList events/setValue, Array query helpers and `then`, Document/Window events, early lifecycle and constructor `initlog`, Element/NodeList bulk mutations | Selected fixtures passed in runs #325, #327, #340, #348, #383, #392 and #395; complete method-level semantic parity remains pending |
 | Cross-family composition | Source-derived border, facet, spacing, affix, flex, swatch, filter, opacity, image and responsive precedence combinations | AQX-001–008, AQX-010–019 passed in run #365; AQX-009 computed sticky/top cascade passed. Run #392 additionally verifies base vs responsive flex stretch selectors through CSSOM and computed styles. An experimental nested-scroll movement test failed in both engines in run #380 and was withdrawn without weakening assertions | 18 AQX cases plus the focused flex selector test pass; actual sticky movement remains unverified |
 | Clean-room portal | Responsive field guide, editable HTML/CSS/JS, isolated preview, AQJS event helper and narrow viewport layout | Four Playwright tests passed in run #369; preview sandbox allows scripts only and omits same-origin access | Passed in CI; public deployment withheld pending OSL-3.0 review |
 | Breakpoints and responsive variants | Inspected: mobile/tablet/desktop hide range queries are malformed and ignored by Chromium/Firefox; tablet/desktop/large typography prefixes activate at their min-width thresholds | 599/600/601, 601/992, 993/1439 and 1440 computed-style tests | All tested breakpoint and hide-helper behavior passed in run #313; short-landscape and touch/hybrid behavior remain untested |
@@ -201,3 +202,13 @@ Run [#380](https://github.com/amrshah/activequery-labs/actions/runs/43762655505)
 | Execution | 257 passed, 0 failed, 1 skipped; 129 authored tests across Chromium and Firefox |
 | New AQCSS evidence | CSSOM confirms base flex stretch selectors contain an escaped asterisk and behave differently from the unescaped responsive selectors; runtime computed-style checks passed in both engines |
 | New AQJS evidence | NodeList setValue across input, checkbox .value, select and textarea; generic-element exclusion and empty-collection receiver identity; source/minified parity |
+
+
+## Latest confirmed execution record — run #395
+
+| Field | Verified value |
+|---|---|
+| Workflow | [ActiveQuery knowledgebase browser tests #395](https://github.com/amrshah/activequery-labs/actions/runs/43820353410) |
+| Commit | `a811ee9d4b9e7621859f1284f4c36b911199e6a6` |
+| Execution | 263 passed, 0 failed, 1 skipped; 132 authored tests across Chromium and Firefox |
+| New AQJS coverage | Element setContent single Node, Array, empty Array, DocumentFragment, invalid string and partial-append failure behavior; source/minified parity |

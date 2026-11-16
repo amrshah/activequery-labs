@@ -149,7 +149,7 @@ The focused CSSOM/computed-style test passed in Chromium and Firefox in run #392
 - base modifier-only column does not establish flex display, while .aq-flexon plus the column modifier does;
 - the malformed mobile shrink-no alias does not match independently, while mobile no-shrink does.
 
-The test verifies the browser's parsed stylesheet and computed values, not merely the source text.
+The test verifies the browser's parsed stylesheet and computed values, not merely the source text. Run [#394](https://github.com/amrshah/activequery-labs/actions/runs/43820114556) also verifies the tablet, desktop and screen row-wrap-reverse spelling mismatch: the correctly spelled flow token sets row/wrap-reverse without enabling flex display, while the misspelled display token enables flex but leaves wrapping at nowrap.
 
 ## Alignment cascade and axis behavior
 

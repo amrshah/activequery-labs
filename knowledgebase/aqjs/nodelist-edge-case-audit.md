@@ -50,6 +50,6 @@ These return values are not evidence of successful work. A chaining-looking retu
 
 ## Runtime status
 
-Latest confirmed suite: run [#392](https://github.com/amrshah/activequery-labs/actions/runs/43819572529), 129 authored tests / 258 browser executions (257 passed, one Firefox mobile-emulation skip). Element setChild and setValue now include DocumentFragment, partial-failure and native form-control coverage. NodeList setValue now covers input, checkbox .value, select, textarea, generic-element exclusion and empty-collection identity, with source/minified parity. Exhaustive NodeList stub argument coverage and Element i remain incomplete.
+Latest confirmed suite: run [#395](https://github.com/amrshah/activequery-labs/actions/runs/43820353410), 132 authored tests / 264 browser executions (263 passed, one Firefox mobile-emulation skip). Element setChild and setValue now include DocumentFragment, partial-failure and native form-control coverage. NodeList setValue now covers input, checkbox .value, select, textarea, generic-element exclusion and empty-collection identity, with source/minified parity. Exhaustive NodeList stub argument coverage and Element i remain incomplete.
 
 References: [API signature reference](api-signature-reference.md), [prototype behavior matrix](behavior-matrix.md), [runtime validation matrix](../testing/runtime-validation-matrix.md), [API contract closure matrix](api-contract-closure-matrix.md).

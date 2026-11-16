@@ -5,7 +5,7 @@ Status: partially implemented and browser-validated. Run [#365](https://github.c
 
 ## Existing coverage — avoid blind duplication
 
-The current suite documents tests for base border token and hover relative-color alpha, facet sizing and third-width anomaly, base flex behavior and selected aliases, the escaped base flex stretch selectors versus unescaped responsive selectors, invalid xlarge row gap, spacing aliases, responsive breakpoints and malformed hide helpers, focus outline, disabled descendants, tooltip/dropdown hover behavior, reduced motion and short-landscape CSSOM divergence.
+The current suite documents tests for base border token and hover relative-color alpha, facet sizing and third-width anomaly, base flex behavior and selected aliases, the escaped base flex stretch selectors versus unescaped responsive selectors, responsive row-wrap-reverse token mismatch, invalid xlarge row gap, spacing aliases, responsive breakpoints and malformed hide helpers, focus outline, disabled descendants, tooltip/dropdown hover behavior, reduced motion and short-landscape CSSOM divergence.
 
 See [browser-test-plan.md](browser-test-plan.md) and [runtime-validation-matrix.md](runtime-validation-matrix.md). Isolated family tests do not prove all cross-family combinations.
 

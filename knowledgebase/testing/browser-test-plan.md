@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run [#392](https://github.com/amrshah/activequery-labs/actions/runs/43819572529) passed 257 browser cases with one documented Firefox mobile-emulation skip (129 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: run [#395](https://github.com/amrshah/activequery-labs/actions/runs/43820353410) passed 263 browser cases with one documented Firefox mobile-emulation skip (132 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -16,7 +16,7 @@ Status: run [#392](https://github.com/amrshah/activequery-labs/actions/runs/4381
 ### Source/minified parity
 
 - PostCSS AST comparison checks all AQCSS source and minified rules, selectors, media context and declarations after syntax-preserving whitespace normalization.
-- Browser tests compare core AQJS selector/Element behavior and selected edge contracts across source and minified module builds, including Element `setValue`, `setChild`, `then`, NodeList event registration/empty-collection return, Array `getCount` default-operator behavior, Array `then`, Document/Window event helpers, early lifecycle hooks and constructor `initlog` timing, Array query helper parity, Element/NodeList bulk mutation parity, Element fragment/form-control contracts, and NodeList multi-control setValue parity (runs #325, #327, #340, #348, #383 and #392).
+- Browser tests compare core AQJS selector/Element behavior and selected edge contracts across source and minified module builds, including Element `setValue`, `setChild`, `then`, NodeList event registration/empty-collection return, Array `getCount` default-operator behavior, Array `then`, Document/Window event helpers, early lifecycle hooks and constructor `initlog` timing, Array query helper parity, Element/NodeList bulk mutation parity, Element fragment/form-control contracts, NodeList multi-control setValue parity, and Element setContent replacement/failure parity (runs #325, #327, #340, #348, #383, #392 and #395).
 - CI verifies exact Git blob SHAs for both source and minified files before testing.
 
 ### AQJS
@@ -102,3 +102,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #392
 
 [Workflow #392](https://github.com/amrshah/activequery-labs/actions/runs/43819572529) passed 257 browser cases, 0 failed, 1 skipped; 129 authored tests across Chromium and Firefox. The one skip is the documented Firefox mobile hardware-emulation case. The run includes the CSSOM-level AQCSS flex selector distinction and NodeList setValue source/minified parity.
+
+
+## Latest execution — run #395
+
+[Workflow #395](https://github.com/amrshah/activequery-labs/actions/runs/43820353410) passed 263 browser cases, 0 failed, 1 skipped; 132 authored tests across Chromium and Firefox. The run includes Element setContent replacement, DocumentFragment, empty-array and invalid-input behavior with source/minified parity.
