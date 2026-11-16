@@ -720,3 +720,44 @@ test("AQJS source and minified builds preserve Array.getIndex and setItem edge b
     setItem: { values: [1, 2], returnedSame: true }
   });
 });
+
+
+test("AQJS source and minified builds preserve Function, Element and NodeList then helpers and defer behavior", async ({ page }) => {
+  const collect = async minified => {
+    await page.goto(minified ? "/tests/fixture-min.html" : "/");
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(async () => {
+      const fn = function marker() {};
+      const functionThen = fn.then(value => value === fn ? "function-ok" : "wrong-receiver");
+
+      const element = document.createElement("div");
+      const elementThen = element.then(value => value === element ? "element-ok" : "wrong-receiver");
+
+      const list = document.querySelectorAll(".target");
+      const listThen = list.then(value => value === list ? "list-ok" : "wrong-receiver");
+
+      window.deferParityCalls = 0;
+      const instance = new window.AQ("");
+      const timer = instance.defer([() => window.deferParityCalls++, 0.01]);
+      await new Promise(resolve => setTimeout(resolve, 60));
+
+      return {
+        functionThen,
+        elementThen,
+        listThen,
+        timerType: typeof timer,
+        deferCalls: window.deferParityCalls
+      };
+    });
+  };
+  const source = await collect(false);
+  const minified = await collect(true);
+  expect(minified).toEqual(source);
+  expect(source).toEqual({
+    functionThen: "function-ok",
+    elementThen: "element-ok",
+    listThen: "list-ok",
+    timerType: "number",
+    deferCalls: 0
+  });
+});
