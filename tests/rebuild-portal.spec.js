@@ -71,4 +71,32 @@ test.describe("clean-room portal", () => {
     expect(preview).not.toBeNull();
     expect(preview.y).toBeGreaterThan(editor.y + editor.height - 2);
   });
+  test("opens the AQCSS guided learning page with verified responsive guidance", async ({ page }) => {
+    await page.goto("/rebuild/guides/aqcss.html");
+    await expect(page).toHaveTitle(/Learn AQCSS/);
+    await expect(page.getByRole("heading", { name: "Understand the cascade. Use AQCSS deliberately." })).toBeVisible();
+    await expect(page.getByText(/600 CSS px/)).toBeVisible();
+    await expect(page.getByRole("link", { name: "Continue to AQJS →" })).toBeVisible();
+  });
+
+  test("opens the AQJS guided learning page and labels unresolved hazards", async ({ page }) => {
+    await page.goto("/rebuild/guides/aqjs.html");
+    await expect(page).toHaveTitle(/Learn AQJS/);
+    await expect(page.getByRole("heading", { name: "Know the API. Respect its edge cases." })).toBeVisible();
+    await expect(page.getByText(/Promise resolver assimilation of/)).toBeVisible();
+    await expect(page.getByRole("link", { name: "Back to AQCSS ←" })).toBeVisible();
+  });
+
+  test("learning pages share the persistent accessible theme preference", async ({ page }) => {
+    await page.goto("/rebuild/guides/aqcss.html");
+    await page.emulateMedia({ colorScheme: "light" });
+    await page.evaluate(() => localStorage.setItem("aq-labs-theme", "light"));
+    await page.reload();
+    await page.getByRole("button", { name: "Switch to dark theme" }).click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    await page.goto("/rebuild/guides/aqjs.html");
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+    await expect(page.getByRole("button", { name: "Switch to light theme" })).toHaveAttribute("aria-pressed", "true");
+  });
+
 });
