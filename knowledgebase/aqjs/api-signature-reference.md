@@ -118,3 +118,8 @@ Run [#413](https://github.com/amrshah/activequery-labs/actions/runs/43824000685)
 ### Array.getCount fallback behavior verified across source/minified builds
 
 Run [#416](https://github.com/amrshah/activequery-labs/actions/runs/43824307566) confirms an unrecognised operator such as `>` enters the delimiter fallback branch rather than performing numeric comparison. The fallback counts exact first-token matches or string values containing the supplied search value; a no-match returns zero. The `*` substring branch throws `TypeError` when the target property is non-string and has no `.includes` method.
+
+
+### Lifecycle event mapping verified across source/minified builds
+
+Run [#417](https://github.com/amrshah/activequery-labs/actions/runs/43824492132) confirms instance lifecycle mapping for `offline`, `online` and `close`, ignores unknown event names, and preserves receiver identity across AQJS source and minified distributions. Repeated construction and unusual timing remain open.

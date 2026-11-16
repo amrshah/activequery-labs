@@ -1,6 +1,6 @@
 # Browser Validation Plan and Current Coverage
 
-Status: run [#416](https://github.com/amrshah/activequery-labs/actions/runs/43824307566) passed 285 browser cases with one documented Firefox mobile-emulation skip (143 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
+Status: run [#418](https://github.com/amrshah/activequery-labs/actions/runs/43824577065) passed 287 browser cases with one documented Firefox mobile-emulation skip (144 authored tests × Chromium/Firefox). Coverage remains targeted rather than exhaustive.
 
 ## Test environment
 
@@ -167,3 +167,8 @@ Update this table only after retrieving the actual workflow run, job logs and te
 ## Latest execution — run #417
 
 [Workflow #417](https://github.com/amrshah/activequery-labs/actions/runs/43824492132) passed 287 browser cases, 0 failed, 1 skipped; 143 authored tests across Chromium and Firefox. It adds lifecycle event mapping source/minified parity.
+
+
+## Latest execution — run #418
+
+[Workflow #418](https://github.com/amrshah/activequery-labs/actions/runs/43824577065) passed 287 browser cases, 0 failed, 1 skipped; 144 authored tests across Chromium and Firefox. The run validates the current knowledgebase after the AQJS lifecycle event-mapping parity addition in #417.
