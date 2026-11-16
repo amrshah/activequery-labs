@@ -1120,3 +1120,48 @@ test("AQJS source and minified builds preserve the Element.sift selector guard d
   expect(minifiedResult).toEqual(sourceResult);
   expect(sourceResult).toEqual({ returnsTarget: true, handlerInstalled: false });
 });
+
+
+test("AQJS source and minified builds preserve sancha static and data-mode behavior", async ({ page }) => {
+  const collect = async path => {
+    await page.goto(path);
+    await page.waitForFunction(() => window.fixtureReady === true);
+    return page.evaluate(() => {
+      const appendHost = document.createElement("div");
+      appendHost.innerHTML = "<i>existing</i>";
+      const appendReturn = appendHost.sancha({ static: true, template: "<b>appended</b>" });
+
+      const swapHost = document.createElement("div");
+      swapHost.innerHTML = "<i>replaced</i>";
+      const swapReturn = swapHost.sancha({ static: true, swap: true, template: "<strong>swapped</strong>" });
+
+      const dataHost = document.createElement("div");
+      let dataError = null;
+      try {
+        dataHost.sancha({ data: [{ name: "Ada" }], template: "<p>{{name}}</p>" });
+      } catch (error) {
+        dataError = error.name;
+      }
+
+      return {
+        appendReturnsHost: appendReturn === appendHost,
+        appended: appendHost.innerHTML,
+        swapReturnsHost: swapReturn === swapHost,
+        swapped: swapHost.innerHTML,
+        dataError,
+        dataOutput: dataHost.innerHTML
+      };
+    });
+  };
+  const sourceResult = await collect("/");
+  const minifiedResult = await collect("/tests/fixture-min.html");
+  expect(minifiedResult).toEqual(sourceResult);
+  expect(sourceResult).toEqual({
+    appendReturnsHost: true,
+    appended: "<i>existing</i><b>appended</b>",
+    swapReturnsHost: true,
+    swapped: "<strong>swapped</strong>",
+    dataError: "ReferenceError",
+    dataOutput: ""
+  });
+});
